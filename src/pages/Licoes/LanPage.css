@@ -1,0 +1,123 @@
+.page {
+  background: #ffe6ea;
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 800 !important;
+  color: #c2185b !important;
+  font-size: 20px !important;
+}
+
+.navBtn {
+  color: #333 !important;
+  text-transform: none !important;
+}
+
+/* HERO */
+.section {
+  padding: 60px 0;
+}
+
+.hero {
+  padding-top: 80px;
+}
+
+.title {
+  font-size: 42px !important;
+  font-weight: 800 !important;
+}
+
+.subtitle {
+  margin-top: 12px !important;
+  color: #555 !important;
+}
+
+.cta {
+  margin-top: 24px !important;
+  background: linear-gradient(45deg, #c2185b, #ff4081) !important;
+  color: white !important;
+  border-radius: 20px !important;
+  padding: 10px 20px !important;
+}
+
+.heroMock {
+  height: 260px;
+  background: #f8bbd0;
+  border-radius: 16px;
+}
+
+/* SEÇÕES */
+.sectionTitle {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  margin-bottom: 30px !important;
+}
+
+/* CARDS */
+.cardsRow {
+  margin-top: 20px;
+}
+
+.card {
+  border-radius: 16px !important;
+  box-shadow: none !important;
+}
+
+/* PROPOSTA SOCIAL */
+.social {
+  background: linear-gradient(45deg, #c2185b, #ff7043);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.socialTitle {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  margin-bottom: 20px !important;
+}
+
+/* TESTEMUNHOS */
+.avatar {
+  margin-bottom: 10px;
+}
+
+.textMuted {
+  color: #666 !important;
+}
+
+/* PLANOS */
+.plans {
+  background: #fff0f3;
+  padding: 60px 0;
+}
+
+.planCard {
+  text-align: center;
+}
+
+.price {
+  font-weight: 800 !important;
+  color: #c2185b !important;
+  margin: 10px 0 !important;
+}
+
+.ctaSmall {
+  margin-top: 10px !important;
+  background: linear-gradient(45deg, #c2185b, #ff4081) !important;
+  color: white !important;
+  border-radius: 12px !important;
+}
