@@ -1,0 +1,18 @@
+.Card {
+  width: 406px;
+  height: 289px;
+
+  padding: 10px;
+
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background: linear-gradient(90deg, #99034A, #F56451);
+
+  box-shadow:
+    1px -1px 4px rgba(255, 255, 255, 1),
+    -10px 10px 7.3px rgba(0, 0, 0, 0.25);
+}

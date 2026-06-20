@@ -1,9 +1,11 @@
-import NavBarLandPage from "./components/NavBar/NavBarLandPage/NavBarLandPage";
-
+import NavBar from "./Components/Navbar";
+import Footer from "./Components/Footer";
+import Menu from "./Components/Menu";
+import  "./Components/Navbar.css";
 function App() {
   return (
     <>
-      <NavBarLandPage />
+      <NavBar/> 
     </>
   );
 }
