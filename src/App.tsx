@@ -1,9 +1,9 @@
-import NavBarLandPage from "./components/NavBar/NavBarLandPage/NavBarLandPage";
+import LandPage from "./pages/LandPage/LandPage";
 
 function App() {
   return (
     <>
-      <NavBarLandPage />
+      <LandPage />
     </>
   );
 }
