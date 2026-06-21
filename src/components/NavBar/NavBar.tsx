@@ -1,9 +1,10 @@
 import { Avatar, List, ListItemButton, Stack, Typography } from "@mui/material";
-import { useState } from "react";
 import { navItems } from "./NavBar.utils";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  const [active, setActive] = useState("Minha empresa");
+  const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <Stack
@@ -36,13 +37,13 @@ export default function NavBar() {
 
       {/* Itens de navegação */}
       <List sx={{ display: "flex", flexDirection: "column", gap: 1, p: 0 }}>
-        {navItems.map(({ label }) => {
-          const isActive = active === label;
+        {navItems.map(({ label, href }) => {
+          const isActive = location.pathname === href;
 
           return (
             <ListItemButton
               key={label}
-              onClick={() => setActive(label)}
+              onClick={() => navigate(href)}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -55,6 +56,7 @@ export default function NavBar() {
                 backgroundColor: isActive
                   ? "rgba(122, 31, 42, 0.35)"
                   : "transparent",
+                transition: "all 0.4s ease", // suaviza tudo
                 "&:hover": {
                   backgroundColor: isActive
                     ? "rgba(122, 31, 42, 0.45)"
@@ -62,13 +64,18 @@ export default function NavBar() {
                 },
               }}
             >
+              {/* Bolinha */}
               <Stack
                 sx={{
                   width: 18,
                   height: 18,
-                  borderRadius: "5px",
+                  borderRadius: "30%",
                   backgroundColor: isActive ? "#e0523a" : "#f0a3a0",
                   flexShrink: 0,
+                  transition: "all 0.4s ease",
+                  transform: isActive
+                    ? "scale(1.2) rotate(180deg)"
+                    : "scale(1) rotate(0deg)",
                 }}
               />
               <Typography
@@ -76,6 +83,7 @@ export default function NavBar() {
                   fontFamily: "'Playfair Display', Georgia, serif",
                   fontSize: "1.1rem",
                   color: "#fff",
+                  transition: "color 0.4s ease",
                 }}
               >
                 {label}

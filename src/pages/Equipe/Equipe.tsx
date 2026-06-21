@@ -3,6 +3,7 @@ import type { TeamMember } from "./Equipe.types";
 import { founders, developers } from "./Equipe.utils"; // Garanta que os arquivos estão importados
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
+import Layout from "../../components/Layout/Layout";
 
 // 🎴 Card único que serve tanto para Fundador quanto para Desenvolvedor
 function MemberCard({
@@ -77,90 +78,92 @@ function MemberCard({
 
 export default function TeamPage() {
   return (
-    <Stack>
-      <NavBarLandPage />
+    <Layout>
+      <Stack>
+        <NavBarLandPage />
 
-      <Box sx={{ backgroundColor: "#f7dde0", py: { xs: 5, md: 7 } }}>
-        <Container maxWidth="md">
-          <Typography
-            align="center"
-            sx={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontWeight: 700,
-              fontSize: { xs: "2.2rem", md: "3rem" },
-              color: "#2b2b2b",
-              mb: 4,
-            }}
-          >
-            Nossa equipe
-          </Typography>
-
-          <Box
-            sx={{
-              background: "linear-gradient(160deg, #f0623e, #d8456a)",
-              borderRadius: "20px",
-              p: { xs: 3, md: 4 },
-            }}
-          >
-            {/* Mapeamento de Fundadores */}
+        <Box sx={{ backgroundColor: "#f7dde0", py: { xs: 5, md: 7 } }}>
+          <Container maxWidth="md">
             <Typography
               align="center"
               sx={{
                 fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: { xs: "1.4rem", md: "1.7rem" },
+                fontWeight: 700,
+                fontSize: { xs: "2.2rem", md: "3rem" },
                 color: "#2b2b2b",
-                mb: 3,
+                mb: 4,
               }}
             >
-              Fundadores
+              Nossa equipe
             </Typography>
 
             <Box
               sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                gap: 2.5,
-                mb: 5,
+                background: "linear-gradient(160deg, #f0623e, #d8456a)",
+                borderRadius: "20px",
+                p: { xs: 3, md: 4 },
               }}
             >
-              {founders.map((member) => (
-                // Por padrão, isDev é false, então renderiza estilo de fundador
-                <MemberCard key={member.name} member={member} />
-              ))}
+              {/* Mapeamento de Fundadores */}
+              <Typography
+                align="center"
+                sx={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: { xs: "1.4rem", md: "1.7rem" },
+                  color: "#2b2b2b",
+                  mb: 3,
+                }}
+              >
+                Fundadores
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: 2.5,
+                  mb: 5,
+                }}
+              >
+                {founders.map((member) => (
+                  // Por padrão, isDev é false, então renderiza estilo de fundador
+                  <MemberCard key={member.name} member={member} />
+                ))}
+              </Box>
+
+              {/* Mapeamento de Desenvolvedores */}
+              <Typography
+                align="center"
+                sx={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: { xs: "1.4rem", md: "1.7rem" },
+                  color: "#2b2b2b",
+                  mb: 3,
+                }}
+              >
+                Desenvolvedores
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: 2,
+                }}
+              >
+                {developers.map((member) => (
+                  // Passamos isDev={true} para aplicar o visual menor e escuro dos devs
+                  <MemberCard key={member.name} member={member} isDev />
+                ))}
+              </Box>
             </Box>
+          </Container>
+        </Box>
 
-            {/* Mapeamento de Desenvolvedores */}
-            <Typography
-              align="center"
-              sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: { xs: "1.4rem", md: "1.7rem" },
-                color: "#2b2b2b",
-                mb: 3,
-              }}
-            >
-              Desenvolvedores
-            </Typography>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                gap: 2,
-              }}
-            >
-              {developers.map((member) => (
-                // Passamos isDev={true} para aplicar o visual menor e escuro dos devs
-                <MemberCard key={member.name} member={member} isDev />
-              ))}
-            </Box>
-          </Box>
-        </Container>
-      </Box>
-
-      <FooterLandPage />
-    </Stack>
+        <FooterLandPage />
+      </Stack>
+    </Layout>
   );
 }
