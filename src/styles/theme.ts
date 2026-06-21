@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+    cssVariables: true, // 🔥 Nova feature do MUI v6: gera variáveis CSS automáticas (--mui-palette-primary-main, etc)
     palette: {
         primary: {
             main: "#e0523a",
@@ -14,29 +15,24 @@ const theme = createTheme({
             primary: "#3a3a3a",
         },
     },
-
     typography: {
         fontFamily: '"Lora", Georgia, serif',
-
         h1: {
             fontFamily: '"Playfair Display", Georgia, serif',
             fontSize: "2.5rem",
             fontWeight: 600,
         },
-
         h2: {
             fontFamily: '"Playfair Display", Georgia, serif',
             fontSize: "2rem",
             fontWeight: 600,
         },
-
         h3: {
             fontFamily: '"Playfair Display", Georgia, serif',
             fontSize: "1.5rem",
             fontWeight: 600,
         },
     },
-
     shape: {
         borderRadius: 12,
     },
