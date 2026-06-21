@@ -32,7 +32,7 @@ function App() {
       <Route path="/cadastro-empreendedor" element={<CadastroEmpreendedor />} />
       <Route path="/cadastro-empresa" element={<CadastroEmpresa />} />
       <Route path="/chat" element={<Chat />} />
-      <Route path="/controle-mentorado" element={<ControleMentorado />} />
+      <Route path="/controle-mentorados" element={<ControleMentorado />} />
       <Route path="/criar-atividade" element={<CriarAtividades />} />
       <Route path="/criar-licao" element={<CriarLicoes />} />
       <Route
