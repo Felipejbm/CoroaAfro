@@ -5,6 +5,10 @@ export interface Testemunhos {
     text: string;
 }
 
+export type PlanCardProps = {
+    plan: Plan;
+};
+
 export interface Plan {
     name: string;
     price: string;
@@ -13,8 +17,4 @@ export interface Plan {
     cta: string;
     highlighted: boolean;
     badge?: string;
-}
-
-export interface PlanCardProps {
-    plan: Plan;
 }

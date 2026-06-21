@@ -11,8 +11,8 @@ import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import { styles } from "./LandPage.styles";
 import { items } from "./LandPage.utils";
 import TestimonialsCarousel from "./Carrosel/Carrosel";
-import PricingSection from "./PrecosSecao/PlanosSecao";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
+import PricingPage from "./Planos/Planos";
 
 export default function LandPage() {
   return (
@@ -187,9 +187,11 @@ export default function LandPage() {
             mt: 10,
           }}
         />
+        
         <TestimonialsCarousel></TestimonialsCarousel>
 
-        <PricingSection></PricingSection>
+        <PricingPage></PricingPage>
+
         <Footer></Footer>
       </Stack>
     </>

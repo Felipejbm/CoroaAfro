@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
 
-export default function CoroaAfroPage() {
+export default function Licoes() {
   return (
     <>
-      <Stack>LandPage</Stack>
+      <Stack>Licoes</Stack>
     </>
   );
 }
