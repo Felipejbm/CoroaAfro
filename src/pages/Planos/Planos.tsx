@@ -2,15 +2,18 @@ import { Stack } from "@mui/material";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import PricingPage from "../../components/Planos/Planos";
+import Layout from "../../components/Layout/Layout";
 
 export default function Planos() {
   return (
-    <Stack>
-      <NavBarLandPage />
+    <Layout>
+      <Stack>
+        <NavBarLandPage />
 
-      <PricingPage />
+        <PricingPage />
 
-      <FooterLandPage />
-    </Stack>
+        <FooterLandPage />
+      </Stack>
+    </Layout>
   );
 }

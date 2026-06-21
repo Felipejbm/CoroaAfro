@@ -51,7 +51,7 @@ export default function FooterLandPage() {
               }}
             >
               <Avatar
-                src="/logo-coroa-afro.png"
+                src="/src/assets/LogoTipo.png"
                 alt="Coroa Afro"
                 sx={{ width: 50, height: 50 }}
               />
