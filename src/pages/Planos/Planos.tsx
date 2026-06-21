@@ -5,14 +5,12 @@ import PricingPage from "../../components/Planos/Planos";
 
 export default function Planos() {
   return (
-    <>
-      <Stack>
-        <NavBarLandPage />
+    <Stack>
+      <NavBarLandPage />
 
-        <PricingPage />
+      <PricingPage />
 
-        <FooterLandPage />
-      </Stack>
-    </>
+      <FooterLandPage />
+    </Stack>
   );
 }
