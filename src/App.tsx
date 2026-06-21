@@ -23,6 +23,7 @@ import CriarTrilhaPersonalizada2 from "./pages/CriarTrilhaPersonalizada/Etapa2/C
 import CriarTrilhaPersonalizada3 from "./pages/CriarTrilhaPersonalizada/Etapa3/CriarTrilhaPersonalizada";
 import CriarTrilhaPersonalizada4 from "./pages/CriarTrilhaPersonalizada/Etapa4/CriarTrilhaPersonalizada";
 import CriarTrilhaPersonalizada5 from "./pages/CriarTrilhaPersonalizada/Etapa5/CriarTrilhaPersonalizada";
+import DashboardMentor from "./pages/DashboardMentor/DashboardMentor";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
       <Route path="/posts" element={<Posts />} />
       <Route path="/trilha-guiada" element={<TrilhaGuiada />} />
       <Route path="/trilha-personalizada" element={<TrilhaPersonalizada />} />
+      <Route path="/dashboard-mentor" element={<DashboardMentor />} />
     </Routes>
   );
 }
