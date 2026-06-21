@@ -12,7 +12,7 @@ import { styles } from "./LandPage.styles";
 import { items } from "./LandPage.utils";
 import TestimonialsCarousel from "./Carrosel/Carrosel";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
-import PricingPage from "./Planos/Planos";
+import PricingPage from "../../components/Planos/Planos";
 
 export default function LandPage() {
   return (
@@ -187,7 +187,7 @@ export default function LandPage() {
             mt: 10,
           }}
         />
-        
+
         <TestimonialsCarousel></TestimonialsCarousel>
 
         <PricingPage></PricingPage>

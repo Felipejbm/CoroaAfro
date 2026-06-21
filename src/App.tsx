@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import LandPage from "./pages/LandPage/LandPage";
-import Cadastro from "./pages/Cadastro/Cadastro";
 import Chat from "./pages/Chat/Chat";
 import ControleMentorado from "./pages/ControleMentorados/ControleMentorado";
 import CriarAtividades from "./pages/CriarAtividades/CriarAtividades";
@@ -18,12 +17,15 @@ import Planos from "./pages/Planos/Planos";
 import Posts from "./pages/Posts/Posts";
 import TrilhaGuiada from "./pages/Trilhas/TrilhaGuiada/TrilhaGuiada";
 import TrilhaPersonalizada from "./pages/Trilhas/TrilhaPersonalizada/TrilhaPersonalizada";
+import CadastroEmpreendedor from "./pages/Cadastro/CadastroEmpreendedor/CadastroEmpreendedor";
+import CadastroEmpresa from "./pages/Cadastro/CadastroEmpresa/CadastroEmpresa";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<LandPage />} />
-      <Route path="/cadastro" element={<Cadastro />} />
+      <Route path="/cadastro-empreendedor" element={<CadastroEmpreendedor />} />
+      <Route path="/cadastro-empresa" element={<CadastroEmpresa />} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/controle-mentorado" element={<ControleMentorado />} />
       <Route path="/criar-atividade" element={<CriarAtividades />} />

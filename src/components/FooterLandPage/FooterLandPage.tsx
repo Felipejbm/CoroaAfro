@@ -22,7 +22,7 @@ const iconMap: Record<SocialLink["icon"], React.ReactElement> = {
   instagram: <InstagramIcon sx={{ fontSize: 18 }} />,
 };
 
-export default function Footer() {
+export default function FooterLandPage() {
   return (
     <Stack
       sx={{
