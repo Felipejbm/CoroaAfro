@@ -1,6 +1,6 @@
 import { Typography, Button, Container, Link, Stack, Box } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
-import { plans } from "../LandPage.utils";
+import { plans } from "../../pages/LandPage/LandPage.utils";
 
 export default function PricingPage() {
   return (
