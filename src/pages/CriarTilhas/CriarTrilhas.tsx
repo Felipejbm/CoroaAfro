@@ -1,6 +1,7 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import { useState } from "react";
+import { fonts } from "../../styles/theme";
 
 export default function CriarTrilhas() {
   const [title, setTitle] = useState("");
@@ -42,7 +43,7 @@ export default function CriarTrilhas() {
         {/* Cabeçalho */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.6rem", md: "2rem" },
             color: "#2b2b2b",
@@ -53,7 +54,7 @@ export default function CriarTrilhas() {
         </Typography>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.9rem",
             color: "#3a3a3a",
             mb: 4,
@@ -65,7 +66,7 @@ export default function CriarTrilhas() {
         {/* Informações Básicas */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -85,7 +86,7 @@ export default function CriarTrilhas() {
         {/* Configurações */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -125,7 +126,7 @@ export default function CriarTrilhas() {
         {/* Conteúdo */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -151,7 +152,7 @@ export default function CriarTrilhas() {
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
               textTransform: "none",
               borderRadius: "8px",
@@ -167,7 +168,7 @@ export default function CriarTrilhas() {
             sx={{
               backgroundColor: "#e0523a",
               color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "0.85rem",
               textTransform: "none",

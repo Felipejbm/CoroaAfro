@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { mentorados } from "./ControleMentorados.utils";
 import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function ControleMentorados() {
   const handleViewProfile = (nome: string) => {
@@ -31,7 +32,7 @@ export default function ControleMentorados() {
         {/* Cabeçalho */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.6rem", md: "2rem" },
             color: "#2b2b2b",
@@ -52,7 +53,7 @@ export default function ControleMentorados() {
                 <TableCell
                   sx={{
                     color: "#fff",
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
                 >
@@ -61,7 +62,7 @@ export default function ControleMentorados() {
                 <TableCell
                   sx={{
                     color: "#fff",
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
                 >
@@ -70,7 +71,7 @@ export default function ControleMentorados() {
                 <TableCell
                   sx={{
                     color: "#fff",
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
                 >
@@ -79,7 +80,7 @@ export default function ControleMentorados() {
                 <TableCell
                   sx={{
                     color: "#fff",
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
                 >
@@ -88,7 +89,7 @@ export default function ControleMentorados() {
                 <TableCell
                   sx={{
                     color: "#fff",
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
                 >
@@ -102,7 +103,7 @@ export default function ControleMentorados() {
                   <TableCell
                     sx={{
                       color: "#fff",
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                     }}
                   >
                     {m.nome}
@@ -110,7 +111,7 @@ export default function ControleMentorados() {
                   <TableCell
                     sx={{
                       color: "#fff",
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                     }}
                   >
                     {m.empresa}
@@ -118,7 +119,7 @@ export default function ControleMentorados() {
                   <TableCell
                     sx={{
                       color: "#fff",
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                     }}
                   >
                     {m.plano}
@@ -126,7 +127,7 @@ export default function ControleMentorados() {
                   <TableCell
                     sx={{
                       color: "#fff",
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                     }}
                   >
                     {m.progresso}
@@ -137,7 +138,7 @@ export default function ControleMentorados() {
                       sx={{
                         backgroundColor: "#e0523a",
                         color: "#fff",
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontSize: "0.8rem",
                         textTransform: "none",
                         borderRadius: "8px",

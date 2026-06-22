@@ -1,6 +1,7 @@
 import { Typography, Button, Container, Link, Stack, Box } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { plans } from "../../pages/LandPage/LandPage.utils";
+import { fonts } from "../../styles/theme";
 
 export default function PricingPage() {
   return (
@@ -64,7 +65,7 @@ export default function PricingPage() {
                         transform: "translateX(-50%)",
                         backgroundColor: "#2b2b2b",
                         color: "#fff",
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontSize: "0.75rem",
                         fontWeight: 700,
                         px: 2,
@@ -79,7 +80,7 @@ export default function PricingPage() {
 
                   <Typography
                     sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       fontSize: "0.95rem",
                       opacity: 0.9,
                       mb: 1,
@@ -90,7 +91,7 @@ export default function PricingPage() {
 
                   <Typography
                     sx={{
-                      fontFamily: "'Playfair Display', Georgia, serif",
+                      fontFamily: fonts.hero,
                       fontWeight: 700,
                       fontSize: "2rem",
                       mb: 2,
@@ -109,7 +110,7 @@ export default function PricingPage() {
                   >
                     <Typography
                       sx={{
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontSize: "1.1rem",
                         fontWeight: 700,
                       }}
@@ -118,7 +119,7 @@ export default function PricingPage() {
                     </Typography>
                     <Typography
                       sx={{
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontSize: "2.6rem",
                         fontWeight: 700,
                         lineHeight: 1,
@@ -128,7 +129,7 @@ export default function PricingPage() {
                     </Typography>
                     <Typography
                       sx={{
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontSize: "1rem",
                       }}
                     >
@@ -177,7 +178,7 @@ export default function PricingPage() {
                         </Stack>
                         <Typography
                           sx={{
-                            fontFamily: "'Comfortaa', sans-serif",
+                            fontFamily: fonts.body,
                             fontSize: "0.9rem",
                             lineHeight: 1.4,
                           }}
@@ -196,7 +197,7 @@ export default function PricingPage() {
                       py: 1.2,
                       borderRadius: "10px",
                       textTransform: "none",
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       fontWeight: 700,
                       fontSize: "1rem",
                       ...(highlighted
@@ -226,7 +227,7 @@ export default function PricingPage() {
         <Typography
           align="center"
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.95rem",
             color: "#2b2b2b",
             mt: 5,

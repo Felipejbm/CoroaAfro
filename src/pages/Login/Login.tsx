@@ -15,6 +15,7 @@ import { useState } from "react";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../components/Layout/Layout";
+import { fonts } from "../../styles/theme";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -42,7 +43,7 @@ export default function Login() {
           <Container maxWidth="sm" sx={{ textAlign: "center" }}>
             <Typography
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontWeight: 700,
                 fontSize: { xs: "2.4rem", md: "3rem" },
                 color: "#2b2b2b",
@@ -54,7 +55,7 @@ export default function Login() {
 
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: { xs: "1rem", md: "1.15rem" },
                 color: "#3a3a3a",
                 mb: 5,
@@ -80,7 +81,7 @@ export default function Login() {
             <Typography
               align="center"
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontSize: "1rem",
                 color: "#2b2b2b",
                 mb: 2,
@@ -133,7 +134,7 @@ export default function Login() {
               />
               <Typography
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: fonts.hero,
                   fontSize: "0.9rem",
                 }}
               >
@@ -151,7 +152,7 @@ export default function Login() {
             {/* Formulário */}
             <Typography
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontSize: "1.05rem",
                 color: "#2b2b2b",
                 mb: 1,
@@ -173,7 +174,7 @@ export default function Login() {
 
             <Typography
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontSize: "1.05rem",
                 color: "#2b2b2b",
                 mb: 1,
@@ -201,7 +202,7 @@ export default function Login() {
                 to="/recuperar-senha"
                 underline="hover"
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
                   color: "#7a1f4a",
                 }}
@@ -217,7 +218,7 @@ export default function Login() {
               sx={{
                 background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
                 color: "#fff",
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontSize: "1.1rem",
                 textTransform: "none",
                 borderRadius: "10px",
@@ -239,7 +240,7 @@ export default function Login() {
                 to="/cadastro-empreendedor"
                 underline="hover"
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
                   color: "#7a1f4a",
                 }}

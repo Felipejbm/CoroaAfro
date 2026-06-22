@@ -1,5 +1,6 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function DashboardMentor() {
   const handleLogout = () => {
@@ -29,7 +30,7 @@ export default function DashboardMentor() {
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: { xs: "1.6rem", md: "2rem" },
               color: "#2b2b2b",
@@ -52,7 +53,7 @@ export default function DashboardMentor() {
             <Avatar sx={{ bgcolor: "#e0523a" }}>R</Avatar>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -64,7 +65,7 @@ export default function DashboardMentor() {
               sx={{
                 backgroundColor: "#e0523a",
                 color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.8rem",
                 textTransform: "none",
                 borderRadius: "8px",
@@ -91,7 +92,7 @@ export default function DashboardMentor() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -100,7 +101,7 @@ export default function DashboardMentor() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#e0523a",
@@ -114,7 +115,7 @@ export default function DashboardMentor() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -123,7 +124,7 @@ export default function DashboardMentor() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#e0523a",
@@ -137,7 +138,7 @@ export default function DashboardMentor() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -146,7 +147,7 @@ export default function DashboardMentor() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#e0523a",
@@ -160,7 +161,7 @@ export default function DashboardMentor() {
         {/* Minhas atividades */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.2rem",
             color: "#2b2b2b",
@@ -181,7 +182,7 @@ export default function DashboardMentor() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -190,7 +191,7 @@ export default function DashboardMentor() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#e0523a",
@@ -204,7 +205,7 @@ export default function DashboardMentor() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -213,7 +214,7 @@ export default function DashboardMentor() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#e0523a",
@@ -227,7 +228,7 @@ export default function DashboardMentor() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#fff",
               }}
@@ -236,7 +237,7 @@ export default function DashboardMentor() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#e0523a",

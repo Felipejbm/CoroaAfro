@@ -1,6 +1,7 @@
 import { Toolbar, Box, Button, Avatar, Stack } from "@mui/material";
 import { navLinks } from "./NavBarLandPage.utils.ts";
 import { useLocation } from "react-router-dom";
+import { fonts } from "../../styles/theme";
 
 export default function NavBarLandPage() {
   const location = useLocation();
@@ -49,7 +50,7 @@ export default function NavBarLandPage() {
                     ? "linear-gradient(180deg, #f06a52, #e0523a)" // ativo com bg
                     : "transparent", // os outros sem fundo
                   color: isActive ? "#fff" : "text.primary",
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: fonts.hero,
                   fontSize: "1.1rem",
                   textTransform: "none",
                   borderRadius: "6px",

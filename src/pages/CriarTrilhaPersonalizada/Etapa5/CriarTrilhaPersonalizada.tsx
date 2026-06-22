@@ -3,6 +3,7 @@ import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import NavBar from "../../../components/NavBar/NavBar";
+import { fonts } from "../../../styles/theme";
 
 export default function CriarTrilhaPersonalizada5() {
   const totalSteps = 5;
@@ -43,7 +44,7 @@ export default function CriarTrilhaPersonalizada5() {
           {/* Título */}
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: { xs: "1.8rem", md: "2.3rem" },
               color: "#2b2b2b",
@@ -53,7 +54,7 @@ export default function CriarTrilhaPersonalizada5() {
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
               color: "#3a3a3a",
               mb: 2,
@@ -74,14 +75,14 @@ export default function CriarTrilhaPersonalizada5() {
                 backgroundColor: "#e0523a",
               }}
             />
-            <Typography
-              sx={{
-                fontFamily: "'Comfortaa', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.7rem",
-                color: "#c43f2a",
-              }}
-            >
+              <Typography
+                sx={{
+                  fontFamily: fonts.body,
+                  fontWeight: 700,
+                  fontSize: "0.7rem",
+                  color: "#c43f2a",
+                }}
+              >
               Passo {currentStep} de {totalSteps}
             </Typography>
           </Stack>
@@ -89,7 +90,7 @@ export default function CriarTrilhaPersonalizada5() {
           {/* Revisão */}
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1.3rem",
               color: "#2b2b2b",
@@ -109,19 +110,19 @@ export default function CriarTrilhaPersonalizada5() {
               mb: 3,
             }}
           >
-            <Typography
-              sx={{
-                fontFamily: "'Comfortaa', sans-serif",
-                fontWeight: 700,
-                fontSize: "1rem",
-                color: "#fff",
-              }}
-            >
+              <Typography
+                sx={{
+                  fontFamily: fonts.body,
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  color: "#fff",
+                }}
+              >
               Nome da trilha: Presença Digital Forte
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 color: "rgba(255,255,255,0.7)",
               }}
@@ -143,7 +144,7 @@ export default function CriarTrilhaPersonalizada5() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.8rem",
                   color: "#fff",
                 }}
@@ -162,7 +163,7 @@ export default function CriarTrilhaPersonalizada5() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.8rem",
                   color: "#fff",
                 }}
@@ -181,7 +182,7 @@ export default function CriarTrilhaPersonalizada5() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.8rem",
                   color: "#fff",
                 }}
@@ -194,7 +195,7 @@ export default function CriarTrilhaPersonalizada5() {
           {/* Módulos selecionados */}
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1rem",
               color: "#2b2b2b",
@@ -214,13 +215,13 @@ export default function CriarTrilhaPersonalizada5() {
                 py: 1,
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "#fff",
-                }}
-              >
+                  <Typography
+                    sx={{
+                      fontFamily: fonts.body,
+                      fontSize: "0.85rem",
+                      color: "#fff",
+                    }}
+                  >
                 📷 Fotografia para Redes Sociais
               </Typography>
             </Stack>
@@ -232,13 +233,13 @@ export default function CriarTrilhaPersonalizada5() {
                 py: 1,
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "#fff",
-                }}
-              >
+                  <Typography
+                    sx={{
+                      fontFamily: fonts.body,
+                      fontSize: "0.85rem",
+                      color: "#fff",
+                    }}
+                  >
                 🎬 Criação de Reels que Vendem
               </Typography>
             </Stack>
@@ -247,7 +248,7 @@ export default function CriarTrilhaPersonalizada5() {
           {/* Preferências */}
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1rem",
               color: "#2b2b2b",
@@ -270,7 +271,7 @@ export default function CriarTrilhaPersonalizada5() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
                   color: "#fff",
                 }}
@@ -295,7 +296,7 @@ export default function CriarTrilhaPersonalizada5() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
                   color: "#fff",
                 }}
@@ -320,7 +321,7 @@ export default function CriarTrilhaPersonalizada5() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
                   color: "#fff",
                 }}
@@ -347,7 +348,7 @@ export default function CriarTrilhaPersonalizada5() {
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.75rem",
               color: "#3a3a3a",
             }}
@@ -362,7 +363,7 @@ export default function CriarTrilhaPersonalizada5() {
               sx={{
                 backgroundColor: "#16161d",
                 color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "8px",
@@ -379,7 +380,7 @@ export default function CriarTrilhaPersonalizada5() {
               sx={{
                 backgroundColor: "#e0523a",
                 color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.85rem",
                 textTransform: "none",

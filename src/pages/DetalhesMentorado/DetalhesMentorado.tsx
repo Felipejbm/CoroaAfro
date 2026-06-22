@@ -1,5 +1,6 @@
 import { Avatar, LinearProgress, Stack, Typography } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function DetalhesMentorado() {
   return (
@@ -19,7 +20,7 @@ export default function DetalhesMentorado() {
           <Stack>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#2b2b2b",
@@ -29,7 +30,7 @@ export default function DetalhesMentorado() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 color: "#3a3a3a",
               }}
@@ -38,7 +39,7 @@ export default function DetalhesMentorado() {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.8rem",
                 color: "#3ddc97",
                 fontWeight: 700,
@@ -111,7 +112,7 @@ export default function DetalhesMentorado() {
         {/* Evolução da trilha */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
             color: "#2b2b2b",
@@ -171,7 +172,7 @@ export default function DetalhesMentorado() {
         {/* Atividades recentes */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
             color: "#2b2b2b",
@@ -192,7 +193,7 @@ export default function DetalhesMentorado() {
             <Typography
               key={idx}
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 color: "#fff",
                 mb: 1,
@@ -206,7 +207,7 @@ export default function DetalhesMentorado() {
         {/* Informações pessoais */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
             color: "#2b2b2b",

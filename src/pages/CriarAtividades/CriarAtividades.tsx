@@ -1,6 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import { lessons, trails } from "./CriarAtividades.utils";
+import { fonts } from "../../styles/theme";
 
 export default function CriarAtividades() {
   const handleCreateActivity = () => {
@@ -24,7 +25,7 @@ export default function CriarAtividades() {
         {/* Cabeçalho */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.6rem", md: "2rem" },
             color: "#2b2b2b",
@@ -35,7 +36,7 @@ export default function CriarAtividades() {
         </Typography>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.9rem",
             color: "#3a3a3a",
             mb: 4,
@@ -47,7 +48,7 @@ export default function CriarAtividades() {
         {/* Minhas trilhas */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
             color: "#2b2b2b",
@@ -86,7 +87,7 @@ export default function CriarAtividades() {
         {/* Minhas lições */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
             color: "#2b2b2b",
@@ -129,7 +130,7 @@ export default function CriarAtividades() {
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
               textTransform: "none",
               borderRadius: "8px",
@@ -145,7 +146,7 @@ export default function CriarAtividades() {
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
               textTransform: "none",
               borderRadius: "8px",

@@ -43,7 +43,6 @@ export default function LandPage() {
               <Typography
                 variant="h1"
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
                   fontWeight: 600,
                   fontSize: { xs: "2rem", md: "3.2rem" },
                   color: "#2b2b2b",
@@ -55,7 +54,6 @@ export default function LandPage() {
               <Typography
                 variant="h1"
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
                   fontWeight: 600,
                   fontSize: { xs: "2rem", md: "3.2rem" },
                   color: "#2b2b2b",
@@ -71,7 +69,6 @@ export default function LandPage() {
           <Typography
             align="center"
             sx={{
-              fontFamily: "'Comic Neue', 'Comfortaa', sans-serif",
               fontSize: { xs: "1rem", md: "2rem" },
               color: "#3a3a3a",
               mb: 6,
@@ -89,7 +86,6 @@ export default function LandPage() {
               sx={{
                 background: "linear-gradient(90deg, #7b1f3a, #e0523a)",
                 color: "#fff",
-                fontFamily: "'Comic Neue', 'Comfortaa', sans-serif",
                 fontSize: "1.1rem",
                 textTransform: "none",
                 borderRadius: "8px",
@@ -130,7 +126,6 @@ export default function LandPage() {
           <Typography
             align="center"
             sx={{
-              fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
               fontVariant: "small-caps",
               letterSpacing: 2,
               fontSize: { xs: "1.6rem", md: "2.2rem" },
@@ -166,7 +161,6 @@ export default function LandPage() {
                 </Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
                     color: "#fff",
                     fontSize: { xs: "1rem", md: "1.15rem" },
                   }}

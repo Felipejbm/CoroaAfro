@@ -1,6 +1,7 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function CriarLicoes() {
   const [title, setTitle] = useState("");
@@ -42,7 +43,7 @@ export default function CriarLicoes() {
         {/* Cabeçalho */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.6rem", md: "2rem" },
             color: "#2b2b2b",
@@ -53,7 +54,7 @@ export default function CriarLicoes() {
         </Typography>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.9rem",
             color: "#3a3a3a",
             mb: 4,
@@ -65,7 +66,7 @@ export default function CriarLicoes() {
         {/* Informações Básicas */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -85,7 +86,7 @@ export default function CriarLicoes() {
         {/* Configurações */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -125,7 +126,7 @@ export default function CriarLicoes() {
         {/* Conteúdo */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -147,7 +148,7 @@ export default function CriarLicoes() {
         {/* Materiais */}
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1rem",
             color: "#2b2b2b",
@@ -169,7 +170,7 @@ export default function CriarLicoes() {
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.9rem",
               color: "#3a3a3a",
             }}
@@ -185,7 +186,7 @@ export default function CriarLicoes() {
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
               textTransform: "none",
               borderRadius: "8px",
@@ -201,7 +202,7 @@ export default function CriarLicoes() {
             sx={{
               backgroundColor: "#e0523a",
               color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "0.85rem",
               textTransform: "none",
