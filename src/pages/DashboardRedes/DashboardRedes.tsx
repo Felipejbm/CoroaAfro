@@ -9,13 +9,15 @@ export default function DashboardRedes() {
   const handleFetchData = () => {
     console.log("Buscar Dados");
   };
+
   return (
-    <Stack>
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
       <Stack
         sx={{
-          backgroundColor: "#16161d",
+          flex: 1,       // CORREÇÃO: Faz este container ocupar 100% do width restante ao lado da NavBar
+          minWidth: 0,   // CORREÇÃO: Impede que elementos filhos (como grids) quebrem o layout
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
@@ -23,10 +25,11 @@ export default function DashboardRedes() {
       >
         {/* Cabeçalho */}
         <Stack
+          direction={{ xs: "column", md: "row" }} // AJUSTE: Alinha título/botões e o nome do plano lado a lado
           sx={{
-            display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: { xs: "flex-start", md: "center" },
+            gap: 2,
             mb: 4,
           }}
         >
@@ -37,12 +40,12 @@ export default function DashboardRedes() {
                 fontWeight: 700,
                 fontSize: { xs: "1.6rem", md: "2rem" },
                 color: "#fff",
-                mb: 1,
+                mb: 2,
               }}
             >
               Acompanhe a evolução da sua marca no digital
             </Typography>
-            <Stack sx={{ display: "flex", gap: 1.5 }}>
+            <Stack direction={"row"} sx={{ flexWrap: "wrap", gap: 1.5 }}> {/* AJUSTE: Botões em linha */}
               <Button
                 onClick={handleConnect}
                 sx={{
@@ -53,6 +56,7 @@ export default function DashboardRedes() {
                   textTransform: "none",
                   borderRadius: "8px",
                   px: 2.5,
+                  py: 1,
                   "&:hover": { backgroundColor: "#c43f2a" },
                 }}
               >
@@ -68,6 +72,7 @@ export default function DashboardRedes() {
                   textTransform: "none",
                   borderRadius: "8px",
                   px: 2.5,
+                  py: 1,
                   "&:hover": { backgroundColor: "#3a3a3a" },
                 }}
               >
@@ -82,6 +87,7 @@ export default function DashboardRedes() {
                   textTransform: "none",
                   borderRadius: "8px",
                   px: 2.5,
+                  py: 1,
                   "&:hover": { backgroundColor: "#3a3a3a" },
                 }}
               >
@@ -95,6 +101,7 @@ export default function DashboardRedes() {
               fontFamily: "'Comfortaa', sans-serif",
               fontSize: "0.9rem",
               color: "#fff",
+              whiteSpace: "nowrap",
             }}
           >
             Café da Dandara • Plano Premium
@@ -102,7 +109,7 @@ export default function DashboardRedes() {
         </Stack>
 
         {/* Filtros */}
-        <Stack sx={{ display: "flex", gap: 1.5, mb: 4 }}>
+        <Stack direction={"row"} sx={{ gap: 1.5, mb: 4 }}> {/* AJUSTE: Filtros em linha */}
           {["Hoje", "7 dias", "30 dias"].map((f) => (
             <Button
               key={f}
@@ -113,7 +120,8 @@ export default function DashboardRedes() {
                 fontSize: "0.8rem",
                 textTransform: "none",
                 borderRadius: "8px",
-                px: 2,
+                px: 2.5,
+                py: 0.8,
                 "&:hover": { backgroundColor: "#3a3a3a" },
               }}
             >
@@ -137,7 +145,7 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(5, 1fr)" },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(5, 1fr)" },
             gap: 2,
             mb: 4,
           }}
@@ -168,6 +176,7 @@ export default function DashboardRedes() {
                   fontWeight: 700,
                   fontSize: "1.1rem",
                   color: "#e0523a",
+                  mt: 1,
                 }}
               >
                 --
@@ -191,7 +200,7 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
             gap: 2,
             mb: 4,
           }}
@@ -217,6 +226,7 @@ export default function DashboardRedes() {
                     fontWeight: 700,
                     fontSize: "1.1rem",
                     color: "#e0523a",
+                    mt: 1,
                   }}
                 >
                   --
@@ -229,7 +239,7 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
             gap: 2,
             mb: 4,
           }}
@@ -259,6 +269,7 @@ export default function DashboardRedes() {
                   fontWeight: 700,
                   fontSize: "1.1rem",
                   color: "#e0523a",
+                  mt: 1,
                 }}
               >
                 --
@@ -282,7 +293,7 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
             gap: 2,
           }}
         >
@@ -296,6 +307,7 @@ export default function DashboardRedes() {
                   fontFamily: "'Comfortaa', sans-serif",
                   fontSize: "0.85rem",
                   color: "#fff",
+                  mb: 1,
                 }}
               >
                 Aguardando dados da API...

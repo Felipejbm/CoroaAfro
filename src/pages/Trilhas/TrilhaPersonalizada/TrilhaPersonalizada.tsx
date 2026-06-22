@@ -3,6 +3,7 @@ import type { ModuleItem } from "./TrilhaPersonalizada.types";
 import { useState } from "react";
 import { modules } from "./TrilhasPersonalizada.utils";
 import NavBar from "../../../components/NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 function ModuleCard({ module }: { module: ModuleItem }) {
   return (
@@ -10,84 +11,130 @@ function ModuleCard({ module }: { module: ModuleItem }) {
       sx={{
         position: "relative",
         backgroundColor: "#16161d",
-        borderRadius: "10px",
-        p: 2.2,
-        minHeight: 120,
-        display: "flex",
-        flexDirection: "column",
+        borderRadius: "14px", // Igual ao Código 1
+        borderLeft: "4px solid #d97a6a", // Borda lateral usando a cor tema da trilha personalizada
+        width: { xs: "100%", sm: 340 }, // Mantido o tamanho ideal para o zigue-zague
+        p: 2.5, // Igual ao Código 1
       }}
+      direction={"column"}
     >
-      {module.avatar && (
-        <Avatar
-          src={module.avatar}
-          sx={{
-            position: "absolute",
-            top: -10,
-            right: 90,
-            width: 32,
-            height: 32,
-            border: "2px solid #16161d",
-          }}
-        />
-      )}
-
-      <Typography
+      {/* Cabeçalho do Card (Ajustado para o mesmo comportamento de linha do Código 1) */}
+      <Stack
+        direction={"row"}
         sx={{
-          fontFamily: "'Comfortaa', sans-serif",
-          fontSize: "0.8rem",
-          color: "rgba(255,255,255,0.55)",
-          mb: 0.3,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 1.5,
+          width: "100%",
         }}
       >
-        Meu Módulo
-      </Typography>
+        <Typography
+          sx={{
+            fontFamily: "'Comfortaa', sans-serif",
+            fontSize: "0.7rem", // Igual ao Código 1
+            color: "rgba(255,255,255,0.55)",
+          }}
+        >
+          Meu Módulo
+        </Typography>
+
+        {module.avatar && (
+          <Avatar
+            src={module.avatar}
+            sx={{
+              width: 32,
+              height: 32,
+              border: "2px solid #16161d",
+            }}
+          />
+        )}
+      </Stack>
+
+      {/* Título do Módulo */}
       <Typography
         sx={{
           fontFamily: "'Comfortaa', sans-serif",
           fontWeight: 700,
-          fontSize: "0.95rem",
+          fontSize: "1.05rem", // Igual ao Código 1
           color: "#fff",
+          mb: 1.5, // Igual ao Código 1
         }}
       >
         {module.title}
       </Typography>
 
-      <Stack sx={{ flexGrow: 1 }} />
-
+      {/* Conteúdo/Descrição do Módulo */}
       <Typography
-        align="center"
         sx={{
           fontFamily: "'Comfortaa', sans-serif",
-          fontSize: "0.85rem",
-          color: "rgba(255,255,255,0.85)",
+          fontSize: "0.8rem", // Igual ao Código 1
+          color: "rgba(255,255,255,0.7)", // Igual ao Código 1
+          lineHeight: 1.5, // Igual ao Código 1
+          mb: 2,
         }}
       >
         {module.content}
       </Typography>
+
+      {/* Link de Ação Inferior (Igual ao Código 1) */}
+      <Stack sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Typography
+          sx={{
+            fontFamily: "'Comfortaa', sans-serif",
+            fontSize: "0.75rem", // Igual ao Código 1
+            fontWeight: 700, // Igual ao Código 1
+            color: "#d97a6a",
+            cursor: "pointer",
+          }}
+        >
+          Acessar
+        </Typography>
+      </Stack>
     </Stack>
+  );
+}
+
+function TimelineDot() {
+  return (
+    <Stack
+      sx={{
+        width: 16,
+        height: 16,
+        borderRadius: "50%",
+        border: `3px solid #d97a6a`,
+        backgroundColor: "#16161d",
+        zIndex: 2,
+      }}
+    />
   );
 }
 
 export default function TrilhaPersonalizada() {
   const [tab, setTab] = useState<"guiada" | "personalizada">("personalizada");
+  const navigate = useNavigate();
 
-  const handleCreateTrail = () => {
-    console.log("Criar nova trilha");
-  };
   return (
-    <Stack>
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
-      <Stack sx={{ backgroundColor: "#f9dde0", minHeight: "100vh" }}>
-        {/* Barra superior escura */}
+      <Stack
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          backgroundColor: "#f9dde0",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Stack sx={{ backgroundColor: "#3a3033", height: 36 }} />
 
-        <Stack sx={{ p: { xs: 3, md: 4 } }}>
+        <Stack sx={{ p: { xs: 3, md: 4 }, flex: 1 }}>
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
               fontWeight: 700,
-              fontSize: { xs: "1.3rem", md: "1.6rem" },
+              fontSize: { xs: "1.4rem", md: "1.8rem" },
               color: "#2b2b2b",
               mb: 2,
             }}
@@ -97,15 +144,17 @@ export default function TrilhaPersonalizada() {
 
           {/* Tabs */}
           <Stack
+            direction={"row"}
             sx={{
               display: "inline-flex",
               borderRadius: "8px",
               overflow: "hidden",
-              mb: 4,
+              mb: 5,
+              width: "fit-content",
             }}
           >
             <Button
-              onClick={() => setTab("guiada")}
+              onClick={() => navigate("/trilha-guiada")}
               sx={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 fontVariant: "small-caps",
@@ -126,8 +175,7 @@ export default function TrilhaPersonalizada() {
                 fontVariant: "small-caps",
                 fontSize: "0.8rem",
                 color: "#fff",
-                backgroundColor:
-                  tab === "personalizada" ? "#c43f2a" : "#d97a6a",
+                backgroundColor: tab === "personalizada" ? "#c43f2a" : "#d97a6a",
                 borderRadius: 0,
                 px: 2,
                 "&:hover": { backgroundColor: "#c43f2a" },
@@ -137,25 +185,78 @@ export default function TrilhaPersonalizada() {
             </Button>
           </Stack>
 
-          {/* Grid de módulos */}
+          {/* Container da Linha do Tempo em Zigue-Zague */}
           <Stack
             sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-              gap: 2.5,
-              maxWidth: 560,
-              mb: { xs: 6, md: 20 },
+              position: "relative",
+              width: "100%",
+              maxWidth: 800,
+              alignSelf: "center",
+              display: "flex",
+              flexDirection: "column",
+              mb: 5,
             }}
           >
-            {modules.map((module, i) => (
-              <ModuleCard key={i} module={module} />
-            ))}
+            <Stack
+              sx={{
+                position: "absolute",
+                left: "50%",
+                transform: "translateX(-50%)",
+                top: 20,
+                bottom: 20,
+                width: "2px",
+                backgroundColor: "rgba(0,0,0,0.15)",
+                zIndex: 1,
+              }}
+            />
+
+            {modules.map((module, i) => {
+              const isLeft = i % 2 === 0;
+
+              return (
+                <Stack
+                  key={i}
+                  direction={"row"}
+                  sx={{
+                    position: "relative",
+                    width: "100%",
+                    mb: 4,
+                    justifyContent: isLeft ? "flex-start" : "flex-end",
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      width: "50%",
+                      display: "flex",
+                      justifyContent: isLeft ? "flex-start" : "flex-end",
+                      px: 4,
+                    }}
+                  >
+                    <ModuleCard module={module} />
+                  </Stack>
+
+                  <Stack
+                    sx={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "24px",
+                      transform: "translateX(-50%)",
+                      zIndex: 2,
+                    }}
+                  >
+                    <TimelineDot />
+                  </Stack>
+                </Stack>
+              );
+            })}
           </Stack>
 
+          <Stack sx={{ flexGrow: 1 }} />
+
           {/* Botão criar trilha */}
-          <Stack sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Stack sx={{ display: "flex", alignItems: "flex-end", mt: 4 }}>
             <Button
-              onClick={handleCreateTrail}
+              onClick={() => navigate("/criar-trilha-personalizada-1")}
               sx={{
                 backgroundColor: "#16161d",
                 color: "#fff",

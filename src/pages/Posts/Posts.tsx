@@ -25,7 +25,7 @@ export default function Posts() {
     setNewComment((prev) => ({ ...prev, [postId]: "" }));
   };
   return (
-    <Stack>
+    <Stack direction={"row"}>
       <NavBar />
       <Stack
         sx={{

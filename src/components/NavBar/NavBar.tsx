@@ -9,7 +9,7 @@ export default function NavBar() {
   return (
     <Stack
       sx={{
-        width: 280,
+        width: "15%",
         minHeight: "100vh",
         backgroundColor: "#15151c",
         py: 3,
@@ -17,10 +17,11 @@ export default function NavBar() {
     >
       {/* Logo */}
       <Stack
+        direction={"row"}
         sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, mb: 4 }}
       >
         <Avatar
-          src="/logo-coroa-afro.png"
+          src="/src/assets/LogoTipo.png"
           alt="Coroa Afro"
           sx={{ width: 44, height: 44 }}
         />

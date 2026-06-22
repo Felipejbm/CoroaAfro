@@ -115,10 +115,10 @@ function ProgressPanel({
 
 export default function DashboardFinanceiro() {
   return (
-    <Stack display={"flex"} direction={"row"}>
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
-      <Stack sx={{ backgroundColor: "#f9dde0", p: { xs: 2, md: 3 } }}>
+      <Stack sx={{ backgroundColor: "#f9dde0", p: { xs: 2, md: 3 }, flex: 1 }}>
         {/* Cabeçalho */}
         <Stack
           sx={{
@@ -128,6 +128,7 @@ export default function DashboardFinanceiro() {
             alignItems: { xs: "flex-start", sm: "center" },
             gap: 2,
             mb: 3,
+            minWidth: 0,
           }}
         >
           <Typography

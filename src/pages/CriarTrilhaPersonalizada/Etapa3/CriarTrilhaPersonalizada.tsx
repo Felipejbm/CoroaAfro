@@ -5,6 +5,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { moduleOptions } from "./CriarTrilhaPersonalizada.utils";
 import { levelColors } from "./CriarTrilhaPersonalizada.styles";
 import NavBar from "../../../components/NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function CriarTrilhaPersonalizada3() {
   const totalSteps = 5;
@@ -18,22 +19,18 @@ export default function CriarTrilhaPersonalizada3() {
     );
   };
 
-  const handleBack = () => {
-    console.log("Voltar");
-  };
-
-  const handleContinue = () => {
-    console.log("Continuar", { selected });
-  };
+  const navigate = useNavigate()
 
   return (
-    <Stack>
+    // AJUSTE: direction={"row"} adicionado para posicionar a NavBar ao lado do conteúdo da tela
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
       <Stack
         sx={{
+          flex: 1,
+          minWidth: 0,
           backgroundColor: "#f9dde0",
-          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         }}
@@ -72,7 +69,8 @@ export default function CriarTrilhaPersonalizada3() {
 
           {/* Barra de progresso */}
           <Stack
-            sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 4 }}
+            direction={"row"} // AJUSTE: Elementos da barra de progresso alinhados horizontalmente
+            sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
               sx={{
@@ -126,8 +124,8 @@ export default function CriarTrilhaPersonalizada3() {
                 <Stack
                   key={mod.id}
                   onClick={() => toggleModule(mod.id)}
+                  direction={"row"} // AJUSTE: Mantém checkbox, ícone e textos alinhados na horizontal
                   sx={{
-                    display: "flex",
                     alignItems: "center",
                     gap: 1.5,
                     backgroundColor: isSelected
@@ -167,7 +165,7 @@ export default function CriarTrilhaPersonalizada3() {
                     {mod.icon}
                   </Stack>
 
-                  <Stack sx={{ flex: 1 }}>
+                  <Stack sx={{ flex: 1 }} direction={"column"}>
                     <Typography
                       sx={{
                         fontFamily: "'Comfortaa', sans-serif",
@@ -179,9 +177,10 @@ export default function CriarTrilhaPersonalizada3() {
                     >
                       {mod.title}
                     </Typography>
+                    
                     <Stack
+                      direction={"row"} // AJUSTE: Detalhes de aulas e badge de nível lado a lado
                       sx={{
-                        display: "flex",
                         alignItems: "center",
                         gap: 1,
                         mt: 0.4,
@@ -198,6 +197,7 @@ export default function CriarTrilhaPersonalizada3() {
                       >
                         {mod.lessons} aulas · {mod.duration}
                       </Typography>
+                      
                       <Stack
                         sx={{
                           backgroundColor: `${levelColors[mod.level]}22`,
@@ -227,12 +227,13 @@ export default function CriarTrilhaPersonalizada3() {
 
         {/* Rodapé de navegação */}
         <Stack
+          direction={"row"} // AJUSTE: Alinha o contador de passos e o grupo de botões horizontalmente
           sx={{
-            display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
+            borderTop: "1px solid rgba(0,0,0,0.05)"
           }}
         >
           <Typography
@@ -245,9 +246,9 @@ export default function CriarTrilhaPersonalizada3() {
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack sx={{ display: "flex", gap: 1.5 }}>
+          <Stack direction={"row"} sx={{ gap: 1.5 }}> {/* AJUSTE: Botões Voltar e Continuar lado a lado */}
             <Button
-              onClick={handleBack}
+              onClick={() => {navigate("/criar-trilha-personalizada-2")}}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#16161d",
@@ -264,7 +265,7 @@ export default function CriarTrilhaPersonalizada3() {
               Voltar
             </Button>
             <Button
-              onClick={handleContinue}
+              onClick={() => {navigate("/criar-trilha-personalizada-4")}}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#e0523a",

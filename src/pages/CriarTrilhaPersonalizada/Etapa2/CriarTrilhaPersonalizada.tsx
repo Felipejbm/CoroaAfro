@@ -6,6 +6,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import NavBar from "../../../components/NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function CriarTrilhaPersonalizada2() {
   const totalSteps = 5;
@@ -18,21 +19,18 @@ export default function CriarTrilhaPersonalizada2() {
     );
   };
 
-  const handleBack = () => {
-    console.log("Voltar");
-  };
+  const navigate = useNavigate();
 
-  const handleContinue = () => {
-    console.log("Continuar", { selected });
-  };
   return (
-    <Stack>
+    // AJUSTE: direction={"row"} adicionado para alinhar a NavBar corretamente na lateral
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
       <Stack
         sx={{
+          flex: 1,
+          minWidth: 0,
           backgroundColor: "#f9dde0",
-          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         }}
@@ -74,7 +72,8 @@ export default function CriarTrilhaPersonalizada2() {
 
           {/* Barra de progresso */}
           <Stack
-            sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 4 }}
+            direction={"row"} // AJUSTE: Itens lado a lado
+            sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
               sx={{
@@ -106,7 +105,7 @@ export default function CriarTrilhaPersonalizada2() {
               mb: 0.8,
             }}
           >
-            Qual é o seu objetivo principal?
+            Qual é o seu objective principal?
           </Typography>
           <Typography
             sx={{
@@ -120,13 +119,17 @@ export default function CriarTrilhaPersonalizada2() {
           </Typography>
 
           {/* Cards de objetivo */}
-          <Stack sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 1.5 }}>
+          <Stack
+            direction={"row"} // AJUSTE: Cards alinhados horizontalmente com quebra de linha
+            sx={{ flexWrap: "wrap", gap: 2, mb: 1.5 }}
+          >
             {objectives.map((obj) => {
               const isSelected = selected.includes(obj.id);
               return (
                 <Stack
                   key={obj.id}
                   onClick={() => toggleObjective(obj.id)}
+                  direction={"column"}
                   sx={{
                     position: "relative",
                     width: { xs: "100%", sm: 165 },
@@ -202,12 +205,13 @@ export default function CriarTrilhaPersonalizada2() {
 
         {/* Rodapé de navegação */}
         <Stack
+          direction={"row"} // AJUSTE: Conteúdo do rodapé em linha
           sx={{
-            display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
+            borderTop: "1px solid rgba(0,0,0,0.05)",
           }}
         >
           <Typography
@@ -220,9 +224,13 @@ export default function CriarTrilhaPersonalizada2() {
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack sx={{ display: "flex", gap: 1.5 }}>
+          <Stack direction={"row"} sx={{ gap: 1.5 }}>
+            {" "}
+            {/* AJUSTE: Botões lado a lado */}
             <Button
-              onClick={handleBack}
+              onClick={() => {
+                navigate("/criar-trilha-personalizada-1");
+              }}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#16161d",
@@ -239,7 +247,9 @@ export default function CriarTrilhaPersonalizada2() {
               Voltar
             </Button>
             <Button
-              onClick={handleContinue}
+              onClick={() => {
+                navigate("/criar-trilha-personalizada-3");
+              }}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#e0523a",
