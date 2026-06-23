@@ -1,4 +1,10 @@
-import { Avatar, LinearProgress, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import type { MetricCard, ProgressItem } from "./DashboardFinanceiro.types";
 import {
   metricCards,
@@ -6,6 +12,8 @@ import {
   weeklyAnalysis,
 } from "./DashboardFinanceiro.utils";
 import NavBar from "../../components/NavBar/NavBar";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Ícone de perfil opcional
+import { useNavigate } from "react-router-dom";
 
 function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
   return (
@@ -114,6 +122,7 @@ function ProgressPanel({
 }
 
 export default function DashboardFinanceiro() {
+  const navigate = useNavigate();
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
@@ -154,26 +163,52 @@ export default function DashboardFinanceiro() {
             }}
           >
             <Avatar sx={{ bgcolor: "#e0523a", width: 36, height: 36 }} />
-            <Stack>
-              <Typography
+            <Stack direction="row" sx={{ alignItems: "center", gap: 2 }}>
+              <Stack>
+                <Typography
+                  sx={{
+                    fontFamily: "'Comfortaa', sans-serif",
+                    fontWeight: 700,
+                    fontSize: "0.8rem",
+                    color: "#fff",
+                  }}
+                >
+                  Café da Dandara
+                </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "'Comfortaa', sans-serif",
+                    fontSize: "0.7rem",
+                    color: "rgba(255,255,255,0.6)",
+                  }}
+                >
+                  Plano Premium
+                </Typography>
+              </Stack>
+
+              {/* Botão de Perfil adicionado */}
+              <Button
+                variant="contained"
+                startIcon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
+                onClick={() => navigate("/perfil")}
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.8rem",
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
                   color: "#fff",
-                }}
-              >
-                Café da Dandara
-              </Typography>
-              <Typography
-                sx={{
                   fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.7rem",
-                  color: "rgba(255,255,255,0.6)",
+                  fontSize: "0.75rem",
+                  textTransform: "none",
+                  borderRadius: "6px",
+                  px: 1.5,
+                  py: 0.5,
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                    boxShadow: "none",
+                  },
                 }}
               >
-                Plano Premium
-              </Typography>
+                Ver Perfil
+              </Button>
             </Stack>
           </Stack>
         </Stack>

@@ -1,5 +1,7 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Stack, Typography } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardRedes() {
   const handleConnect = () => {
@@ -10,8 +12,8 @@ export default function DashboardRedes() {
     console.log("Buscar Dados");
   };
 
+  const navigate = useNavigate();
   return (
-   
     <Stack
       direction={"row"}
       sx={{
@@ -46,7 +48,6 @@ export default function DashboardRedes() {
                 fontFamily: "'Comfortaa', sans-serif",
                 fontWeight: 700,
                 fontSize: { xs: "1.6rem", md: "2rem" },
-                color: "#fff",
                 mb: 2,
               }}
             >
@@ -103,16 +104,66 @@ export default function DashboardRedes() {
             </Stack>
           </Stack>
 
-          <Typography
+          <Stack
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
-              fontSize: "0.9rem",
-              color: "#fff",
-              whiteSpace: "nowrap",
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              backgroundColor: "#1c1830",
+              borderRadius: "30px",
+              px: 2,
+              py: 1,
             }}
           >
-            Café da Dandara • Plano Premium
-          </Typography>
+            <Avatar sx={{ bgcolor: "#e0523a", width: 36, height: 36 }} />
+            <Stack direction="row" sx={{ alignItems: "center", gap: 2 }}>
+              <Stack>
+                <Typography
+                  sx={{
+                    fontFamily: "'Comfortaa', sans-serif",
+                    fontWeight: 700,
+                    fontSize: "0.8rem",
+                    color: "#fff",
+                  }}
+                >
+                  Café da Dandara
+                </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "'Comfortaa', sans-serif",
+                    fontSize: "0.7rem",
+                    color: "rgba(255,255,255,0.6)",
+                  }}
+                >
+                  Plano Premium
+                </Typography>
+              </Stack>
+
+              {/* Botão de Perfil adicionado */}
+              <Button
+                variant="contained"
+                startIcon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
+                onClick={() => navigate("/perfil")}
+                sx={{
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  color: "#fff",
+                  fontFamily: "'Comfortaa', sans-serif",
+                  fontSize: "0.75rem",
+                  textTransform: "none",
+                  borderRadius: "6px",
+                  px: 1.5,
+                  py: 0.5,
+                  boxShadow: "none",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                Ver Perfil
+              </Button>
+            </Stack>
+          </Stack>
         </Stack>
 
         <Stack direction={"row"} sx={{ gap: 1.5, mb: 4 }}>
@@ -141,7 +192,6 @@ export default function DashboardRedes() {
             fontFamily: "'Comfortaa', sans-serif",
             fontWeight: 700,
             fontSize: "1.2rem",
-            color: "#fff",
             mb: 2,
           }}
         >
@@ -199,7 +249,6 @@ export default function DashboardRedes() {
             fontFamily: "'Comfortaa', sans-serif",
             fontWeight: 700,
             fontSize: "1.2rem",
-            color: "#fff",
             mb: 2,
           }}
         >
@@ -299,7 +348,6 @@ export default function DashboardRedes() {
             fontFamily: "'Comfortaa', sans-serif",
             fontWeight: 700,
             fontSize: "1.2rem",
-            color: "#fff",
             mb: 2,
           }}
         >
