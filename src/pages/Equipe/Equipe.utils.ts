@@ -4,7 +4,7 @@ export const founders: TeamMember[] = [
     {
         name: "Emilio",
         role: "Fundador",
-        bio: "lorem",
+        bio: "",
         photo: "/emilio.png",
     },
     {
@@ -37,7 +37,7 @@ export const developers: TeamMember[] = [
     {
         name: "Daniel",
         role: "Desenvolvedor",
-        bio: "lorem",
+        bio: "",
         photo: "/daniel.png",
     },
     {
@@ -49,7 +49,7 @@ export const developers: TeamMember[] = [
     {
         name: "Gabriel",
         role: "Desenvolvedor",
-        bio: "lorem",
+        bio: "",
         photo: "https://picsum.photos/seed/gabriel/240/280",
     },
     {

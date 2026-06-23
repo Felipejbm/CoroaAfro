@@ -2,7 +2,7 @@ import { Avatar, List, ListItemButton, Stack, Typography } from "@mui/material";
 import { navItems } from "./NavBar.utils";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBarMentor() {
   const location = useLocation();
   const navigate = useNavigate();
 

@@ -16,7 +16,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import { useState } from "react";
 import { messages, onlineNow, recents } from "./Chats.utils";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 
 function ConversationItem({
   conv,
@@ -234,7 +234,7 @@ function MessageBubble({ message }: { message: Message }) {
   );
 }
 
-export default function Chat() {
+export default function ChatMentor() {
   const [input, setInput] = useState("");
 
   const [activeConversation, setActiveConversation] = useState<Conversation>(
@@ -261,7 +261,7 @@ export default function Chat() {
         overflow: "hidden",
       }}
     >
-      <NavBar />
+      <NavBarMentor />
 
       <Stack
         direction={"row"}

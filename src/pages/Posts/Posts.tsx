@@ -1,11 +1,32 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import type { Post } from "./Posts.types";
+import type { PostWithImage } from "./Posts.types";
 import { initialPosts } from "./Posts.utils";
 import NavBar from "../../components/NavBar/NavBar";
 
+
 export default function Posts() {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const postsWithMockImages: PostWithImage[] = initialPosts.map(
+    (post, index) => {
+      if (index === 0) {
+        return {
+          ...post,
+          image:
+            "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
+        };
+      }
+      if (index === 2) {
+        return {
+          ...post,
+          image:
+            "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60",
+        };
+      }
+      return post;
+    },
+  );
+
+  const [posts, setPosts] = useState<PostWithImage[]>(postsWithMockImages);
   const [newComment, setNewComment] = useState<Record<string, string>>({});
 
   const handleAddComment = (postId: string) => {
@@ -24,18 +45,19 @@ export default function Posts() {
     setPosts(updatedPosts);
     setNewComment((prev) => ({ ...prev, [postId]: "" }));
   };
+
   return (
-    <Stack>
+    <Stack direction={"row"} sx={{ width: "100vw", maxWidth: "100%" }}>
       <NavBar />
       <Stack
         sx={{
+          flexGrow: 1,
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -58,7 +80,7 @@ export default function Posts() {
           Compartilhe experiências, dúvidas e ideias com outros empreendedores
         </Typography>
 
-        <Stack sx={{ display: "flex", gap: 2, mb: 4 }}>
+        <Stack direction="row" sx={{ gap: 2, mb: 4 }}>
           <TextField
             placeholder="Pesquisar empresas ou assuntos..."
             variant="outlined"
@@ -81,97 +103,135 @@ export default function Posts() {
           </Button>
         </Stack>
 
-        {/* Lista de posts */}
-        <Stack sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <Stack sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {posts.map((post) => (
-            <Stack
-              key={post.id}
-              sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "1rem",
-                  color: "#fff",
-                }}
-              >
-                {post.company}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.8rem",
-                  color: "rgba(255,255,255,0.6)",
-                  mb: 1,
-                }}
-              >
-                {post.segment}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.9rem",
-                  color: "#fff",
-                  mb: 2,
-                }}
-              >
-                “{post.content}”
-              </Typography>
-
-              {/* Comentários */}
+            <Stack key={post.id} sx={{ flexDirection: "column" }}>
               <Stack
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 1.2,
-                  mb: 2,
+                  backgroundColor: "#16161d",
+                  borderRadius: "10px 10px 0px 0px",
+                  p: 3,
+                  position: "relative",
+                  zIndex: 2,
                 }}
               >
-                {post.comments.map((c, idx) => (
-                  <Typography
-                    key={idx}
-                    sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
-                      fontSize: "0.85rem",
-                      color: "#f2f2f2",
-                    }}
-                  >
-                    <strong>{c.author}:</strong> {c.text}
-                  </Typography>
-                ))}
-              </Stack>
-
-              {/* Campo para novo comentário */}
-              <Stack sx={{ display: "flex", gap: 1.5 }}>
-                <TextField
-                  placeholder="Escreva um comentário..."
-                  variant="outlined"
-                  size="small"
-                  value={newComment[post.id] || ""}
-                  onChange={(e) =>
-                    setNewComment((prev) => ({
-                      ...prev,
-                      [post.id]: e.target.value,
-                    }))
-                  }
-                  sx={{ flex: 1, backgroundColor: "#fff", borderRadius: "8px" }}
-                />
-                <Button
-                  onClick={() => handleAddComment(post.id)}
+                <Typography
                   sx={{
-                    backgroundColor: "#e0523a",
-                    color: "#fff",
                     fontFamily: "'Comfortaa', sans-serif",
                     fontWeight: 700,
-                    textTransform: "none",
-                    borderRadius: "8px",
-                    px: 2.5,
-                    "&:hover": { backgroundColor: "#c43f2a" },
+                    fontSize: "1rem",
+                    color: "#fff",
                   }}
                 >
-                  Comentar
-                </Button>
+                  {post.company}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: "'Comfortaa', sans-serif",
+                    fontSize: "0.8rem",
+                    color: "rgba(255,255,255,0.6)",
+                    mb: 2,
+                  }}
+                >
+                  {post.segment}
+                </Typography>
+
+                <Typography
+                  sx={{
+                    fontFamily: "'Comfortaa', sans-serif",
+                    fontSize: "0.9rem",
+                    color: "#fff",
+                    mb: post.image ? 2 : 0, // Adiciona margem embaixo apenas se houver imagem
+                  }}
+                >
+                  “{post.content}”
+                </Typography>
+
+                {post.image && (
+                  <Stack
+                    component="img"
+                    src={post.image}
+                    alt="Imagem do post"
+                    sx={{
+                      width: "100%",
+                      maxHeight: "350px",
+                      objectFit: "cover",
+                      borderRadius: "6px",
+                    }}
+                  />
+                )}
+              </Stack>
+
+              <Stack
+                sx={{
+                  backgroundColor: "#f0f0f0",
+                  borderRadius: "0px 0px 10px 10px",
+                  p: 3,
+                  borderTop: "1px solid #e0e0e0",
+                  gap: 2,
+                }}
+              >
+                {post.comments.length > 0 && (
+                  <Stack sx={{ gap: 1.2 }}>
+                    {post.comments.map((c, idx) => (
+                      <Typography
+                        key={idx}
+                        sx={{
+                          fontFamily: "'Comfortaa', sans-serif",
+                          fontSize: "0.85rem",
+                          color: "#333333",
+                          backgroundColor: "#fff",
+                          p: 1.5,
+                          borderRadius: "6px",
+                          boxShadow: "0px 1px 3px rgba(0,0,0,0.05)",
+                        }}
+                      >
+                        <strong style={{ color: "#e0523a" }}>
+                          {c.author}:
+                        </strong>
+                        {c.text}
+                      </Typography>
+                    ))}
+                  </Stack>
+                )}
+
+                <Stack
+                  direction="row"
+                  sx={{ gap: 1.5, mt: post.comments.length > 0 ? 1 : 0 }}
+                >
+                  <TextField
+                    placeholder="Escreva um comentário..."
+                    variant="outlined"
+                    size="small"
+                    value={newComment[post.id] || ""}
+                    onChange={(e) =>
+                      setNewComment((prev) => ({
+                        ...prev,
+                        [post.id]: e.target.value,
+                      }))
+                    }
+                    sx={{
+                      flex: 1,
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Button
+                    onClick={() => handleAddComment(post.id)}
+                    sx={{
+                      backgroundColor: "#e0523a",
+                      color: "#fff",
+                      fontFamily: "'Comfortaa', sans-serif",
+                      fontWeight: 700,
+                      textTransform: "none",
+                      borderRadius: "8px",
+                      px: 2.5,
+                      "&:hover": { backgroundColor: "#c43f2a" },
+                    }}
+                  >
+                    Comentar
+                  </Button>
+                </Stack>
               </Stack>
             </Stack>
           ))}

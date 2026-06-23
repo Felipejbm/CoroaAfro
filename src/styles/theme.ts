@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
-    cssVariables: true, // 🔥 Nova feature do MUI v6: gera variáveis CSS automáticas (--mui-palette-primary-main, etc)
+    cssVariables: true,  
     palette: {
         primary: {
             main: "#e0523a",

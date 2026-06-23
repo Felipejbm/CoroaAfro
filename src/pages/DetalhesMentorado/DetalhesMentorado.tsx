@@ -1,20 +1,46 @@
-import { Avatar, LinearProgress, Stack, Typography } from "@mui/material";
-import NavBar from "../../components/NavBar/NavBar";
+import {
+  Avatar,
+  LinearProgress,
+  Stack,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"; // Certifique-se de ter @mui/icons-material instalado
+import NavBarMentor from "../../components/NavMentor/NavBar";
 
 export default function DetalhesMentorado() {
   return (
-    <Stack>
-      <NavBar />
+    // CORREÇÃO: Alinha a NavBar lateral e o conteúdo lado a lado
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
+
+      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
+          flex: 1, // CORREÇÃO: Preenche todo o espaço horizontal restante da tela
+          minWidth: 0, // CORREÇÃO: Previne estouros de layout por elementos rígidos ou grids
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
         }}
       >
-        {/* Cabeçalho com perfil */}
-        <Stack sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}>
+        {/* BOTÃO RETORNAR: Posicionado no topo esquerdo com margem inferior */}
+        <Stack direction="row" sx={{ mb: 2 }}>
+          <IconButton
+            onClick={() => window.history.back()}
+            sx={{
+              color: "#16161d",
+              backgroundColor: "rgba(22, 22, 29, 0.05)",
+              "&:hover": { backgroundColor: "rgba(22, 22, 29, 0.1)" },
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </Stack>
+
+        {/* Bloco do Perfil */}
+        <Stack direction="row" sx={{ alignItems: "center", gap: 2, mb: 4 }}>
           <Avatar sx={{ width: 70, height: 70, bgcolor: "#16161d" }}>DS</Avatar>
           <Stack>
             <Typography
@@ -49,11 +75,15 @@ export default function DetalhesMentorado() {
           </Stack>
         </Stack>
 
-        {/* Resumo de progresso */}
+        {/* Grid de Métricas */}
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+            },
             gap: 2,
             mb: 4,
           }}
@@ -108,7 +138,7 @@ export default function DetalhesMentorado() {
           </Stack>
         </Stack>
 
-        {/* Evolução da trilha */}
+        {/* Evolução da Trilha */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -122,7 +152,7 @@ export default function DetalhesMentorado() {
         </Typography>
         <Stack sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 4 }}>
           <Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b" }}>
+            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b", mb: 0.5 }}>
               Identidade Visual
             </Typography>
             <LinearProgress
@@ -137,7 +167,7 @@ export default function DetalhesMentorado() {
             />
           </Stack>
           <Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b" }}>
+            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b", mb: 0.5 }}>
               Posicionamento de Marca
             </Typography>
             <LinearProgress
@@ -152,7 +182,7 @@ export default function DetalhesMentorado() {
             />
           </Stack>
           <Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b" }}>
+            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b", mb: 0.5 }}>
               Redes Sociais
             </Typography>
             <LinearProgress
@@ -168,7 +198,7 @@ export default function DetalhesMentorado() {
           </Stack>
         </Stack>
 
-        {/* Atividades recentes */}
+        {/* Atividades Recentes */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -196,6 +226,7 @@ export default function DetalhesMentorado() {
                 fontSize: "0.85rem",
                 color: "#fff",
                 mb: 1,
+                "&:last-child": { mb: 0 },
               }}
             >
               • {act}
@@ -203,7 +234,7 @@ export default function DetalhesMentorado() {
           ))}
         </Stack>
 
-        {/* Informações pessoais */}
+        {/* Informações de Contato */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -215,7 +246,14 @@ export default function DetalhesMentorado() {
         >
           Informações
         </Typography>
-        <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+        <Stack
+          sx={{
+            backgroundColor: "#16161d",
+            borderRadius: "10px",
+            p: 3,
+            gap: 1,
+          }}
+        >
           <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
             Email: dandara@email.com
           </Typography>

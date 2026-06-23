@@ -33,14 +33,12 @@ export default function FooterLandPage() {
       }}
     >
       <Container maxWidth="lg">
-        {/* CONTAINER PRINCIPAL DO RODAPÉ */}
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={4}
           useFlexGap
           flexWrap="wrap"
         >
-          {/* LOGO + REDES SOCIAIS */}
           <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 25%" } }}>
             <Stack
               direction="row"
@@ -102,7 +100,6 @@ export default function FooterLandPage() {
             </Stack>
           </Stack>
 
-          {/* DESENVOLVEDORES */}
           <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 40%" } }}>
             <Typography
               sx={{
@@ -140,7 +137,6 @@ export default function FooterLandPage() {
             </Stack>
           </Stack>
 
-          {/* LINKS INSTITUCIONAIS */}
           <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
             <Stack sx={{ gap: 1 }}>
               {aboutLinks.map((link) => (
@@ -160,7 +156,6 @@ export default function FooterLandPage() {
             </Stack>
           </Stack>
 
-          {/* RODAPÉ FINAL */}
           <Stack sx={{ flex: "1 1 100%", textAlign: "center", mt: 5 }}>
             <Typography
               sx={{

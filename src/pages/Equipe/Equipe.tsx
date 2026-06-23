@@ -1,11 +1,10 @@
 import { Box, Typography, Container, Stack } from "@mui/material";
 import type { TeamMember } from "./Equipe.types";
-import { founders, developers } from "./Equipe.utils"; // Garanta que os arquivos estão importados
+import { founders, developers } from "./Equipe.utils";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import Layout from "../../components/Layout/Layout";
 
-// 🎴 Card único que serve tanto para Fundador quanto para Desenvolvedor
 function MemberCard({
   member,
   isDev = false,
@@ -16,11 +15,12 @@ function MemberCard({
   return (
     <Box
       sx={{
-        // Define a largura baseada no tipo (130px para dev, 150px para fundador)
         width: { xs: "100%", sm: isDev ? 130 : 150 },
         borderRadius: "10px",
         overflow: "hidden",
         boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -29,18 +29,18 @@ function MemberCard({
         alt={member.name}
         sx={{
           width: "100%",
-          height: isDev ? 130 : 160, // Altura dinâmica da imagem
+          height: isDev ? 130 : 160,
           objectFit: "cover",
           display: "block",
         }}
       />
       <Box
         sx={{
-          // Cor de fundo dinâmica (#1c1c1c para dev, #7a1f4a para fundador)
           backgroundColor: isDev ? "#1c1c1c" : "#7a1f4a",
           color: "#fff",
           px: isDev ? 1.2 : 1.5,
           py: isDev ? 1 : 1.2,
+          flexGrow: 1,
         }}
       >
         <Typography
@@ -104,7 +104,6 @@ export default function TeamPage() {
                 p: { xs: 3, md: 4 },
               }}
             >
-              {/* Mapeamento de Fundadores */}
               <Typography
                 align="center"
                 sx={{
@@ -124,15 +123,14 @@ export default function TeamPage() {
                   justifyContent: "center",
                   gap: 2.5,
                   mb: 5,
+                  alignItems: "stretch",
                 }}
               >
                 {founders.map((member) => (
-                  // Por padrão, isDev é false, então renderiza estilo de fundador
                   <MemberCard key={member.name} member={member} />
                 ))}
               </Box>
 
-              {/* Mapeamento de Desenvolvedores */}
               <Typography
                 align="center"
                 sx={{
@@ -151,10 +149,10 @@ export default function TeamPage() {
                   flexWrap: "wrap",
                   justifyContent: "center",
                   gap: 2,
+                  alignItems: "stretch",
                 }}
               >
                 {developers.map((member) => (
-                  // Passamos isDev={true} para aplicar o visual menor e escuro dos devs
                   <MemberCard key={member.name} member={member} isDev />
                 ))}
               </Box>

@@ -10,3 +10,7 @@ export interface Post {
     content: string;
     comments: Comment[];
 }
+
+export interface PostWithImage extends Post {
+    image?: string;
+}
