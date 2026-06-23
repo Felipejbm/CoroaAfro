@@ -28,7 +28,6 @@ export default function ControleMentorados() {
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -41,7 +40,6 @@ export default function ControleMentorados() {
           Acompanhe a evolução de seus mentorados
         </Typography>
 
-        {/* Tabela */}
         <TableContainer
           component={Paper}
           sx={{ backgroundColor: "#16161d", borderRadius: "10px" }}

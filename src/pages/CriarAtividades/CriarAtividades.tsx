@@ -21,7 +21,6 @@ export default function CriarAtividades() {
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -44,7 +43,6 @@ export default function CriarAtividades() {
           Crie conteúdos para seus mentorados de forma organizada
         </Typography>
 
-        {/* Minhas trilhas */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -83,7 +81,6 @@ export default function CriarAtividades() {
           ))}
         </Stack>
 
-        {/* Minhas lições */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -122,7 +119,6 @@ export default function CriarAtividades() {
           ))}
         </Stack>
 
-        {/* ões de ação */}
         <Stack sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
           <Button
             onClick={handleCreateActivity}

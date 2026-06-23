@@ -18,7 +18,6 @@ export default function DashboardMentor() {
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Stack
           sx={{
             display: "flex",
@@ -77,7 +76,6 @@ export default function DashboardMentor() {
           </Stack>
         </Stack>
 
-        {/* Métricas de mentorados */}
         <Stack
           sx={{
             display: "grid",
@@ -157,7 +155,6 @@ export default function DashboardMentor() {
           </Stack>
         </Stack>
 
-        {/* Minhas atividades */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",

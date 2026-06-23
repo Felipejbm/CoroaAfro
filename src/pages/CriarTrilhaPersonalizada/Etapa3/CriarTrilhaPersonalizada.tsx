@@ -22,7 +22,6 @@ export default function CriarTrilhaPersonalizada3() {
   const navigate = useNavigate()
 
   return (
-    // AJUSTE: direction={"row"} adicionado para posicionar a NavBar ao lado do conteúdo da tela
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
@@ -45,7 +44,6 @@ export default function CriarTrilhaPersonalizada3() {
             py: 5,
           }}
         >
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -67,9 +65,8 @@ export default function CriarTrilhaPersonalizada3() {
             Monte seu percurso de aprendizado do seu jeito
           </Typography>
 
-          {/* Barra de progresso */}
           <Stack
-            direction={"row"} // AJUSTE: Elementos da barra de progresso alinhados horizontalmente
+            direction={"row"}  
             sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
@@ -92,7 +89,6 @@ export default function CriarTrilhaPersonalizada3() {
             </Typography>
           </Stack>
 
-          {/* Pergunta */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -116,7 +112,6 @@ export default function CriarTrilhaPersonalizada3() {
             selecionar quantos quiser.
           </Typography>
 
-          {/* Lista de módulos */}
           <Stack sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
             {moduleOptions.map((mod) => {
               const isSelected = selected.includes(mod.id);
@@ -124,7 +119,7 @@ export default function CriarTrilhaPersonalizada3() {
                 <Stack
                   key={mod.id}
                   onClick={() => toggleModule(mod.id)}
-                  direction={"row"} // AJUSTE: Mantém checkbox, ícone e textos alinhados na horizontal
+                  direction={"row"}  
                   sx={{
                     alignItems: "center",
                     gap: 1.5,
@@ -179,7 +174,7 @@ export default function CriarTrilhaPersonalizada3() {
                     </Typography>
                     
                     <Stack
-                      direction={"row"} // AJUSTE: Detalhes de aulas e badge de nível lado a lado
+                      direction={"row"}
                       sx={{
                         alignItems: "center",
                         gap: 1,
@@ -225,9 +220,8 @@ export default function CriarTrilhaPersonalizada3() {
           </Stack>
         </Stack>
 
-        {/* Rodapé de navegação */}
         <Stack
-          direction={"row"} // AJUSTE: Alinha o contador de passos e o grupo de botões horizontalmente
+          direction={"row"}  
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
@@ -246,7 +240,7 @@ export default function CriarTrilhaPersonalizada3() {
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack direction={"row"} sx={{ gap: 1.5 }}> {/* AJUSTE: Botões Voltar e Continuar lado a lado */}
+          <Stack direction={"row"} sx={{ gap: 1.5 }}> 
             <Button
               onClick={() => {navigate("/criar-trilha-personalizada-2")}}
               startIcon={<ArrowBackIcon fontSize="small" />}

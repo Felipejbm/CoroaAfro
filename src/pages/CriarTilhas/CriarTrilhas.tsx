@@ -39,7 +39,6 @@ export default function CriarTrilhas() {
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -62,7 +61,6 @@ export default function CriarTrilhas() {
           Crie trilhas para seus mentorados de forma organizada
         </Typography>
 
-        {/* Informações Básicas */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -82,7 +80,6 @@ export default function CriarTrilhas() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        {/* Configurações */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -122,7 +119,6 @@ export default function CriarTrilhas() {
           />
         </Stack>
 
-        {/* Conteúdo */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -144,7 +140,6 @@ export default function CriarTrilhas() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        {/* Botões de ação */}
         <Stack sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
           <Button
             onClick={handleSaveDraft}

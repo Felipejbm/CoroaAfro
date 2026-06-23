@@ -23,7 +23,6 @@ export default function CriarTrilhaPersonalizada4() {
   const navigate = useNavigate();
 
   return (
-    // AJUSTE: direction={"row"} para a NavBar fixar corretamente na lateral esquerda
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
@@ -46,7 +45,6 @@ export default function CriarTrilhaPersonalizada4() {
             py: 5,
           }}
         >
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -68,9 +66,8 @@ export default function CriarTrilhaPersonalizada4() {
             Ajuste o ritmo e os dias da sua jornada
           </Typography>
 
-          {/* Barra de progresso */}
           <Stack
-            direction={"row"} // AJUSTE: Alinha a barra e o texto do passo horizontalmente
+            direction={"row"} 
             sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
@@ -93,7 +90,6 @@ export default function CriarTrilhaPersonalizada4() {
             </Typography>
           </Stack>
 
-          {/* Pergunta */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -106,7 +102,6 @@ export default function CriarTrilhaPersonalizada4() {
             Qual é o seu ritmo de estudo?
           </Typography>
 
-          {/* Opções de ritmo */}
           <Stack
             sx={{ display: "flex", flexDirection: "column", gap: 1.5, mb: 3 }}
           >
@@ -116,7 +111,7 @@ export default function CriarTrilhaPersonalizada4() {
                 <Stack
                   key={opt.id}
                   onClick={() => setPace(opt.id)}
-                  direction={"row"} // AJUSTE: Mantém o ícone e os textos alinhados lado a lado
+                  direction={"row"} 
                   sx={{
                     alignItems: "center",
                     gap: 1.5,
@@ -163,7 +158,6 @@ export default function CriarTrilhaPersonalizada4() {
             })}
           </Stack>
 
-          {/* Dias preferidos */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -187,7 +181,7 @@ export default function CriarTrilhaPersonalizada4() {
           </Typography>
 
           <Stack
-            direction={"row"} // AJUSTE: Exibe os botões de dias horizontalmente com quebra de linha
+            direction={"row"} 
             sx={{ flexWrap: "wrap", gap: 1.2, mb: 3 }}
           >
             {days.map((day) => {
@@ -216,7 +210,6 @@ export default function CriarTrilhaPersonalizada4() {
             })}
           </Stack>
 
-          {/* Mensagem dinâmica */}
           <Stack
             sx={{
               backgroundColor: "#16161d",
@@ -238,9 +231,8 @@ export default function CriarTrilhaPersonalizada4() {
           </Stack>
         </Stack>
 
-        {/* Rodapé de navegação */}
         <Stack
-          direction={"row"} // AJUSTE: Organiza o texto descritivo e as ações lado a lado
+          direction={"row"}
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
@@ -260,8 +252,7 @@ export default function CriarTrilhaPersonalizada4() {
           </Typography>
 
           <Stack direction={"row"} sx={{ gap: 1.5 }}>
-            {" "}
-            {/* AJUSTE: Botões de ação dispostos em linha */}
+   
             <Button
               onClick={() => {
                 navigate("/criar-trilha-personalizada-3");

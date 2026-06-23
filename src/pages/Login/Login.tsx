@@ -7,7 +7,7 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom"; // 🔥 Renomeado para evitar conflito
+import { Link as RouterLink } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
@@ -71,12 +71,11 @@ export default function Login() {
               maxWidth: 460,
               backgroundColor: "#e7d2d3",
               borderRadius: "20px",
-              boxShadow: "0 10px 24px rgba(0,0,0,0.2)", // 💡 Corrigido de StackShadow para boxShadow
+              boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
               px: { xs: 3, md: 5 },
               py: 5,
             }}
           >
-            {/* Login social */}
             <Typography
               align="center"
               sx={{
@@ -90,7 +89,7 @@ export default function Login() {
             </Typography>
 
             <Stack
-              direction="row" // 💡 Adicionado para alinhar os botões lado a lado
+              direction="row"
               sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 3 }}
             >
               <IconButton
@@ -119,7 +118,6 @@ export default function Login() {
               </IconButton>
             </Stack>
 
-            {/* Divisor "ou" */}
             <Stack
               direction="row"
               sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}
@@ -148,7 +146,6 @@ export default function Login() {
               />
             </Stack>
 
-            {/* Formulário */}
             <Typography
               sx={{
                 fontFamily: "'Playfair Display', Georgia, serif",
@@ -195,7 +192,6 @@ export default function Login() {
             />
 
             <Stack sx={{ textAlign: "center", mb: 3 }}>
-              {/* 🔥 Correção: Combinado MuiLink com RouterLink usando a propriedade 'to' */}
               <MuiLink
                 component={RouterLink}
                 to="/recuperar-senha"
@@ -210,7 +206,6 @@ export default function Login() {
               </MuiLink>
             </Stack>
 
-            {/* Botão confirmar */}
             <Button
               fullWidth
               onClick={handleConfirm}
@@ -223,7 +218,7 @@ export default function Login() {
                 borderRadius: "10px",
                 py: 1.3,
                 mb: 2,
-                boxShadow: "0 4px 10px rgba(0,0,0,0.25)", // 💡 Corrigido de StackShadow para boxShadow
+                boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
                 "&:hover": {
                   background: "linear-gradient(90deg, #e0523a, #7a1942)",
                 },
@@ -233,7 +228,6 @@ export default function Login() {
             </Button>
 
             <Stack sx={{ textAlign: "center" }}>
-              {/* 🔥 Correção: Combinado MuiLink com RouterLink usando a propriedade 'to' */}
               <MuiLink
                 component={RouterLink}
                 to="/cadastro-empreendedor"

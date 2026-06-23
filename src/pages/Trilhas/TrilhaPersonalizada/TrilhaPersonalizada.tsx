@@ -11,14 +11,13 @@ function ModuleCard({ module }: { module: ModuleItem }) {
       sx={{
         position: "relative",
         backgroundColor: "#16161d",
-        borderRadius: "14px", // Igual ao Código 1
-        borderLeft: "4px solid #d97a6a", // Borda lateral usando a cor tema da trilha personalizada
-        width: { xs: "100%", sm: 340 }, // Mantido o tamanho ideal para o zigue-zague
-        p: 2.5, // Igual ao Código 1
+        borderRadius: "14px", 
+        borderLeft: "4px solid #d97a6a", 
+        width: { xs: "100%", sm: 340 },
+        p: 2.5, 
       }}
       direction={"column"}
     >
-      {/* Cabeçalho do Card (Ajustado para o mesmo comportamento de linha do Código 1) */}
       <Stack
         direction={"row"}
         sx={{
@@ -32,7 +31,7 @@ function ModuleCard({ module }: { module: ModuleItem }) {
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
-            fontSize: "0.7rem", // Igual ao Código 1
+            fontSize: "0.7rem", 
             color: "rgba(255,255,255,0.55)",
           }}
         >
@@ -51,39 +50,36 @@ function ModuleCard({ module }: { module: ModuleItem }) {
         )}
       </Stack>
 
-      {/* Título do Módulo */}
       <Typography
         sx={{
           fontFamily: "'Comfortaa', sans-serif",
           fontWeight: 700,
-          fontSize: "1.05rem", // Igual ao Código 1
+          fontSize: "1.05rem",
           color: "#fff",
-          mb: 1.5, // Igual ao Código 1
+          mb: 1.5,
         }}
       >
         {module.title}
       </Typography>
 
-      {/* Conteúdo/Descrição do Módulo */}
       <Typography
         sx={{
           fontFamily: "'Comfortaa', sans-serif",
-          fontSize: "0.8rem", // Igual ao Código 1
-          color: "rgba(255,255,255,0.7)", // Igual ao Código 1
-          lineHeight: 1.5, // Igual ao Código 1
+          fontSize: "0.8rem", 
+          color: "rgba(255,255,255,0.7)", 
+          lineHeight: 1.5, 
           mb: 2,
         }}
       >
         {module.content}
       </Typography>
 
-      {/* Link de Ação Inferior (Igual ao Código 1) */}
       <Stack sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
-            fontSize: "0.75rem", // Igual ao Código 1
-            fontWeight: 700, // Igual ao Código 1
+            fontSize: "0.75rem", 
+            fontWeight: 700, 
             color: "#d97a6a",
             cursor: "pointer",
           }}
@@ -115,7 +111,7 @@ export default function TrilhaPersonalizada() {
   const navigate = useNavigate();
 
   return (
-    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+    <Stack direction={"row"} sx={{ width: "100%" }}>
       <NavBar />
 
       <Stack
@@ -127,8 +123,6 @@ export default function TrilhaPersonalizada() {
           flexDirection: "column",
         }}
       >
-        <Stack sx={{ backgroundColor: "#3a3033", height: 36 }} />
-
         <Stack sx={{ p: { xs: 3, md: 4 }, flex: 1 }}>
           <Typography
             sx={{
@@ -142,7 +136,6 @@ export default function TrilhaPersonalizada() {
             Acompanhe o caminho percorrido
           </Typography>
 
-          {/* Tabs */}
           <Stack
             direction={"row"}
             sx={{
@@ -175,7 +168,8 @@ export default function TrilhaPersonalizada() {
                 fontVariant: "small-caps",
                 fontSize: "0.8rem",
                 color: "#fff",
-                backgroundColor: tab === "personalizada" ? "#c43f2a" : "#d97a6a",
+                backgroundColor:
+                  tab === "personalizada" ? "#c43f2a" : "#d97a6a",
                 borderRadius: 0,
                 px: 2,
                 "&:hover": { backgroundColor: "#c43f2a" },
@@ -185,7 +179,6 @@ export default function TrilhaPersonalizada() {
             </Button>
           </Stack>
 
-          {/* Container da Linha do Tempo em Zigue-Zague */}
           <Stack
             sx={{
               position: "relative",
@@ -253,7 +246,6 @@ export default function TrilhaPersonalizada() {
 
           <Stack sx={{ flexGrow: 1 }} />
 
-          {/* Botão criar trilha */}
           <Stack sx={{ display: "flex", alignItems: "flex-end", mt: 4 }}>
             <Button
               onClick={() => navigate("/criar-trilha-personalizada-1")}

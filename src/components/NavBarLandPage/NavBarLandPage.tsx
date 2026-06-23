@@ -7,11 +7,11 @@ export default function NavBarLandPage() {
   return (
     <Stack
       sx={{
-        position: "fixed", // fixa no topo
+        position: "fixed",  
         top: 0,
         left: 0,
         width: "100%",
-        zIndex: 1100, // garante que fique acima do conteúdo
+        zIndex: 1100, 
         backgroundColor: "rgba(194, 177, 177, 0.85)",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
       }}
@@ -29,7 +29,6 @@ export default function NavBarLandPage() {
           sx={{ width: 70, height: 70 }}
         />
 
-        {/* Links */}
         <Box
           sx={{
             display: "flex",
@@ -46,8 +45,8 @@ export default function NavBarLandPage() {
                 disableElevation
                 sx={{
                   background: isActive
-                    ? "linear-gradient(180deg, #f06a52, #e0523a)" // ativo com bg
-                    : "transparent", // os outros sem fundo
+                    ? "linear-gradient(180deg, #f06a52, #e0523a)" 
+                    : "transparent", 
                   color: isActive ? "#fff" : "text.primary",
                   fontFamily: "'Playfair Display', Georgia, serif",
                   fontSize: "1.1rem",

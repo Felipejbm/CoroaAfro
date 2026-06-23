@@ -39,7 +39,6 @@ export default function CriarLicoes() {
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -62,7 +61,6 @@ export default function CriarLicoes() {
           Crie conteúdos para seus mentorados de forma organizada
         </Typography>
 
-        {/* Informações Básicas */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -82,7 +80,6 @@ export default function CriarLicoes() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        {/* Configurações */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -122,7 +119,6 @@ export default function CriarLicoes() {
           />
         </Stack>
 
-        {/* Conteúdo */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -144,7 +140,6 @@ export default function CriarLicoes() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        {/* Materiais */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -178,7 +173,6 @@ export default function CriarLicoes() {
           </Typography>
         </Stack>
 
-        {/* Botões de ação */}
         <Stack sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
           <Button
             onClick={handleSaveDraft}

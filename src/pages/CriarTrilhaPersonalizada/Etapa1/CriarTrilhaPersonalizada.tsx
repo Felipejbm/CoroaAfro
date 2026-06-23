@@ -26,7 +26,6 @@ export default function CriarTrilhaPersonalizada1() {
 
 
   return (
-    // AJUSTE: direction={"row"} adicionado aqui para colocar a NavBar ao lado do conteúdo
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
       
@@ -49,7 +48,6 @@ export default function CriarTrilhaPersonalizada1() {
             py: 5,
           }}
         >
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -71,9 +69,7 @@ export default function CriarTrilhaPersonalizada1() {
             Monte seu percurso de aprendizado do seu jeito
           </Typography>
 
-          {/* Barra de progresso */}
           <Stack
-            direction={"row"} // AJUSTE: Itens lado a lado
             sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
@@ -96,7 +92,6 @@ export default function CriarTrilhaPersonalizada1() {
             </Typography>
           </Stack>
 
-          {/* Pergunta */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -120,9 +115,8 @@ export default function CriarTrilhaPersonalizada1() {
             direto ou até divertido.
           </Typography>
 
-          {/* Campo de texto */}
           <Stack
-            direction={"row"} // AJUSTE: Coloca o emoji de lápis lado a lado com o Input
+            direction={"row"} 
             sx={{
               backgroundColor: "#16161d",
               borderRadius: "10px",
@@ -151,7 +145,6 @@ export default function CriarTrilhaPersonalizada1() {
             />
           </Stack>
 
-          {/* Sugestões */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -164,9 +157,9 @@ export default function CriarTrilhaPersonalizada1() {
             Ou escolha uma sugestão
           </Typography>
 
-          {/* Grid/Lista de Sugestões */}
+  
           <Stack 
-            direction={"row"} // AJUSTE: Faz os cards de sugestão ficarem lado a lado
+            direction={"row"}  
             sx={{ flexWrap: "wrap", gap: 2 }}
           >
             {suggestions.map((s) => {
@@ -175,7 +168,7 @@ export default function CriarTrilhaPersonalizada1() {
                 <Stack
                   key={s.id}
                   onClick={() => handleSelectSuggestion(s)}
-                  direction={"column"} // Mantém o interior da sugestão empilhado
+                  direction={"column"}  
                   sx={{
                     position: "relative",
                     width: { xs: "100%", sm: 165 },
@@ -229,9 +222,8 @@ export default function CriarTrilhaPersonalizada1() {
           </Stack>
         </Stack>
 
-        {/* Rodapé de navegação */}
         <Stack
-          direction={"row"} // AJUSTE: Texto e botões lado a lado no rodapé
+          direction={"row"}  
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
@@ -250,7 +242,7 @@ export default function CriarTrilhaPersonalizada1() {
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack direction={"row"} sx={{ gap: 1.5 }}> {/* AJUSTE: Botões lado a lado */}
+          <Stack direction={"row"} sx={{ gap: 1.5 }}> 
             <Button
               onClick={() => {navigate("/trilha-personalizada")}}
               startIcon={<ArrowBackIcon fontSize="small" />}

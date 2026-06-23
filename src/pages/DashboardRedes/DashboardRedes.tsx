@@ -11,21 +11,28 @@ export default function DashboardRedes() {
   };
 
   return (
-    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+   
+    <Stack
+      direction={"row"}
+      sx={{
+        width: "100%",
+        minHeight: "100vh",
+        backgroundColor: "#f9dde0",
+      }}
+    >
       <NavBar />
 
       <Stack
         sx={{
-          flex: 1,       // CORREÇÃO: Faz este container ocupar 100% do width restante ao lado da NavBar
-          minWidth: 0,   // CORREÇÃO: Impede que elementos filhos (como grids) quebrem o layout
+          flex: 1,
+          minWidth: 0,
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Stack
-          direction={{ xs: "column", md: "row" }} // AJUSTE: Alinha título/botões e o nome do plano lado a lado
+          direction={{ xs: "column", md: "row" }}
           sx={{
             justifyContent: "space-between",
             alignItems: { xs: "flex-start", md: "center" },
@@ -45,7 +52,7 @@ export default function DashboardRedes() {
             >
               Acompanhe a evolução da sua marca no digital
             </Typography>
-            <Stack direction={"row"} sx={{ flexWrap: "wrap", gap: 1.5 }}> {/* AJUSTE: Botões em linha */}
+            <Stack direction={"row"} sx={{ flexWrap: "wrap", gap: 1.5 }}>
               <Button
                 onClick={handleConnect}
                 sx={{
@@ -108,8 +115,7 @@ export default function DashboardRedes() {
           </Typography>
         </Stack>
 
-        {/* Filtros */}
-        <Stack direction={"row"} sx={{ gap: 1.5, mb: 4 }}> {/* AJUSTE: Filtros em linha */}
+        <Stack direction={"row"} sx={{ gap: 1.5, mb: 4 }}>
           {["Hoje", "7 dias", "30 dias"].map((f) => (
             <Button
               key={f}
@@ -130,7 +136,6 @@ export default function DashboardRedes() {
           ))}
         </Stack>
 
-        {/* Métricas de Visibilidade */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -145,7 +150,11 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(5, 1fr)" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(5, 1fr)",
+            },
             gap: 2,
             mb: 4,
           }}
@@ -185,7 +194,6 @@ export default function DashboardRedes() {
           ))}
         </Stack>
 
-        {/* Métricas de Interação */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -200,7 +208,11 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+            },
             gap: 2,
             mb: 4,
           }}
@@ -239,7 +251,11 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+            },
             gap: 2,
             mb: 4,
           }}
@@ -278,7 +294,6 @@ export default function DashboardRedes() {
           ))}
         </Stack>
 
-        {/* Posts Populares */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -293,7 +308,11 @@ export default function DashboardRedes() {
         <Stack
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+            },
             gap: 2,
           }}
         >

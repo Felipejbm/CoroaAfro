@@ -18,16 +18,26 @@ import { useState } from "react";
 import { messages, onlineNow, recents } from "./Chats.utils";
 import NavBar from "../../components/NavBar/NavBar";
 
-function ConversationItem({ conv }: { conv: Conversation }) {
+function ConversationItem({
+  conv,
+  isActive,
+  onClick,
+}: {
+  conv: Conversation;
+  isActive: boolean;
+  onClick: () => void;
+}) {
   return (
     <Stack
+      direction="row"
+      onClick={onClick}
       sx={{
-        display: "flex",
         alignItems: "center",
         gap: 1.5,
         px: 2,
         py: 1.2,
         cursor: "pointer",
+        backgroundColor: isActive ? "rgba(255,255,255,0.08)" : "transparent",
         "&:hover": { backgroundColor: "rgba(255,255,255,0.04)" },
       }}
     >
@@ -96,7 +106,7 @@ function ConversationItem({ conv }: { conv: Conversation }) {
         >
           {conv.time}
         </Typography>
-        {conv.unread && (
+        {conv.unread && !isActive && (
           <Stack
             sx={{
               backgroundColor: "#e0523a",
@@ -131,8 +141,8 @@ function MessageBubble({ message }: { message: Message }) {
 
   return (
     <Stack
+      direction="row"
       sx={{
-        display: "flex",
         justifyContent: fromMe ? "flex-end" : "flex-start",
         mb: 1.5,
       }}
@@ -207,9 +217,7 @@ function MessageBubble({ message }: { message: Message }) {
             </Stack>
           )}
         </Stack>
-        <Stack
-          sx={{ display: "flex", alignItems: "center", gap: 0.4, mt: 0.4 }}
-        >
+        <Stack direction="row" sx={{ alignItems: "center", gap: 0.4, mt: 0.4 }}>
           {fromMe && <DoneAllIcon sx={{ fontSize: 12, color: "#3ddc97" }} />}
           <Typography
             sx={{
@@ -229,25 +237,44 @@ function MessageBubble({ message }: { message: Message }) {
 export default function Chat() {
   const [input, setInput] = useState("");
 
+  const [activeConversation, setActiveConversation] = useState<Conversation>(
+    onlineNow[0] || recents[0],
+  );
+
+  const currentMessages =
+    messages.filter((msg) => msg.id === activeConversation.id) ||
+    [];
+
   const handleSend = () => {
-    console.log(input);
+    if (!input.trim()) return;
+    console.log(`Enviando para ${activeConversation.name}:`, input);
     setInput("");
   };
 
   return (
-    <Stack>
+    <Stack
+      direction={"row"}
+      sx={{
+        width: "100vw",
+        maxWidth: "100%",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
       <NavBar />
 
       <Stack
-        sx={{ display: "flex", height: "100vh", backgroundColor: "#f9dde0" }}
+        direction={"row"}
+        sx={{ flexGrow: 1, height: "100vh", backgroundColor: "#f9dde0" }}
       >
-        {/* Sidebar de conversas */}
         <Stack
           sx={{
             width: 280,
+            minWidth: 280,
             backgroundColor: "#16161d",
             display: "flex",
             flexDirection: "column",
+            height: "100%",
           }}
         >
           <Stack sx={{ p: 2.5 }}>
@@ -263,8 +290,8 @@ export default function Chat() {
               Mensagens
             </Typography>
             <Stack
+              direction="row"
               sx={{
-                display: "flex",
                 alignItems: "center",
                 gap: 1,
                 backgroundColor: "rgba(255,255,255,0.06)",
@@ -302,7 +329,12 @@ export default function Chat() {
               Online agora
             </Typography>
             {onlineNow.map((c) => (
-              <ConversationItem key={c.id} conv={c} />
+              <ConversationItem
+                key={c.id}
+                conv={c}
+                isActive={activeConversation.id === c.id}
+                onClick={() => setActiveConversation(c)}
+              />
             ))}
 
             <Typography
@@ -318,34 +350,44 @@ export default function Chat() {
               Recentes
             </Typography>
             {recents.map((c) => (
-              <ConversationItem key={c.id} conv={c} />
+              <ConversationItem
+                key={c.id}
+                conv={c}
+                isActive={activeConversation.id === c.id}
+                onClick={() => setActiveConversation(c)}
+              />
             ))}
           </Stack>
         </Stack>
 
-        {/* Área do chat */}
-        <Stack sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          {/* Cabeçalho do chat */}
+        <Stack
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
           <Stack
+            direction="row"
             sx={{
               backgroundColor: "rgba(122,31,74,0.5)",
-              display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               px: 2.5,
               py: 1.5,
             }}
           >
-            <Stack sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Stack direction="row" sx={{ alignItems: "center", gap: 1.5 }}>
               <Avatar
                 sx={{
-                  bgcolor: "#8a3fae",
+                  bgcolor: activeConversation.color || "#8a3fae",
                   width: 38,
                   height: 38,
                   fontSize: "0.8rem",
                 }}
               >
-                KL
+                {activeConversation.initials}
               </Avatar>
               <Stack>
                 <Typography
@@ -356,20 +398,22 @@ export default function Chat() {
                     color: "#fff",
                   }}
                 >
-                  Karla Lima
+                  {activeConversation.name}
                 </Typography>
                 <Typography
                   sx={{
                     fontFamily: "'Comfortaa', sans-serif",
                     fontSize: "0.7rem",
-                    color: "#3ddc97",
+                    color: activeConversation.online
+                      ? "#3ddc97"
+                      : "rgba(255,255,255,0.5)",
                   }}
                 >
-                  ● Online agora
+                  {activeConversation.online ? "● Online agora" : "Offline"}
                 </Typography>
               </Stack>
             </Stack>
-            <Stack sx={{ display: "flex", gap: 1 }}>
+            <Stack direction="row" sx={{ gap: 1 }}>
               <IconButton
                 size="small"
                 sx={{ backgroundColor: "#16161d", color: "#fff" }}
@@ -391,7 +435,6 @@ export default function Chat() {
             </Stack>
           </Stack>
 
-          {/* Mensagens */}
           <Stack
             sx={{
               flex: 1,
@@ -401,7 +444,7 @@ export default function Chat() {
               py: 3,
             }}
           >
-            <Stack sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+            <Stack direction="row" sx={{ justifyContent: "center", mb: 3 }}>
               <Stack
                 sx={{
                   backgroundColor: "#16161d",
@@ -417,53 +460,70 @@ export default function Chat() {
                     color: "#fff",
                   }}
                 >
-                  Hoje, 14 de maio
+                  Hoje
                 </Typography>
               </Stack>
             </Stack>
 
-            {messages.map((msg) => (
-              <MessageBubble key={msg.id} message={msg} />
-            ))}
+            {currentMessages.length > 0 ? (
+              currentMessages.map((msg) => (
+                <MessageBubble key={msg.id} message={msg} />
+              ))
+            ) : (
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  color: "rgba(0,0,0,0.4)",
+                  fontFamily: "'Comfortaa', sans-serif",
+                  fontSize: "0.85rem",
+                  mt: 4,
+                }}
+              >
+                Nenhuma mensagem por aqui ainda. Comece a conversar!
+              </Typography>
+            )}
 
-            {/* Indicador "digitando" */}
-            <Stack sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Avatar
-                sx={{
-                  bgcolor: "#8a3fae",
-                  width: 26,
-                  height: 26,
-                  fontSize: "0.65rem",
-                }}
-              >
-                KL
-              </Avatar>
+            {activeConversation.online && currentMessages.length > 0 && (
               <Stack
-                sx={{
-                  backgroundColor: "#16161d",
-                  borderRadius: "12px",
-                  px: 2,
-                  py: 1,
-                }}
+                direction="row"
+                sx={{ alignItems: "center", gap: 1, mt: 1 }}
               >
-                <Typography
+                <Avatar
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
-                    fontSize: "0.9rem",
-                    color: "#fff",
+                    bgcolor: activeConversation.color,
+                    width: 26,
+                    height: 26,
+                    fontSize: "0.65rem",
                   }}
                 >
-                  •••
-                </Typography>
+                  {activeConversation.initials}
+                </Avatar>
+                <Stack
+                  sx={{
+                    backgroundColor: "#16161d",
+                    borderRadius: "12px",
+                    px: 2,
+                    py: 1,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: "'Comfortaa', sans-serif",
+                      fontSize: "0.9rem",
+                      color: "#fff",
+                    }}
+                  >
+                    •••
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
+            )}
           </Stack>
 
-          {/* Input de mensagem */}
           <Stack
+            direction="row"
             sx={{
               backgroundColor: "#16161d",
-              display: "flex",
               alignItems: "center",
               gap: 1.5,
               px: 2.5,
@@ -474,9 +534,12 @@ export default function Chat() {
               <InsertEmoticonIcon fontSize="small" />
             </IconButton>
             <InputBase
-              placeholder="Escreva uma mensagem..."
+              placeholder={`Enviar mensagem para ${activeConversation.name}...`}
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSend();
+              }}
               sx={{
                 flex: 1,
                 color: "#fff",

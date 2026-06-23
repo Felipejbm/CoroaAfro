@@ -17,7 +17,7 @@ function ModuleCard({ module }: { module: Module }) {
         backgroundColor: "#16161d",
         borderRadius: "14px",
         borderLeft: `4px solid ${config.color}`,
-        width: { xs: "100%", sm: 340 }, // Ajustado para dar um bom espaço no zigue-zague
+        width: { xs: "100%", sm: 340 },
         p: 2.5,
       }}
       direction={"column"}
@@ -149,7 +149,6 @@ export default function TrilhaGuiada() {
           Acompanhe o caminho percorrido
         </Typography>
 
-        {/* Tabs */}
         <Stack
           direction={"row"}
           sx={{
@@ -192,18 +191,16 @@ export default function TrilhaGuiada() {
           </Button>
         </Stack>
 
-        {/* Container Geral da Linha do Tempo */}
         <Stack
           sx={{
             position: "relative",
             width: "100%",
             maxWidth: 800,
-            alignSelf: "center", // Centraliza a estrutura toda na área de conteúdo
+            alignSelf: "center",  
             display: "flex",
             flexDirection: "column",
           }}
         >
-          {/* Linha vertical mestre exatamente no meio (50%) */}
           <Stack
             sx={{
               position: "absolute",
@@ -219,7 +216,6 @@ export default function TrilhaGuiada() {
 
           {modules.map((module, i) => {
             const dotColor = statusConfig[module.status].color;
-            // Define o lado baseado no index: pares na esquerda, ímpares na direita
             const isLeft = i % 2 === 0;
 
             return (
@@ -230,23 +226,20 @@ export default function TrilhaGuiada() {
                   position: "relative",
                   width: "100%",
                   mb: 4,
-                  // Se for esquerda, o conteúdo alinha no fim da primeira metade. Se for direita, no início.
                   justifyContent: isLeft ? "flex-start" : "flex-end",
                 }}
               >
-                {/* Bloco de espaçamento interno para empurrar o card para o lado correto */}
                 <Stack
                   sx={{
                     width: "50%",
                     display: "flex",
                     justifyContent: isLeft ? "flex-start" : "flex-end",
-                    px: 4, // Espaço seguro entre o card e a linha central
+                    px: 4,
                   }}
                 >
                   <ModuleCard module={module} />
                 </Stack>
 
-                {/* Container da Bolinha fixado no centro exato da linha do tempo */}
                 <Stack
                   sx={{
                     position: "absolute",

@@ -13,7 +13,6 @@ export default function DetalhesMentorado() {
           py: 5,
         }}
       >
-        {/* Cabeçalho com perfil */}
         <Stack sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}>
           <Avatar sx={{ width: 70, height: 70, bgcolor: "#16161d" }}>DS</Avatar>
           <Stack>
@@ -49,7 +48,6 @@ export default function DetalhesMentorado() {
           </Stack>
         </Stack>
 
-        {/* Resumo de progresso */}
         <Stack
           sx={{
             display: "grid",
@@ -108,7 +106,6 @@ export default function DetalhesMentorado() {
           </Stack>
         </Stack>
 
-        {/* Evolução da trilha */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -168,7 +165,6 @@ export default function DetalhesMentorado() {
           </Stack>
         </Stack>
 
-        {/* Atividades recentes */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",
@@ -203,7 +199,6 @@ export default function DetalhesMentorado() {
           ))}
         </Stack>
 
-        {/* Informações pessoais */}
         <Typography
           sx={{
             fontFamily: "'Comfortaa', sans-serif",

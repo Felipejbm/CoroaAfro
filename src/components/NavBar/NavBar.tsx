@@ -15,7 +15,6 @@ export default function NavBar() {
         py: 3,
       }}
     >
-      {/* Logo */}
       <Stack
         direction={"row"}
         sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, mb: 4 }}
@@ -36,7 +35,6 @@ export default function NavBar() {
         </Typography>
       </Stack>
 
-      {/* Itens de navegação */}
       <List sx={{ display: "flex", flexDirection: "column", gap: 1, p: 0 }}>
         {navItems.map(({ label, href }) => {
           const isActive = location.pathname === href;
@@ -57,7 +55,7 @@ export default function NavBar() {
                 backgroundColor: isActive
                   ? "rgba(122, 31, 42, 0.35)"
                   : "transparent",
-                transition: "all 0.4s ease", // suaviza tudo
+                transition: "all 0.4s ease", 
                 "&:hover": {
                   backgroundColor: isActive
                     ? "rgba(122, 31, 42, 0.45)"
@@ -65,7 +63,6 @@ export default function NavBar() {
                 },
               }}
             >
-              {/* Bolinha */}
               <Stack
                 sx={{
                   width: 18,

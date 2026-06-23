@@ -22,7 +22,6 @@ export default function CriarTrilhaPersonalizada2() {
   const navigate = useNavigate();
 
   return (
-    // AJUSTE: direction={"row"} adicionado para alinhar a NavBar corretamente na lateral
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
@@ -35,7 +34,6 @@ export default function CriarTrilhaPersonalizada2() {
           flexDirection: "column",
         }}
       >
-        {/* Barra superior escura */}
         <Stack sx={{ backgroundColor: "#3a3033", height: 6 }} />
 
         <Stack
@@ -48,7 +46,6 @@ export default function CriarTrilhaPersonalizada2() {
             py: 5,
           }}
         >
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -70,9 +67,8 @@ export default function CriarTrilhaPersonalizada2() {
             Monte seu percurso de aprendizado do seu jeito
           </Typography>
 
-          {/* Barra de progresso */}
           <Stack
-            direction={"row"} // AJUSTE: Itens lado a lado
+            direction={"row"}
             sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
@@ -95,7 +91,6 @@ export default function CriarTrilhaPersonalizada2() {
             </Typography>
           </Stack>
 
-          {/* Pergunta */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -118,9 +113,8 @@ export default function CriarTrilhaPersonalizada2() {
             Escolha os focos da sua trilha. Você pode selecionar mais de um.
           </Typography>
 
-          {/* Cards de objetivo */}
           <Stack
-            direction={"row"} // AJUSTE: Cards alinhados horizontalmente com quebra de linha
+            direction={"row"} 
             sx={{ flexWrap: "wrap", gap: 2, mb: 1.5 }}
           >
             {objectives.map((obj) => {
@@ -203,9 +197,8 @@ export default function CriarTrilhaPersonalizada2() {
           </Typography>
         </Stack>
 
-        {/* Rodapé de navegação */}
         <Stack
-          direction={"row"} // AJUSTE: Conteúdo do rodapé em linha
+          direction={"row"} 
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
@@ -225,8 +218,7 @@ export default function CriarTrilhaPersonalizada2() {
           </Typography>
 
           <Stack direction={"row"} sx={{ gap: 1.5 }}>
-            {" "}
-            {/* AJUSTE: Botões lado a lado */}
+         
             <Button
               onClick={() => {
                 navigate("/criar-trilha-personalizada-1");

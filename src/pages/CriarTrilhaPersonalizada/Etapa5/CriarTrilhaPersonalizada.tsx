@@ -13,13 +13,12 @@ export default function CriarTrilhaPersonalizada5() {
   const [achievements, setAchievements] = useState(true);
   const [shareProgress, setShareProgress] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
-    // AJUSTE: direction={"row"} adicionado para posicionar a NavBar ao lado do conteúdo principal
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
-      
+
       <Stack
         sx={{
           flex: 1,
@@ -39,7 +38,6 @@ export default function CriarTrilhaPersonalizada5() {
             py: 5,
           }}
         >
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -61,9 +59,8 @@ export default function CriarTrilhaPersonalizada5() {
             Monte seu percurso de aprendizado do seu jeito
           </Typography>
 
-          {/* Barra de progresso */}
           <Stack
-            direction={"row"} // AJUSTE: Elementos alinhados na horizontal
+            direction={"row"}
             sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
@@ -86,7 +83,6 @@ export default function CriarTrilhaPersonalizada5() {
             </Typography>
           </Stack>
 
-          {/* Revisão */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -99,7 +95,6 @@ export default function CriarTrilhaPersonalizada5() {
             Revise sua trilha
           </Typography>
 
-          {/* Nome e ritmo */}
           <Stack
             sx={{
               backgroundColor: "#16161d",
@@ -130,11 +125,7 @@ export default function CriarTrilhaPersonalizada5() {
             </Typography>
           </Stack>
 
-          {/* Estatísticas */}
-          <Stack 
-            direction={{ xs: "column", sm: "row" }} // AJUSTE: Cards ficam em linha em telas maiores
-            sx={{ gap: 2, mb: 3 }}
-          >
+          <Stack direction={{ xs: "column", sm: "row" }} sx={{ gap: 2, mb: 3 }}>
             <Stack
               sx={{
                 flex: 1,
@@ -194,7 +185,6 @@ export default function CriarTrilhaPersonalizada5() {
             </Stack>
           </Stack>
 
-          {/* Módulos selecionados */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -247,7 +237,6 @@ export default function CriarTrilhaPersonalizada5() {
             </Stack>
           </Stack>
 
-          {/* Preferências */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -261,7 +250,7 @@ export default function CriarTrilhaPersonalizada5() {
           </Typography>
           <Stack sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
             <Stack
-              direction={"row"} // AJUSTE: Texto e Switch alinhados horizontalmente
+              direction={"row"}
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -286,7 +275,7 @@ export default function CriarTrilhaPersonalizada5() {
               />
             </Stack>
             <Stack
-              direction={"row"} // AJUSTE: Texto e Switch alinhados horizontalmente
+              direction={"row"}
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -311,7 +300,7 @@ export default function CriarTrilhaPersonalizada5() {
               />
             </Stack>
             <Stack
-              direction={"row"} // AJUSTE: Texto e Switch alinhados horizontalmente
+              direction={"row"}
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -338,15 +327,14 @@ export default function CriarTrilhaPersonalizada5() {
           </Stack>
         </Stack>
 
-        {/* Rodapé de navegação */}
         <Stack
-          direction={"row"} // AJUSTE: Contador e grupo de botões lado a lado
+          direction={"row"}
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
-            borderTop: "1px solid rgba(0,0,0,0.05)"
+            borderTop: "1px solid rgba(0,0,0,0.05)",
           }}
         >
           <Typography
@@ -359,9 +347,11 @@ export default function CriarTrilhaPersonalizada5() {
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack direction={"row"} sx={{ gap: 1.5 }}> {/* AJUSTE: Botões dispostos em linha */}
+          <Stack direction={"row"} sx={{ gap: 1.5 }}>
             <Button
-              onClick={() => {navigate("/criar-trilha-personalizada-4")}}
+              onClick={() => {
+                navigate("/criar-trilha-personalizada-4");
+              }}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#16161d",
@@ -378,7 +368,9 @@ export default function CriarTrilhaPersonalizada5() {
               Voltar
             </Button>
             <Button
-              onClick={() => {navigate("/trilha-personalizada")}}
+              onClick={() => {
+                navigate("/trilha-personalizada");
+              }}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#e0523a",

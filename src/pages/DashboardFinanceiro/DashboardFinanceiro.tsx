@@ -119,7 +119,6 @@ export default function DashboardFinanceiro() {
       <NavBar />
 
       <Stack sx={{ backgroundColor: "#f9dde0", p: { xs: 2, md: 3 }, flex: 1 }}>
-        {/* Cabeçalho */}
         <Stack
           sx={{
             display: "flex",
@@ -179,7 +178,6 @@ export default function DashboardFinanceiro() {
           </Stack>
         </Stack>
 
-        {/* Grid principal: cards + painéis */}
         <Stack
           sx={{
             display: "flex",
@@ -202,7 +200,6 @@ export default function DashboardFinanceiro() {
               ))}
             </Stack>
 
-            {/* Insights */}
             <Stack
               sx={{
                 backgroundColor: "#1c1830",
@@ -250,7 +247,6 @@ export default function DashboardFinanceiro() {
           </Stack>
         </Stack>
 
-        {/* Gráfico */}
         <Stack
           sx={{ backgroundColor: "#1c1830", borderRadius: "12px", p: 2.5 }}
         >
