@@ -9,11 +9,10 @@ export const developers: Developer[] = [
 ];
 
 export const aboutLinks: FooterLink[] = [
-    { label: "Sobre", href: "#sobre" },
-    { label: "Atualizações", href: "#atualizacoes" },
-    { label: "Conheça os Integrantes", href: "#integrantes" },
-    { label: "Politica de Privacidade", href: "#privacidade" },
-    { label: "Mídias", href: "#midias" },
+    { label: "Home", href: "/" },
+    { label: "Planos", href: "/planos" },
+    { label: "Equipe", href: "/equipe" },
+    { label: "Login", href: "/login" },
 ];
 
 export const socialLinks: SocialLink[] = [
