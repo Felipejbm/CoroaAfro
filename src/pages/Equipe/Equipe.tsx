@@ -19,6 +19,8 @@ function MemberCard({
         borderRadius: "10px",
         overflow: "hidden",
         boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
@@ -27,7 +29,7 @@ function MemberCard({
         alt={member.name}
         sx={{
           width: "100%",
-          height: isDev ? 130 : 160, 
+          height: isDev ? 130 : 160,
           objectFit: "cover",
           display: "block",
         }}
@@ -38,6 +40,7 @@ function MemberCard({
           color: "#fff",
           px: isDev ? 1.2 : 1.5,
           py: isDev ? 1 : 1.2,
+          flexGrow: 1,
         }}
       >
         <Typography
@@ -120,6 +123,7 @@ export default function TeamPage() {
                   justifyContent: "center",
                   gap: 2.5,
                   mb: 5,
+                  alignItems: "stretch",
                 }}
               >
                 {founders.map((member) => (
@@ -145,6 +149,7 @@ export default function TeamPage() {
                   flexWrap: "wrap",
                   justifyContent: "center",
                   gap: 2,
+                  alignItems: "stretch",
                 }}
               >
                 {developers.map((member) => (
