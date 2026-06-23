@@ -1,38 +1,27 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import NavBar from "../../components/NavBar/NavBar";
 import { useState } from "react";
+import NavBarMentor from "../../components/NavMentor/NavBar";
+import { useNavigate } from "react-router-dom";
 
-export default function CriarTrilhas() {
+export default function CriarTrilhasMentor() {
   const [title, setTitle] = useState("");
   const [level, setLevel] = useState("");
   const [duration, setDuration] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSaveDraft = () => {
-    console.log("Salvar Rascunho", {
-      title,
-      level,
-      duration,
-      category,
-      content,
-    });
-  };
+  const navigate = useNavigate();
 
-  const handlePublish = () => {
-    console.log("Publicar Trilha", {
-      title,
-      level,
-      duration,
-      category,
-      content,
-    });
-  };
   return (
-    <Stack>
-      <NavBar />
+    // CORREÇÃO: Alinha a NavBar e o formulário lado a lado
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
+
+      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
+          flex: 1, // CORREÇÃO: Ocupa o restante do espaço horizontal da tela
+          minWidth: 0, // CORREÇÃO: Previne quebras em telas menores devido ao grid interno
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
@@ -140,9 +129,20 @@ export default function CriarTrilhas() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        <Stack sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+        {/* AJUSTE: Botões "Salvar Rascunho" e "Publicar" alinhados na horizontal */}
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: "flex-end",
+            gap: 2,
+            flexWrap: "wrap",
+            mt: "auto",
+          }}
+        >
           <Button
-            onClick={handleSaveDraft}
+            onClick={() => {
+              navigate("/criar-atividade");
+            }}
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
@@ -158,7 +158,9 @@ export default function CriarTrilhas() {
             Salvar Rascunho
           </Button>
           <Button
-            onClick={handlePublish}
+            onClick={() => {
+              navigate("/criar-atividade");
+            }}
             sx={{
               backgroundColor: "#e0523a",
               color: "#fff",

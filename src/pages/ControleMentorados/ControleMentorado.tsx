@@ -11,17 +11,22 @@ import {
   Typography,
 } from "@mui/material";
 import { mentorados } from "./ControleMentorados.utils";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function ControleMentorados() {
-  const handleViewProfile = (nome: string) => {
-    console.log("Ver perfil de:", nome);
-  };
+  const navigate = useNavigate();
+
   return (
-    <Stack>
-      <NavBar />
+    // CORREÇÃO: direction="row" força a NavBar e o conteúdo a ficarem na mesma linha
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
+
+      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
+          flex: 1, // CORREÇÃO: Faz o conteúdo ocupar 100% do espaço restante ao lado da barra lateral
+          minWidth: 0, // CORREÇÃO: Evita que tabelas ou elementos grandes quebrem o layout flexível
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
@@ -131,7 +136,9 @@ export default function ControleMentorados() {
                   </TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => handleViewProfile(m.nome)}
+                      onClick={() => {
+                        navigate("/detalhes-mentorado");
+                      }}
                       sx={{
                         backgroundColor: "#e0523a",
                         color: "#fff",
