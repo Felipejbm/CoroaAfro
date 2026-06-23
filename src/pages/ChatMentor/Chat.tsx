@@ -16,8 +16,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import { useState } from "react";
 import { messages, onlineNow, recents } from "./Chats.utils";
-import NavBar from "../../components/NavBar/NavBar";
-import { fonts } from "../../styles/theme";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 
 function ConversationItem({
   conv,
@@ -71,7 +70,7 @@ function ConversationItem({
       <Stack sx={{ flex: 1, minWidth: 0 }}>
         <Typography
           sx={{
-            fontFamily: fonts.body,
+            fontFamily: "'Comfortaa', sans-serif",
             fontWeight: 700,
             fontSize: "0.85rem",
             color: "#fff",
@@ -82,7 +81,7 @@ function ConversationItem({
         <Typography
           noWrap
           sx={{
-            fontFamily: fonts.body,
+            fontFamily: "'Comfortaa', sans-serif",
             fontSize: "0.75rem",
             color: "rgba(255,255,255,0.5)",
           }}
@@ -100,7 +99,7 @@ function ConversationItem({
       >
         <Typography
           sx={{
-            fontFamily: fonts.body,
+            fontFamily: "'Comfortaa', sans-serif",
             fontSize: "0.7rem",
             color: "rgba(255,255,255,0.4)",
           }}
@@ -122,7 +121,7 @@ function ConversationItem({
           >
             <Typography
               sx={{
-                fontFamily: fonts.body,
+                fontFamily: "'Comfortaa', sans-serif",
                 fontSize: "0.65rem",
                 color: "#fff",
                 fontWeight: 700,
@@ -167,7 +166,7 @@ function MessageBubble({ message }: { message: Message }) {
         >
           <Typography
             sx={{
-              fontFamily: fonts.body,
+              fontFamily: "'Comfortaa', sans-serif",
               fontSize: "0.85rem",
               lineHeight: 1.5,
             }}
@@ -186,7 +185,7 @@ function MessageBubble({ message }: { message: Message }) {
             >
               <Typography
                 sx={{
-                  fontFamily: fonts.body,
+                  fontFamily: "'Comfortaa', sans-serif",
                   fontSize: "0.65rem",
                   color: "#3ddc97",
                   mb: 0.5,
@@ -196,7 +195,7 @@ function MessageBubble({ message }: { message: Message }) {
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: fonts.body,
+                  fontFamily: "'Comfortaa', sans-serif",
                   fontWeight: 700,
                   fontSize: "0.85rem",
                   color: "#fff",
@@ -207,7 +206,7 @@ function MessageBubble({ message }: { message: Message }) {
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: fonts.body,
+                  fontFamily: "'Comfortaa', sans-serif",
                   fontSize: "0.72rem",
                   color: "rgba(255,255,255,0.6)",
                   lineHeight: 1.4,
@@ -222,7 +221,7 @@ function MessageBubble({ message }: { message: Message }) {
           {fromMe && <DoneAllIcon sx={{ fontSize: 12, color: "#3ddc97" }} />}
           <Typography
             sx={{
-              fontFamily: fonts.body,
+              fontFamily: "'Comfortaa', sans-serif",
               fontSize: "0.65rem",
               color: "rgba(0,0,0,0.4)",
             }}
@@ -235,7 +234,7 @@ function MessageBubble({ message }: { message: Message }) {
   );
 }
 
-export default function Chat() {
+export default function ChatMentor() {
   const [input, setInput] = useState("");
 
   const [activeConversation, setActiveConversation] = useState<Conversation>(
@@ -243,7 +242,8 @@ export default function Chat() {
   );
 
   const currentMessages =
-    messages.filter((msg) => msg.id === activeConversation.id) || [];
+    messages.filter((msg) => msg.id === activeConversation.id) ||
+    [];
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -261,7 +261,7 @@ export default function Chat() {
         overflow: "hidden",
       }}
     >
-      <NavBar />
+      <NavBarMentor />
 
       <Stack
         direction={"row"}
@@ -280,7 +280,7 @@ export default function Chat() {
           <Stack sx={{ p: 2.5 }}>
             <Typography
               sx={{
-                fontFamily: fonts.body,
+                fontFamily: "'Comfortaa', sans-serif",
                 fontWeight: 700,
                 fontSize: "1.2rem",
                 color: "#fff",
@@ -307,7 +307,7 @@ export default function Chat() {
                 placeholder="Buscar conversa..."
                 sx={{
                   color: "#fff",
-                  fontFamily: fonts.body,
+                  fontFamily: "'Comfortaa', sans-serif",
                   fontSize: "0.8rem",
                   flex: 1,
                 }}
@@ -318,7 +318,7 @@ export default function Chat() {
           <Stack sx={{ overflowY: "auto", flex: 1 }}>
             <Typography
               sx={{
-                fontFamily: fonts.body,
+                fontFamily: "'Comfortaa', sans-serif",
                 fontSize: "0.7rem",
                 color: "rgba(255,255,255,0.4)",
                 px: 2,
@@ -339,7 +339,7 @@ export default function Chat() {
 
             <Typography
               sx={{
-                fontFamily: fonts.body,
+                fontFamily: "'Comfortaa', sans-serif",
                 fontSize: "0.7rem",
                 color: "rgba(255,255,255,0.4)",
                 px: 2,
@@ -392,7 +392,7 @@ export default function Chat() {
               <Stack>
                 <Typography
                   sx={{
-                    fontFamily: fonts.body,
+                    fontFamily: "'Comfortaa', sans-serif",
                     fontWeight: 700,
                     fontSize: "0.9rem",
                     color: "#fff",
@@ -402,7 +402,7 @@ export default function Chat() {
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: fonts.body,
+                    fontFamily: "'Comfortaa', sans-serif",
                     fontSize: "0.7rem",
                     color: activeConversation.online
                       ? "#3ddc97"
@@ -455,7 +455,7 @@ export default function Chat() {
               >
                 <Typography
                   sx={{
-                    fontFamily: fonts.body,
+                    fontFamily: "'Comfortaa', sans-serif",
                     fontSize: "0.7rem",
                     color: "#fff",
                   }}
@@ -490,7 +490,7 @@ export default function Chat() {
               >
                 <Avatar
                   sx={{
-                    bgcolor: activeConversation.color || "#8a3fae",
+                    bgcolor: activeConversation.color,
                     width: 26,
                     height: 26,
                     fontSize: "0.65rem",
@@ -543,7 +543,7 @@ export default function Chat() {
               sx={{
                 flex: 1,
                 color: "#fff",
-                fontFamily: fonts.body,
+                fontFamily: "'Comfortaa', sans-serif",
                 fontSize: "0.85rem",
               }}
             />

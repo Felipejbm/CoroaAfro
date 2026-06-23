@@ -1,8 +1,8 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
-
+import { useNavigate } from "react-router-dom";
 export default function CriarLicoes() {
   const [title, setTitle] = useState("");
   const [level, setLevel] = useState("");
@@ -10,37 +10,24 @@ export default function CriarLicoes() {
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSaveDraft = () => {
-    console.log("Salvar Rascunho", {
-      title,
-      level,
-      duration,
-      category,
-      content,
-    });
-  };
+  const navigate = useNavigate();
 
-  const handlePublish = () => {
-    console.log("Publicar Lição", {
-      title,
-      level,
-      duration,
-      category,
-      content,
-    });
-  };
   return (
-    <Stack>
-      <NavBar />
+    // CORREÇÃO: Força a barra lateral e o formulário a ficarem alinhados lado a lado
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
+
+      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
+          flex: 1, // CORREÇÃO: Preenche o espaço restante da tela horizontalmente
+          minWidth: 0, // CORREÇÃO: Evita estouros ou comportamentos estranhos com elementos de grid
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -63,7 +50,6 @@ export default function CriarLicoes() {
           Crie conteúdos para seus mentorados de forma organizada
         </Typography>
 
-        {/* Informações Básicas */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -83,7 +69,6 @@ export default function CriarLicoes() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        {/* Configurações */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -123,7 +108,6 @@ export default function CriarLicoes() {
           />
         </Stack>
 
-        {/* Conteúdo */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -145,7 +129,6 @@ export default function CriarLicoes() {
           sx={{ backgroundColor: "#fff", borderRadius: "8px", mb: 3 }}
         />
 
-        {/* Materiais */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -179,10 +162,20 @@ export default function CriarLicoes() {
           </Typography>
         </Stack>
 
-        {/* Botões de ação */}
-        <Stack sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+        {/* CORREÇÃO: Botões de ação alinhados horizontalmente com flex-wrap */}
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: "flex-end",
+            gap: 2,
+            flexWrap: "wrap",
+            mt: "auto",
+          }}
+        >
           <Button
-            onClick={handleSaveDraft}
+            onClick={() => {
+              navigate("/criar-atividade");
+            }}
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
@@ -198,7 +191,9 @@ export default function CriarLicoes() {
             Salvar Rascunho
           </Button>
           <Button
-            onClick={handlePublish}
+            onClick={() => {
+              navigate("/criar-atividade");
+            }}
             sx={{
               backgroundColor: "#e0523a",
               color: "#fff",

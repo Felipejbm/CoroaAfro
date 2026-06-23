@@ -1,28 +1,28 @@
 import { Button, Stack, Typography } from "@mui/material";
-import NavBar from "../../components/NavBar/NavBar";
 import { lessons, trails } from "./CriarAtividades.utils";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
+import { useNavigate } from "react-router-dom";
 
 export default function CriarAtividades() {
-  const handleCreateActivity = () => {
-    console.log("Criar Atividade");
-  };
+  const navigate = useNavigate();
 
-  const handleCreateTrail = () => {
-    console.log("Criar Trilha");
-  };
   return (
-    <Stack>
-      <NavBar />
+    // CORREÇÃO: Alinha a NavBar lateral e o conteúdo lado a lado
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
+
+      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
+          flex: 1, // CORREÇÃO: Preenche o restante do espaço horizontal
+          minWidth: 0, // CORREÇÃO: Evita que os grids internos quebrem a responsividade
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -45,7 +45,6 @@ export default function CriarAtividades() {
           Crie conteúdos para seus mentorados de forma organizada
         </Typography>
 
-        {/* Minhas trilhas */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -84,7 +83,6 @@ export default function CriarAtividades() {
           ))}
         </Stack>
 
-        {/* Minhas lições */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -123,10 +121,20 @@ export default function CriarAtividades() {
           ))}
         </Stack>
 
-        {/* ões de ação */}
-        <Stack sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+        {/* AJUSTE EXTRA: direction="row" com wrap para os botões ficarem lado a lado */}
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: "flex-end",
+            gap: 2,
+            flexWrap: "wrap",
+            mt: "auto", // Joga os botões para o fim da página caso haja espaço de sobra
+          }}
+        >
           <Button
-            onClick={handleCreateActivity}
+            onClick={() => {
+              navigate("/criar-licao");
+            }}
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",
@@ -139,10 +147,12 @@ export default function CriarAtividades() {
               "&:hover": { backgroundColor: "#26262f" },
             }}
           >
-            Criar Atividade
+            Criar Lição
           </Button>
           <Button
-            onClick={handleCreateTrail}
+            onClick={() => {
+              navigate("/criar-trilha");
+            }}
             sx={{
               backgroundColor: "#16161d",
               color: "#fff",

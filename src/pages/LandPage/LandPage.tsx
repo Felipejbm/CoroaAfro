@@ -64,7 +64,6 @@ export default function LandPage() {
               </Typography>
             </Stack>
           </Stack>
-          {/* Subtítulo */}
 
           <Typography
             align="center"
@@ -78,7 +77,6 @@ export default function LandPage() {
             conquistar mais clientes.
           </Typography>
 
-          {/* Botão CTA */}
           <Stack sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               variant="contained"

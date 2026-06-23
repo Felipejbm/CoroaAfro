@@ -17,20 +17,23 @@ export default function Perfil() {
   const handleLogout = () => {
     console.log("Sair");
   };
+
   return (
-    <Stack>
+    <Stack direction={"row"} sx={{ width: "100vw", maxWidth: "100%" }}>
       <NavBar />
+
       <Stack
         sx={{
+          flexGrow: 1,
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           py: 5,
+          px: { xs: 2, md: 4 },
         }}
       >
-        {/* Cabeçalho com avatar e nomes */}
         <Stack
           sx={{
             display: "flex",
@@ -42,7 +45,6 @@ export default function Perfil() {
           <Avatar
             sx={{ width: 80, height: 80, mb: 2, backgroundColor: "#16161d" }}
           >
-            {/* Imagem genérica */}
             <Typography sx={{ color: "#fff", fontWeight: 700 }}>
               Logo
             </Typography>
@@ -68,7 +70,7 @@ export default function Perfil() {
             Nome empreendedor
           </Typography>
 
-          <Stack sx={{ display: "flex", gap: 1.5 }}>
+          <Stack direction="row" sx={{ display: "flex", gap: 1.5 }}>
             <Button
               onClick={handleEditEntrepreneur}
               sx={{
@@ -104,7 +106,6 @@ export default function Perfil() {
           </Stack>
         </Stack>
 
-        {/* Painéis de dados */}
         <Stack
           sx={{
             display: "flex",
@@ -114,7 +115,6 @@ export default function Perfil() {
             maxWidth: 900,
           }}
         >
-          {/* Dados do empreendedor */}
           <Stack
             sx={{
               flex: 1,
@@ -154,6 +154,7 @@ export default function Perfil() {
                 borderRadius: "6px",
                 px: 2,
                 py: 0.5,
+                width: "fit-content",
                 "&:hover": { backgroundColor: "#c43f2a" },
               }}
             >
@@ -176,6 +177,7 @@ export default function Perfil() {
                 borderRadius: "6px",
                 px: 2,
                 py: 0.5,
+                width: "fit-content",
                 "&:hover": { backgroundColor: "#c43f2a" },
               }}
             >
@@ -183,7 +185,6 @@ export default function Perfil() {
             </Button>
           </Stack>
 
-          {/* Dados da empresa */}
           <Stack
             sx={{
               flex: 1,
@@ -229,6 +230,7 @@ export default function Perfil() {
                 borderRadius: "6px",
                 px: 2,
                 py: 0.5,
+                width: "fit-content",
                 "&:hover": { backgroundColor: "#c43f2a" },
               }}
             >

@@ -3,10 +3,13 @@ import type { Module } from "./TrilhaGuiada.types";
 import { modules, statusConfig } from "./TrilhaGuiada.utils";
 import { useState } from "react";
 import NavBar from "../../../components/NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 function ModuleCard({ module }: { module: Module }) {
   const { number, title, description, status, icon } = module;
   const config = statusConfig[status];
+
+  
 
   return (
     <Stack
@@ -14,16 +17,19 @@ function ModuleCard({ module }: { module: Module }) {
         backgroundColor: "#16161d",
         borderRadius: "14px",
         borderLeft: `4px solid ${config.color}`,
-        width: { xs: "100%", sm: 280 },
+        width: { xs: "100%", sm: 340 },
         p: 2.5,
       }}
+      direction={"column"}
     >
       <Stack
+        direction={"row"}
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           mb: 1.5,
+          width: "100%",
         }}
       >
         <Stack
@@ -90,6 +96,7 @@ function ModuleCard({ module }: { module: Module }) {
             fontSize: "0.75rem",
             fontWeight: 700,
             color: config.color,
+            cursor: "pointer",
           }}
         >
           Acessar
@@ -103,11 +110,12 @@ function TimelineDot({ color }: { color: string }) {
   return (
     <Stack
       sx={{
-        width: 18,
-        height: 18,
+        width: 16,
+        height: 16,
         borderRadius: "50%",
         border: `3px solid ${color}`,
         backgroundColor: "#16161d",
+        zIndex: 2,
       }}
     />
   );
@@ -116,14 +124,17 @@ function TimelineDot({ color }: { color: string }) {
 export default function TrilhaGuiada() {
   const [tab, setTab] = useState<"guiada" | "personalizada">("guiada");
 
+  const navigate = useNavigate()
   return (
-    <Stack>
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
+
       <Stack
         sx={{
+          flex: 1,
+          minWidth: 0,
           backgroundColor: "#f9dde0",
           p: { xs: 3, md: 4 },
-          minHeight: "100vh",
         }}
       >
         <Typography
@@ -138,13 +149,14 @@ export default function TrilhaGuiada() {
           Acompanhe o caminho percorrido
         </Typography>
 
-        {/* Tabs */}
         <Stack
+          direction={"row"}
           sx={{
             display: "inline-flex",
             borderRadius: "8px",
             overflow: "hidden",
             mb: 5,
+            width: "fit-content",
           }}
         >
           <Button
@@ -163,7 +175,7 @@ export default function TrilhaGuiada() {
             Trilha guiada
           </Button>
           <Button
-            onClick={() => setTab("personalizada")}
+            onClick={() => navigate("/trilha-personalizada")}
             sx={{
               fontFamily: "'Playfair Display', Georgia, serif",
               fontVariant: "small-caps",
@@ -179,36 +191,62 @@ export default function TrilhaGuiada() {
           </Button>
         </Stack>
 
-        {/* Timeline em zigue-zague */}
-        <Stack sx={{ position: "relative", maxWidth: 700 }}>
+        <Stack
+          sx={{
+            position: "relative",
+            width: "100%",
+            maxWidth: 800,
+            alignSelf: "center",  
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Stack
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              top: 20,
+              bottom: 20,
+              width: "2px",
+              backgroundColor: "rgba(0,0,0,0.15)",
+              zIndex: 1,
+            }}
+          />
+
           {modules.map((module, i) => {
-            const isLeft = module.align === "left";
-            const isLast = i === modules.length - 1;
             const dotColor = statusConfig[module.status].color;
+            const isLeft = i % 2 === 0;
 
             return (
               <Stack
                 key={module.number}
+                direction={"row"}
                 sx={{
-                  display: "flex",
-                  justifyContent: isLeft ? "flex-start" : "flex-end",
-                  alignItems: "center",
                   position: "relative",
-                  mb: isLast ? 0 : 5,
+                  width: "100%",
+                  mb: 4,
+                  justifyContent: isLeft ? "flex-start" : "flex-end",
                 }}
               >
-                <ModuleCard module={module} />
+                <Stack
+                  sx={{
+                    width: "50%",
+                    display: "flex",
+                    justifyContent: isLeft ? "flex-start" : "flex-end",
+                    px: 4,
+                  }}
+                >
+                  <ModuleCard module={module} />
+                </Stack>
 
-                {/* Linha + ponto conector */}
                 <Stack
                   sx={{
                     position: "absolute",
-                    top: "50%",
-                    left: isLeft ? "calc(100% + 12px)" : "auto",
-                    right: isLeft ? "auto" : "calc(100% + 12px)",
-                    transform: "translateY(-50%)",
-                    display: "flex",
-                    alignItems: "center",
+                    left: "50%",
+                    top: "24px",
+                    transform: "translateX(-50%)",
+                    zIndex: 2,
                   }}
                 >
                   <TimelineDot color={dotColor} />

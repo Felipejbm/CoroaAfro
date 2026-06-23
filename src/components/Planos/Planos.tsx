@@ -13,7 +13,6 @@ export default function PricingPage() {
       }}
     >
       <Container maxWidth="lg">
-        {/* Modernização com Box Flex: distribui os cards perfeitamente */}
         <Box
           sx={{
             display: "flex",
@@ -233,7 +232,7 @@ export default function PricingPage() {
             mt: 5,
           }}
         >
-          Não possui conta?{" "}
+          Não possui conta?
           <Link
             href="#cadastro"
             sx={{ color: "#c43f2a", fontWeight: 700 }}

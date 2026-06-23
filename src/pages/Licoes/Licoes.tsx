@@ -19,7 +19,6 @@ export default function Licoes() {
 
       <Stack sx={{ backgroundColor: "#f9dde0", minHeight: "100vh", pb: 9 }}>
         <Stack sx={{ maxWidth: 1100, mx: "auto", px: { xs: 2, md: 3 }, py: 4 }}>
-          {/* Badges */}
           <Stack sx={{ display: "flex", gap: 1.5, mb: 2 }}>
             <Stack
               sx={{
@@ -64,7 +63,6 @@ export default function Licoes() {
             </Stack>
           </Stack>
 
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -89,7 +87,6 @@ export default function Licoes() {
             representa sua marca no mercado de forma consistente e memorável.
           </Typography>
 
-          {/* Meta info */}
           <Stack sx={{ display: "flex", flexWrap: "wrap", gap: 3, mb: 3 }}>
             <Stack sx={{ display: "flex", alignItems: "center", gap: 0.7 }}>
               <ScheduleIcon sx={{ fontSize: 18, color: "#3a3a3a" }} />
@@ -129,7 +126,6 @@ export default function Licoes() {
             </Stack>
           </Stack>
 
-          {/* Vídeo + painel lateral */}
           <Stack
             sx={{
               display: "flex",
@@ -138,7 +134,6 @@ export default function Licoes() {
               mb: 5,
             }}
           >
-            {/* Player de vídeo */}
             <Stack
               sx={{
                 flex: 1.4,
@@ -204,7 +199,6 @@ export default function Licoes() {
                 da sua marca
               </Typography>
 
-              {/* Controles do player */}
               <Stack sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                 <IconButton size="small" sx={{ color: "#fff" }}>
                   <PlayArrowIcon />
@@ -265,7 +259,6 @@ export default function Licoes() {
               </Stack>
             </Stack>
 
-            {/* Painel lateral */}
             <Stack
               sx={{
                 flex: 1,
@@ -402,7 +395,6 @@ export default function Licoes() {
             </Stack>
           </Stack>
 
-          {/* Objetivos da lição */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -467,7 +459,6 @@ export default function Licoes() {
           </Stack>
         </Stack>
 
-        {/* Botão flutuante tirar dúvidas */}
         <Button
           sx={{
             position: "fixed",
@@ -488,7 +479,6 @@ export default function Licoes() {
           Tirar Duvidas
         </Button>
 
-        {/* Rodapé de navegação fixo */}
         <Stack
           sx={{
             position: "fixed",

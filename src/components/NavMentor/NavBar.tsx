@@ -1,10 +1,8 @@
-import { Avatar, List, ListItemButton, Stack, Typography, Button } from "@mui/material";
+import { Avatar, List, ListItemButton, Stack, Typography } from "@mui/material";
 import { navItems } from "./NavBar.utils";
 import { useLocation, useNavigate } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { fonts } from "../../styles/theme";
 
-export default function NavBar() {
+export default function NavBarMentor() {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -15,8 +13,6 @@ export default function NavBar() {
         minHeight: "100vh",
         backgroundColor: "#15151c",
         py: 3,
-        display: "flex",
-        flexDirection: "column",
       }}
     >
       <Stack
@@ -94,28 +90,6 @@ export default function NavBar() {
           );
         })}
       </List>
-
-      {/* Rodapé com ação de sair (navega para a hero) */}
-      <Stack sx={{ mt: "auto", px: 3, pt: 3 }}>
-        <Button
-          fullWidth
-          startIcon={<LogoutIcon />}
-          onClick={() => navigate("/")}
-          sx={{
-            background: "linear-gradient(90deg, #f0623e, #e0523a)",
-            color: "#fff",
-            textTransform: "none",
-            borderRadius: "8px",
-            py: 1.1,
-            fontFamily: fonts.body,
-            fontWeight: 700,
-            boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-            "&:hover": { background: "linear-gradient(90deg, #e0523a, #c43f2a)" },
-          }}
-        >
-          Sair
-        </Button>
-      </Stack>
     </Stack>
   );
 }

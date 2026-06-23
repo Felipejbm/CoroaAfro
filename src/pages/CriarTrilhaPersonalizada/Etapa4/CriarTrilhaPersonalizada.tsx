@@ -5,6 +5,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import type { Pace } from "./CriarTrilhaPersonalizada.types";
 import { days, paceOptions } from "./CriarTrilhaPersonalizada.utils";
 import NavBar from "../../../components/NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function CriarTrilhaPersonalizada4() {
   const totalSteps = 5;
@@ -19,21 +20,17 @@ export default function CriarTrilhaPersonalizada4() {
     );
   };
 
-  const handleBack = () => {
-    console.log("Voltar");
-  };
+  const navigate = useNavigate();
 
-  const handleContinue = () => {
-    console.log("Continuar", { pace, selectedDays });
-  };
   return (
-    <Stack>
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
       <Stack
         sx={{
+          flex: 1,
+          minWidth: 0,
           backgroundColor: "#f9dde0",
-          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         }}
@@ -48,7 +45,6 @@ export default function CriarTrilhaPersonalizada4() {
             py: 5,
           }}
         >
-          {/* Título */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -70,9 +66,9 @@ export default function CriarTrilhaPersonalizada4() {
             Ajuste o ritmo e os dias da sua jornada
           </Typography>
 
-          {/* Barra de progresso */}
           <Stack
-            sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 4 }}
+            direction={"row"} 
+            sx={{ alignItems: "center", gap: 1.5, mb: 4 }}
           >
             <Stack
               sx={{
@@ -94,7 +90,6 @@ export default function CriarTrilhaPersonalizada4() {
             </Typography>
           </Stack>
 
-          {/* Pergunta */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -107,7 +102,6 @@ export default function CriarTrilhaPersonalizada4() {
             Qual é o seu ritmo de estudo?
           </Typography>
 
-          {/* Opções de ritmo */}
           <Stack
             sx={{ display: "flex", flexDirection: "column", gap: 1.5, mb: 3 }}
           >
@@ -117,8 +111,8 @@ export default function CriarTrilhaPersonalizada4() {
                 <Stack
                   key={opt.id}
                   onClick={() => setPace(opt.id)}
+                  direction={"row"} 
                   sx={{
-                    display: "flex",
                     alignItems: "center",
                     gap: 1.5,
                     backgroundColor: isSelected
@@ -133,8 +127,10 @@ export default function CriarTrilhaPersonalizada4() {
                     cursor: "pointer",
                   }}
                 >
-                  <Stack sx={{ fontSize: "1.5rem" }}>{opt.icon}</Stack>
-                  <Stack>
+                  <Stack sx={{ fontSize: "1.5rem", flexShrink: 0 }}>
+                    {opt.icon}
+                  </Stack>
+                  <Stack direction={"column"}>
                     <Typography
                       sx={{
                         fontFamily: "'Comfortaa', sans-serif",
@@ -162,7 +158,6 @@ export default function CriarTrilhaPersonalizada4() {
             })}
           </Stack>
 
-          {/* Dias preferidos */}
           <Typography
             sx={{
               fontFamily: "'Comfortaa', sans-serif",
@@ -185,7 +180,10 @@ export default function CriarTrilhaPersonalizada4() {
             Seleção múltipla permitida — escolha todos que se aplicam
           </Typography>
 
-          <Stack sx={{ display: "flex", flexWrap: "wrap", gap: 1.2, mb: 3 }}>
+          <Stack
+            direction={"row"} 
+            sx={{ flexWrap: "wrap", gap: 1.2, mb: 3 }}
+          >
             {days.map((day) => {
               const isSelected = selectedDays.includes(day);
               return (
@@ -212,7 +210,6 @@ export default function CriarTrilhaPersonalizada4() {
             })}
           </Stack>
 
-          {/* Mensagem dinâmica */}
           <Stack
             sx={{
               backgroundColor: "#16161d",
@@ -234,14 +231,14 @@ export default function CriarTrilhaPersonalizada4() {
           </Stack>
         </Stack>
 
-        {/* Rodapé de navegação */}
         <Stack
+          direction={"row"}
           sx={{
-            display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
+            borderTop: "1px solid rgba(0,0,0,0.05)",
           }}
         >
           <Typography
@@ -254,9 +251,12 @@ export default function CriarTrilhaPersonalizada4() {
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack sx={{ display: "flex", gap: 1.5 }}>
+          <Stack direction={"row"} sx={{ gap: 1.5 }}>
+   
             <Button
-              onClick={handleBack}
+              onClick={() => {
+                navigate("/criar-trilha-personalizada-3");
+              }}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#16161d",
@@ -273,7 +273,9 @@ export default function CriarTrilhaPersonalizada4() {
               Voltar
             </Button>
             <Button
-              onClick={handleContinue}
+              onClick={() => {
+                navigate("/criar-trilha-personalizada-5");
+              }}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
                 backgroundColor: "#e0523a",

@@ -2,24 +2,17 @@ import { createTheme } from "@mui/material/styles";
 
 export const fonts = {
   logo: '"Cinzel", serif',
-
   hero: '"Playfair Display", Georgia, serif',
-
   heading: '"Syne", sans-serif',
-
   subheading: '"Sora", sans-serif',
-
   body: '"Inter", sans-serif',
-
   button: '"Poppins", sans-serif',
-
   metrics: '"DM Sans", sans-serif',
-
   navbar: '"Montserrat Alternates", sans-serif',
 };
 
 const theme = createTheme({
-  cssVariables: true, // MUI v6
+  cssVariables: true,
 
   palette: {
     primary: {
@@ -27,18 +20,15 @@ const theme = createTheme({
       light: "#f06a52",
       dark: "#c43f2a",
     },
-
     background: {
       default: "#beb0ae",
     },
-
     text: {
       primary: "#3a3a3a",
     },
   },
 
   typography: {
-    // Fonte padrão do projeto
     fontFamily: fonts.body,
 
     h1: {

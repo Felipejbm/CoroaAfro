@@ -16,7 +16,7 @@ export const modules: Module[] = [
     description: "Tudo que sua empresa precisa para ser lembrada!",
     status: "concluido",
     icon: <EmailIcon sx={{ fontSize: 18, color: "#2b2b2b" }} />,
-    align: "left", // 🔥 Corrigido: Agora está dentro do objeto corretamente
+    align: "left",  
   },
   {
     number: "Módulo 02",

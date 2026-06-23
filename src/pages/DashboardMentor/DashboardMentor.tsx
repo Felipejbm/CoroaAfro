@@ -1,5 +1,5 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 
 export default function DashboardMentor() {
@@ -8,23 +8,26 @@ export default function DashboardMentor() {
   };
 
   return (
-    <Stack>
-      <NavBar />
+    <Stack direction="row" sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
 
       <Stack
         sx={{
+          flex: 1,
+          minWidth: 0,
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
         }}
       >
-        {/* Cabeçalho */}
         <Stack
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
             alignItems: "center",
+            gap: 2,
             mb: 4,
           }}
         >
@@ -40,8 +43,8 @@ export default function DashboardMentor() {
           </Typography>
 
           <Stack
+            direction="row"
             sx={{
-              display: "flex",
               alignItems: "center",
               gap: 2,
               backgroundColor: "#16161d",
@@ -51,15 +54,10 @@ export default function DashboardMentor() {
             }}
           >
             <Avatar sx={{ bgcolor: "#e0523a" }}>R</Avatar>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff", whiteSpace: "nowrap" }}>
               Reginaldo Alves
             </Typography>
+
             <Button
               onClick={handleLogout}
               sx={{
@@ -78,7 +76,6 @@ export default function DashboardMentor() {
           </Stack>
         </Stack>
 
-        {/* Métricas de mentorados */}
         <Stack
           sx={{
             display: "grid",
@@ -87,78 +84,34 @@ export default function DashboardMentor() {
             mb: 4,
           }}
         >
-          <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+          <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff" }}>
               Faturamento Gerado
             </Typography>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#e0523a",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "1.2rem", color: "#e0523a" }}>
               $2000
             </Typography>
           </Stack>
-          <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+
+          <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff" }}>
               Número de alunos
             </Typography>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#e0523a",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "1.2rem", color: "#e0523a" }}>
               80
             </Typography>
           </Stack>
-          <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+
+          <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff" }}>
               Número de cursos
             </Typography>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#e0523a",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "1.2rem", color: "#e0523a" }}>
               4
             </Typography>
           </Stack>
         </Stack>
 
-        {/* Minhas atividades */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -170,6 +123,7 @@ export default function DashboardMentor() {
         >
           Minhas atividades
         </Typography>
+
         <Stack
           sx={{
             display: "grid",
@@ -177,72 +131,29 @@ export default function DashboardMentor() {
             gap: 2,
           }}
         >
-          <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+          <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff" }}>
               Faturamento Gerado
             </Typography>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#e0523a",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "1.2rem", color: "#e0523a" }}>
               $2000
             </Typography>
           </Stack>
-          <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+
+          <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff" }}>
               Número de alunos
             </Typography>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#e0523a",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "1.2rem", color: "#e0523a" }}>
               80
             </Typography>
           </Stack>
-          <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                color: "#fff",
-              }}
-            >
+
+          <Stack sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}>
+            <Typography sx={{ fontFamily: fonts.body, fontSize: "0.9rem", color: "#fff" }}>
               Número de cursos
             </Typography>
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "#e0523a",
-              }}
-            >
+            <Typography sx={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "1.2rem", color: "#e0523a" }}>
               4
             </Typography>
           </Stack>
