@@ -12,34 +12,36 @@ export default function NavBar() {
     <Stack
       sx={{
         width: "15%",
-        minHeight: "100vh",
+        height: "100vh",
         backgroundColor: "#15151c",
         py: 3,
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <Stack
-        direction={"row"}
-        sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, mb: 4 }}
-      >
-        <Avatar
-          src="/src/assets/LogoTipo.png"
-          alt="Coroa Afro"
-          sx={{ width: 44, height: 44 }}
-        />
-        <Typography
-          sx={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: "1.2rem",
-            color: "#fff",
-          }}
+      <Stack>
+        <Stack
+          direction={"row"}
+          sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, mb: 4 }}
         >
-          Coroa Afro
-        </Typography>
-      </Stack>
+          <Avatar
+            src="/src/assets/LogoTipo.png"
+            alt="Coroa Afro"
+            sx={{ width: 44, height: 44 }}
+          />
+          <Typography
+            sx={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: "1.2rem",
+              color: "#fff",
+            }}
+          >
+            Coroa Afro
+          </Typography>
+        </Stack>
 
-      <List sx={{ display: "flex", flexDirection: "column", gap: 1, p: 0 }}>
+        <List sx={{ display: "flex", flexDirection: "column", gap: 1, p: 0, flex: 1, overflowY: "auto" }}>
         {navItems.map(({ label, href }) => {
           const isActive = location.pathname === href;
 
@@ -94,6 +96,7 @@ export default function NavBar() {
           );
         })}
       </List>
+      </Stack>
 
       {/* Rodapé com ação de sair (navega para a hero) */}
       <Stack sx={{ mt: "auto", px: 3, pt: 3 }}>
