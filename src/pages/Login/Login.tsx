@@ -7,7 +7,7 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
@@ -16,14 +16,25 @@ import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../components/Layout/Layout";
 import { fonts } from "../../styles/theme";
+import { login } from "../../services/controllers/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
 
-  const handleConfirm = () => {
-    console.log({ email, password });
-  };
+  async function handleLogin() {
+    try {
+      await login({
+        email,
+        senha,
+      });
+
+      navigate("/dashboard-financeiro");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Layout>
@@ -182,8 +193,8 @@ export default function Login() {
             <TextField
               fullWidth
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               sx={{
                 mb: 1,
                 backgroundColor: "#f2eaea",
@@ -209,7 +220,7 @@ export default function Login() {
 
             <Button
               fullWidth
-              onClick={handleConfirm}
+              onClick={handleLogin}
               sx={{
                 background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
                 color: "#fff",
