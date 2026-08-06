@@ -14,6 +14,7 @@ import TestimonialsCarousel from "./Carrosel/Carrosel";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
 import PricingPage from "../../components/Planos/Planos";
 import Layout from "../../components/Layout/Layout";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function LandPage() {
   return (
@@ -78,7 +79,10 @@ export default function LandPage() {
           </Typography>
 
           <Stack sx={{ display: "flex", justifyContent: "center" }}>
+
             <Button
+              component={RouterLink}
+              to ="/planos"
               variant="contained"
               disableElevation
               sx={{
@@ -93,6 +97,7 @@ export default function LandPage() {
                 "&:hover": {
                   background: "linear-gradient(90deg, #6a1a32, #c43f2a)",
                 },
+                
               }}
             >
               Quero transformar meu negócio

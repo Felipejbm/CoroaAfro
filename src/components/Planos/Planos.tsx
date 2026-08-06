@@ -2,6 +2,7 @@ import { Typography, Button, Container, Link, Stack, Box } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { plans } from "../../pages/LandPage/LandPage.utils";
 import { fonts } from "../../styles/theme";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function PricingPage() {
   return (
@@ -234,7 +235,8 @@ export default function PricingPage() {
         >
           Não possui conta?
           <Link
-            href="#cadastro"
+            component={RouterLink}
+            to="cadastro-empreendedor"
             sx={{ color: "#c43f2a", fontWeight: 700 }}
             underline="hover"
           >
