@@ -14,8 +14,10 @@ import TestimonialsCarousel from "./Carrosel/Carrosel";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
 import PricingPage from "../../components/Planos/Planos";
 import Layout from "../../components/Layout/Layout";
+import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 export default function LandPage() {
+  
 
     const navigate = useNavigate();
 
