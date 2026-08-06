@@ -13,15 +13,13 @@ export default function CriarLicoes() {
   const navigate = useNavigate();
 
   return (
-    // CORREÇÃO: Força a barra lateral e o formulário a ficarem alinhados lado a lado
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBarMentor />
 
-      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
-          flex: 1, // CORREÇÃO: Preenche o espaço restante da tela horizontalmente
-          minWidth: 0, // CORREÇÃO: Evita estouros ou comportamentos estranhos com elementos de grid
+          flex: 1,
+          minWidth: 0, 
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },

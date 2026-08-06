@@ -14,15 +14,13 @@ export default function CriarTrilhasMentor() {
   const navigate = useNavigate();
 
   return (
-    // CORREÇÃO: Alinha a NavBar e o formulário lado a lado
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBarMentor />
 
-      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
-          flex: 1, // CORREÇÃO: Ocupa o restante do espaço horizontal da tela
-          minWidth: 0, // CORREÇÃO: Previne quebras em telas menores devido ao grid interno
+          flex: 1,
+          minWidth: 0,
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },

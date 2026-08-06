@@ -8,15 +8,13 @@ export default function CriarAtividades() {
   const navigate = useNavigate();
 
   return (
-    // CORREÇÃO: Alinha a NavBar lateral e o conteúdo lado a lado
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBarMentor />
 
-      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
-          flex: 1, // CORREÇÃO: Preenche o restante do espaço horizontal
-          minWidth: 0, // CORREÇÃO: Evita que os grids internos quebrem a responsividade
+          flex: 1,
+          minWidth: 0, 
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
@@ -121,14 +119,13 @@ export default function CriarAtividades() {
           ))}
         </Stack>
 
-        {/* AJUSTE EXTRA: direction="row" com wrap para os botões ficarem lado a lado */}
         <Stack
           direction="row"
           sx={{
             justifyContent: "flex-end",
             gap: 2,
             flexWrap: "wrap",
-            mt: "auto", // Joga os botões para o fim da página caso haja espaço de sobra
+            mt: "auto", 
           }}
         >
           <Button

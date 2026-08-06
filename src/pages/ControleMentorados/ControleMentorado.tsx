@@ -18,15 +18,13 @@ export default function ControleMentorados() {
   const navigate = useNavigate();
 
   return (
-    // CORREÇÃO: direction="row" força a NavBar e o conteúdo a ficarem na mesma linha
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBarMentor />
 
-      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
-          flex: 1, // CORREÇÃO: Faz o conteúdo ocupar 100% do espaço restante ao lado da barra lateral
-          minWidth: 0, // CORREÇÃO: Evita que tabelas ou elementos grandes quebrem o layout flexível
+          flex: 1, 
+          minWidth: 0, 
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
