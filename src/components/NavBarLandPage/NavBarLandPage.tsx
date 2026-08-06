@@ -1,10 +1,8 @@
 import { Toolbar, Box, Button, Avatar, Stack } from "@mui/material";
 import { navLinks } from "./NavBarLandPage.utils.ts";
-import { useLocation } from "react-router-dom";
 import { fonts } from "../../styles/theme";
 
 export default function NavBarLandPage() {
-  const location = useLocation();
   return (
     <Stack
       sx={{

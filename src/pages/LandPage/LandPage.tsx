@@ -14,8 +14,12 @@ import TestimonialsCarousel from "./Carrosel/Carrosel";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
 import PricingPage from "../../components/Planos/Planos";
 import Layout from "../../components/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 
 export default function LandPage() {
+
+    const navigate = useNavigate();
+
   return (
     <Layout>
       <Stack sx={styles.page}>
@@ -81,6 +85,7 @@ export default function LandPage() {
             <Button
               variant="contained"
               disableElevation
+              onClick={() => navigate("/login")}
               sx={{
                 background: "linear-gradient(90deg, #7b1f3a, #e0523a)",
                 color: "#fff",

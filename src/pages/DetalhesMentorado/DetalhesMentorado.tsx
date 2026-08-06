@@ -10,15 +10,13 @@ import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 export default function DetalhesMentorado() {
   return (
-    // CORREÇÃO: Alinha a NavBar lateral e o conteúdo lado a lado
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBarMentor />
 
-      {/* Container de conteúdo ajustado */}
       <Stack
         sx={{
-          flex: 1, // CORREÇÃO: Preenche todo o espaço horizontal restante da tela
-          minWidth: 0, // CORREÇÃO: Previne estouros de layout por elementos rígidos ou grids
+          flex: 1, 
+          minWidth: 0, 
           backgroundColor: "#f9dde0",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },

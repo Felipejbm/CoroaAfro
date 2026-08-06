@@ -12,7 +12,7 @@ import {
   weeklyAnalysis,
 } from "./DashboardFinanceiro.utils";
 import NavBar from "../../components/NavBar/NavBar";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Ícone de perfil opcional
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"; 
 import { useNavigate } from "react-router-dom";
 
 function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
