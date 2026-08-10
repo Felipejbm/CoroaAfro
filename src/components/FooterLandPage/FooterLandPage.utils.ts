@@ -12,7 +12,7 @@ export const Administration: Adm[] = [
     { name: "Giovanna de Souza Antero Lopes", href: "https://www.instagram.com/llopexs.g/" },
     { name: "Danielly Cristina Barbosa dos Anjos Dias", href: "https://www.instagram.com/dany_bdx/" },
     { name: "Emilio Giarola Lopez", href: "https://www.instagram.com/lopez.pzz/" },
-    { name: "Beatriz", href: "" },
+    { name: "Beatriz de Moraes Bertoldo", href: "https://www.instagram.com/biabertoldo.m/" },
 ];
 
 export const aboutLinks: FooterLink[] = [
