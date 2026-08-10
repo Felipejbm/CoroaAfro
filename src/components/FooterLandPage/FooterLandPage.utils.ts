@@ -1,4 +1,4 @@
-import type { Developer, FooterLink, SocialLink } from "./FooterLandPage.types";
+import type { Developer, Adm, FooterLink, SocialLink } from "./FooterLandPage.types";
 
 export const developers: Developer[] = [
     { name: "Allyson Rocha Dos Santos" },
@@ -6,6 +6,13 @@ export const developers: Developer[] = [
     { name: "Felipe José Borges de Mello" },
     { name: "Gabriel Palozi Gonçalves" },
     { name: "Ízan Rios" },
+];
+
+export const Administration: Adm[] = [
+    { name: "Giovanna de Souza Antero Lopes", href: "https://www.instagram.com/llopexs.g/" },
+    { name: "Danielly Cristina Barbosa dos Anjos Dias", href: "https://www.instagram.com/dany_bdx/" },
+    { name: "Emilio Giarola Lopez", href: "https://www.instagram.com/lopez.pzz/" },
+    { name: "Beatriz", href: "" },
 ];
 
 export const aboutLinks: FooterLink[] = [
