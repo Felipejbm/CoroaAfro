@@ -1,0 +1,171 @@
+import { Button, Stack, Typography } from "@mui/material";
+import { lessons, trails } from "./CriarAtividades.utils";
+import NavBarMentor from "../../components/NavMentor/NavBar";
+import { fonts } from "../../styles/theme";
+import { useNavigate } from "react-router-dom";
+
+export default function CriarAtividades() {
+  const navigate = useNavigate();
+
+  return (
+    <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
+      <NavBarMentor />
+
+      <Stack
+        sx={{
+          flex: 1,
+          minWidth: 0, 
+          backgroundColor: "#f9dde0",
+          minHeight: "100vh",
+          px: { xs: 2, md: 4 },
+          py: 5,
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: fonts.body,
+            fontWeight: 700,
+            fontSize: { xs: "1.6rem", md: "2rem" },
+            color: "#2b2b2b",
+            mb: 1,
+          }}
+        >
+          Criar novas atividades
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: fonts.body,
+            fontSize: "0.9rem",
+            color: "#3a3a3a",
+            mb: 4,
+          }}
+        >
+          Crie conteúdos para seus mentorados de forma organizada
+        </Typography>
+
+        <Typography
+          sx={{
+            fontFamily: fonts.body,
+            fontWeight: 700,
+            fontSize: "1.1rem",
+            color: "#2b2b2b",
+            mb: 2,
+          }}
+        >
+          Minhas trilhas
+        </Typography>
+        <Stack
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+            gap: 2,
+            mb: 4,
+          }}
+        >
+          {trails.map((t, idx) => (
+            <Stack
+              key={idx}
+              sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
+            >
+              <Typography
+                sx={{ color: "#fff", fontSize: "0.85rem", fontWeight: 700 }}
+              >
+                {t.titulo}
+              </Typography>
+              <Typography
+                sx={{ color: "rgba(255,255,255,0.7)", fontSize: "0.8rem" }}
+              >
+                {t.mentorado}
+              </Typography>
+            </Stack>
+          ))}
+        </Stack>
+
+        <Typography
+          sx={{
+            fontFamily: fonts.body,
+            fontWeight: 700,
+            fontSize: "1.1rem",
+            color: "#2b2b2b",
+            mb: 2,
+          }}
+        >
+          Minhas lições
+        </Typography>
+        <Stack
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+            gap: 2,
+            mb: 4,
+          }}
+        >
+          {lessons.map((l, idx) => (
+            <Stack
+              key={idx}
+              sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
+            >
+              <Typography
+                sx={{ color: "#fff", fontSize: "0.85rem", fontWeight: 700 }}
+              >
+                {l.titulo}
+              </Typography>
+              <Typography
+                sx={{ color: "rgba(255,255,255,0.7)", fontSize: "0.8rem" }}
+              >
+                {l.mentorado}
+              </Typography>
+            </Stack>
+          ))}
+        </Stack>
+
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: "flex-end",
+            gap: 2,
+            flexWrap: "wrap",
+            mt: "auto", 
+          }}
+        >
+          <Button
+            onClick={() => {
+              navigate("/criar-licao");
+            }}
+            sx={{
+              backgroundColor: "#16161d",
+              color: "#fff",
+              fontFamily: fonts.body,
+              fontSize: "0.85rem",
+              textTransform: "none",
+              borderRadius: "8px",
+              px: 2.5,
+              py: 1,
+              "&:hover": { backgroundColor: "#26262f" },
+            }}
+          >
+            Criar Lição
+          </Button>
+          <Button
+            onClick={() => {
+              navigate("/criar-trilha");
+            }}
+            sx={{
+              backgroundColor: "#16161d",
+              color: "#fff",
+              fontFamily: fonts.body,
+              fontSize: "0.85rem",
+              textTransform: "none",
+              borderRadius: "8px",
+              px: 2.5,
+              py: 1,
+              "&:hover": { backgroundColor: "#26262f" },
+            }}
+          >
+            Criar Trilha
+          </Button>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+}

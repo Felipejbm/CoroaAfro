@@ -1,31 +1,32 @@
 import React from "react";
 import {
-  Box,
   Typography,
   Avatar,
   Link,
   Container,
-  Grid,
   IconButton,
+  Stack,
 } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import {
   developers,
+  Administration,
   aboutLinks,
   socialLinks,
   currentYear,
-} from "./Footer.utils";
+} from "./FooterLandPage.utils";
 import type { SocialLink } from "./FooterLandPage.types";
+import { fonts } from "../../styles/theme";
 
 const iconMap: Record<SocialLink["icon"], React.ReactElement> = {
   github: <GitHubIcon sx={{ fontSize: 18 }} />,
   instagram: <InstagramIcon sx={{ fontSize: 18 }} />,
 };
 
-export default function Footer() {
+export default function FooterLandPage() {
   return (
-    <Box
+    <Stack
       sx={{
         backgroundColor: "#3a3033",
         borderTop: "4px solid #f7dde0",
@@ -34,21 +35,31 @@ export default function Footer() {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          {/* Logo + redes sociais */}
-          <Grid size={{ xs: 12, md: 3 }}>
-            <Box
-              sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1.5 }}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={4}
+          useFlexGap
+          flexWrap="wrap"
+        >
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
+            <Stack
+              direction="row"
+              sx={{
+                alignItems: "center",
+                gap: 1.5,
+                mb: 2,
+              }}
             >
               <Avatar
-                src="/logo-coroa-afro.png"
+                src="/src/assets/LogoTipo.png"
                 alt="Coroa Afro"
                 sx={{ width: 50, height: 50 }}
               />
-              <Box>
+
+              <Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontFamily: fonts.hero,
                     color: "#fff",
                     fontSize: "1.2rem",
                     lineHeight: 1.2,
@@ -56,19 +67,20 @@ export default function Footer() {
                 >
                   COROA AFRO
                 </Typography>
+
                 <Typography
                   sx={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontFamily: fonts.hero,
                     color: "rgba(255,255,255,0.75)",
                     fontSize: "1rem",
                   }}
                 >
                   Fortalecendo laços
                 </Typography>
-              </Box>
-            </Box>
+              </Stack>
+            </Stack>
 
-            <Box sx={{ display: "flex", gap: 1 }}>
+            <Stack direction="row" sx={{ gap: 1 }}>
               {socialLinks.map((social) => (
                 <IconButton
                   key={social.icon}
@@ -87,14 +99,13 @@ export default function Footer() {
                   {iconMap[social.icon]}
                 </IconButton>
               ))}
-            </Box>
-          </Grid>
+            </Stack>
+          </Stack>
 
-          {/* Desenvolvedores */}
-          <Grid size={{ xs: 12, md: 5 }}>
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 color: "rgba(255,255,255,0.6)",
                 fontSize: "0.95rem",
                 mb: 1.5,
@@ -103,74 +114,114 @@ export default function Footer() {
               Desenvolvedores:
             </Typography>
 
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <Stack sx={{ gap: 1 }}>
               {developers.map((dev) => (
-                <Box
+                <Stack
                   key={dev.name}
-                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                  direction="row"
+                  sx={{ alignItems: "center", gap: 1 }}
                 >
                   <GitHubIcon
                     sx={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}
                   />
+
                   <Typography
                     sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       color: "rgba(255,255,255,0.85)",
                       fontSize: "0.95rem",
                     }}
                   >
                     {dev.name}
                   </Typography>
-                </Box>
+                </Stack>
               ))}
-            </Box>
-          </Grid>
+            </Stack>
+          </Stack>
 
-          {/* Links institucionais */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              {aboutLinks.map((link) => (
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
+            <Typography
+              sx={{
+                fontFamily: fonts.body,
+                color: "rgba(255,255,255,0.6)",
+                fontSize: "0.95rem",
+                mb: 1.5,
+              }}
+            >
+              Administração:
+            </Typography>
+
+            <Stack sx={{ gap: 1 }}>
+              {Administration.map((Adm) => (
                 <Link
-                  key={link.label}
-                  href={link.href}
+                  key={Adm.name}
+                  href={Adm.href}
                   underline="hover"
-                  sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
-                    color: "rgba(255,255,255,0.85)",
-                    fontSize: "0.95rem",
-                  }}
+                  color="rgba(255,255,255,0.85)"
+                  sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
                 >
+                  <InstagramIcon
+                    sx={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}
+                  />
+
+                  <Typography
+                    sx={{
+                      fontFamily: fonts.body,
+                      color: "rgba(255,255,255,0.85)",
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    {Adm.name}
+                  </Typography>
+                </Link>
+              ))}
+            </Stack>
+          </Stack>
+
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
+            <Stack sx={{ gap: 1 }}>
+              {aboutLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    underline="hover"
+                    sx={{
+                      fontFamily: fonts.body,
+                      color: "rgba(255,255,255,0.85)",
+                      fontSize: "0.95rem",
+                    }}
+                  >
                   {link.label}
                 </Link>
               ))}
-            </Box>
-          </Grid>
-        </Grid>
+            </Stack>
+          </Stack>
 
-        {/* Rodapé inferior */}
-        <Box sx={{ textAlign: "center", mt: 5 }}>
-          <Typography
-            sx={{
-              fontFamily: "'Comfortaa', sans-serif",
-              color: "rgba(255,255,255,0.85)",
-              fontSize: "0.95rem",
-              mb: 0.5,
-            }}
-          >
-            Um Projeto Transformador!
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: "'Comfortaa', sans-serif",
-              color: "rgba(255,255,255,0.55)",
-              fontSize: "0.85rem",
-            }}
-          >
-            © {currentYear} Coroa Afro - Etec MCM | Etec Maria Cristina Medeiros
-            3° ano C
-          </Typography>
-        </Box>
+          <Stack sx={{ flex: "1 1 100%", textAlign: "center", mt: 5 }}>
+            <Typography
+              sx={{
+                fontFamily: fonts.body,
+                color: "rgba(255,255,255,0.85)",
+                fontSize: "0.95rem",
+                mb: 0.5,
+              }}
+            >
+              Um Projeto Transformador!
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: fonts.body,
+                color: "rgba(255,255,255,0.55)",
+                fontSize: "0.85rem",
+              }}
+            >
+              © {currentYear} Coroa Afro - Etec MCM | Etec Maria Cristina
+              Medeiros 3° ano C
+            </Typography>
+          </Stack>
+        </Stack>
       </Container>
-    </Box>
+    </Stack>
   );
 }

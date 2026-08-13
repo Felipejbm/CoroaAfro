@@ -14,7 +14,7 @@ export function TestimonialCard({ item }: Props) {
         color: "#fff",
 
         width: "100%",
-        minHeight: 200, // 🔥 aumentou bastante a altura
+        minHeight: 200,
         maxHeight: 360,
 
         px: 4,
@@ -26,7 +26,6 @@ export function TestimonialCard({ item }: Props) {
         gap: 4,
       }}
     >
-      {/* 👤 PERFIL */}
       <Stack
         sx={{
           minWidth: 160,
@@ -46,18 +45,13 @@ export function TestimonialCard({ item }: Props) {
         </Typography>
       </Stack>
 
-      {/* 💬 DEPOIMENTO */}
       <Typography
         sx={{
           flex: 1,
           fontSize: "1.05rem",
           lineHeight: 1.7,
-
-          // 🔥 ESSENCIAL: permite quebra real de linha
           whiteSpace: "normal",
           wordBreak: "break-word",
-
-          // 🔥 limita mas permite múltiplas linhas
           display: "-webkit-box",
           WebkitLineClamp: 6,
           WebkitBoxOrient: "vertical",

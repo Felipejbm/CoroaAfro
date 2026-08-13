@@ -17,10 +17,8 @@ export default function TestimonialsCarousel() {
 
   let momentumFrame: number;
 
-  // 🔥 lista duplicada para loop infinito
   const fullList = [...testimonials, ...testimonials];
 
-  // 🟡 iniciar no meio (evita vazio à esquerda)
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -30,7 +28,6 @@ export default function TestimonialsCarousel() {
     });
   }, []);
 
-  // 🖱️ início do drag
   const onMouseDown = (e: React.MouseEvent) => {
     if (!ref.current) return;
 
@@ -55,7 +52,6 @@ export default function TestimonialsCarousel() {
     applyMomentum();
   };
 
-  // 🧊 movimento do mouse
   const onMouseMove = (e: React.MouseEvent) => {
     if (!isDown.current || !ref.current) return;
 
@@ -66,7 +62,6 @@ export default function TestimonialsCarousel() {
 
     ref.current.scrollLeft = scrollLeft.current - walk;
 
-    // 🔥 cálculo de velocidade (inércia)
     const now = performance.now();
     const dt = now - lastTime.current;
 
@@ -78,7 +73,6 @@ export default function TestimonialsCarousel() {
     lastTime.current = now;
   };
 
-  // 🧊 inércia + loop infinito invisível
   const applyMomentum = () => {
     const el = ref.current;
     if (!el) return;
@@ -96,7 +90,6 @@ export default function TestimonialsCarousel() {
 
       const half = el.scrollWidth / 2;
 
-      // 🔥 loop infinito invisível
       if (el.scrollLeft >= half) {
         el.scrollLeft -= half;
       }
@@ -143,7 +136,7 @@ export default function TestimonialsCarousel() {
           <Stack
             key={i}
             sx={{
-              flex: "0 0 40vw", // 🔥 cards menores (ajustável)
+              flex: "0 0 40vw",
               minWidth: "320px",
             }}
           >

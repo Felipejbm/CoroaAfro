@@ -11,12 +11,18 @@ import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import { styles } from "./LandPage.styles";
 import { items } from "./LandPage.utils";
 import TestimonialsCarousel from "./Carrosel/Carrosel";
-import PricingSection from "./PrecosSecao/PlanosSecao";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
-
+import PricingPage from "../../components/Planos/Planos";
+import Layout from "../../components/Layout/Layout";
+import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function LandPage() {
+  
+
+    const navigate = useNavigate();
+
   return (
-    <>
+    <Layout>
       <Stack sx={styles.page}>
         <NavBarLandPage />
 
@@ -31,19 +37,17 @@ export default function LandPage() {
             }}
           >
             <Avatar
-              src="/logo-coroa-afro.png"
+              src="/src/assets/LogoTipo.png"
               alt="Coroa Afro"
               sx={{
                 width: { xs: 90, md: 140 },
                 height: { xs: 90, md: 140 },
-                boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
               }}
             />
             <Stack>
               <Typography
                 variant="h1"
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
                   fontWeight: 600,
                   fontSize: { xs: "2rem", md: "3.2rem" },
                   color: "#2b2b2b",
@@ -55,7 +59,6 @@ export default function LandPage() {
               <Typography
                 variant="h1"
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
                   fontWeight: 600,
                   fontSize: { xs: "2rem", md: "3.2rem" },
                   color: "#2b2b2b",
@@ -66,12 +69,10 @@ export default function LandPage() {
               </Typography>
             </Stack>
           </Stack>
-          {/* Subtítulo */}
 
           <Typography
             align="center"
             sx={{
-              fontFamily: "'Comic Neue', 'Comfortaa', sans-serif",
               fontSize: { xs: "1rem", md: "2rem" },
               color: "#3a3a3a",
               mb: 6,
@@ -81,15 +82,17 @@ export default function LandPage() {
             conquistar mais clientes.
           </Typography>
 
-          {/* Botão CTA */}
           <Stack sx={{ display: "flex", justifyContent: "center" }}>
+
             <Button
+              component={RouterLink}
+              to ="/planos"
               variant="contained"
               disableElevation
+              onClick={() => navigate("/login")}
               sx={{
                 background: "linear-gradient(90deg, #7b1f3a, #e0523a)",
                 color: "#fff",
-                fontFamily: "'Comic Neue', 'Comfortaa', sans-serif",
                 fontSize: "1.1rem",
                 textTransform: "none",
                 borderRadius: "8px",
@@ -99,6 +102,7 @@ export default function LandPage() {
                 "&:hover": {
                   background: "linear-gradient(90deg, #6a1a32, #c43f2a)",
                 },
+                
               }}
             >
               Quero transformar meu negócio
@@ -130,7 +134,6 @@ export default function LandPage() {
           <Typography
             align="center"
             sx={{
-              fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
               fontVariant: "small-caps",
               letterSpacing: 2,
               fontSize: { xs: "1.6rem", md: "2.2rem" },
@@ -166,7 +169,6 @@ export default function LandPage() {
                 </Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
                     color: "#fff",
                     fontSize: { xs: "1rem", md: "1.15rem" },
                   }}
@@ -187,11 +189,13 @@ export default function LandPage() {
             mt: 10,
           }}
         />
+
         <TestimonialsCarousel></TestimonialsCarousel>
 
-        <PricingSection></PricingSection>
+        <PricingPage></PricingPage>
+
         <Footer></Footer>
       </Stack>
-    </>
+    </Layout>
   );
 }
