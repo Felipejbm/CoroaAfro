@@ -28,7 +28,7 @@ export default function Login() {
       await login({
         email,
         senha,
-      });
+      }); 
 
       navigate("/dashboard-financeiro");
     } catch (error) {
