@@ -1,5 +1,5 @@
 import { Avatar, List, ListItemButton, Stack, Typography, Button } from "@mui/material";
-import { navItems } from "./NavBar.utils";
+import { navItems } from "./NavBar.utils.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { fonts } from "../../styles/theme";
