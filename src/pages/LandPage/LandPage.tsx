@@ -7,13 +7,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
+import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
 import { styles } from "./LandPage.styles";
 import { items } from "./LandPage.utils";
 import TestimonialsCarousel from "./Carrosel/Carrosel";
-import Footer from "../../components/FooterLandPage/FooterLandPage";
-import PricingPage from "../../components/Planos/Planos";
-import Layout from "../../components/Layout/Layout";
+import Footer from "../../Components/FooterLandPage/FooterLandPage";
+import PricingPage from "../../Components/Planos/Planos";
+import Layout from "../../Components/Layout/Layout";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 export default function LandPage() {

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { fieldRows, initialFormData } from "./CadastroEmpreendedor.utils";
 import { fieldStyles, labelStyles } from "./CadastroEmpreendedor.styles";
 import type { FormData } from "./CadastroEmpreendedor.types";
-import FooterLandPage from "../../../components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../../components/NavBarLandPage/NavBarLandPage";
-import Layout from "../../../components/Layout/Layout";
+import FooterLandPage from "../../../Components/FooterLandPage/FooterLandPage";
+import NavBarLandPage from "../../../Components/NavBarLandPage/NavBarLandPage";
+import Layout from "../../../Components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 
 export default function CadastroEmpreendedor() {
