@@ -12,9 +12,9 @@ import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import { useState } from "react";
-import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
-import Layout from "../../components/Layout/Layout";
+import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
+import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
+import Layout from "../../Components/Layout/Layout";
 import { fonts } from "../../styles/theme";
 
 export default function Login() {

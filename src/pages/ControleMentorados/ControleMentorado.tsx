@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { mentorados } from "./ControleMentorados.utils";
-import NavBarMentor from "../../components/NavMentor/NavBar";
+import NavBarMentor from "../../Components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 import { useNavigate } from "react-router-dom";
 export default function ControleMentorados() {

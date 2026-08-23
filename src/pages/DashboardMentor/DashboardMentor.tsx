@@ -1,5 +1,5 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
-import NavBarMentor from "../../components/NavMentor/NavBar";
+import NavBarMentor from "../../Components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 
 export default function DashboardMentor() {

@@ -2,7 +2,7 @@ import { Button, Stack, Switch, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import NavBarMentor from "../../../components/NavMentor/NavBar";
+import NavBarMentor from "../../../Components/NavMentor/NavBar";
 import { fonts } from "../../../styles/theme";
 import { useNavigate } from "react-router-dom";
 export default function CriarTrilhaPersonalizada5() {

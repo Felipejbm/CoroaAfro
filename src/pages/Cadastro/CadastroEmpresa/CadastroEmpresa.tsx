@@ -1,11 +1,11 @@
 import { Button, Container, Stack, TextField, Typography } from "@mui/material";
 import { fieldStyles, labelStyles } from "./CadastroEmpresa.styles";
-import FooterLandPage from "../../../components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../../components/NavBarLandPage/NavBarLandPage";
+import FooterLandPage from "../../../Components/FooterLandPage/FooterLandPage";
+import NavBarLandPage from "../../../Components/NavBarLandPage/NavBarLandPage";
 import { useState } from "react";
 import type { CompanyFormData } from "./CadastroEmpresa.types";
 import { fieldRows, initialFormData } from "./CadastroEmpresa.utils";
-import Layout from "../../../components/Layout/Layout";
+import Layout from "../../../Components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 
 export default function CadastroEmpre() {

@@ -1,9 +1,9 @@
 import { Box, Typography, Container, Stack } from "@mui/material";
 import type { TeamMember } from "./Equipe.types";
 import { founders, developers } from "./Equipe.utils";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
-import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
-import Layout from "../../components/Layout/Layout";
+import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
+import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
+import Layout from "../../Components/Layout/Layout";
 
 function MemberCard({
   member,

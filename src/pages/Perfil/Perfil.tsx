@@ -1,5 +1,5 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../Components/NavBar/NavBar";
 
 export default function Perfil() {
   const handleEditEntrepreneur = () => {

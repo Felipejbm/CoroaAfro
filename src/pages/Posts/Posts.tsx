@@ -2,7 +2,7 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import type { PostWithImage } from "./Posts.types";
 import { initialPosts } from "./Posts.utils";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../Components/NavBar/NavBar";
 
 
 export default function Posts() {
