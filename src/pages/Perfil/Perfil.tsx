@@ -1,5 +1,7 @@
 import { Avatar, Button, Stack, Typography } from "@mui/material";
 import NavBar from "../../Components/NavBar/NavBar";
+import { Logout } from "@mui/icons-material";
+
 
 export default function Perfil() {
   const handleEditEntrepreneur = () => {
@@ -14,9 +16,28 @@ export default function Perfil() {
     console.log("Redefinir senha");
   };
 
-  const handleLogout = () => {
-    console.log("Sair");
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/auth/logout", {
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao fazer logout");
+      }
+
+      const data = await response.json();
+
+      console.log(data);
+
+      localStorage.removeItem("empreendedor");
+
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Erro no logout:", error);
+    }
   };
+
 
   return (
     <Stack direction={"row"} sx={{ width: "100vw", maxWidth: "100%" }}>
