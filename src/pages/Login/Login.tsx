@@ -1,5 +1,7 @@
 import {
+  Alert,
   Button,
+  CircularProgress,
   Container,
   IconButton,
   Stack,
@@ -16,23 +18,36 @@ import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../components/Layout/Layout";
 import { fonts } from "../../styles/theme";
-import { login } from "../../services/controllers/auth";
+import { login, mensagemErroLogin } from "../../services/controllers/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  async function handleLogin() {
+  async function handleLogin(event?: React.FormEvent) {
+    event?.preventDefault();
+    setError(null);
+
+    if (!email.trim() || !senha) {
+      setError("Preencha o e-mail e a senha para entrar.");
+      return;
+    }
+
+    setLoading(true);
     try {
       await login({
-        email,
+        email: email.trim(),
         senha,
-      }); 
+      });
 
       navigate("/dashboard-financeiro");
-    } catch (error) {
-      console.log(error);
+    } catch (requestError) {
+      setError(mensagemErroLogin(requestError));
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -78,6 +93,8 @@ export default function Login() {
           </Container>
 
           <Stack
+            component="form"
+            onSubmit={(event) => void handleLogin(event)}
             sx={{
               width: "100%",
               maxWidth: 460,
@@ -88,6 +105,11 @@ export default function Login() {
               py: 5,
             }}
           >
+            {error && (
+              <Alert severity="error" sx={{ mb: 3 }}>
+                {error}
+              </Alert>
+            )}
             <Typography
               align="center"
               sx={{
@@ -220,7 +242,8 @@ export default function Login() {
 
             <Button
               fullWidth
-              onClick={handleLogin}
+              type="submit"
+              disabled={loading}
               sx={{
                 background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
                 color: "#fff",
@@ -236,7 +259,11 @@ export default function Login() {
                 },
               }}
             >
-              Confirmar
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Entrar"
+              )}
             </Button>
 
             <Stack sx={{ textAlign: "center" }}>
