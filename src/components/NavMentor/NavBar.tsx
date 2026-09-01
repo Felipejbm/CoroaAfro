@@ -1,10 +1,30 @@
-import { Avatar, List, ListItemButton, Stack, Typography } from "@mui/material";
+import { Avatar, Button, List, ListItemButton, Stack, Typography } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useState } from "react";
+import { fonts } from "../../styles/theme";
+import { logout } from "../../services/controllers/auth";
+import { mensagemErroApi } from "../../services/controllers/empresa";
 import { navItems } from "./NavBar.utils";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function NavBarMentor() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [saindo, setSaindo] = useState(false);
+  const [erroSaida, setErroSaida] = useState("");
+  async function sair() {
+    if (saindo) return;
+    setSaindo(true);
+    setErroSaida("");
+    try {
+      await logout();
+      navigate("/login", { replace: true });
+    } catch (error) {
+      setErroSaida(mensagemErroApi(error));
+    } finally {
+      setSaindo(false);
+    }
+  }
 
   return (
     <Stack
@@ -90,6 +110,28 @@ export default function NavBarMentor() {
           );
         })}
       </List>
+      <Stack sx={{ mt: "auto", px: 3, pt: 3 }}>
+        <Button
+          fullWidth
+          startIcon={<LogoutIcon />}
+          onClick={() => void sair()}
+          disabled={saindo}
+          sx={{
+            background: "linear-gradient(90deg, #f0623e, #e0523a)",
+            color: "#fff",
+            textTransform: "none",
+            borderRadius: "8px",
+            py: 1.1,
+            fontFamily: fonts.body,
+            fontWeight: 700,
+            boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+            "&:hover": { background: "linear-gradient(90deg, #e0523a, #c43f2a)" },
+          }}
+        >
+          Sair
+        </Button>
+        {erroSaida && <Typography role="alert" sx={{ color: "#ffb4ab", fontSize: 12 }}>{erroSaida}</Typography>}
+      </Stack>
     </Stack>
   );
 }

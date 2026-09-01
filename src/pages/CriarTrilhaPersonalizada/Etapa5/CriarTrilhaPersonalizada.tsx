@@ -2,7 +2,7 @@ import { Button, Stack, Switch, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import NavBarMentor from "../../../components/NavMentor/NavBar";
+import NavBar from "../../../components/NavBar/NavBar";
 import { fonts } from "../../../styles/theme";
 import { useNavigate } from "react-router-dom";
 export default function CriarTrilhaPersonalizada5() {
@@ -18,7 +18,7 @@ export default function CriarTrilhaPersonalizada5() {
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
-      <NavBarMentor />
+      <NavBar />
 
       <Stack
         sx={{
