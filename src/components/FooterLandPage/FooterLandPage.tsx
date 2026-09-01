@@ -11,6 +11,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import {
   developers,
+  Administration,
   aboutLinks,
   socialLinks,
   currentYear,
@@ -40,7 +41,7 @@ export default function FooterLandPage() {
           useFlexGap
           flexWrap="wrap"
         >
-          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 25%" } }}>
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
             <Stack
               direction="row"
               sx={{
@@ -101,7 +102,7 @@ export default function FooterLandPage() {
             </Stack>
           </Stack>
 
-          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 40%" } }}>
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
             <Typography
               sx={{
                 fontFamily: fonts.body,
@@ -134,6 +135,45 @@ export default function FooterLandPage() {
                     {dev.name}
                   </Typography>
                 </Stack>
+              ))}
+            </Stack>
+          </Stack>
+
+          <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
+            <Typography
+              sx={{
+                fontFamily: fonts.body,
+                color: "rgba(255,255,255,0.6)",
+                fontSize: "0.95rem",
+                mb: 1.5,
+              }}
+            >
+              Administração:
+            </Typography>
+
+            <Stack sx={{ gap: 1 }}>
+              {Administration.map((Adm) => (
+                <Link
+                  key={Adm.name}
+                  href={Adm.href}
+                  underline="hover"
+                  color="rgba(255,255,255,0.85)"
+                  sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
+                >
+                  <InstagramIcon
+                    sx={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}
+                  />
+
+                  <Typography
+                    sx={{
+                      fontFamily: fonts.body,
+                      color: "rgba(255,255,255,0.85)",
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    {Adm.name}
+                  </Typography>
+                </Link>
               ))}
             </Stack>
           </Stack>

@@ -5,7 +5,7 @@ import PushPinIcon from "@mui/icons-material/PushPin";
 import CheckIcon from "@mui/icons-material/Check";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import NavBar from "../../../components/NavBar/NavBar";
+import NavBar from "../../../Components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 
 export default function CriarTrilhaPersonalizada2() {

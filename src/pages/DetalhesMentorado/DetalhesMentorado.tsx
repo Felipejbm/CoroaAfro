@@ -6,7 +6,7 @@ import {
   IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import NavBarMentor from "../../components/NavMentor/NavBar";
+import NavBarMentor from "../../Components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 export default function DetalhesMentorado() {
   return (

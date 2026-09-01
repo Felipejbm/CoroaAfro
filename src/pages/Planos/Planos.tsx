@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
-import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
-import PricingPage from "../../components/Planos/Planos";
-import Layout from "../../components/Layout/Layout";
+import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
+import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
+import PricingPage from "../../Components/Planos/Planos";
+import Layout from "../../Components/Layout/Layout";
 
 export default function Planos() {
   return (

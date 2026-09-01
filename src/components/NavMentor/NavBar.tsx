@@ -1,5 +1,5 @@
 import { Avatar, List, ListItemButton, Stack, Typography } from "@mui/material";
-import { navItems } from "./NavBar.utils";
+import { navItems } from "./NavBar.utils.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function NavBarMentor() {

@@ -4,6 +4,8 @@ import { fieldStyles, labelStyles } from "./CadastroEmpreendedor.styles";
 import FooterLandPage from "../../../components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../../components/Layout/Layout";
+import type { FormData } from "./CadastroEmpreendedor.types";
+
 import { useNavigate } from "react-router-dom";
 import { useCadastroEmpreendedor } from "./CadastroEmpreendedor.hook";
 import { cadastroEmpreendedor } from "../../../services/Cadastro/controller/cadastroEmpreendedor";
@@ -17,7 +19,6 @@ export default function CadastroEmpreendedor() {
     cpf,
     dataNascimento,
     genero,
-
     setNome,
     setEmail,
     setSenha,
