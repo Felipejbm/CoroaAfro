@@ -1,5 +1,6 @@
+import api from "../../../api/axios"
 import axios from "axios";
-import api from "../../api/axios"
+
 import type { LoginReq } from "../schema/authSchema";
 
 export async function login(data: LoginReq) {

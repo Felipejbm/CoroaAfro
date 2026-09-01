@@ -22,9 +22,7 @@ import {
 } from "./CadastroEmpreendedor.utils";
 import { fieldStyles, labelStyles } from "./CadastroEmpreendedor.styles";
 import type { FormData } from "./CadastroEmpreendedor.types";
-import FooterLandPage from "../../../Components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../../Components/NavBarLandPage/NavBarLandPage";
-import Layout from "../../../Components/Layout/Layout";
+
 import { useNavigate } from "react-router-dom";
 import {
   criarEmpreendedor,
@@ -83,40 +81,45 @@ export default function CadastroEmpreendedor() {
 
   return (
     <Layout>
-      <Stack>
+      <Stack
+        sx={{
+          backgroundColor: "#f7dde0",
+          py: { xs: 5, md: 7 },
+        }}
+      >
         <NavBarLandPage />
 
-        <Stack sx={{ backgroundColor: "#f7dde0", py: { xs: 5, md: 7 } }}>
-          <Container maxWidth="md">
-            <Stack
+        <Container maxWidth="md">
+          <Stack
+            sx={{
+              backgroundColor: "#e7d2d3",
+              borderRadius: "16px",
+              boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
+              px: { xs: 3, md: 5 },
+              py: 4,
+            }}
+          >
+            <Typography
               sx={{
-                backgroundColor: "#e7d2d3",
-                borderRadius: "16px",
-                boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
-                px: { xs: 3, md: 5 },
-                py: 4,
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontWeight: 700,
+                fontSize: { xs: "1.6rem", md: "1.9rem" },
+                color: "#2b2b2b",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontWeight: 700,
-                  fontSize: { xs: "1.6rem", md: "1.9rem" },
-                  color: "#2b2b2b",
-                }}
-              >
-                Formulário de cadastro
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: { xs: "1.1rem", md: "1.3rem" },
-                  color: "#2b2b2b",
-                  mb: 4,
-                }}
-              >
-                Dados do empreendedor
-              </Typography>
+              Formulário de cadastro
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: { xs: "1.1rem", md: "1.3rem" },
+                color: "#2b2b2b",
+                mb: 4,
+              }}
+            >
+              Dados do empreendedor
+            </Typography>
 
               <Stack sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                 {error && <Alert severity="error">{error}</Alert>}
@@ -132,6 +135,7 @@ export default function CadastroEmpreendedor() {
                     {row.map(({ label, field, type }) => (
                       <Stack key={field} sx={{ flex: 1 }}>
                         <Typography sx={labelStyles}>{label}</Typography>
+
                         <TextField
                           fullWidth
                           type={type ?? "text"}
@@ -162,10 +166,11 @@ export default function CadastroEmpreendedor() {
                             ))}
                         </TextField>
                       </Stack>
-                    ))}
-                  </Stack>
-                ))}
-              </Stack>
+                    );
+                  })}
+                </Stack>
+              ))}
+            </Stack>
 
               <Stack sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
                 <Button

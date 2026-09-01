@@ -4,7 +4,6 @@ export interface FormData {
     email: string;
     genero: string;
     senha: string;
-    cargo: string;
     cpf: string;
     telefone: string;
 }

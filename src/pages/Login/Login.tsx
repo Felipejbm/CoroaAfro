@@ -52,7 +52,9 @@ export default function Login() {
         return;
       }
       const empresa = await buscarMinhaEmpresa();
-      navigate(empresa ? "/dashboard-financeiro" : "/cadastro-empresa", { replace: true });
+      navigate(empresa ? "/dashboard-financeiro" : "/cadastro-empresa", {
+        replace: true,
+      });
     } catch (requestError) {
       setError(mensagemErroLogin(requestError));
     } finally {
@@ -114,13 +116,25 @@ export default function Login() {
               py: 5,
             }}
           >
-            <TextField select label="Tipo de conta" value={papel} disabled={loading}
-              onChange={(event) => { setPapel(event.target.value as "empreendedor" | "mentor"); setError(null); }}
-              sx={{ mb: 2 }}>
+            <TextField
+              select
+              label="Tipo de conta"
+              value={papel}
+              disabled={loading}
+              onChange={(event) => {
+                setPapel(event.target.value as "empreendedor" | "mentor");
+                setError(null);
+              }}
+              sx={{ mb: 2 }}
+            >
               <MenuItem value="empreendedor">Empreendedor</MenuItem>
               <MenuItem value="mentor">Mentor autorizado</MenuItem>
             </TextField>
-            {papel === "mentor" && <Alert severity="info" sx={{ mb: 2 }}>O acesso de mentor é autorizado pela equipe do Coroa Afro.</Alert>}
+            {papel === "mentor" && (
+              <Alert severity="info" sx={{ mb: 2 }}>
+                O acesso de mentor é autorizado pela equipe do Coroa Afro.
+              </Alert>
+            )}
             {error && (
               <Alert severity="error" sx={{ mb: 3 }}>
                 {error}
