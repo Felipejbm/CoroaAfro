@@ -1,92 +1,82 @@
-import { Button, Container, Stack, TextField, Typography } from "@mui/material";
-import { fieldRows } from "./CadastroEmpreendedor.utils";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import {
+  fieldRows,
+  formatCpf,
+  formatTelefone,
+  generoOptions,
+  initialFormData,
+} from "./CadastroEmpreendedor.utils";
 import { fieldStyles, labelStyles } from "./CadastroEmpreendedor.styles";
-import FooterLandPage from "../../../components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../../components/NavBarLandPage/NavBarLandPage";
-import Layout from "../../../components/Layout/Layout";
 import type { FormData } from "./CadastroEmpreendedor.types";
 
 import { useNavigate } from "react-router-dom";
-import { useCadastroEmpreendedor } from "./CadastroEmpreendedor.hook";
-import { cadastroEmpreendedor } from "../../../services/Cadastro/controller/cadastroEmpreendedor";
+import {
+  criarEmpreendedor,
+  mensagemErroCadastro,
+} from "../../../services/controllers/empreendedor";
 
 export default function CadastroEmpreendedor() {
-  const {
-    nome,
-    email,
-    senha,
-    telefone,
-    cpf,
-    dataNascimento,
-    genero,
-    setNome,
-    setEmail,
-    setSenha,
-    setTelefone,
-    setCpf,
-    setDataNascimento,
-    setGenero,
-  } = useCadastroEmpreendedor();
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successOpen, setSuccessOpen] = useState(false);
+
+  const handleChange =
+    (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      let value = e.target.value;
+      if (field === "cpf") value = formatCpf(value);
+      if (field === "telefone") value = formatTelefone(value);
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
   const navigate = useNavigate();
 
-  const handleCadastro = async (): Promise<void> => {
+  const handleSubmit = async () => {
+    setError(null);
+    if (
+      !formData.nomeCompleto.trim() ||
+      !formData.email.trim() ||
+      !formData.senha ||
+      !formData.telefone.trim()
+    ) {
+      setError("Preencha nome, e-mail, senha e telefone para continuar.");
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await cadastroEmpreendedor({
-        nome,
-        email,
-        senha,
-        telefone,
-        cpf,
-        dataNascimento,
-        genero,
+      await criarEmpreendedor({
+        nome: formData.nomeCompleto.trim(),
+        email: formData.email.trim(),
+        senha: formData.senha,
+        telefone: formData.telefone.trim(),
+        data_cadastro: new Date().toISOString().slice(0, 10),
       });
-
-      console.log(response);
-
-      alert("Cadastro realizado com sucesso!");
-
-      navigate("/login");
-    } catch (error: any) {
-      console.error(error);
-
-      alert(error.response?.data?.detail ?? "Erro ao realizar cadastro.");
+      setSuccessOpen(true);
+    } catch (requestError) {
+      setError(mensagemErroCadastro(requestError));
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleFieldChange = (field: string, value: string): void => {
-    switch (field) {
-      case "nome":
-        setNome(value);
-        break;
-
-      case "email":
-        setEmail(value);
-        break;
-
-      case "senha":
-        setSenha(value);
-        break;
-
-      case "telefone":
-        setTelefone(value);
-        break;
-
-      case "cpf":
-        setCpf(value);
-        break;
-
-      case "dataNascimento":
-        setDataNascimento(value);
-        break;
-
-      case "genero":
-        setGenero(value);
-        break;
-
-      default:
-        break;
-    }
+  const goToLogin = () => {
+    setSuccessOpen(false);
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -131,74 +121,50 @@ export default function CadastroEmpreendedor() {
               Dados do empreendedor
             </Typography>
 
-            <Stack
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
-              }}
-            >
-              {fieldRows.map((row) => (
-                <Stack
-                  key={row.map((f) => f.field).join("-")}
-                  sx={{
-                    display: "flex",
-                    flexDirection: {
-                      xs: "column",
-                      md: "row",
-                    },
-                    gap: {
-                      xs: 2,
-                      md: 4,
-                    },
-                  }}
-                >
-                  {row.map(({ label, field, type }) => {
-                    let value = "";
-
-                    switch (field) {
-                      case "nomeCompleto":
-                        value = nome;
-                        break;
-
-                      case "email":
-                        value = email;
-                        break;
-
-                      case "senha":
-                        value = senha;
-                        break;
-
-                      case "telefone":
-                        value = telefone;
-                        break;
-
-                      case "cpf":
-                        value = cpf;
-                        break;
-
-                      case "dataNascimento":
-                        value = dataNascimento;
-                        break;
-
-                      case "genero":
-                        value = genero;
-                        break;
-                    }
-
-                    return (
+              <Stack sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                {error && <Alert severity="error">{error}</Alert>}
+                {fieldRows.map((row) => (
+                  <Stack
+                    key={row.map((f) => f.field).join("-")}
+                    sx={{
+                      display: "flex",
+                      flexDirection: { xs: "column", md: "row" },
+                      gap: { xs: 2, md: 4 },
+                    }}
+                  >
+                    {row.map(({ label, field, type }) => (
                       <Stack key={field} sx={{ flex: 1 }}>
                         <Typography sx={labelStyles}>{label}</Typography>
 
                         <TextField
                           fullWidth
                           type={type ?? "text"}
-                          value={value}
-                          onChange={(e) =>
-                            handleFieldChange(field, e.target.value)
-                          }
+                          select={field === "genero"}
+                          value={formData[field]}
+                          onChange={handleChange(field)}
+                          slotProps={{
+                            htmlInput: {
+                              inputMode:
+                                field === "cpf" || field === "telefone"
+                                  ? "numeric"
+                                  : undefined,
+                              maxLength:
+                                field === "cpf"
+                                  ? 14
+                                  : field === "telefone"
+                                    ? 15
+                                    : undefined,
+                            },
+                          }}
                           sx={fieldStyles}
-                        />
+                        >
+                          {field === "genero" &&
+                            generoOptions.map((option) => (
+                              <MenuItem key={option} value={option}>
+                                {option}
+                              </MenuItem>
+                            ))}
+                        </TextField>
                       </Stack>
                     );
                   })}
@@ -206,38 +172,104 @@ export default function CadastroEmpreendedor() {
               ))}
             </Stack>
 
-            <Stack
+              <Stack sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+                <Button
+                  onClick={() => void handleSubmit()}
+                  disabled={loading}
+                  sx={{
+                    background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
+                    color: "#fff",
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontSize: "1rem",
+                    textTransform: "none",
+                    borderRadius: "8px",
+                    px: 6,
+                    py: 1.1,
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #e0523a, #7a1942)",
+                    },
+                  }}
+                >
+                  {loading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Confirmar"
+                  )}
+                </Button>
+              </Stack>
+            </Stack>
+          </Container>
+        </Stack>
+
+        <FooterLandPage />
+
+        <Dialog
+          open={successOpen}
+          onClose={goToLogin}
+          fullWidth
+          maxWidth="xs"
+          slotProps={{
+            paper: {
+              sx: {
+                borderRadius: "20px",
+                bgcolor: "#e7d2d3",
+                backgroundImage: "none",
+                boxShadow: "0 18px 50px rgba(44, 20, 34, 0.35)",
+                px: { xs: 1, sm: 2 },
+                py: 1,
+              },
+            },
+          }}
+        >
+          <DialogTitle
+            sx={{
+              textAlign: "center",
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontWeight: 700,
+              fontSize: "1.7rem",
+              color: "#2b2b2b",
+              pt: 3,
+            }}
+          >
+            Conta criada com sucesso!
+          </DialogTitle>
+          <DialogContent>
+            <Typography
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                mt: 5,
+                textAlign: "center",
+                fontFamily: "'Inter', sans-serif",
+                color: "#4a3a40",
+                lineHeight: 1.6,
               }}
             >
-              <Button
-                onClick={handleCadastro}
-                sx={{
-                  background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
-                  color: "#fff",
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: "1rem",
-                  textTransform: "none",
-                  borderRadius: "8px",
-                  px: 6,
-                  py: 1.1,
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
-                  "&:hover": {
-                    background: "linear-gradient(90deg, #e0523a, #7a1942)",
-                  },
-                }}
-              >
-                Confirmar
-              </Button>
-            </Stack>
-          </Stack>
-        </Container>
+              Seu cadastro foi concluído. Agora entre com seu e-mail e senha
+              para continuar no Coroa Afro.
+            </Typography>
+          </DialogContent>
+          <DialogActions sx={{ justifyContent: "center", px: 3, pb: 3 }}>
+            <Button
+              fullWidth
+              onClick={goToLogin}
+              sx={{
+                background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
+                color: "#fff",
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: "1rem",
+                textTransform: "none",
+                borderRadius: "10px",
+                py: 1.2,
+                boxShadow: "0 4px 12px rgba(0,0,0,0.22)",
+                "&:hover": {
+                  background: "linear-gradient(90deg, #e0523a, #7a1942)",
+                },
+              }}
+            >
+              Ir para o login
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Stack>
-
-      <FooterLandPage />
     </Layout>
   );
 }
