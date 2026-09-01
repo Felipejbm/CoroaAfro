@@ -1,0 +1,22 @@
+.Tag {
+  width: 521px;
+  height: 46px;
+
+  padding: 1px 54px;
+
+  border-radius: 10px;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+
+  background-color: #2A252F;
+  color: white;
+
+  font-size: 16px;
+  font-family: sans-serif;
+}

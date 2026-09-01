@@ -1,0 +1,124 @@
+import { Avatar, List, ListItemButton, Stack, Typography, Button } from "@mui/material";
+import { navItems } from "./NavBar.utils.ts";
+import { useLocation, useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { fonts } from "../../styles/theme";
+
+export default function NavBar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <Stack
+      sx={{
+        width: "15%",
+        height: "100vh",
+        backgroundColor: "#15151c",
+        py: 3,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <Stack>
+        <Stack
+          direction={"row"}
+          sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, mb: 4 }}
+        >
+          <Avatar
+            src="/src/assets/LogoTipo.png"
+            alt="Coroa Afro"
+            sx={{ width: 44, height: 44 }}
+          />
+          <Typography
+            sx={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: "1.2rem",
+              color: "#fff",
+            }}
+          >
+            Coroa Afro
+          </Typography>
+        </Stack>
+
+        <List sx={{ display: "flex", flexDirection: "column", gap: 1, p: 0, flex: 1, overflowY: "auto" }}>
+        {navItems.map(({ label, href }) => {
+          const isActive = location.pathname === href;
+
+          return (
+            <ListItemButton
+              key={label}
+              onClick={() => navigate(href)}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                px: 3,
+                py: 1.4,
+                borderLeft: isActive
+                  ? "4px solid #e0523a"
+                  : "4px solid transparent",
+                backgroundColor: isActive
+                  ? "rgba(122, 31, 42, 0.35)"
+                  : "transparent",
+                transition: "all 0.4s ease", 
+                "&:hover": {
+                  backgroundColor: isActive
+                    ? "rgba(122, 31, 42, 0.45)"
+                    : "rgba(255,255,255,0.04)",
+                },
+              }}
+            >
+              <Stack
+                sx={{
+                  width: 18,
+                  height: 18,
+                  borderRadius: "30%",
+                  backgroundColor: isActive ? "#e0523a" : "#f0a3a0",
+                  flexShrink: 0,
+                  transition: "all 0.4s ease",
+                  transform: isActive
+                    ? "scale(1.2) rotate(180deg)"
+                    : "scale(1) rotate(0deg)",
+                }}
+              />
+              <Typography
+                sx={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: "1.1rem",
+                  color: "#fff",
+                  transition: "color 0.4s ease",
+                }}
+              >
+                {label}
+              </Typography>
+            </ListItemButton>
+          );
+        })}
+      </List>
+      </Stack>
+
+      {/* Rodapé com ação de sair (navega para a hero) */}
+      <Stack sx={{ mt: "auto", px: 3, pt: 3 }}>
+        <Button
+          fullWidth
+          startIcon={<LogoutIcon />}
+          onClick={() => navigate("/")}
+          sx={{
+            background: "linear-gradient(90deg, #f0623e, #e0523a)",
+            color: "#fff",
+            textTransform: "none",
+            borderRadius: "8px",
+            py: 1.1,
+            fontFamily: fonts.body,
+            fontWeight: 700,
+            boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+            "&:hover": { background: "linear-gradient(90deg, #e0523a, #c43f2a)" },
+          }}
+        >
+          Sair
+        </Button>
+      </Stack>
+    </Stack>
+  );
+}

@@ -1,0 +1,1 @@
+export type Pace = "Tranquilo" | "Moderado" | "Intensivo";
