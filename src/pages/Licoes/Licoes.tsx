@@ -10,7 +10,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { objectives, topics } from "./Licoes.utils";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../Components/NavBar/NavBar";
 
 export default function Licoes() {
   return (

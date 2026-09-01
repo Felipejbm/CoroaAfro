@@ -1,6 +1,6 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import NavBarMentor from "../../components/NavMentor/NavBar";
+import NavBarMentor from "../../Components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 import { useNavigate } from "react-router-dom";
 export default function CriarLicoes() {

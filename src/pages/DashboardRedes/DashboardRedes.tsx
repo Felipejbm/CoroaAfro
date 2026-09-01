@@ -1,13 +1,6 @@
+import { Avatar, Button, Stack, Typography, Alert, Box, CircularProgress } from "@mui/material";
+import NavBar from "../../components/NavBar/NavBar";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Alert,
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import RefreshIcon from "@mui/icons-material/Refresh";

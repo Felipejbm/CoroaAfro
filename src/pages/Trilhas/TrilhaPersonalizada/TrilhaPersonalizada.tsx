@@ -2,7 +2,7 @@ import { Avatar, Button, Stack, Typography } from "@mui/material";
 import type { ModuleItem } from "./TrilhaPersonalizada.types";
 import { useState } from "react";
 import { modules } from "./TrilhasPersonalizada.utils";
-import NavBar from "../../../components/NavBar/NavBar";
+import NavBar from "../../../Components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 
 function ModuleCard({ module }: { module: ModuleItem }) {

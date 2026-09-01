@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import type { Module } from "./TrilhaGuiada.types";
 import { modules, statusConfig } from "./TrilhaGuiada.utils";
 import { useState } from "react";
-import NavBar from "../../../components/NavBar/NavBar";
+import NavBar from "../../../Components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 
 function ModuleCard({ module }: { module: Module }) {

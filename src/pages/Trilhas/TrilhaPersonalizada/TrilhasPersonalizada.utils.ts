@@ -1,8 +1,8 @@
 import type { ModuleItem } from "./TrilhaPersonalizada.types";
 
 export const modules: ModuleItem[] = [
-    { title: "Módulo teste", content: "Conteúdo do módulo" },
-    { title: "MÓDULO TESTE", content: "Conteúdo do módulo" },
-    { title: "MÓDULO TESTE", content: "Conteúdo do módulo" },
-    { title: "MÓDULO TESTE", content: "Conteúdo do módulo", avatar: "https://picsum.photos/seed/user/60/60" },
+    { title: "1° Módulo ", content: "Conteúdo do módulo" },
+    { title: "2° Módulo", content: "Conteúdo do módulo" },
+    { title: "3° Módulo", content: "Conteúdo do módulo" },
+    { title: "4° Módulo", content: "Conteúdo do módulo", avatar: "https://picsum.photos/seed/user/60/60" },
 ];

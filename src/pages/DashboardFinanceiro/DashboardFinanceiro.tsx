@@ -11,7 +11,7 @@ import {
   monthlyGoals,
   weeklyAnalysis,
 } from "./DashboardFinanceiro.utils";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../Components/NavBar/NavBar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; 
 import { useNavigate } from "react-router-dom";
 

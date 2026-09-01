@@ -16,7 +16,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import { useState } from "react";
 import { messages, onlineNow, recents } from "./Chats.utils";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../Components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
 
 function ConversationItem({

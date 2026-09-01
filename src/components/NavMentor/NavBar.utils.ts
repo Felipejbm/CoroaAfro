@@ -1,4 +1,4 @@
-import type { NavItem } from "./NavBar.types";
+import type { NavItem } from "./NavBar.types.ts";
 
 export const navItems: NavItem[] = [
     { label: "Dashboard", href: "/dashboard-mentor" },
