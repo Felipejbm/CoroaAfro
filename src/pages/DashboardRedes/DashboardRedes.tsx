@@ -1,11 +1,18 @@
-import { Avatar, Button, Stack, Typography, Alert, Box, CircularProgress } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Stack,
+  Typography,
+  Alert,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import NavBar from "../../components/NavBar/NavBar";
 import {
   buscarAlcanceInstagram,
   buscarMidiasInstagram,
@@ -13,11 +20,12 @@ import {
   getEmpreendedorLogado,
   iniciarConexaoInstagram,
   mensagemErroInstagram,
-} from "../../services/controllers/instagram";
+} from "../../services/Auth/controllers/instagram";
 import type {
   InstagramMedia,
   InstagramProfile,
-} from "../../services/schema/instagramSchema";
+  InstagramInsight,
+} from "../../services/Auth/schema/instagramSchema";
 
 const cardSx = {
   backgroundColor: "#26262f",
@@ -52,7 +60,9 @@ export default function DashboardRedes() {
         buscarMidiasInstagram(usuario.id),
         buscarAlcanceInstagram(usuario.id),
       ]);
-      const reachMetric = insightsData.data.find((item) => item.name === "reach");
+      const reachMetric = insightsData.data.find(
+        (item: InstagramInsight) => item.name === "reach",
+      );
       const latestReach = reachMetric?.values.at(-1)?.value;
 
       setProfile(profileData);
@@ -80,7 +90,10 @@ export default function DashboardRedes() {
     return () => window.clearTimeout(timer);
   }, [connected, setSearchParams]);
 
-  const likes = media.reduce((total, item) => total + (item.like_count ?? 0), 0);
+  const likes = media.reduce(
+    (total, item) => total + (item.like_count ?? 0),
+    0,
+  );
   const comments = media.reduce(
     (total, item) => total + (item.comments_count ?? 0),
     0,
@@ -88,7 +101,8 @@ export default function DashboardRedes() {
   const popularPosts = [...media]
     .sort(
       (a, b) =>
-        (b.like_count ?? 0) + (b.comments_count ?? 0) -
+        (b.like_count ?? 0) +
+        (b.comments_count ?? 0) -
         ((a.like_count ?? 0) + (a.comments_count ?? 0)),
     )
     .slice(0, 3);
@@ -183,7 +197,9 @@ export default function DashboardRedes() {
               <Typography
                 sx={{ fontWeight: 700, fontSize: "0.85rem", color: "#fff" }}
               >
-                {profile ? `@${profile.username}` : usuario?.nome ?? "Visitante"}
+                {profile
+                  ? `@${profile.username}`
+                  : (usuario?.nome ?? "Visitante")}
               </Typography>
               <Typography
                 sx={{
@@ -254,7 +270,11 @@ export default function DashboardRedes() {
                   mt: 1,
                 }}
               >
-                {loading ? <CircularProgress size={22} color="inherit" /> : value}
+                {loading ? (
+                  <CircularProgress size={22} color="inherit" />
+                ) : (
+                  value
+                )}
               </Typography>
             </Stack>
           ))}

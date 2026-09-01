@@ -1,4 +1,5 @@
-import api from "../../api/axios";
+import api from "../../../api/axios";
+
 
 export interface MetaEntrada {
   titulo: string; unidade: string; valor_inicial: string; valor_atual: string;

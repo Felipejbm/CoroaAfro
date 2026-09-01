@@ -22,18 +22,23 @@ import {
 } from "./CadastroEmpreendedor.utils";
 import { fieldStyles, labelStyles } from "./CadastroEmpreendedor.styles";
 import type { FormData } from "./CadastroEmpreendedor.types";
-
-import { useNavigate } from "react-router-dom";
 import {
   criarEmpreendedor,
   mensagemErroCadastro,
-} from "../../../services/controllers/empreendedor";
+} from "../../../services/Auth/controllers/empreendedor";
+import Layout from "../../../Components/Layout/Layout";
+import NavBarLandPage from "../../../Components/NavBarLandPage/NavBarLandPage";
+
+import { useNavigate } from "react-router-dom";
+import FooterLandPage from "../../../Components/FooterLandPage/FooterLandPage";
 
 export default function CadastroEmpreendedor() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successOpen, setSuccessOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange =
     (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,15 +48,15 @@ export default function CadastroEmpreendedor() {
       setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
-  const navigate = useNavigate();
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError(null);
+
     if (
-      !formData.nomeCompleto.trim() ||
-      !formData.email.trim() ||
+      !formData.nomeCompleto?.trim() ||
+      !formData.email?.trim() ||
       !formData.senha ||
-      !formData.telefone.trim()
+      !formData.telefone?.trim()
     ) {
       setError("Preencha nome, e-mail, senha e telefone para continuar.");
       return;
@@ -81,16 +86,13 @@ export default function CadastroEmpreendedor() {
 
   return (
     <Layout>
-      <Stack
-        sx={{
-          backgroundColor: "#f7dde0",
-          py: { xs: 5, md: 7 },
-        }}
-      >
+      <Stack sx={{ backgroundColor: "#f7dde0", minHeight: "100vh" }}>
         <NavBarLandPage />
 
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ py: { xs: 5, md: 7 } }}>
           <Stack
+            component="form"
+            onSubmit={handleSubmit}
             sx={{
               backgroundColor: "#e7d2d3",
               borderRadius: "16px",
@@ -121,86 +123,82 @@ export default function CadastroEmpreendedor() {
               Dados do empreendedor
             </Typography>
 
-              <Stack sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                {error && <Alert severity="error">{error}</Alert>}
-                {fieldRows.map((row) => (
-                  <Stack
-                    key={row.map((f) => f.field).join("-")}
-                    sx={{
-                      display: "flex",
-                      flexDirection: { xs: "column", md: "row" },
-                      gap: { xs: 2, md: 4 },
-                    }}
-                  >
-                    {row.map(({ label, field, type }) => (
-                      <Stack key={field} sx={{ flex: 1 }}>
-                        <Typography sx={labelStyles}>{label}</Typography>
+            <Stack spacing={3}>
+              {error && <Alert severity="error">{error}</Alert>}
 
-                        <TextField
-                          fullWidth
-                          type={type ?? "text"}
-                          select={field === "genero"}
-                          value={formData[field]}
-                          onChange={handleChange(field)}
-                          slotProps={{
-                            htmlInput: {
-                              inputMode:
-                                field === "cpf" || field === "telefone"
-                                  ? "numeric"
+              {fieldRows.map((row, rowIndex) => (
+                <Stack
+                  key={row.map((f) => f.field).join("-") || rowIndex}
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={{ xs: 2, md: 4 }}
+                >
+                  {row.map(({ label, field, type }) => (
+                    <Stack key={field} sx={{ flex: 1 }}>
+                      <Typography sx={labelStyles}>{label}</Typography>
+
+                      <TextField
+                        fullWidth
+                        type={type ?? "text"}
+                        select={field === "genero"}
+                        value={formData[field] ?? ""}
+                        onChange={handleChange(field)}
+                        slotProps={{
+                          htmlInput: {
+                            inputMode:
+                              field === "cpf" || field === "telefone"
+                                ? "numeric"
+                                : undefined,
+                            maxLength:
+                              field === "cpf"
+                                ? 14
+                                : field === "telefone"
+                                  ? 15
                                   : undefined,
-                              maxLength:
-                                field === "cpf"
-                                  ? 14
-                                  : field === "telefone"
-                                    ? 15
-                                    : undefined,
-                            },
-                          }}
-                          sx={fieldStyles}
-                        >
-                          {field === "genero" &&
-                            generoOptions.map((option) => (
-                              <MenuItem key={option} value={option}>
-                                {option}
-                              </MenuItem>
-                            ))}
-                        </TextField>
-                      </Stack>
-                    );
-                  })}
+                          },
+                        }}
+                        sx={fieldStyles}
+                      >
+                        {field === "genero" &&
+                          generoOptions.map((option) => (
+                            <MenuItem key={option} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                      </TextField>
+                    </Stack>
+                  ))}
                 </Stack>
               ))}
             </Stack>
 
-              <Stack sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-                <Button
-                  onClick={() => void handleSubmit()}
-                  disabled={loading}
-                  sx={{
-                    background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
-                    color: "#fff",
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    fontSize: "1rem",
-                    textTransform: "none",
-                    borderRadius: "8px",
-                    px: 6,
-                    py: 1.1,
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
-                    "&:hover": {
-                      background: "linear-gradient(90deg, #e0523a, #7a1942)",
-                    },
-                  }}
-                >
-                  {loading ? (
-                    <CircularProgress size={24} color="inherit" />
-                  ) : (
-                    "Confirmar"
-                  )}
-                </Button>
-              </Stack>
+            <Stack direction="row" justifyContent="center" sx={{ mt: 5 }}>
+              <Button
+                type="submit"
+                disabled={loading}
+                sx={{
+                  background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
+                  color: "#fff",
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: "1rem",
+                  textTransform: "none",
+                  borderRadius: "8px",
+                  px: 6,
+                  py: 1.1,
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #e0523a, #7a1942)",
+                  },
+                }}
+              >
+                {loading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Confirmar"
+                )}
+              </Button>
             </Stack>
-          </Container>
-        </Stack>
+          </Stack>
+        </Container>
 
         <FooterLandPage />
 

@@ -19,8 +19,8 @@ import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../Components/Layout/Layout";
 import { fonts } from "../../styles/theme";
-import { login, mensagemErroLogin } from "../../services/controllers/auth";
-import { buscarMinhaEmpresa } from "../../services/controllers/empresa";
+import { login, mensagemErroLogin } from "../../services/Auth/controllers/auth";
+import { buscarMinhaEmpresa } from "../../services/Auth/controllers/empresa";
 
 export default function Login() {
   const [email, setEmail] = useState("");

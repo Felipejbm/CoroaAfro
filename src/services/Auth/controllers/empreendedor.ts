@@ -1,9 +1,9 @@
 import axios from "axios";
-import api from "../../api/axios";
 import type {
   EmpreendedorCreate,
   EmpreendedorResponse,
 } from "../schema/empreendedorSchema";
+import api from "../../../api/axios";
 
 export async function criarEmpreendedor(data: EmpreendedorCreate) {
   const response = await api.post<EmpreendedorResponse>("/empreendedor", data);

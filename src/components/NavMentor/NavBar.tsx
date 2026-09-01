@@ -1,11 +1,18 @@
-import { Avatar, Button, List, ListItemButton, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  List,
+  ListItemButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 import { fonts } from "../../styles/theme";
-import { logout } from "../../services/controllers/auth";
-import { mensagemErroApi } from "../../services/controllers/empresa";
 import { navItems } from "./NavBar.utils";
 import { useLocation, useNavigate } from "react-router-dom";
+import { logout } from "../../services/Auth/controllers/auth";
+import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
 
 export default function NavBarMentor() {
   const location = useLocation();
@@ -75,7 +82,7 @@ export default function NavBarMentor() {
                 backgroundColor: isActive
                   ? "rgba(122, 31, 42, 0.35)"
                   : "transparent",
-                transition: "all 0.4s ease", 
+                transition: "all 0.4s ease",
                 "&:hover": {
                   backgroundColor: isActive
                     ? "rgba(122, 31, 42, 0.45)"
@@ -125,12 +132,18 @@ export default function NavBarMentor() {
             fontFamily: fonts.body,
             fontWeight: 700,
             boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
-            "&:hover": { background: "linear-gradient(90deg, #e0523a, #c43f2a)" },
+            "&:hover": {
+              background: "linear-gradient(90deg, #e0523a, #c43f2a)",
+            },
           }}
         >
           Sair
         </Button>
-        {erroSaida && <Typography role="alert" sx={{ color: "#ffb4ab", fontSize: 12 }}>{erroSaida}</Typography>}
+        {erroSaida && (
+          <Typography role="alert" sx={{ color: "#ffb4ab", fontSize: 12 }}>
+            {erroSaida}
+          </Typography>
+        )}
       </Stack>
     </Stack>
   );

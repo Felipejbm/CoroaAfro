@@ -4,9 +4,8 @@ import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, CircularP
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CatalogoTrilhas from "./CatalogoTrilhas";
 import AprendizadoLayout from "./AprendizadoLayout";
-import { concluirAula, minhasTrilhas } from "../../services/controllers/aprendizado";
-import type { Aula, Trilha } from "../../services/controllers/aprendizado";
-import { mensagemErroApi } from "../../services/controllers/empresa";
+import { concluirAula, minhasTrilhas, type Aula, type Trilha } from "../../services/Auth/controllers/aprendizado";
+import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
 
 export default function MinhasTrilhas() {
   const navigate = useNavigate();

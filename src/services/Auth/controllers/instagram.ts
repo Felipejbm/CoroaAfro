@@ -1,11 +1,12 @@
 import axios from "axios";
-import api from "../../api/axios";
+
 import type {
   InstagramInsightsResponse,
   InstagramMediaResponse,
   InstagramProfile,
   UsuarioLogado,
 } from "../schema/instagramSchema";
+import api from "../../../api/axios";
 
 export function getEmpreendedorLogado(): UsuarioLogado | null {
   const stored = localStorage.getItem("empreendedor");

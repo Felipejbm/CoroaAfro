@@ -15,6 +15,8 @@ import {
 import { fieldStyles } from "./CadastroEmpresa.styles";
 import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+
+import Layout from "../../../Components/Layout/Layout";
 import {
   buscarMinhaEmpresa,
   buscarOpcoesEmpresa,
@@ -22,8 +24,7 @@ import {
   salvarEmpresa,
   type DadosEmpresa,
   type OpcoesEmpresa,
-} from "../../../services/controllers/empresa";
-import Layout from "../../../Components/Layout/Layout";
+} from "../../../services/Auth/controllers/empresa";
 
 type Formulario = Omit<DadosEmpresa, "num_funcionarios"> & {
   num_funcionarios: string;
