@@ -1,5 +1,8 @@
 import {
+  Alert,
+  MenuItem,
   Button,
+  CircularProgress,
   Container,
   IconButton,
   Stack,
@@ -7,7 +10,7 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
@@ -16,14 +19,46 @@ import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../Components/Layout/Layout";
 import { fonts } from "../../styles/theme";
+import { login, mensagemErroLogin } from "../../services/controllers/auth";
+import { buscarMinhaEmpresa } from "../../services/controllers/empresa";
 
 export default function Login() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [papel, setPapel] = useState<"empreendedor" | "mentor">("empreendedor");
+  const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const handleConfirm = () => {
-    console.log({ email, password });
-  };
+  async function handleLogin(event?: React.FormEvent) {
+    event?.preventDefault();
+    setError(null);
+
+    if (!email.trim() || !senha) {
+      setError("Preencha o e-mail e a senha para entrar.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await login({
+        email: email.trim(),
+        senha,
+        papel,
+      });
+
+      if (papel === "mentor") {
+        navigate("/dashboard-mentor", { replace: true });
+        return;
+      }
+      const empresa = await buscarMinhaEmpresa();
+      navigate(empresa ? "/dashboard-financeiro" : "/cadastro-empresa", { replace: true });
+    } catch (requestError) {
+      setError(mensagemErroLogin(requestError));
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Layout>
@@ -67,6 +102,8 @@ export default function Login() {
           </Container>
 
           <Stack
+            component="form"
+            onSubmit={(event) => void handleLogin(event)}
             sx={{
               width: "100%",
               maxWidth: 460,
@@ -77,6 +114,18 @@ export default function Login() {
               py: 5,
             }}
           >
+            <TextField select label="Tipo de conta" value={papel} disabled={loading}
+              onChange={(event) => { setPapel(event.target.value as "empreendedor" | "mentor"); setError(null); }}
+              sx={{ mb: 2 }}>
+              <MenuItem value="empreendedor">Empreendedor</MenuItem>
+              <MenuItem value="mentor">Mentor autorizado</MenuItem>
+            </TextField>
+            {papel === "mentor" && <Alert severity="info" sx={{ mb: 2 }}>O acesso de mentor é autorizado pela equipe do Coroa Afro.</Alert>}
+            {error && (
+              <Alert severity="error" sx={{ mb: 3 }}>
+                {error}
+              </Alert>
+            )}
             <Typography
               align="center"
               sx={{
@@ -182,8 +231,8 @@ export default function Login() {
             <TextField
               fullWidth
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               sx={{
                 mb: 1,
                 backgroundColor: "#f2eaea",
@@ -209,7 +258,8 @@ export default function Login() {
 
             <Button
               fullWidth
-              onClick={handleConfirm}
+              type="submit"
+              disabled={loading}
               sx={{
                 background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
                 color: "#fff",
@@ -225,7 +275,11 @@ export default function Login() {
                 },
               }}
             >
-              Confirmar
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Entrar"
+              )}
             </Button>
 
             <Stack sx={{ textAlign: "center" }}>

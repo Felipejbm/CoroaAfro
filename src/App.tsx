@@ -1,30 +1,19 @@
+import TrilhasMentor from "./pages/Mentoria/TrilhasMentor";
+import MinhasTrilhas from "./pages/Mentoria/MinhasTrilhas";
 import { Route, Routes } from "react-router-dom";
+import RequireLogin from "./components/RequireLogin";
 import LandPage from "./pages/LandPage/LandPage";
-import Chat from "./pages/Chat/Chat";
-import ControleMentorado from "./pages/ControleMentorados/ControleMentorado";
-import CriarAtividades from "./pages/CriarAtividades/CriarAtividades";
-import CriarLicoes from "./pages/CriarLicoes/CriarLicoes";
-import CriarTrilhas from "./pages/CriarTilhas/CriarTrilhas";
-import DashboardFinanceiro from "./pages/DashboardFinanceiro/DashboardFinanceiro";
+import Chat from "./pages/Mentoria/ChatMentoria";
+import Mentoria from "./pages/Mentoria/Mentoria";
+import DashboardFinanceiro from "./pages/DashboardFinanceiro/DashboardMetas";
 import DashboardRedes from "./pages/DashboardRedes/DashboardRedes";
-import DetalhesMentorado from "./pages/DetalhesMentorado/DetalhesMentorado";
 import Equipe from "./pages/Equipe/Equipe";
-import Licoes from "./pages/Licoes/Licoes";
 import Login from "./pages/Login/Login";
 import Perfil from "./pages/Perfil/Perfil";
 import Planos from "./pages/Planos/Planos";
 import Posts from "./pages/Posts/Posts";
-import TrilhaGuiada from "./pages/Trilhas/TrilhaGuiada/TrilhaGuiada";
-import TrilhaPersonalizada from "./pages/Trilhas/TrilhaPersonalizada/TrilhaPersonalizada";
 import CadastroEmpreendedor from "./pages/Cadastro/CadastroEmpreendedor/CadastroEmpreendedor";
 import CadastroEmpresa from "./pages/Cadastro/CadastroEmpresa/CadastroEmpresa";
-import CriarTrilhaPersonalizada1 from "./pages/CriarTrilhaPersonalizada/Etapa1/CriarTrilhaPersonalizada";
-import CriarTrilhaPersonalizada2 from "./pages/CriarTrilhaPersonalizada/Etapa2/CriarTrilhaPersonalizada";
-import CriarTrilhaPersonalizada3 from "./pages/CriarTrilhaPersonalizada/Etapa3/CriarTrilhaPersonalizada";
-import CriarTrilhaPersonalizada4 from "./pages/CriarTrilhaPersonalizada/Etapa4/CriarTrilhaPersonalizada";
-import CriarTrilhaPersonalizada5 from "./pages/CriarTrilhaPersonalizada/Etapa5/CriarTrilhaPersonalizada";
-import DashboardMentor from "./pages/DashboardMentor/DashboardMentor";
-import ChatMentor from "./pages/ChatMentor/Chat";
 
 
 function App() {
@@ -32,45 +21,46 @@ function App() {
     <Routes>
       <Route path="/" element={<LandPage />} />
       <Route path="/cadastro-empreendedor" element={<CadastroEmpreendedor />} />
-      <Route path="/cadastro-empresa" element={<CadastroEmpresa />} />
-      <Route path="/chat" element={<Chat />} />
-      <Route path="/controle-mentorados" element={<ControleMentorado />} />
-      <Route path="/criar-atividade" element={<CriarAtividades />} />
-      <Route path="/criar-licao" element={<CriarLicoes />} />
+      <Route path="/cadastro-empresa" element={<RequireLogin><CadastroEmpresa /></RequireLogin>} />
+      <Route path="/chat" element={<RequireLogin><Chat /></RequireLogin>} />
+      <Route path="/controle-mentorados" element={<RequireLogin papel="mentor"><Mentoria /></RequireLogin>} />
+      <Route path="/criar-atividade" element={<RequireLogin papel="mentor"><TrilhasMentor /></RequireLogin>} />
+      <Route path="/criar-licao" element={<RequireLogin papel="mentor"><TrilhasMentor /></RequireLogin>} />
       <Route
         path="/criar-trilha-personalizada-1"
-        element={<CriarTrilhaPersonalizada1 />}
+        element={<RequireLogin><MinhasTrilhas /></RequireLogin>}
       />
       <Route
         path="/criar-trilha-personalizada-2"
-        element={<CriarTrilhaPersonalizada2 />}
+        element={<RequireLogin><MinhasTrilhas /></RequireLogin>}
       />
       <Route
         path="/criar-trilha-personalizada-3"
-        element={<CriarTrilhaPersonalizada3 />}
+        element={<RequireLogin><MinhasTrilhas /></RequireLogin>}
       />
       <Route
         path="/criar-trilha-personalizada-4"
-        element={<CriarTrilhaPersonalizada4 />}
+        element={<RequireLogin><MinhasTrilhas /></RequireLogin>}
       />
       <Route
         path="/criar-trilha-personalizada-5"
-        element={<CriarTrilhaPersonalizada5 />}
+        element={<RequireLogin><MinhasTrilhas /></RequireLogin>}
       />
-      <Route path="/criar-trilha" element={<CriarTrilhas />} />
-      <Route path="/dashboard-financeiro" element={<DashboardFinanceiro />} />
-      <Route path="/dashboard-redes" element={<DashboardRedes />} />
-      <Route path="/detalhes-mentorado" element={<DetalhesMentorado />} />
+      <Route path="/criar-trilha" element={<RequireLogin papel="mentor"><TrilhasMentor /></RequireLogin>} />
+      <Route path="/dashboard-financeiro" element={<RequireLogin><DashboardFinanceiro /></RequireLogin>} />
+      <Route path="/dashboard-redes" element={<RequireLogin><DashboardRedes /></RequireLogin>} />
+      <Route path="/detalhes-mentorado" element={<RequireLogin papel="mentor"><Mentoria detalhe /></RequireLogin>} />
+      <Route path="/detalhes-mentorado/:id" element={<RequireLogin papel="mentor"><Mentoria detalhe /></RequireLogin>} />
       <Route path="/equipe" element={<Equipe />} />
-      <Route path="/licoes" element={<Licoes />} />
+      <Route path="/licoes" element={<RequireLogin><MinhasTrilhas /></RequireLogin>} />
       <Route path="/login" element={<Login />} />
-      <Route path="/perfil" element={<Perfil />} />
+      <Route path="/perfil" element={<RequireLogin><Perfil /></RequireLogin>} />
       <Route path="/planos" element={<Planos />} />
-      <Route path="/posts" element={<Posts />} />
-      <Route path="/trilha-guiada" element={<TrilhaGuiada />} />
-      <Route path="/trilha-personalizada" element={<TrilhaPersonalizada />} />
-      <Route path="/dashboard-mentor" element={<DashboardMentor />} />
-      <Route path="/chat-mentor" element={<ChatMentor />} />
+      <Route path="/posts" element={<RequireLogin><Posts /></RequireLogin>} />
+      <Route path="/trilha-guiada" element={<RequireLogin><MinhasTrilhas /></RequireLogin>} />
+      <Route path="/trilha-personalizada" element={<RequireLogin><MinhasTrilhas /></RequireLogin>} />
+      <Route path="/dashboard-mentor" element={<RequireLogin papel="mentor"><Mentoria painel /></RequireLogin>} />
+      <Route path="/chat-mentor" element={<RequireLogin papel="mentor"><Chat mentor /></RequireLogin>} />
     </Routes>
   );
 }

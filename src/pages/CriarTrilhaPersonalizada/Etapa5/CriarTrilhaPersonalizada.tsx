@@ -2,11 +2,10 @@ import { Button, Stack, Switch, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import NavBarMentor from "../../../Components/NavMentor/NavBar";
 import { fonts } from "../../../styles/theme";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../../../components/NavBar/NavBar";
 export default function CriarTrilhaPersonalizada5() {
-
   const totalSteps = 5;
   const currentStep = 5;
 
@@ -18,7 +17,7 @@ export default function CriarTrilhaPersonalizada5() {
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
-      <NavBarMentor />
+      <NavBar />
 
       <Stack
         sx={{
@@ -72,14 +71,14 @@ export default function CriarTrilhaPersonalizada5() {
                 backgroundColor: "#e0523a",
               }}
             />
-              <Typography
-                sx={{
-                  fontFamily: fonts.body,
-                  fontWeight: 700,
-                  fontSize: "0.7rem",
-                  color: "#c43f2a",
-                }}
-              >
+            <Typography
+              sx={{
+                fontFamily: fonts.body,
+                fontWeight: 700,
+                fontSize: "0.7rem",
+                color: "#c43f2a",
+              }}
+            >
               Passo {currentStep} de {totalSteps}
             </Typography>
           </Stack>
@@ -105,14 +104,14 @@ export default function CriarTrilhaPersonalizada5() {
               mb: 3,
             }}
           >
-              <Typography
-                sx={{
-                  fontFamily: fonts.body,
-                  fontWeight: 700,
-                  fontSize: "1rem",
-                  color: "#fff",
-                }}
-              >
+            <Typography
+              sx={{
+                fontFamily: fonts.body,
+                fontWeight: 700,
+                fontSize: "1rem",
+                color: "#fff",
+              }}
+            >
               Nome da trilha: Presença Digital Forte
             </Typography>
             <Typography
@@ -208,13 +207,13 @@ export default function CriarTrilhaPersonalizada5() {
                 py: 1,
               }}
             >
-                  <Typography
-                    sx={{
-                      fontFamily: fonts.body,
-                      fontSize: "0.85rem",
-                      color: "#fff",
-                    }}
-                  >
+              <Typography
+                sx={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.85rem",
+                  color: "#fff",
+                }}
+              >
                 📷 Fotografia para Redes Sociais
               </Typography>
             </Stack>
@@ -226,13 +225,13 @@ export default function CriarTrilhaPersonalizada5() {
                 py: 1,
               }}
             >
-                  <Typography
-                    sx={{
-                      fontFamily: fonts.body,
-                      fontSize: "0.85rem",
-                      color: "#fff",
-                    }}
-                  >
+              <Typography
+                sx={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.85rem",
+                  color: "#fff",
+                }}
+              >
                 🎬 Criação de Reels que Vendem
               </Typography>
             </Stack>

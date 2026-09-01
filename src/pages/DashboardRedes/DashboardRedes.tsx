@@ -1,29 +1,112 @@
-import { Avatar, Button, Stack, Typography } from "@mui/material";
-import NavBar from "../../Components/NavBar/NavBar";
+import { Avatar, Button, Stack, Typography, Alert, Box, CircularProgress } from "@mui/material";
+import NavBar from "../../components/NavBar/NavBar";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import NavBar from "../../components/NavBar/NavBar";
+import {
+  buscarAlcanceInstagram,
+  buscarMidiasInstagram,
+  buscarPerfilInstagram,
+  getEmpreendedorLogado,
+  iniciarConexaoInstagram,
+  mensagemErroInstagram,
+} from "../../services/controllers/instagram";
+import type {
+  InstagramMedia,
+  InstagramProfile,
+} from "../../services/schema/instagramSchema";
+
+const cardSx = {
+  backgroundColor: "#26262f",
+  borderRadius: "12px",
+  p: 2,
+  minWidth: 0,
+};
 
 export default function DashboardRedes() {
-  const handleConnect = () => {
-    console.log("Conectar com Meta Analytics");
-  };
-
-  const handleFetchData = () => {
-    console.log("Buscar Dados");
-  };
-
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const usuario = useMemo(() => getEmpreendedorLogado(), []);
+  const [profile, setProfile] = useState<InstagramProfile | null>(null);
+  const [media, setMedia] = useState<InstagramMedia[]>([]);
+  const [reach, setReach] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const connected = searchParams.get("instagram") === "connected";
+
+  const loadInstagram = useCallback(async () => {
+    if (!usuario) {
+      setError("Entre na sua conta para conectar o Instagram.");
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    try {
+      const [profileData, mediaData, insightsData] = await Promise.all([
+        buscarPerfilInstagram(usuario.id),
+        buscarMidiasInstagram(usuario.id),
+        buscarAlcanceInstagram(usuario.id),
+      ]);
+      const reachMetric = insightsData.data.find((item) => item.name === "reach");
+      const latestReach = reachMetric?.values.at(-1)?.value;
+
+      setProfile(profileData);
+      setMedia(mediaData);
+      setReach(typeof latestReach === "number" ? latestReach : 0);
+    } catch (requestError) {
+      setError(mensagemErroInstagram(requestError));
+      setProfile(null);
+      setMedia([]);
+      setReach(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [usuario]);
+
+  useEffect(() => {
+    void loadInstagram();
+  }, [loadInstagram]);
+
+  useEffect(() => {
+    if (!connected) return;
+    const timer = window.setTimeout(() => {
+      setSearchParams({}, { replace: true });
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, [connected, setSearchParams]);
+
+  const likes = media.reduce((total, item) => total + (item.like_count ?? 0), 0);
+  const comments = media.reduce(
+    (total, item) => total + (item.comments_count ?? 0),
+    0,
+  );
+  const popularPosts = [...media]
+    .sort(
+      (a, b) =>
+        (b.like_count ?? 0) + (b.comments_count ?? 0) -
+        ((a.like_count ?? 0) + (a.comments_count ?? 0)),
+    )
+    .slice(0, 3);
+
+  const handleConnect = () => {
+    if (!usuario) {
+      navigate("/login");
+      return;
+    }
+    iniciarConexaoInstagram(usuario.id);
+  };
+
   return (
     <Stack
-      direction={"row"}
-      sx={{
-        width: "100%",
-        minHeight: "100vh",
-        backgroundColor: "#f9dde0",
-      }}
+      direction="row"
+      sx={{ width: "100%", minHeight: "100vh", bgcolor: "#f9dde0" }}
     >
       <NavBar />
-
       <Stack
         sx={{
           flex: 1,
@@ -45,7 +128,6 @@ export default function DashboardRedes() {
           <Stack>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
                 fontWeight: 700,
                 fontSize: { xs: "1.6rem", md: "2rem" },
                 mb: 2,
@@ -53,344 +135,232 @@ export default function DashboardRedes() {
             >
               Acompanhe a evolução da sua marca no digital
             </Typography>
-            <Stack direction={"row"} sx={{ flexWrap: "wrap", gap: 1.5 }}>
+            <Stack direction="row" sx={{ flexWrap: "wrap", gap: 1.5 }}>
               <Button
+                variant="contained"
+                startIcon={<InstagramIcon />}
                 onClick={handleConnect}
-                sx={{
-                  backgroundColor: "#e0523a",
-                  color: "#fff",
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  textTransform: "none",
-                  borderRadius: "8px",
-                  px: 2.5,
-                  py: 1,
-                  "&:hover": { backgroundColor: "#c43f2a" },
-                }}
               >
-                Conectar com Meta Analytics
+                {profile ? "Reconectar Instagram" : "Conectar Instagram"}
               </Button>
               <Button
-                onClick={handleFetchData}
+                variant="contained"
+                startIcon={
+                  loading ? (
+                    <CircularProgress size={16} color="inherit" />
+                  ) : (
+                    <RefreshIcon />
+                  )
+                }
+                disabled={loading}
+                onClick={() => void loadInstagram()}
                 sx={{
-                  backgroundColor: "#26262f",
-                  color: "#fff",
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  textTransform: "none",
-                  borderRadius: "8px",
-                  px: 2.5,
-                  py: 1,
-                  "&:hover": { backgroundColor: "#3a3a3a" },
+                  bgcolor: "#26262f",
+                  "&:hover": { bgcolor: "#3a3a3a" },
                 }}
               >
-                Buscar Dados
-              </Button>
-              <Button
-                sx={{
-                  backgroundColor: "#26262f",
-                  color: "#fff",
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  textTransform: "none",
-                  borderRadius: "8px",
-                  px: 2.5,
-                  py: 1,
-                  "&:hover": { backgroundColor: "#3a3a3a" },
-                }}
-              >
-                Instagram
+                Atualizar dados
               </Button>
             </Stack>
           </Stack>
 
           <Stack
+            direction="row"
             sx={{
-              display: "flex",
               alignItems: "center",
               gap: 1.5,
-              backgroundColor: "#1c1830",
+              bgcolor: "#1c1830",
               borderRadius: "30px",
               px: 2,
               py: 1,
             }}
           >
-            <Avatar sx={{ bgcolor: "#e0523a", width: 36, height: 36 }} />
-            <Stack direction="row" sx={{ alignItems: "center", gap: 2 }}>
-              <Stack>
-                <Typography
-                  sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    color: "#fff",
-                  }}
-                >
-                  Café da Dandara
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
-                    fontSize: "0.7rem",
-                    color: "rgba(255,255,255,0.6)",
-                  }}
-                >
-                  Plano Premium
-                </Typography>
-              </Stack>
-
-              {/* Botão de Perfil adicionado */}
-              <Button
-                variant="contained"
-                startIcon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
-                onClick={() => navigate("/perfil")}
+            <Avatar
+              src={profile?.profile_picture_url}
+              sx={{ bgcolor: "#e0523a", width: 40, height: 40 }}
+            />
+            <Stack>
+              <Typography
+                sx={{ fontWeight: 700, fontSize: "0.85rem", color: "#fff" }}
+              >
+                {profile ? `@${profile.username}` : usuario?.nome ?? "Visitante"}
+              </Typography>
+              <Typography
                 sx={{
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  color: "#fff",
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.75rem",
-                  textTransform: "none",
-                  borderRadius: "6px",
-                  px: 1.5,
-                  py: 0.5,
-                  boxShadow: "none",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.2)",
-                    boxShadow: "none",
-                  },
+                  fontSize: "0.72rem",
+                  color: "rgba(255,255,255,0.65)",
                 }}
               >
-                Ver Perfil
-              </Button>
+                {profile ? "Instagram conectado" : "Instagram não conectado"}
+              </Typography>
             </Stack>
+            <Button
+              startIcon={<AccountCircleIcon />}
+              onClick={() => navigate("/perfil")}
+              sx={{
+                color: "#fff",
+                bgcolor: "rgba(255,255,255,0.1)",
+                "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
+              }}
+            >
+              Perfil
+            </Button>
           </Stack>
         </Stack>
 
-        <Stack direction={"row"} sx={{ gap: 1.5, mb: 4 }}>
-          {["Hoje", "7 dias", "30 dias"].map((f) => (
-            <Button
-              key={f}
-              sx={{
-                backgroundColor: "#26262f",
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
-                fontSize: "0.8rem",
-                textTransform: "none",
-                borderRadius: "8px",
-                px: 2.5,
-                py: 0.8,
-                "&:hover": { backgroundColor: "#3a3a3a" },
-              }}
-            >
-              {f}
-            </Button>
-          ))}
-        </Stack>
+        {connected && (
+          <Alert severity="success" sx={{ mb: 3 }}>
+            Instagram conectado com sucesso.
+          </Alert>
+        )}
+        {error && (
+          <Alert severity="warning" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
 
-        <Typography
-          sx={{
-            fontFamily: "'Comfortaa', sans-serif",
-            fontWeight: 700,
-            fontSize: "1.2rem",
-            mb: 2,
-          }}
-        >
-          Métricas de Visibilidade
+        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2 }}>
+          Visão geral
         </Typography>
-        <Stack
+        <Box
           sx={{
             display: "grid",
             gridTemplateColumns: {
               xs: "1fr",
               sm: "repeat(2, 1fr)",
-              md: "repeat(5, 1fr)",
+              lg: "repeat(4, 1fr)",
             },
             gap: 2,
             mb: 4,
           }}
         >
           {[
-            "Seguidores Totais",
-            "Novos Seguidores",
-            "Alcance",
-            "Impressões",
-            "Visitas ao Perfil",
-          ].map((m) => (
-            <Stack
-              key={m}
-              sx={{ backgroundColor: "#26262f", borderRadius: "10px", p: 2 }}
-            >
+            ["Seguidores", profile?.followers_count ?? "--"],
+            ["Publicações", profile?.media_count ?? "--"],
+            ["Alcance hoje", profile ? reach : "--"],
+            ["Curtidas nos posts", profile ? likes : "--"],
+          ].map(([label, value]) => (
+            <Stack key={label} sx={cardSx}>
               <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "#fff",
-                }}
+                sx={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)" }}
               >
-                {m}
+                {label}
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
                   fontWeight: 700,
-                  fontSize: "1.1rem",
-                  color: "#e0523a",
+                  fontSize: "1.6rem",
+                  color: "#f06a52",
                   mt: 1,
                 }}
               >
-                --
+                {loading ? <CircularProgress size={22} color="inherit" /> : value}
               </Typography>
             </Stack>
           ))}
-        </Stack>
+        </Box>
 
-        <Typography
-          sx={{
-            fontFamily: "'Comfortaa', sans-serif",
-            fontWeight: 700,
-            fontSize: "1.2rem",
-            mb: 2,
-          }}
-        >
-          Métricas de Interação
+        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2 }}>
+          Interações das publicações carregadas
         </Typography>
-        <Stack
+        <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(4, 1fr)",
-            },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
             gap: 2,
             mb: 4,
           }}
         >
-          {["Curtidas", "Comentários", "Salvamentos", "Compartilha"].map(
-            (m) => (
-              <Stack
-                key={m}
-                sx={{ backgroundColor: "#26262f", borderRadius: "10px", p: 2 }}
+          {[
+            ["Curtidas", likes],
+            ["Comentários", comments],
+          ].map(([label, value]) => (
+            <Stack key={label} sx={cardSx}>
+              <Typography sx={{ color: "#fff" }}>{label}</Typography>
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "1.4rem",
+                  color: "#f06a52",
+                  mt: 1,
+                }}
               >
-                <Typography
-                  sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
-                    fontSize: "0.85rem",
-                    color: "#fff",
-                  }}
-                >
-                  {m}
+                {profile ? value : "--"}
+              </Typography>
+            </Stack>
+          ))}
+        </Box>
+
+        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2 }}>
+          Publicações em destaque
+        </Typography>
+        {popularPosts.length === 0 ? (
+          <Stack sx={{ ...cardSx, alignItems: "center", py: 5 }}>
+            <InstagramIcon sx={{ color: "#f06a52", fontSize: 40, mb: 1 }} />
+            <Typography sx={{ color: "#fff" }}>
+              {loading
+                ? "Carregando publicações..."
+                : "Nenhuma publicação disponível."}
+            </Typography>
+          </Stack>
+        ) : (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(auto-fit, minmax(220px, 280px))",
+              },
+              gap: 2,
+              justifyContent: { xs: "stretch", sm: "flex-start" },
+            }}
+          >
+            {popularPosts.map((post) => (
+              <Stack
+                key={post.id}
+                component="a"
+                href={post.permalink}
+                target="_blank"
+                rel="noreferrer"
+                sx={{
+                  ...cardSx,
+                  width: "100%",
+                  maxWidth: { xs: "100%", sm: 280 },
+                  textDecoration: "none",
+                  overflow: "hidden",
+                }}
+              >
+                {(post.thumbnail_url || post.media_url) && (
+                  <Box
+                    component="img"
+                    src={post.thumbnail_url || post.media_url}
+                    alt={post.caption || "Publicação do Instagram"}
+                    sx={{
+                      width: "100%",
+                      height: { xs: 190, sm: 170 },
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                      mb: 1.5,
+                    }}
+                  />
+                )}
+                <Typography noWrap sx={{ color: "#fff", fontWeight: 600 }}>
+                  {post.caption || "Publicação sem legenda"}
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
-                    fontWeight: 700,
-                    fontSize: "1.1rem",
-                    color: "#e0523a",
-                    mt: 1,
+                    color: "rgba(255,255,255,0.65)",
+                    fontSize: "0.8rem",
+                    mt: 0.7,
                   }}
                 >
-                  --
+                  {post.like_count ?? 0} curtidas • {post.comments_count ?? 0}{" "}
+                  comentários
                 </Typography>
               </Stack>
-            ),
-          )}
-        </Stack>
-
-        <Stack
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(4, 1fr)",
-            },
-            gap: 2,
-            mb: 4,
-          }}
-        >
-          {[
-            "Alcance de Reels",
-            "Cliques no Link da Bio",
-            "Toques no Botão de Contato",
-            "Visualizações de Stories",
-          ].map((m) => (
-            <Stack
-              key={m}
-              sx={{ backgroundColor: "#26262f", borderRadius: "10px", p: 2 }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "#fff",
-                }}
-              >
-                {m}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "1.1rem",
-                  color: "#e0523a",
-                  mt: 1,
-                }}
-              >
-                --
-              </Typography>
-            </Stack>
-          ))}
-        </Stack>
-
-        <Typography
-          sx={{
-            fontFamily: "'Comfortaa', sans-serif",
-            fontWeight: 700,
-            fontSize: "1.2rem",
-            mb: 2,
-          }}
-        >
-          Posts Populares — Maior Alcance do Mês
-        </Typography>
-        <Stack
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
-            },
-            gap: 2,
-          }}
-        >
-          {[1, 2, 3].map((p) => (
-            <Stack
-              key={p}
-              sx={{ backgroundColor: "#26262f", borderRadius: "10px", p: 2 }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "#fff",
-                  mb: 1,
-                }}
-              >
-                Aguardando dados da API...
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
-                  fontSize: "0.75rem",
-                  color: "rgba(255,255,255,0.6)",
-                }}
-              >
-                Alcance • Curtidas • Visualiz. • Salvamen.
-              </Typography>
-            </Stack>
-          ))}
-        </Stack>
+            ))}
+          </Box>
+        )}
       </Stack>
     </Stack>
   );

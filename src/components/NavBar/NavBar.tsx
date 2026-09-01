@@ -3,10 +3,25 @@ import { navItems } from "./NavBar.utils.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { fonts } from "../../styles/theme";
+import { logout } from "../../services/controllers/auth";
+import { mensagemErroApi } from "../../services/controllers/empresa";
+import { useState } from "react";
 
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [saindo, setSaindo] = useState(false);
+  const [erroSaida, setErroSaida] = useState("");
+  const sair = async () => {
+    setSaindo(true);
+    setErroSaida("");
+    try {
+      await logout();
+      navigate("/login", { replace: true });
+    } catch (error) {
+      setErroSaida(mensagemErroApi(error));
+    } finally { setSaindo(false); }
+  };
 
   return (
     <Stack
@@ -103,7 +118,8 @@ export default function NavBar() {
         <Button
           fullWidth
           startIcon={<LogoutIcon />}
-          onClick={() => navigate("/")}
+          onClick={() => void sair()}
+          disabled={saindo}
           sx={{
             background: "linear-gradient(90deg, #f0623e, #e0523a)",
             color: "#fff",
@@ -118,6 +134,7 @@ export default function NavBar() {
         >
           Sair
         </Button>
+        {erroSaida && <Typography role="alert" sx={{ color: "#ffb4ab", fontSize: 12 }}>{erroSaida}</Typography>}
       </Stack>
     </Stack>
   );
