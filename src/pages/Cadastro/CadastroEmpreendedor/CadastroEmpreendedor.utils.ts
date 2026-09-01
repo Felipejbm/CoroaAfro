@@ -6,7 +6,6 @@ export const initialFormData: FormData = {
     email: "",
     genero: "",
     senha: "",
-    cargo: "",
     cpf: "",
     telefone: "",
 };
@@ -14,11 +13,10 @@ export const initialFormData: FormData = {
 export const fieldRows: { label: string; field: keyof FormData; type?: string }[][] = [
     [
         { label: "Nome completo:", field: "nomeCompleto" },
-        { label: "Senha:", field: "senha", type: "password" },
     ],
     [
+        { label: "Senha:", field: "senha", type: "password" },
         { label: "Data de nascimento:", field: "dataNascimento", type: "date" },
-        { label: "Cargo na empresa:", field: "cargo" },
     ],
     [
         { label: "E-mail:", field: "email", type: "email" },
@@ -29,3 +27,4 @@ export const fieldRows: { label: string; field: keyof FormData; type?: string }[
         { label: "Telefone/WhatsApp:", field: "telefone" },
     ],
 ];
+

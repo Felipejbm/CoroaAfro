@@ -1,8 +1,8 @@
-import api from "../../api/axios"
+import api from "../../../api/axios"
 import type { LoginReq } from "../schema/authSchema";
 
-export async function login(data: LoginReq) {
-    const resp = await api.post("/login", data)
+export async function login(req: LoginReq) {
+    const resp = await api.post("/login", req)
 
     const empreendedor = resp.data.Empreendedor;
 

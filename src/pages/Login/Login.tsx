@@ -16,7 +16,7 @@ import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../components/Layout/Layout";
 import { fonts } from "../../styles/theme";
-import { login } from "../../services/controllers/auth";
+import { login } from "../../services/Auth/controllers/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
