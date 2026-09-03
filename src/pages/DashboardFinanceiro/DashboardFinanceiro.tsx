@@ -4,27 +4,32 @@ import {
   LinearProgress,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import type { MetricCard, ProgressItem } from "./DashboardFinanceiro.types";
 import {
   metricCards,
   monthlyGoals,
   weeklyAnalysis,
 } from "./DashboardFinanceiro.utils";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; 
 import { useNavigate } from "react-router-dom";
+import { fonts } from "../../styles/theme";
 
 function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
+  const theme = useTheme();
+
   return (
     <Stack
-      sx={{ backgroundColor: "#1c1830", borderRadius: "12px", p: 2.5, flex: 1 }}
+      sx={{ backgroundColor: theme.palette.background.default, borderRadius: "12px", p: 2.5, flex: 1 }}
     >
       <Typography
         sx={{
-          fontFamily: "'Comfortaa', sans-serif",
+          fontFamily: fonts.body,
           fontSize: "0.8rem",
-          color: "rgba(255,255,255,0.6)",
+          color: alpha(theme.palette.common.white, 0.6),
           mb: 1,
         }}
       >
@@ -32,10 +37,10 @@ function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
       </Typography>
       <Typography
         sx={{
-          fontFamily: "'Comfortaa', sans-serif",
+          fontFamily: fonts.body,
           fontWeight: 700,
           fontSize: "1.5rem",
-          color: "#fff",
+          color: theme.palette.common.white,
         }}
       >
         {value}
@@ -43,7 +48,7 @@ function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
       {note && (
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.75rem",
             color: noteColor,
             mt: 0.5,
@@ -63,14 +68,16 @@ function ProgressPanel({
   title: string;
   items: ProgressItem[];
 }) {
+  const theme = useTheme();
+
   return (
-    <Stack sx={{ backgroundColor: "#1c1830", borderRadius: "12px", p: 2.5 }}>
+    <Stack sx={{ backgroundColor: theme.palette.background.default, borderRadius: "12px", p: 2.5 }}>
       <Typography
         sx={{
-          fontFamily: "'Comfortaa', sans-serif",
+          fontFamily: fonts.body,
           fontWeight: 700,
           fontSize: "0.95rem",
-          color: "#fff",
+          color: theme.palette.common.white,
           mb: 2,
         }}
       >
@@ -84,18 +91,18 @@ function ProgressPanel({
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.75rem",
-                  color: "rgba(255,255,255,0.7)",
+                  color: alpha(theme.palette.common.white, 0.7),
                 }}
               >
                 {item.label}
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.75rem",
-                  color: "rgba(255,255,255,0.7)",
+                  color: alpha(theme.palette.common.white, 0.7),
                 }}
               >
                 {item.value}%
@@ -107,10 +114,10 @@ function ProgressPanel({
               sx={{
                 height: 6,
                 borderRadius: 3,
-                backgroundColor: "rgba(255,255,255,0.1)",
+                backgroundColor: alpha(theme.palette.common.white, 0.1),
                 "& .MuiLinearProgress-bar": {
                   borderRadius: 3,
-                  background: "linear-gradient(90deg, #e0523a, #f06a52)",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                 },
               }}
             />
@@ -122,12 +129,13 @@ function ProgressPanel({
 }
 
 export default function DashboardFinanceiro() {
+  const theme = useTheme();
   const navigate = useNavigate();
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
-      <Stack sx={{ backgroundColor: "#f9dde0", p: { xs: 2, md: 3 }, flex: 1 }}>
+      <Stack sx={{ backgroundColor: theme.palette.secondary.light, p: { xs: 2, md: 3 }, flex: 1 }}>
         <Stack
           sx={{
             display: "flex",
@@ -141,10 +149,10 @@ export default function DashboardFinanceiro() {
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: { xs: "1.3rem", md: "1.6rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               maxWidth: 460,
             }}
           >
@@ -156,30 +164,30 @@ export default function DashboardFinanceiro() {
               display: "flex",
               alignItems: "center",
               gap: 1.5,
-              backgroundColor: "#1c1830",
+              backgroundColor: theme.palette.background.default,
               borderRadius: "30px",
               px: 2,
               py: 1,
             }}
           >
-            <Avatar sx={{ bgcolor: "#e0523a", width: 36, height: 36 }} />
+            <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 36, height: 36 }} />
             <Stack direction="row" sx={{ alignItems: "center", gap: 2 }}>
               <Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                     fontSize: "0.8rem",
-                    color: "#fff",
+                    color: theme.palette.common.white,
                   }}
                 >
                   Café da Dandara
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.7rem",
-                    color: "rgba(255,255,255,0.6)",
+                    color: alpha(theme.palette.common.white, 0.6),
                   }}
                 >
                   Plano Premium
@@ -192,9 +200,9 @@ export default function DashboardFinanceiro() {
                 startIcon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
                 onClick={() => navigate("/perfil")}
                 sx={{
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  color: "#fff",
-                  fontFamily: "'Comfortaa', sans-serif",
+                  backgroundColor: alpha(theme.palette.common.white, 0.1),
+                  color: theme.palette.common.white,
+                  fontFamily: fonts.body,
                   fontSize: "0.75rem",
                   textTransform: "none",
                   borderRadius: "6px",
@@ -202,7 +210,7 @@ export default function DashboardFinanceiro() {
                   py: 0.5,
                   boxShadow: "none",
                   "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                    backgroundColor: alpha(theme.palette.common.white, 0.2),
                     boxShadow: "none",
                   },
                 }}
@@ -237,7 +245,7 @@ export default function DashboardFinanceiro() {
 
             <Stack
               sx={{
-                backgroundColor: "#1c1830",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "12px",
                 p: 2.5,
                 minHeight: 200,
@@ -245,10 +253,10 @@ export default function DashboardFinanceiro() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontWeight: 700,
                   fontSize: "0.95rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                   mb: 2,
                 }}
               >
@@ -256,9 +264,9 @@ export default function DashboardFinanceiro() {
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "rgba(255,255,255,0.75)",
+                  color: alpha(theme.palette.common.white, 0.75),
                   lineHeight: 1.6,
                 }}
               >
@@ -283,7 +291,7 @@ export default function DashboardFinanceiro() {
         </Stack>
 
         <Stack
-          sx={{ backgroundColor: "#1c1830", borderRadius: "12px", p: 2.5 }}
+          sx={{ backgroundColor: theme.palette.background.default, borderRadius: "12px", p: 2.5 }}
         >
           <Stack>Gráfico aqui</Stack>
         </Stack>

@@ -1,18 +1,20 @@
-import { Toolbar, Box, Button, Avatar, Stack } from "@mui/material";
-import { navLinks } from "./NavBarLandPage.utils.ts";
+import { Toolbar, Box, Button, Avatar, Stack, alpha, useTheme } from "@mui/material";
 import { fonts } from "../../styles/theme";
+import { navLinks } from "./NavBarLandPage.utils";
 
 export default function NavBarLandPage() {
+  const theme = useTheme();
+
   return (
     <Stack
       sx={{
-        position: "fixed",  
+        position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
-        zIndex: 1100, 
-        backgroundColor: "rgba(194, 177, 177, 0.85)",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+        zIndex: 1100,
+        backgroundColor: alpha(theme.palette.secondary.main, 0.85),
+        boxShadow: `0 4px 12px ${alpha(theme.palette.common.black, 0.15)}`,
       }}
     >
       <Toolbar
@@ -44,19 +46,21 @@ export default function NavBarLandPage() {
                 disableElevation
                 sx={{
                   background: isActive
-                    ? "linear-gradient(180deg, #f06a52, #e0523a)" 
-                    : "transparent", 
-                  color: isActive ? "#fff" : "text.primary",
-                  fontFamily: fonts.hero,
+                    ? (theme) =>
+                        `linear-gradient(180deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`
+                    : "transparent",
+                  color: isActive ? "secondary.main" : "text.primary",
+                  fontFamily: fonts.navbar,
                   fontSize: "1.1rem",
                   textTransform: "none",
                   borderRadius: "6px",
                   px: 3,
-                  boxShadow: isActive ? "0 2px 6px rgba(0,0,0,0.3)" : "none",
+                  boxShadow: isActive ? `0 2px 6px ${alpha(theme.palette.common.black, 0.3)}` : "none",
                   "&:hover": {
                     background: isActive
-                      ? "linear-gradient(180deg, #f06a52, #c43f2a)"
-                      : "rgba(0,0,0,0.05)",
+                      ? (theme) =>
+                          `linear-gradient(180deg, ${theme.palette.primary.light}, ${theme.palette.primary.dark})`
+                      : alpha(theme.palette.common.white, 0.05),
                   },
                 }}
               >

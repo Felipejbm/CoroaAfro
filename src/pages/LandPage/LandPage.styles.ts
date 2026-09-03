@@ -1,12 +1,14 @@
+import { default as theme } from "../../styles/theme";
+
 export const styles = {
   page: {
-    background: "#FBDDDE",
+    background: theme.palette.secondary.light,
     minHeight: "100vh",
   },
 
   /* NAVBAR */
   navbar: {
-    background: "#fff",
+    background: theme.palette.common.white,
     boxShadow: "none",
   },
 
@@ -17,12 +19,12 @@ export const styles = {
 
   logo: {
     fontWeight: 800,
-    color: "#c2185b",
+    color: theme.palette.primary.dark,
     fontSize: "20px",
   },
 
   navBtn: {
-    color: "#333",
+    color: theme.palette.text.primary,
     textTransform: "none",
   },
 
@@ -42,20 +44,20 @@ export const styles = {
 
   subtitle: {
     marginTop: "12px",
-    color: "#555",
+    color: theme.palette.text.primary,
   },
 
   cta: {
     marginTop: "24px",
-    background: "linear-gradient(45deg, #c2185b, #ff4081)",
-    color: "white",
+    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+    color: theme.palette.getContrastText(theme.palette.primary.main),
     borderRadius: "20px",
     padding: "10px 20px",
   },
 
   heroMock: {
     height: "260px",
-    background: "#f8bbd0",
+    background: theme.palette.secondary.main,
     borderRadius: "16px",
   },
 
@@ -79,8 +81,8 @@ export const styles = {
 
   /* PROPOSTA SOCIAL */
   social: {
-    background: "linear-gradient(45deg, #c2185b, #ff7043)",
-    color: "white",
+    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+    color: theme.palette.getContrastText(theme.palette.primary.main),
     padding: "60px 20px",
     textAlign: "center",
   },
@@ -97,12 +99,12 @@ export const styles = {
   },
 
   textMuted: {
-    color: "#666",
+    color: theme.palette.text.primary,
   },
 
   /* PLANOS */
   plans: {
-    background: "#fff0f3",
+    background: theme.palette.secondary.light,
     padding: "60px 0",
   },
 
@@ -112,14 +114,14 @@ export const styles = {
 
   price: {
     fontWeight: 800,
-    color: "#c2185b",
+    color: theme.palette.primary.main,
     margin: "10px 0",
   },
 
   ctaSmall: {
     marginTop: "10px",
-    background: "linear-gradient(45deg, #c2185b, #ff4081)",
-    color: "white",
+    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+    color: theme.palette.getContrastText(theme.palette.primary.main),
     borderRadius: "12px",
   },
 };

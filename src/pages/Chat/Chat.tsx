@@ -1,10 +1,11 @@
-import {
+import { useTheme,
   Avatar,
   IconButton,
   InputBase,
   Stack,
   Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import type { Conversation, Message } from "./Chat.types";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -16,7 +17,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import { useState } from "react";
 import { messages, onlineNow, recents } from "./Chats.utils";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
 
 function ConversationItem({
@@ -28,6 +29,8 @@ function ConversationItem({
   isActive: boolean;
   onClick: () => void;
 }) {
+  const theme = useTheme();
+
   return (
     <Stack
       direction="row"
@@ -38,8 +41,8 @@ function ConversationItem({
         px: 2,
         py: 1.2,
         cursor: "pointer",
-        backgroundColor: isActive ? "rgba(255,255,255,0.08)" : "transparent",
-        "&:hover": { backgroundColor: "rgba(255,255,255,0.04)" },
+        backgroundColor: isActive ? alpha(theme.palette.common.white, 0.08) : "transparent",
+        "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.04) },
       }}
     >
       <Stack sx={{ position: "relative" }}>
@@ -62,8 +65,8 @@ function ConversationItem({
               width: 10,
               height: 10,
               borderRadius: "50%",
-              backgroundColor: "#3ddc97",
-              border: "2px solid #16161d",
+              backgroundColor: theme.palette.success.main,
+              border: `2px solid ${theme.palette.background.default}`,
             }}
           />
         )}
@@ -74,7 +77,7 @@ function ConversationItem({
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "0.85rem",
-            color: "#fff",
+            color: theme.palette.common.white,
           }}
         >
           {conv.name}
@@ -84,7 +87,7 @@ function ConversationItem({
           sx={{
             fontFamily: fonts.body,
             fontSize: "0.75rem",
-            color: "rgba(255,255,255,0.5)",
+            color: alpha(theme.palette.common.white, 0.5),
           }}
         >
           {conv.lastMessage}
@@ -102,7 +105,7 @@ function ConversationItem({
           sx={{
             fontFamily: fonts.body,
             fontSize: "0.7rem",
-            color: "rgba(255,255,255,0.4)",
+            color: alpha(theme.palette.common.white, 0.4),
           }}
         >
           {conv.time}
@@ -110,7 +113,7 @@ function ConversationItem({
         {conv.unread && !isActive && (
           <Stack
             sx={{
-              backgroundColor: "#e0523a",
+              backgroundColor: theme.palette.primary.main,
               borderRadius: "10px",
               minWidth: 18,
               height: 18,
@@ -124,7 +127,7 @@ function ConversationItem({
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.65rem",
-                color: "#fff",
+                color: theme.palette.common.white,
                 fontWeight: 700,
               }}
             >
@@ -138,6 +141,7 @@ function ConversationItem({
 }
 
 function MessageBubble({ message }: { message: Message }) {
+  const theme = useTheme();
   const { fromMe, text, time, highlight } = message;
 
   return (
@@ -158,8 +162,8 @@ function MessageBubble({ message }: { message: Message }) {
       >
         <Stack
           sx={{
-            backgroundColor: fromMe ? "#e0523a" : "#16161d",
-            color: "#fff",
+            backgroundColor: fromMe ? theme.palette.primary.main : theme.palette.background.default,
+            color: theme.palette.common.white,
             borderRadius: "14px",
             px: 2,
             py: 1.3,
@@ -178,7 +182,7 @@ function MessageBubble({ message }: { message: Message }) {
           {highlight && (
             <Stack
               sx={{
-                backgroundColor: "#0c0c10",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "10px",
                 p: 1.5,
                 mt: 1.2,
@@ -188,7 +192,7 @@ function MessageBubble({ message }: { message: Message }) {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.65rem",
-                  color: "#3ddc97",
+                  color: theme.palette.success.main,
                   mb: 0.5,
                 }}
               >
@@ -199,7 +203,7 @@ function MessageBubble({ message }: { message: Message }) {
                   fontFamily: fonts.body,
                   fontWeight: 700,
                   fontSize: "0.85rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                   mb: 0.4,
                 }}
               >
@@ -209,7 +213,7 @@ function MessageBubble({ message }: { message: Message }) {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.72rem",
-                  color: "rgba(255,255,255,0.6)",
+                  color: alpha(theme.palette.common.white, 0.6),
                   lineHeight: 1.4,
                 }}
               >
@@ -219,12 +223,12 @@ function MessageBubble({ message }: { message: Message }) {
           )}
         </Stack>
         <Stack direction="row" sx={{ alignItems: "center", gap: 0.4, mt: 0.4 }}>
-          {fromMe && <DoneAllIcon sx={{ fontSize: 12, color: "#3ddc97" }} />}
+          {fromMe && <DoneAllIcon sx={{ fontSize: 12, color: theme.palette.success.main }} />}
           <Typography
             sx={{
               fontFamily: fonts.body,
               fontSize: "0.65rem",
-              color: "rgba(0,0,0,0.4)",
+              color: alpha(theme.palette.common.black, 0.4),
             }}
           >
             {time}
@@ -236,6 +240,7 @@ function MessageBubble({ message }: { message: Message }) {
 }
 
 export default function Chat() {
+  const theme = useTheme();
   const [input, setInput] = useState("");
 
   const [activeConversation, setActiveConversation] = useState<Conversation>(
@@ -265,13 +270,13 @@ export default function Chat() {
 
       <Stack
         direction={"row"}
-        sx={{ flexGrow: 1, height: "100vh", backgroundColor: "#f9dde0" }}
+        sx={{ flexGrow: 1, height: "100vh", backgroundColor: theme.palette.secondary.light }}
       >
         <Stack
           sx={{
             width: 280,
             minWidth: 280,
-            backgroundColor: "#16161d",
+            backgroundColor: theme.palette.background.default,
             display: "flex",
             flexDirection: "column",
             height: "100%",
@@ -283,7 +288,7 @@ export default function Chat() {
                 fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
-                color: "#fff",
+                color: theme.palette.common.white,
                 mb: 2,
               }}
             >
@@ -294,19 +299,19 @@ export default function Chat() {
               sx={{
                 alignItems: "center",
                 gap: 1,
-                backgroundColor: "rgba(255,255,255,0.06)",
+                backgroundColor: alpha(theme.palette.common.white, 0.06),
                 borderRadius: "8px",
                 px: 1.5,
                 py: 0.8,
               }}
             >
               <SearchIcon
-                sx={{ fontSize: 18, color: "rgba(255,255,255,0.5)" }}
+                sx={{ fontSize: 18, color: alpha(theme.palette.common.white, 0.5) }}
               />
               <InputBase
                 placeholder="Buscar conversa..."
                 sx={{
-                  color: "#fff",
+                  color: theme.palette.common.white,
                   fontFamily: fonts.body,
                   fontSize: "0.8rem",
                   flex: 1,
@@ -320,7 +325,7 @@ export default function Chat() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.7rem",
-                color: "rgba(255,255,255,0.4)",
+                color: alpha(theme.palette.common.white, 0.4),
                 px: 2,
                 mb: 0.5,
                 mt: 1,
@@ -341,7 +346,7 @@ export default function Chat() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.7rem",
-                color: "rgba(255,255,255,0.4)",
+                color: alpha(theme.palette.common.white, 0.4),
                 px: 2,
                 mb: 0.5,
                 mt: 2,
@@ -371,7 +376,7 @@ export default function Chat() {
           <Stack
             direction="row"
             sx={{
-              backgroundColor: "rgba(122,31,74,0.5)",
+              backgroundColor: alpha(theme.palette.primary.main, 0.5),
               alignItems: "center",
               justifyContent: "space-between",
               px: 2.5,
@@ -381,7 +386,7 @@ export default function Chat() {
             <Stack direction="row" sx={{ alignItems: "center", gap: 1.5 }}>
               <Avatar
                 sx={{
-                  bgcolor: activeConversation.color || "#8a3fae",
+                  bgcolor: activeConversation.color || theme.palette.primary.light,
                   width: 38,
                   height: 38,
                   fontSize: "0.8rem",
@@ -395,7 +400,7 @@ export default function Chat() {
                     fontFamily: fonts.body,
                     fontWeight: 700,
                     fontSize: "0.9rem",
-                    color: "#fff",
+                    color: theme.palette.common.white,
                   }}
                 >
                   {activeConversation.name}
@@ -405,8 +410,8 @@ export default function Chat() {
                     fontFamily: fonts.body,
                     fontSize: "0.7rem",
                     color: activeConversation.online
-                      ? "#3ddc97"
-                      : "rgba(255,255,255,0.5)",
+                        ? theme.palette.success.main
+                        : alpha(theme.palette.common.white, 0.5),
                   }}
                 >
                   {activeConversation.online ? "● Online agora" : "Offline"}
@@ -416,19 +421,19 @@ export default function Chat() {
             <Stack direction="row" sx={{ gap: 1 }}>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: "#16161d", color: "#fff" }}
+                sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}
               >
                 <VideocamIcon fontSize="small" />
               </IconButton>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: "#16161d", color: "#fff" }}
+                sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}
               >
                 <AttachFileIcon fontSize="small" />
               </IconButton>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: "#16161d", color: "#fff" }}
+                sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}
               >
                 <MoreHorizIcon fontSize="small" />
               </IconButton>
@@ -439,7 +444,7 @@ export default function Chat() {
             sx={{
               flex: 1,
               overflowY: "auto",
-              backgroundColor: "#f9dde0",
+              backgroundColor: theme.palette.secondary.light,
               px: { xs: 2, md: 6 },
               py: 3,
             }}
@@ -447,7 +452,7 @@ export default function Chat() {
             <Stack direction="row" sx={{ justifyContent: "center", mb: 3 }}>
               <Stack
                 sx={{
-                  backgroundColor: "#16161d",
+                  backgroundColor: theme.palette.background.default,
                   borderRadius: "12px",
                   px: 1.5,
                   py: 0.4,
@@ -457,7 +462,7 @@ export default function Chat() {
                   sx={{
                     fontFamily: fonts.body,
                     fontSize: "0.7rem",
-                    color: "#fff",
+                    color: theme.palette.common.white,
                   }}
                 >
                   Hoje
@@ -473,8 +478,8 @@ export default function Chat() {
               <Typography
                 sx={{
                   textAlign: "center",
-                  color: "rgba(0,0,0,0.4)",
-                  fontFamily: "'Comfortaa', sans-serif",
+                  color: alpha(theme.palette.common.black, 0.4),
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
                   mt: 4,
                 }}
@@ -490,7 +495,7 @@ export default function Chat() {
               >
                 <Avatar
                   sx={{
-                    bgcolor: activeConversation.color || "#8a3fae",
+                    bgcolor: activeConversation.color || theme.palette.primary.light,
                     width: 26,
                     height: 26,
                     fontSize: "0.65rem",
@@ -500,7 +505,7 @@ export default function Chat() {
                 </Avatar>
                 <Stack
                   sx={{
-                    backgroundColor: "#16161d",
+                    backgroundColor: theme.palette.background.default,
                     borderRadius: "12px",
                     px: 2,
                     py: 1,
@@ -508,9 +513,9 @@ export default function Chat() {
                 >
                   <Typography
                     sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       fontSize: "0.9rem",
-                      color: "#fff",
+                      color: theme.palette.common.white,
                     }}
                   >
                     •••
@@ -523,14 +528,14 @@ export default function Chat() {
           <Stack
             direction="row"
             sx={{
-              backgroundColor: "#16161d",
+              backgroundColor: theme.palette.background.default,
               alignItems: "center",
               gap: 1.5,
               px: 2.5,
               py: 1.5,
             }}
           >
-            <IconButton size="small" sx={{ color: "rgba(255,255,255,0.6)" }}>
+            <IconButton size="small" sx={{ color: alpha(theme.palette.common.white, 0.6) }}>
               <InsertEmoticonIcon fontSize="small" />
             </IconButton>
             <InputBase
@@ -542,23 +547,23 @@ export default function Chat() {
               }}
               sx={{
                 flex: 1,
-                color: "#fff",
+                color: theme.palette.common.white,
                 fontFamily: fonts.body,
                 fontSize: "0.85rem",
               }}
             />
-            <IconButton size="small" sx={{ color: "rgba(255,255,255,0.6)" }}>
+            <IconButton size="small" sx={{ color: alpha(theme.palette.common.white, 0.6) }}>
               <AttachFileIcon fontSize="small" />
             </IconButton>
-            <IconButton size="small" sx={{ color: "rgba(255,255,255,0.6)" }}>
+            <IconButton size="small" sx={{ color: alpha(theme.palette.common.white, 0.6) }}>
               <EditIcon fontSize="small" />
             </IconButton>
             <IconButton
               onClick={handleSend}
               sx={{
-                backgroundColor: "#e0523a",
-                color: "#fff",
-                "&:hover": { backgroundColor: "#c43f2a" },
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.common.white,
+                "&:hover": { backgroundColor: theme.palette.primary.dark },
               }}
             >
               <SendIcon fontSize="small" />

@@ -13,12 +13,20 @@ export const fonts = {
 
 const theme = createTheme({
   cssVariables: true,
-
   palette: {
     primary: {
-      main: "#e0523a",
-      light: "#f06a52",
-      dark: "#c43f2a",
+      main: "#71011C",
+      light: "#831731",
+      dark: "#4d0012",
+    },
+    secondary: {
+      main: "#F2E1D1",
+      light: "#F9F1DF",
+      dark: '#b3a79b'
+    },
+    common: {
+      black: "#FC6B52",
+      white: "#970049"
     },
     background: {
       default: "#15151C",

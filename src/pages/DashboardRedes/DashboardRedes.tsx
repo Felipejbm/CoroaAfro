@@ -1,12 +1,14 @@
 import {
+  Alert,
   Avatar,
+  Box,
   Button,
+  CircularProgress,
   Stack,
   Typography,
-  Alert,
-  Box,
-  CircularProgress,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -22,19 +24,13 @@ import {
   mensagemErroInstagram,
 } from "../../services/Auth/controllers/instagram";
 import type {
+  InstagramInsight,
   InstagramMedia,
   InstagramProfile,
-  InstagramInsight,
 } from "../../services/Auth/schema/instagramSchema";
 
-const cardSx = {
-  backgroundColor: "#26262f",
-  borderRadius: "12px",
-  p: 2,
-  minWidth: 0,
-};
-
 export default function DashboardRedes() {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const usuario = useMemo(() => getEmpreendedorLogado(), []);
@@ -44,6 +40,13 @@ export default function DashboardRedes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const connected = searchParams.get("instagram") === "connected";
+
+  const cardSx = {
+    backgroundColor: theme.palette.background.default,
+    borderRadius: "12px",
+    p: 2,
+    minWidth: 0,
+  };
 
   const loadInstagram = useCallback(async () => {
     if (!usuario) {
@@ -90,10 +93,7 @@ export default function DashboardRedes() {
     return () => window.clearTimeout(timer);
   }, [connected, setSearchParams]);
 
-  const likes = media.reduce(
-    (total, item) => total + (item.like_count ?? 0),
-    0,
-  );
+  const likes = media.reduce((total, item) => total + (item.like_count ?? 0), 0);
   const comments = media.reduce(
     (total, item) => total + (item.comments_count ?? 0),
     0,
@@ -116,10 +116,7 @@ export default function DashboardRedes() {
   };
 
   return (
-    <Stack
-      direction="row"
-      sx={{ width: "100%", minHeight: "100vh", bgcolor: "#f9dde0" }}
-    >
+    <Stack direction="row" sx={{ width: "100%", minHeight: "100vh", bgcolor: theme.palette.secondary.light }}>
       <NavBar />
       <Stack
         sx={{
@@ -145,6 +142,7 @@ export default function DashboardRedes() {
                 fontWeight: 700,
                 fontSize: { xs: "1.6rem", md: "2rem" },
                 mb: 2,
+                color: theme.palette.text.primary,
               }}
             >
               Acompanhe a evolução da sua marca no digital
@@ -154,23 +152,24 @@ export default function DashboardRedes() {
                 variant="contained"
                 startIcon={<InstagramIcon />}
                 onClick={handleConnect}
+                sx={{
+                  backgroundColor: theme.palette.primary.main,
+                  color: theme.palette.common.white,
+                  textTransform: "none",
+                }}
               >
                 {profile ? "Reconectar Instagram" : "Conectar Instagram"}
               </Button>
               <Button
                 variant="contained"
-                startIcon={
-                  loading ? (
-                    <CircularProgress size={16} color="inherit" />
-                  ) : (
-                    <RefreshIcon />
-                  )
-                }
+                startIcon={loading ? <CircularProgress size={16} color="inherit" /> : <RefreshIcon />}
                 disabled={loading}
                 onClick={() => void loadInstagram()}
                 sx={{
-                  bgcolor: "#26262f",
-                  "&:hover": { bgcolor: "#3a3a3a" },
+                  bgcolor: theme.palette.background.default,
+                  color: theme.palette.common.white,
+                  textTransform: "none",
+                  "&:hover": { bgcolor: theme.palette.primary.dark },
                 }}
               >
                 Atualizar dados
@@ -183,30 +182,18 @@ export default function DashboardRedes() {
             sx={{
               alignItems: "center",
               gap: 1.5,
-              bgcolor: "#1c1830",
+              backgroundColor: alpha(theme.palette.background.default, 0.9),
               borderRadius: "30px",
               px: 2,
               py: 1,
             }}
           >
-            <Avatar
-              src={profile?.profile_picture_url}
-              sx={{ bgcolor: "#e0523a", width: 40, height: 40 }}
-            />
+            <Avatar src={profile?.profile_picture_url} sx={{ bgcolor: theme.palette.primary.main, width: 40, height: 40 }} />
             <Stack>
-              <Typography
-                sx={{ fontWeight: 700, fontSize: "0.85rem", color: "#fff" }}
-              >
-                {profile
-                  ? `@${profile.username}`
-                  : (usuario?.nome ?? "Visitante")}
+              <Typography sx={{ fontWeight: 700, fontSize: "0.85rem", color: theme.palette.common.white }}>
+                {profile ? `@${profile.username}` : usuario?.nome ?? "Visitante"}
               </Typography>
-              <Typography
-                sx={{
-                  fontSize: "0.72rem",
-                  color: "rgba(255,255,255,0.65)",
-                }}
-              >
+              <Typography sx={{ fontSize: "0.72rem", color: alpha(theme.palette.common.white, 0.65) }}>
                 {profile ? "Instagram conectado" : "Instagram não conectado"}
               </Typography>
             </Stack>
@@ -214,9 +201,9 @@ export default function DashboardRedes() {
               startIcon={<AccountCircleIcon />}
               onClick={() => navigate("/perfil")}
               sx={{
-                color: "#fff",
-                bgcolor: "rgba(255,255,255,0.1)",
-                "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
+                color: theme.palette.common.white,
+                bgcolor: alpha(theme.palette.common.white, 0.1),
+                "&:hover": { bgcolor: alpha(theme.palette.common.white, 0.2) },
               }}
             >
               Perfil
@@ -224,28 +211,16 @@ export default function DashboardRedes() {
           </Stack>
         </Stack>
 
-        {connected && (
-          <Alert severity="success" sx={{ mb: 3 }}>
-            Instagram conectado com sucesso.
-          </Alert>
-        )}
-        {error && (
-          <Alert severity="warning" sx={{ mb: 3 }}>
-            {error}
-          </Alert>
-        )}
+        {connected && <Alert severity="success" sx={{ mb: 3 }}>Instagram conectado com sucesso.</Alert>}
+        {error && <Alert severity="warning" sx={{ mb: 3 }}>{error}</Alert>}
 
-        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2 }}>
+        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2, color: theme.palette.text.primary }}>
           Visão geral
         </Typography>
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              lg: "repeat(4, 1fr)",
-            },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" },
             gap: 2,
             mb: 4,
           }}
@@ -257,30 +232,24 @@ export default function DashboardRedes() {
             ["Curtidas nos posts", profile ? likes : "--"],
           ].map(([label, value]) => (
             <Stack key={label} sx={cardSx}>
-              <Typography
-                sx={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)" }}
-              >
+              <Typography sx={{ fontSize: "0.85rem", color: alpha(theme.palette.common.white, 0.75) }}>
                 {label}
               </Typography>
               <Typography
                 sx={{
                   fontWeight: 700,
                   fontSize: "1.6rem",
-                  color: "#f06a52",
+                  color: theme.palette.primary.light,
                   mt: 1,
                 }}
               >
-                {loading ? (
-                  <CircularProgress size={22} color="inherit" />
-                ) : (
-                  value
-                )}
+                {loading ? <CircularProgress size={22} color="inherit" /> : value}
               </Typography>
             </Stack>
           ))}
         </Box>
 
-        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2 }}>
+        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2, color: theme.palette.text.primary }}>
           Interações das publicações carregadas
         </Typography>
         <Box
@@ -291,17 +260,14 @@ export default function DashboardRedes() {
             mb: 4,
           }}
         >
-          {[
-            ["Curtidas", likes],
-            ["Comentários", comments],
-          ].map(([label, value]) => (
+          {[["Curtidas", likes], ["Comentários", comments]].map(([label, value]) => (
             <Stack key={label} sx={cardSx}>
-              <Typography sx={{ color: "#fff" }}>{label}</Typography>
+              <Typography sx={{ color: theme.palette.common.white }}>{label}</Typography>
               <Typography
                 sx={{
                   fontWeight: 700,
                   fontSize: "1.4rem",
-                  color: "#f06a52",
+                  color: theme.palette.primary.light,
                   mt: 1,
                 }}
               >
@@ -311,26 +277,21 @@ export default function DashboardRedes() {
           ))}
         </Box>
 
-        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2 }}>
+        <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", mb: 2, color: theme.palette.text.primary }}>
           Publicações em destaque
         </Typography>
         {popularPosts.length === 0 ? (
           <Stack sx={{ ...cardSx, alignItems: "center", py: 5 }}>
-            <InstagramIcon sx={{ color: "#f06a52", fontSize: 40, mb: 1 }} />
-            <Typography sx={{ color: "#fff" }}>
-              {loading
-                ? "Carregando publicações..."
-                : "Nenhuma publicação disponível."}
+            <InstagramIcon sx={{ color: theme.palette.primary.main, fontSize: 40, mb: 1 }} />
+            <Typography sx={{ color: theme.palette.common.white }}>
+              {loading ? "Carregando publicações..." : "Nenhuma publicação disponível."}
             </Typography>
           </Stack>
         ) : (
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(auto-fit, minmax(220px, 280px))",
-              },
+              gridTemplateColumns: { xs: "1fr", sm: "repeat(auto-fit, minmax(220px, 280px))" },
               gap: 2,
               justifyContent: { xs: "stretch", sm: "flex-start" },
             }}
@@ -364,18 +325,17 @@ export default function DashboardRedes() {
                     }}
                   />
                 )}
-                <Typography noWrap sx={{ color: "#fff", fontWeight: 600 }}>
+                <Typography noWrap sx={{ color: theme.palette.common.white, fontWeight: 600 }}>
                   {post.caption || "Publicação sem legenda"}
                 </Typography>
                 <Typography
                   sx={{
-                    color: "rgba(255,255,255,0.65)",
+                    color: alpha(theme.palette.common.white, 0.65),
                     fontSize: "0.8rem",
                     mt: 0.7,
                   }}
                 >
-                  {post.like_count ?? 0} curtidas • {post.comments_count ?? 0}{" "}
-                  comentários
+                  {post.like_count ?? 0} curtidas • {post.comments_count ?? 0} comentários
                 </Typography>
               </Stack>
             ))}

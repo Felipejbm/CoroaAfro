@@ -9,20 +9,23 @@ import {
   TextField,
   Typography,
   Link as MuiLink,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import { useState } from "react";
-import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
-import Layout from "../../Components/Layout/Layout";
+import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
+import Layout from "../../components/Layout/Layout";
 import { fonts } from "../../styles/theme";
 import { login, mensagemErroLogin } from "../../services/Auth/controllers/auth";
 import { buscarMinhaEmpresa } from "../../services/Auth/controllers/empresa";
 
 export default function Login() {
+  const theme = useTheme();
   const [email, setEmail] = useState("");
   const [papel, setPapel] = useState<"empreendedor" | "mentor">("empreendedor");
   const [senha, setSenha] = useState("");
@@ -70,7 +73,7 @@ export default function Login() {
         <Stack
           sx={{
             minHeight: "100vh",
-            backgroundColor: "#f7dde0",
+            backgroundColor: theme.palette.secondary.light,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -83,7 +86,7 @@ export default function Login() {
                 fontFamily: fonts.hero,
                 fontWeight: 700,
                 fontSize: { xs: "2.4rem", md: "3rem" },
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
                 mb: 2,
               }}
             >
@@ -94,7 +97,7 @@ export default function Login() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: { xs: "1rem", md: "1.15rem" },
-                color: "#3a3a3a",
+                color: theme.palette.text.primary,
                 mb: 5,
               }}
             >
@@ -109,9 +112,9 @@ export default function Login() {
             sx={{
               width: "100%",
               maxWidth: 460,
-              backgroundColor: "#e7d2d3",
+              backgroundColor: theme.palette.secondary.main,
               borderRadius: "20px",
-              boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
+              boxShadow: `0 10px 24px ${alpha(theme.palette.common.black, 0.2)}`,
               px: { xs: 3, md: 5 },
               py: 5,
             }}
@@ -145,7 +148,7 @@ export default function Login() {
               sx={{
                 fontFamily: fonts.hero,
                 fontSize: "1rem",
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
                 mb: 2,
               }}
             >
@@ -158,27 +161,27 @@ export default function Login() {
             >
               <IconButton
                 sx={{
-                  backgroundColor: "#fff",
-                  "&:hover": { backgroundColor: "#f5f5f5" },
+                  backgroundColor: theme.palette.common.white,
+                  "&:hover": { backgroundColor: theme.palette.secondary.light },
                 }}
               >
-                <GoogleIcon sx={{ color: "#DB4437" }} />
+                <GoogleIcon sx={{ color: theme.palette.primary.main }} />
               </IconButton>
               <IconButton
                 sx={{
-                  backgroundColor: "#0a66c2",
-                  "&:hover": { backgroundColor: "#0958a8" },
+                  backgroundColor: theme.palette.primary.dark,
+                  "&:hover": { backgroundColor: theme.palette.primary.main },
                 }}
               >
-                <LinkedInIcon sx={{ color: "#fff" }} />
+                <LinkedInIcon sx={{ color: theme.palette.common.white }} />
               </IconButton>
               <IconButton
                 sx={{
-                  backgroundColor: "#4a9de0",
-                  "&:hover": { backgroundColor: "#3c8bca" },
+                  backgroundColor: theme.palette.primary.light,
+                  "&:hover": { backgroundColor: theme.palette.primary.dark },
                 }}
               >
-                <EmailIcon sx={{ color: "#fff" }} />
+                <EmailIcon sx={{ color: theme.palette.common.white }} />
               </IconButton>
             </Stack>
 
@@ -190,7 +193,7 @@ export default function Login() {
                 sx={{
                   flex: 1,
                   height: "1px",
-                  backgroundColor: "rgba(0,0,0,0.25)",
+                  backgroundColor: alpha(theme.palette.common.black, 0.25),
                 }}
               />
               <Typography
@@ -205,7 +208,7 @@ export default function Login() {
                 sx={{
                   flex: 1,
                   height: "1px",
-                  backgroundColor: "rgba(0,0,0,0.25)",
+                  backgroundColor: alpha(theme.palette.common.black, 0.25),
                 }}
               />
             </Stack>
@@ -214,7 +217,7 @@ export default function Login() {
               sx={{
                 fontFamily: fonts.hero,
                 fontSize: "1.05rem",
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
                 mb: 1,
               }}
             >
@@ -226,7 +229,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               sx={{
                 mb: 3,
-                backgroundColor: "#f2eaea",
+                backgroundColor: theme.palette.secondary.light,
                 borderRadius: "6px",
                 "& .MuiOutlinedInput-root": { borderRadius: "6px" },
               }}
@@ -236,7 +239,7 @@ export default function Login() {
               sx={{
                 fontFamily: fonts.hero,
                 fontSize: "1.05rem",
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
                 mb: 1,
               }}
             >
@@ -249,7 +252,7 @@ export default function Login() {
               onChange={(e) => setSenha(e.target.value)}
               sx={{
                 mb: 1,
-                backgroundColor: "#f2eaea",
+                backgroundColor: theme.palette.secondary.light,
                 borderRadius: "6px",
                 "& .MuiOutlinedInput-root": { borderRadius: "6px" },
               }}
@@ -263,7 +266,7 @@ export default function Login() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#7a1f4a",
+                  color: theme.palette.primary.dark,
                 }}
               >
                 Esqueci minha senha
@@ -275,17 +278,17 @@ export default function Login() {
               type="submit"
               disabled={loading}
               sx={{
-                background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
-                color: "#fff",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                color: theme.palette.getContrastText(theme.palette.primary.main),
                 fontFamily: fonts.hero,
                 fontSize: "1.1rem",
                 textTransform: "none",
                 borderRadius: "10px",
                 py: 1.3,
                 mb: 2,
-                boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
+                boxShadow: (theme) => `0 4px 10px ${alpha(theme.palette.common.black, 0.25)}`,
                 "&:hover": {
-                  background: "linear-gradient(90deg, #e0523a, #7a1942)",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                 },
               }}
             >
@@ -304,7 +307,7 @@ export default function Login() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#7a1f4a",
+                  color: theme.palette.primary.dark,
                 }}
               >
                 Não possui conta? Cadastre-se

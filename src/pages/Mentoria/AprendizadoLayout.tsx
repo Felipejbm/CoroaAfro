@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function AprendizadoLayout({
   mentor = false,
@@ -12,10 +13,11 @@ export default function AprendizadoLayout({
   titulo: string;
   children: ReactNode;
 }) {
+  const theme = useTheme();
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
-      sx={{ minHeight: "100vh", bgcolor: "#f9dde0" }}
+      sx={{ minHeight: "100vh", bgcolor: theme.palette.secondary.light }}
     >
       <Stack
         sx={{
@@ -36,7 +38,7 @@ export default function AprendizadoLayout({
       >
         <Typography
           variant="h4"
-          sx={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          sx={{ fontFamily: fonts.hero }}
         >
           {titulo}
         </Typography>

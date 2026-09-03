@@ -1,4 +1,5 @@
-import { Button, Stack, Switch, Typography } from "@mui/material";
+import { Button, Stack, Switch, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -6,6 +7,7 @@ import { fonts } from "../../../styles/theme";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../../components/NavBar/NavBar";
 export default function CriarTrilhaPersonalizada5() {
+  const theme = useTheme();
   const totalSteps = 5;
   const currentStep = 5;
 
@@ -23,7 +25,7 @@ export default function CriarTrilhaPersonalizada5() {
         sx={{
           flex: 1,
           minWidth: 0,
-          backgroundColor: "#f9dde0",
+          backgroundColor: theme.palette.secondary.light,
           display: "flex",
           flexDirection: "column",
         }}
@@ -43,7 +45,7 @@ export default function CriarTrilhaPersonalizada5() {
               fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: { xs: "1.8rem", md: "2.3rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
             }}
           >
             Criar Trilha Personalizada
@@ -52,7 +54,7 @@ export default function CriarTrilhaPersonalizada5() {
             sx={{
               fontFamily: fonts.body,
               fontSize: "0.85rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.secondary,
               mb: 2,
             }}
           >
@@ -68,7 +70,7 @@ export default function CriarTrilhaPersonalizada5() {
                 width: 28,
                 height: 3,
                 borderRadius: 2,
-                backgroundColor: "#e0523a",
+                backgroundColor: theme.palette.primary.main,
               }}
             />
             <Typography
@@ -76,7 +78,7 @@ export default function CriarTrilhaPersonalizada5() {
                 fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.7rem",
-                color: "#c43f2a",
+                color: theme.palette.primary.dark,
               }}
             >
               Passo {currentStep} de {totalSteps}
@@ -88,7 +90,7 @@ export default function CriarTrilhaPersonalizada5() {
               fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1.3rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 2,
             }}
           >
@@ -97,7 +99,7 @@ export default function CriarTrilhaPersonalizada5() {
 
           <Stack
             sx={{
-              backgroundColor: "#16161d",
+              backgroundColor: theme.palette.background.default,
               borderRadius: "10px",
               px: 3,
               py: 2,
@@ -109,7 +111,7 @@ export default function CriarTrilhaPersonalizada5() {
                 fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1rem",
-                color: "#fff",
+                color: theme.palette.common.white,
               }}
             >
               Nome da trilha: Presença Digital Forte
@@ -118,7 +120,7 @@ export default function CriarTrilhaPersonalizada5() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.85rem",
-                color: "rgba(255,255,255,0.7)",
+                color: alpha(theme.palette.common.white, 0.7),
               }}
             >
               Ritmo Moderado • Ter & Qui
@@ -129,7 +131,7 @@ export default function CriarTrilhaPersonalizada5() {
             <Stack
               sx={{
                 flex: 1,
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "10px",
                 px: 2,
                 py: 1.5,
@@ -139,7 +141,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.8rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 2 módulos
@@ -148,7 +150,7 @@ export default function CriarTrilhaPersonalizada5() {
             <Stack
               sx={{
                 flex: 1,
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "10px",
                 px: 2,
                 py: 1.5,
@@ -158,7 +160,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.8rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 6h30 de conteúdo
@@ -167,7 +169,7 @@ export default function CriarTrilhaPersonalizada5() {
             <Stack
               sx={{
                 flex: 1,
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "10px",
                 px: 2,
                 py: 1.5,
@@ -177,7 +179,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.8rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 3 semanas
@@ -190,7 +192,7 @@ export default function CriarTrilhaPersonalizada5() {
               fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 1,
             }}
           >
@@ -201,7 +203,7 @@ export default function CriarTrilhaPersonalizada5() {
           >
             <Stack
               sx={{
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "8px",
                 px: 2,
                 py: 1,
@@ -211,7 +213,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 📷 Fotografia para Redes Sociais
@@ -219,7 +221,7 @@ export default function CriarTrilhaPersonalizada5() {
             </Stack>
             <Stack
               sx={{
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "8px",
                 px: 2,
                 py: 1,
@@ -229,7 +231,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 🎬 Criação de Reels que Vendem
@@ -242,7 +244,7 @@ export default function CriarTrilhaPersonalizada5() {
               fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 1,
             }}
           >
@@ -254,7 +256,7 @@ export default function CriarTrilhaPersonalizada5() {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "8px",
                 px: 2,
                 py: 1,
@@ -264,7 +266,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 Lembretes de estudo
@@ -279,7 +281,7 @@ export default function CriarTrilhaPersonalizada5() {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "8px",
                 px: 2,
                 py: 1,
@@ -289,7 +291,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 Conquistas e metas
@@ -304,7 +306,7 @@ export default function CriarTrilhaPersonalizada5() {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "8px",
                 px: 2,
                 py: 1,
@@ -314,7 +316,7 @@ export default function CriarTrilhaPersonalizada5() {
                 sx={{
                   fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 Compartilhar progresso na comunidade
@@ -334,14 +336,14 @@ export default function CriarTrilhaPersonalizada5() {
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
-            borderTop: "1px solid rgba(0,0,0,0.05)",
+            borderTop: `1px solid ${alpha(theme.palette.common.black, 0.05)}`,
           }}
         >
           <Typography
             sx={{
               fontFamily: fonts.body,
               fontSize: "0.75rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
             }}
           >
             Passo {currentStep} de {totalSteps}
@@ -354,15 +356,15 @@ export default function CriarTrilhaPersonalizada5() {
               }}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
-                backgroundColor: "#16161d",
-                color: "#fff",
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.common.white,
                 fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 2.5,
                 py: 1,
-                "&:hover": { backgroundColor: "#26262f" },
+                "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.1) },
               }}
             >
               Voltar
@@ -373,8 +375,8 @@ export default function CriarTrilhaPersonalizada5() {
               }}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
-                backgroundColor: "#e0523a",
-                color: "#fff",
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.common.white,
                 fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.85rem",
@@ -382,7 +384,7 @@ export default function CriarTrilhaPersonalizada5() {
                 borderRadius: "8px",
                 px: 2.5,
                 py: 1,
-                "&:hover": { backgroundColor: "#c43f2a" },
+                "&:hover": { backgroundColor: theme.palette.primary.dark },
               }}
             >
               Continuar

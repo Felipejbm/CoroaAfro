@@ -7,6 +7,7 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import {
@@ -15,7 +16,7 @@ import {
   aboutLinks,
   socialLinks,
   currentYear,
-} from "./FooterLandPage.utils";
+} from "../FooterLandPage/FooterLandPage.utils";
 import type { SocialLink } from "./FooterLandPage.types";
 import { fonts } from "../../styles/theme";
 
@@ -28,8 +29,8 @@ export default function FooterLandPage() {
   return (
     <Stack
       sx={{
-        backgroundColor: "#3a3033",
-        borderTop: "4px solid #f7dde0",
+        backgroundColor: "primary.dark",
+        borderTop: "4px solid secondary.light",
         pt: 5,
         pb: 3,
       }}
@@ -60,7 +61,7 @@ export default function FooterLandPage() {
                 <Typography
                   sx={{
                     fontFamily: fonts.hero,
-                    color: "#fff",
+                    color: "secondary.light",
                     fontSize: "1.2rem",
                     lineHeight: 1.2,
                   }}
@@ -71,7 +72,7 @@ export default function FooterLandPage() {
                 <Typography
                   sx={{
                     fontFamily: fonts.hero,
-                    color: "rgba(255,255,255,0.75)",
+                    color: "secondary.light",
                     fontSize: "1rem",
                   }}
                 >
@@ -89,11 +90,11 @@ export default function FooterLandPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    backgroundColor: "#fff",
-                    color: "#2b2b2b",
+                    backgroundColor: "secondary.light",
+                    color: "background.default",
                     width: 32,
                     height: 32,
-                    "&:hover": { backgroundColor: "#e8e8e8" },
+                    "&:hover": { backgroundColor: "secondary.dark" },
                   }}
                 >
                   {iconMap[social.icon]}
@@ -106,7 +107,7 @@ export default function FooterLandPage() {
             <Typography
               sx={{
                 fontFamily: fonts.body,
-                color: "rgba(255,255,255,0.6)",
+                color: (theme) => alpha(theme.palette.secondary.light, 0.6),
                 fontSize: "0.95rem",
                 mb: 1.5,
               }}
@@ -122,13 +123,16 @@ export default function FooterLandPage() {
                   sx={{ alignItems: "center", gap: 1 }}
                 >
                   <GitHubIcon
-                    sx={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}
+                    sx={{
+                      fontSize: 16,
+                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                    }}
                   />
 
                   <Typography
                     sx={{
                       fontFamily: fonts.body,
-                      color: "rgba(255,255,255,0.85)",
+                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
                       fontSize: "0.95rem",
                     }}
                   >
@@ -143,7 +147,7 @@ export default function FooterLandPage() {
             <Typography
               sx={{
                 fontFamily: fonts.body,
-                color: "rgba(255,255,255,0.6)",
+                color: (theme) => alpha(theme.palette.secondary.light, 0.6),
                 fontSize: "0.95rem",
                 mb: 1.5,
               }}
@@ -157,17 +161,24 @@ export default function FooterLandPage() {
                   key={Adm.name}
                   href={Adm.href}
                   underline="hover"
-                  color="rgba(255,255,255,0.85)"
-                  sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 1,
+                    color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                  }}
                 >
                   <InstagramIcon
-                    sx={{ fontSize: 16, color: "rgba(255,255,255,0.85)" }}
+                    sx={{
+                      fontSize: 16,
+                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                    }}
                   />
 
                   <Typography
                     sx={{
                       fontFamily: fonts.body,
-                      color: "rgba(255,255,255,0.85)",
+                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
                       fontSize: "0.95rem",
                     }}
                   >
@@ -181,16 +192,16 @@ export default function FooterLandPage() {
           <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
             <Stack sx={{ gap: 1 }}>
               {aboutLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    underline="hover"
-                    sx={{
-                      fontFamily: fonts.body,
-                      color: "rgba(255,255,255,0.85)",
-                      fontSize: "0.95rem",
-                    }}
-                  >
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  underline="hover"
+                  sx={{
+                    fontFamily: fonts.body,
+                    color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                    fontSize: "0.95rem",
+                  }}
+                >
                   {link.label}
                 </Link>
               ))}
@@ -201,7 +212,7 @@ export default function FooterLandPage() {
             <Typography
               sx={{
                 fontFamily: fonts.body,
-                color: "rgba(255,255,255,0.85)",
+                color: (theme) => alpha(theme.palette.secondary.light, 0.85),
                 fontSize: "0.95rem",
                 mb: 0.5,
               }}
@@ -212,7 +223,7 @@ export default function FooterLandPage() {
             <Typography
               sx={{
                 fontFamily: fonts.body,
-                color: "rgba(255,255,255,0.55)",
+                color: (theme) => alpha(theme.palette.secondary.light, 0.55),
                 fontSize: "0.85rem",
               }}
             >

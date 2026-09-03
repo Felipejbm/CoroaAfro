@@ -1,14 +1,17 @@
-import { Button, InputBase, Stack, Typography } from "@mui/material";
+import { Button, InputBase, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useState } from "react";
 import type { Suggestion } from "./CriarTrilhaPersonalizada.types";
 import { suggestions } from "./CriarTrilhaPersonalizada.utils";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import NavBar from "../../../Components/NavBar/NavBar";
+import NavBar from "../../../components/NavBar/NavBar";
+import { fonts } from "../../../styles/theme";
 import { useNavigate } from "react-router-dom";
 
 export default function CriarTrilhaPersonalizada1() {
+  const theme = useTheme();
   const totalSteps = 5;
   const currentStep = 1;
 
@@ -33,7 +36,7 @@ export default function CriarTrilhaPersonalizada1() {
         sx={{
           flex: 1,
           minWidth: 0,
-          backgroundColor: "#f9dde0",
+          backgroundColor: theme.palette.secondary.light,
           display: "flex",
           flexDirection: "column",
         }}
@@ -50,19 +53,19 @@ export default function CriarTrilhaPersonalizada1() {
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.hero,
               fontWeight: 700,
               fontSize: { xs: "1.8rem", md: "2.3rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
             }}
           >
             Criar Trilha Personalizada
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.secondary,
               mb: 3,
             }}
           >
@@ -77,15 +80,15 @@ export default function CriarTrilhaPersonalizada1() {
                 width: 28,
                 height: 3,
                 borderRadius: 2,
-                backgroundColor: "#e0523a",
+                backgroundColor: theme.palette.primary.main,
               }}
             />
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.7rem",
-                color: "#c43f2a",
+                color: theme.palette.primary.dark,
               }}
             >
               Passo {currentStep} de {totalSteps}
@@ -94,10 +97,10 @@ export default function CriarTrilhaPersonalizada1() {
 
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "1.3rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 0.8,
             }}
           >
@@ -105,9 +108,9 @@ export default function CriarTrilhaPersonalizada1() {
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.secondary,
               mb: 2.5,
             }}
           >
@@ -118,7 +121,7 @@ export default function CriarTrilhaPersonalizada1() {
           <Stack
             direction={"row"} 
             sx={{
-              backgroundColor: "#16161d",
+              backgroundColor: theme.palette.background.default,
               borderRadius: "10px",
               alignItems: "center",
               gap: 1.2,
@@ -134,11 +137,11 @@ export default function CriarTrilhaPersonalizada1() {
               onChange={(e) => setTrailName(e.target.value)}
               sx={{
                 flex: 1,
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                color: theme.palette.common.white,
+                fontFamily: fonts.body,
                 fontSize: "0.9rem",
                 "& .MuiInputBase-input::placeholder": {
-                  color: "rgba(255,255,255,0.4)",
+                  color: alpha(theme.palette.common.white, 0.4),
                   opacity: 1,
                 },
               }}
@@ -147,10 +150,10 @@ export default function CriarTrilhaPersonalizada1() {
 
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: "0.75rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 1.5,
             }}
           >
@@ -168,19 +171,19 @@ export default function CriarTrilhaPersonalizada1() {
                 <Stack
                   key={s.id}
                   onClick={() => handleSelectSuggestion(s)}
-                  direction={"column"}  
+                  direction={"column"}
                   sx={{
                     position: "relative",
                     width: { xs: "100%", sm: 165 },
-                    backgroundColor: "#16161d",
+                    backgroundColor: theme.palette.background.default,
                     borderRadius: "10px",
                     border: isSelected
-                      ? "2px solid #e0523a"
+                      ? `2px solid ${theme.palette.primary.main}`
                       : "2px solid transparent",
                     p: 2,
                     cursor: "pointer",
                     transition: "border-color 0.15s ease",
-                    "&:hover": { borderColor: "rgba(224,82,58,0.5)" },
+                    "&:hover": { borderColor: alpha(theme.palette.primary.main, 0.5) },
                   }}
                 >
                   <PushPinIcon
@@ -189,7 +192,7 @@ export default function CriarTrilhaPersonalizada1() {
                       top: 8,
                       right: 8,
                       fontSize: 14,
-                      color: "#e0523a",
+                      color: theme.palette.primary.main,
                     }}
                   />
                   <Typography sx={{ fontSize: "1.3rem", mb: 1 }}>
@@ -197,10 +200,10 @@ export default function CriarTrilhaPersonalizada1() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       fontWeight: 700,
                       fontSize: "0.85rem",
-                      color: "#fff",
+                      color: theme.palette.common.white,
                       mb: 0.4,
                       lineHeight: 1.3,
                     }}
@@ -209,9 +212,9 @@ export default function CriarTrilhaPersonalizada1() {
                   </Typography>
                   <Typography
                     sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       fontSize: "0.7rem",
-                      color: "rgba(255,255,255,0.5)",
+                      color: alpha(theme.palette.common.white, 0.5),
                     }}
                   >
                     {s.description}
@@ -223,39 +226,39 @@ export default function CriarTrilhaPersonalizada1() {
         </Stack>
 
         <Stack
-          direction={"row"}  
+          direction={"row"}
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
-            borderTop: "1px solid rgba(0,0,0,0.05)"
+            borderTop: `1px solid ${alpha(theme.palette.common.black, 0.05)}`,
           }}
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.75rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.secondary,
             }}
           >
             Passo {currentStep} de {totalSteps}
           </Typography>
 
-          <Stack direction={"row"} sx={{ gap: 1.5 }}> 
+          <Stack direction={"row"} sx={{ gap: 1.5 }}>
             <Button
               onClick={() => {navigate("/trilha-personalizada")}}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
-                backgroundColor: "#16161d",
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.common.white,
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 2.5,
                 py: 1,
-                "&:hover": { backgroundColor: "#26262f" },
+                "&:hover": { backgroundColor: theme.palette.grey[800] },
               }}
             >
               Voltar
@@ -264,16 +267,16 @@ export default function CriarTrilhaPersonalizada1() {
               onClick={() => {navigate("/criar-trilha-personalizada-2")}}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
-                backgroundColor: "#e0523a",
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.common.white,
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 2.5,
                 py: 1,
-                "&:hover": { backgroundColor: "#c43f2a" },
+                "&:hover": { backgroundColor: theme.palette.primary.dark },
               }}
             >
               Continuar

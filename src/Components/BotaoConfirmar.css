@@ -1,26 +1,24 @@
 .btn {
   width: 297px;
   height: 66px;
-
   padding-top: 19px;
   padding-bottom: 28px;
   padding-left: 81px;
   padding-right: 82px;
-
   border-radius: 15px;
   opacity: 1;
-
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   border: none;
   cursor: pointer;
-
   font-family: "Playfair Display", serif;
   font-size: 32px;
-  color: white;
-
-  background: linear-gradient(90deg, #FC6B52, #970049);
+  color: var(--mui-pallete-secondary-main);
+  background: linear-gradient(
+    90deg,
+    var(--mui-pallete-common-black),
+    var(--mui-pallete-common-white)
+  );
 }

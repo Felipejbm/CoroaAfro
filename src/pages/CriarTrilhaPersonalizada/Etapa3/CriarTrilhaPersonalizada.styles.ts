@@ -1,7 +1,8 @@
+import type { Theme } from "@mui/material/styles";
 import type { Level } from "./CriarTrilhaPersonalizada.types";
 
-export const levelColors: Record<Level, string> = {
-    Iniciante: "#3ddc97",
-    Intermediário: "#f2b705",
-    Avançado: "#e0523a",
-};
+export const getLevelColors = (theme: Theme): Record<Level, string> => ({
+  Iniciante: theme.palette.primary.light,
+  Intermediário: theme.palette.primary.main,
+  Avançado: theme.palette.primary.dark,
+});

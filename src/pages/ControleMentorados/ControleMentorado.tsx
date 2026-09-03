@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { mentorados } from "./ControleMentorados.utils";
-import NavBarMentor from "../../Components/NavMentor/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 import { useNavigate } from "react-router-dom";
 export default function ControleMentorados() {
@@ -25,7 +25,7 @@ export default function ControleMentorados() {
         sx={{
           flex: 1, 
           minWidth: 0, 
-          backgroundColor: "#f9dde0",
+          backgroundColor: "secondary.light",
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
@@ -36,7 +36,7 @@ export default function ControleMentorados() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.6rem", md: "2rem" },
-            color: "#2b2b2b",
+            color: "text.primary",
             mb: 3,
           }}
         >
@@ -45,14 +45,14 @@ export default function ControleMentorados() {
 
         <TableContainer
           component={Paper}
-          sx={{ backgroundColor: "#16161d", borderRadius: "10px" }}
+          sx={{ backgroundColor: "background.default", borderRadius: "10px" }}
         >
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell
                   sx={{
-                    color: "#fff",
+                    color: "common.white",
                     fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
@@ -61,7 +61,7 @@ export default function ControleMentorados() {
                 </TableCell>
                 <TableCell
                   sx={{
-                    color: "#fff",
+                    color: "common.white",
                     fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
@@ -70,7 +70,7 @@ export default function ControleMentorados() {
                 </TableCell>
                 <TableCell
                   sx={{
-                    color: "#fff",
+                    color: "common.white",
                     fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
@@ -79,7 +79,7 @@ export default function ControleMentorados() {
                 </TableCell>
                 <TableCell
                   sx={{
-                    color: "#fff",
+                    color: "common.white",
                     fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
@@ -88,7 +88,7 @@ export default function ControleMentorados() {
                 </TableCell>
                 <TableCell
                   sx={{
-                    color: "#fff",
+                    color: "common.white",
                     fontFamily: fonts.body,
                     fontWeight: 700,
                   }}
@@ -102,7 +102,7 @@ export default function ControleMentorados() {
                 <TableRow key={m.nome}>
                   <TableCell
                     sx={{
-                      color: "#fff",
+                      color: "common.white",
                       fontFamily: fonts.body,
                     }}
                   >
@@ -110,7 +110,7 @@ export default function ControleMentorados() {
                   </TableCell>
                   <TableCell
                     sx={{
-                      color: "#fff",
+                      color: "common.white",
                       fontFamily: fonts.body,
                     }}
                   >
@@ -118,7 +118,7 @@ export default function ControleMentorados() {
                   </TableCell>
                   <TableCell
                     sx={{
-                      color: "#fff",
+                      color: "common.white",
                       fontFamily: fonts.body,
                     }}
                   >
@@ -126,7 +126,7 @@ export default function ControleMentorados() {
                   </TableCell>
                   <TableCell
                     sx={{
-                      color: "#fff",
+                      color: "common.white",
                       fontFamily: fonts.body,
                     }}
                   >
@@ -138,14 +138,14 @@ export default function ControleMentorados() {
                         navigate("/detalhes-mentorado");
                       }}
                       sx={{
-                        backgroundColor: "#e0523a",
-                        color: "#fff",
+                        backgroundColor: "primary.main",
+                        color: "common.white",
                         fontFamily: fonts.body,
                         fontSize: "0.8rem",
                         textTransform: "none",
                         borderRadius: "8px",
                         px: 2,
-                        "&:hover": { backgroundColor: "#c43f2a" },
+                        "&:hover": { backgroundColor: "primary.dark" },
                       }}
                     >
                       Ver Perfil

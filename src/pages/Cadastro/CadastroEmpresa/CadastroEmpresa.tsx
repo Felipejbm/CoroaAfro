@@ -11,12 +11,15 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { fieldStyles } from "./CadastroEmpresa.styles";
 import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { fonts } from "../../../styles/theme";
 
-import Layout from "../../../Components/Layout/Layout";
+import Layout from "../../../components/Layout/Layout";
 import {
   buscarMinhaEmpresa,
   buscarOpcoesEmpresa,
@@ -86,6 +89,7 @@ const endereco: Campo[] = [
 ];
 
 export default function CadastroEmpre() {
+  const theme = useTheme();
   const [form, setForm] = useState<Formulario>(inicial);
   const [opcoes, setOpcoes] = useState<OpcoesEmpresa>({
     nichos: [],
@@ -262,22 +266,22 @@ export default function CadastroEmpre() {
 
   return (
     <Layout>
-      <Stack sx={{ bgcolor: "#f7dde0", py: { xs: 4, md: 6 } }}>
+      <Stack sx={{ bgcolor: theme.palette.secondary.light, py: { xs: 4, md: 6 } }}>
         <Container maxWidth="md">
           <Stack
             component="form"
             onSubmit={(event) => void salvar(event)}
             sx={{
-              bgcolor: "#e7d2d3",
+              bgcolor: theme.palette.secondary.main,
               borderRadius: 3,
-              boxShadow: "0 10px 24px rgba(0,0,0,.2)",
+              boxShadow: (theme) => `0 10px 24px ${alpha(theme.palette.common.black, 0.2)}`,
               p: { xs: 3, md: 5 },
               gap: 3,
             }}
           >
             <Typography
               variant="h4"
-              sx={{ fontFamily: "'Playfair Display', serif" }}
+              sx={{ fontFamily: fonts.hero }}
             >
               {empresaId ? "Editar empresa" : "Cadastre sua empresa"}
             </Typography>
@@ -327,8 +331,8 @@ export default function CadastroEmpre() {
               type="submit"
               disabled={carregando || salvando || falhaCarga || sucesso}
               sx={{
-                background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
-                color: "#fff",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                color: theme.palette.getContrastText(theme.palette.primary.main),
                 py: 1.5,
                 borderRadius: 2,
               }}
@@ -350,7 +354,7 @@ export default function CadastroEmpre() {
         fullWidth
         maxWidth="xs"
         slotProps={{
-          paper: { sx: { bgcolor: "#e7d2d3", borderRadius: 3, p: 2 } },
+          paper: { sx: { bgcolor: theme.palette.secondary.main, borderRadius: 3, p: 2 } },
         }}
       >
         <DialogTitle>

@@ -6,7 +6,9 @@ import {
   Paper,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useNavigate, useParams } from "react-router-dom";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import api from "../../api/axios";
@@ -29,12 +31,14 @@ export default function Mentoria({
 }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [nome, setNome] = useState("");
   const [alunos, setAlunos] = useState<Mentorado[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
   const [saindo, setSaindo] = useState(false);
+
   useEffect(() => {
     let active = true;
     async function carregar() {
@@ -67,6 +71,7 @@ export default function Mentoria({
       active = false;
     };
   }, [id, detalhe, retry]);
+
   async function sair() {
     setSaindo(true);
     try {
@@ -78,6 +83,7 @@ export default function Mentoria({
       setSaindo(false);
     }
   }
+
   return (
     <Stack direction="row" sx={{ minHeight: "100vh" }}>
       <NavBarMentor />
@@ -85,7 +91,7 @@ export default function Mentoria({
         sx={{
           flex: 1,
           minWidth: 0,
-          bgcolor: "#f9dde0",
+          backgroundColor: theme.palette.secondary.light,
           p: { xs: 2, md: 5 },
           gap: 3,
           fontFamily: fonts.body,
@@ -98,14 +104,23 @@ export default function Mentoria({
           flexWrap="wrap"
           gap={2}
         >
-          <Typography variant="h4" sx={{ fontFamily: fonts.hero }}>
+          <Typography variant="h4" sx={{ fontFamily: fonts.hero, color: theme.palette.text.primary }}>
             {painel
               ? "Meu painel de mentoria"
               : detalhe
                 ? "Detalhes do mentorado"
                 : "Meus mentorados"}
           </Typography>
-          <Button disabled={saindo} onClick={() => void sair()}>
+          <Button
+            disabled={saindo}
+            onClick={() => void sair()}
+            sx={{
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.common.white,
+              textTransform: "none",
+              borderRadius: "10px",
+            }}
+          >
             Sair
           </Button>
         </Stack>
@@ -115,7 +130,7 @@ export default function Mentoria({
           <Alert
             severity="error"
             action={
-              <Button onClick={() => setRetry(retry + 1)}>
+              <Button onClick={() => setRetry((current) => current + 1)}>
                 Tentar novamente
               </Button>
             }
@@ -124,16 +139,15 @@ export default function Mentoria({
           </Alert>
         ) : (
           <>
-            <Typography>Olá, {nome}.</Typography>
+            <Typography sx={{ color: theme.palette.text.primary }}>Olá, {nome}.</Typography>
             {painel && (
-              <Typography variant="h6">
+              <Typography variant="h6" sx={{ color: theme.palette.text.primary }}>
                 {alunos.length} mentorado(s) vinculado(s)
               </Typography>
             )}
             {!alunos.length && (
               <Alert severity="info">
-                Nenhum mentorado vinculado. Os empreendedores aparecerão aqui
-                quando escolherem uma das suas trilhas.
+                Nenhum mentorado vinculado. Os empreendedores aparecerão aqui quando escolherem uma das suas trilhas.
               </Alert>
             )}
             {alunos.map((aluno) => (
@@ -141,26 +155,25 @@ export default function Mentoria({
                 key={aluno.id}
                 sx={{
                   p: 3,
-                  bgcolor: "#16161d",
-                  color: "white",
+                  backgroundColor: theme.palette.background.default,
+                  color: theme.palette.common.white,
                   borderRadius: 3,
+                  boxShadow: `0 12px 24px ${alpha(theme.palette.common.black, 0.12)}`,
                 }}
               >
-                <Typography variant="h6">{aluno.nome}</Typography>
-                <Typography>
+                <Typography variant="h6" sx={{ color: theme.palette.common.white }}>{aluno.nome}</Typography>
+                <Typography sx={{ color: alpha(theme.palette.common.white, 0.72) }}>
                   {aluno.empresa || "Empresa ainda não cadastrada"}
                 </Typography>
                 <Button
-                  sx={{ color: "#ffb4ab", mt: 1 }}
-                  onClick={() =>
-                    navigate(`/chat-mentor?empreendedor=${aluno.id}`)
-                  }
+                  sx={{ color: theme.palette.primary.light, mt: 1, textTransform: "none" }}
+                  onClick={() => navigate(`/chat-mentor?empreendedor=${aluno.id}`)}
                 >
                   Conversar
                 </Button>
                 {!detalhe && (
                   <Button
-                    sx={{ color: "#f0a3a0", mt: 1 }}
+                    sx={{ color: theme.palette.primary.light, mt: 1, textTransform: "none" }}
                     onClick={() => navigate(`/detalhes-mentorado/${aluno.id}`)}
                   >
                     Ver perfil
@@ -170,23 +183,19 @@ export default function Mentoria({
             ))}
             <Button
               variant="contained"
-              sx={{ alignSelf: "flex-start" }}
+              sx={{ alignSelf: "flex-start", backgroundColor: theme.palette.primary.main, textTransform: "none"}}
               onClick={() =>
                 navigate(
-                  detalhe && id
-                    ? `/criar-trilha?mentorado=${id}`
-                    : "/criar-trilha",
+                  detalhe && id ? `/criar-trilha?mentorado=${id}` : "/criar-trilha",
                 )
               }
             >
-              {detalhe
-                ? "Acompanhar trilhas e progresso"
-                : "Gerenciar trilhas e aulas"}
+              {detalhe ? "Acompanhar trilhas e progresso" : "Gerenciar trilhas e aulas"}
             </Button>
           </>
         )}
         {detalhe && (
-          <Button onClick={() => navigate("/controle-mentorados")}>
+          <Button onClick={() => navigate("/controle-mentorados")} sx={{ alignSelf: "flex-start", color: theme.palette.primary.main }}>
             Voltar aos mentorados
           </Button>
         )}

@@ -4,11 +4,14 @@ import {
   Stack,
   Typography,
   IconButton,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import NavBarMentor from "../../Components/NavMentor/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 export default function DetalhesMentorado() {
+  const theme = useTheme();
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBarMentor />
@@ -17,7 +20,7 @@ export default function DetalhesMentorado() {
         sx={{
           flex: 1, 
           minWidth: 0, 
-          backgroundColor: "#f9dde0",
+          backgroundColor: theme.palette.secondary.light,
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
@@ -28,9 +31,9 @@ export default function DetalhesMentorado() {
           <IconButton
             onClick={() => window.history.back()}
             sx={{
-              color: "#16161d",
-              backgroundColor: "rgba(22, 22, 29, 0.05)",
-              "&:hover": { backgroundColor: "rgba(22, 22, 29, 0.1)" },
+              color: theme.palette.text.primary,
+              backgroundColor: alpha(theme.palette.background.default, 0.06),
+              "&:hover": { backgroundColor: alpha(theme.palette.background.default, 0.12) },
             }}
           >
             <ArrowBackIcon />
@@ -39,14 +42,14 @@ export default function DetalhesMentorado() {
 
         {/* Bloco do Perfil */}
         <Stack direction="row" sx={{ alignItems: "center", gap: 2, mb: 4 }}>
-          <Avatar sx={{ width: 70, height: 70, bgcolor: "#16161d" }}>DS</Avatar>
+          <Avatar sx={{ width: 70, height: 70, bgcolor: theme.palette.background.default }}>DS</Avatar>
           <Stack>
             <Typography
               sx={{
                 fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "1.2rem",
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
               }}
             >
               Dandara Santos
@@ -55,7 +58,7 @@ export default function DetalhesMentorado() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.9rem",
-                color: "#3a3a3a",
+                color: theme.palette.text.primary,
               }}
             >
               Café da Dandara • Plano Premium
@@ -64,7 +67,7 @@ export default function DetalhesMentorado() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.8rem",
-                color: "#3ddc97",
+                color: theme.palette.success.main,
                 fontWeight: 700,
               }}
             >
@@ -87,49 +90,49 @@ export default function DetalhesMentorado() {
           }}
         >
           <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 2 }}
+            sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 2 }}
           >
-            <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+            <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
               Progresso Geral
             </Typography>
             <Typography
-              sx={{ color: "#e0523a", fontWeight: 700, fontSize: "1.2rem" }}
+              sx={{ color: theme.palette.primary.main, fontWeight: 700, fontSize: "1.2rem" }}
             >
               82%
             </Typography>
           </Stack>
           <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 2 }}
+            sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 2 }}
           >
-            <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+            <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
               Lições Concluídas
             </Typography>
             <Typography
-              sx={{ color: "#e0523a", fontWeight: 700, fontSize: "1.2rem" }}
+              sx={{ color: theme.palette.primary.main, fontWeight: 700, fontSize: "1.2rem" }}
             >
               15
             </Typography>
           </Stack>
           <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 2 }}
+            sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 2 }}
           >
-            <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+            <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
               Pendentes
             </Typography>
             <Typography
-              sx={{ color: "#e0523a", fontWeight: 700, fontSize: "1.2rem" }}
+              sx={{ color: theme.palette.primary.main, fontWeight: 700, fontSize: "1.2rem" }}
             >
               4
             </Typography>
           </Stack>
           <Stack
-            sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 2 }}
+            sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 2 }}
           >
-            <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+            <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
               Trilhas Ativas
             </Typography>
             <Typography
-              sx={{ color: "#e0523a", fontWeight: 700, fontSize: "1.2rem" }}
+              sx={{ color: theme.palette.primary.main, fontWeight: 700, fontSize: "1.2rem" }}
             >
               3
             </Typography>
@@ -142,7 +145,7 @@ export default function DetalhesMentorado() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 2,
           }}
         >
@@ -150,7 +153,7 @@ export default function DetalhesMentorado() {
         </Typography>
         <Stack sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 4 }}>
           <Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b", mb: 0.5 }}>
+            <Typography sx={{ fontSize: "0.85rem", color: theme.palette.text.primary, mb: 0.5 }}>
               Identidade Visual
             </Typography>
             <LinearProgress
@@ -159,13 +162,13 @@ export default function DetalhesMentorado() {
               sx={{
                 height: 8,
                 borderRadius: 5,
-                backgroundColor: "#26262f",
-                "& .MuiLinearProgress-bar": { backgroundColor: "#3ddc97" },
+                backgroundColor: theme.palette.background.default,
+                "& .MuiLinearProgress-bar": { backgroundColor: theme.palette.success.main },
               }}
             />
           </Stack>
           <Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b", mb: 0.5 }}>
+            <Typography sx={{ fontSize: "0.85rem", color: theme.palette.text.primary, mb: 0.5 }}>
               Posicionamento de Marca
             </Typography>
             <LinearProgress
@@ -174,13 +177,13 @@ export default function DetalhesMentorado() {
               sx={{
                 height: 8,
                 borderRadius: 5,
-                backgroundColor: "#26262f",
-                "& .MuiLinearProgress-bar": { backgroundColor: "#f2b705" },
+                backgroundColor: theme.palette.background.default,
+                "& .MuiLinearProgress-bar": { backgroundColor: theme.palette.warning.main },
               }}
             />
           </Stack>
           <Stack>
-            <Typography sx={{ fontSize: "0.85rem", color: "#2b2b2b", mb: 0.5 }}>
+            <Typography sx={{ fontSize: "0.85rem", color: theme.palette.text.primary, mb: 0.5 }}>
               Redes Sociais
             </Typography>
             <LinearProgress
@@ -189,8 +192,8 @@ export default function DetalhesMentorado() {
               sx={{
                 height: 8,
                 borderRadius: 5,
-                backgroundColor: "#26262f",
-                "& .MuiLinearProgress-bar": { backgroundColor: "#e0523a" },
+                backgroundColor: theme.palette.background.default,
+                "& .MuiLinearProgress-bar": { backgroundColor: theme.palette.primary.main },
               }}
             />
           </Stack>
@@ -202,14 +205,14 @@ export default function DetalhesMentorado() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 2,
           }}
         >
           Atividades Recentes
         </Typography>
         <Stack
-          sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3, mb: 4 }}
+          sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 3, mb: 4 }}
         >
           {[
             "Concluiu a lição 'Identidade Visual'",
@@ -222,7 +225,7 @@ export default function DetalhesMentorado() {
               sx={{
                 fontFamily: fonts.body,
                 fontSize: "0.85rem",
-                color: "#fff",
+                color: theme.palette.common.white,
                 mb: 1,
                 "&:last-child": { mb: 0 },
               }}
@@ -238,7 +241,7 @@ export default function DetalhesMentorado() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 2,
           }}
         >
@@ -246,22 +249,22 @@ export default function DetalhesMentorado() {
         </Typography>
         <Stack
           sx={{
-            backgroundColor: "#16161d",
+            backgroundColor: theme.palette.background.default,
             borderRadius: "10px",
             p: 3,
             gap: 1,
           }}
         >
-          <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+          <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
             Email: dandara@email.com
           </Typography>
-          <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+          <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
             Telefone: (11) 99999-9999
           </Typography>
-          <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+          <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
             Empresa: Café da Dandara
           </Typography>
-          <Typography sx={{ color: "#fff", fontSize: "0.85rem" }}>
+          <Typography sx={{ color: theme.palette.common.white, fontSize: "0.85rem" }}>
             Ingresso: 15/02/2026
           </Typography>
         </Stack>

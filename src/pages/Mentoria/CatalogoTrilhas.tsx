@@ -13,6 +13,7 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import {
   buscarCatalogo,
@@ -29,6 +30,7 @@ export default function CatalogoTrilhas({
 }: {
   onComecar: () => void;
 }) {
+  const theme = useTheme();
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [categoria, setCategoria] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -135,15 +137,15 @@ export default function CatalogoTrilhas({
                   sx={{
                     p: 3,
                     borderRadius: 3,
-                    bgcolor: "#16161d",
-                    color: "white",
+                    bgcolor: theme.palette.background.default,
+                    color: theme.palette.common.white,
                     display: "flex",
                     flexDirection: "column",
                     gap: 1.5,
                     overflowWrap: "anywhere",
                   }}
                 >
-                  <Typography sx={{ color: "#ffb4ab" }}>
+                  <Typography sx={{ color: theme.palette.primary.light }}>
                     {t.categoria_label}
                   </Typography>
                   <Typography variant="h5">{t.titulo}</Typography>

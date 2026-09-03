@@ -1,12 +1,14 @@
+import { fonts, default as theme } from "../../../styles/theme";
+
 export const fieldStyles = {
-    backgroundColor: "#f2eaea",
+    backgroundColor: theme.palette.secondary.light,
     borderRadius: "6px",
     "& .MuiOutlinedInput-root": { borderRadius: "6px" },
 };
 
 export const labelStyles = {
-    fontFamily: "'Playfair Display', Georgia, serif",
+    fontFamily: fonts.hero,
     fontSize: "0.95rem",
-    color: "#3a3a3a",
+    color: theme.palette.text.primary,
     mb: 0.8,
 };

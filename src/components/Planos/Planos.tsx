@@ -1,4 +1,12 @@
-import { Typography, Button, Container, Link, Stack, Box } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Container,
+  Link,
+  Stack,
+  Box,
+  alpha,
+} from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { plans } from "../../pages/LandPage/LandPage.utils";
 import { fonts } from "../../styles/theme";
@@ -8,7 +16,7 @@ export default function PricingPage() {
   return (
     <Stack
       sx={{
-        backgroundColor: "#f7dde0",
+        backgroundColor: "secondary.light",
         py: { xs: 6, md: 10 },
         minHeight: "100vh",
       }}
@@ -39,9 +47,10 @@ export default function PricingPage() {
                 <Stack
                   sx={{
                     position: "relative",
-                    background: "linear-gradient(160deg, #f0623e, #e0523a)",
+                    background: (theme) =>
+                      `linear-gradient(160deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
                     borderRadius: "20px",
-                    color: "#fff",
+                    color: "secondary.main",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
@@ -50,8 +59,8 @@ export default function PricingPage() {
                     pb: 4,
                     mt: highlighted ? 0 : { xs: 0, md: 2 },
                     boxShadow: highlighted
-                      ? "0 14px 30px rgba(0,0,0,0.3)"
-                      : "0 8px 18px rgba(0,0,0,0.2)",
+                      ? (theme) => `0 14px 30px ${alpha(theme.palette.common.black, 0.3)}`
+                      : (theme) => `0 8px 18px ${alpha(theme.palette.common.black, 0.2)}`,
                     transform: { md: highlighted ? "scale(1.05)" : "none" },
                     transition: "transform 0.2s ease-in-out",
                   }}
@@ -63,8 +72,8 @@ export default function PricingPage() {
                         top: -16,
                         left: "50%",
                         transform: "translateX(-50%)",
-                        backgroundColor: "#2b2b2b",
-                        color: "#fff",
+                        backgroundColor: "primary.dark",
+                        color: "secondary.main",
                         fontFamily: fonts.body,
                         fontSize: "0.75rem",
                         fontWeight: 700,
@@ -139,7 +148,9 @@ export default function PricingPage() {
 
                   <Stack
                     sx={{
-                      borderBottom: "1px solid rgba(255,255,255,0.4)",
+                      borderBottom: "1px solid",
+                      borderColor: (theme) =>
+                        alpha(theme.palette.secondary.main, 0.4),
                       mb: 2.5,
                     }}
                   />
@@ -166,7 +177,8 @@ export default function PricingPage() {
                             width: 20,
                             height: 20,
                             borderRadius: "50%",
-                            backgroundColor: "rgba(255,255,255,0.25)",
+                            backgroundColor: (theme) =>
+                              alpha(theme.palette.secondary.main, 0.25),
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -174,7 +186,9 @@ export default function PricingPage() {
                             mt: 0.2,
                           }}
                         >
-                          <CheckIcon sx={{ fontSize: 13, color: "#fff" }} />
+                          <CheckIcon
+                            sx={{ fontSize: 13, color: "secondary.main" }}
+                          />
                         </Stack>
                         <Typography
                           sx={{
@@ -197,21 +211,25 @@ export default function PricingPage() {
                       py: 1.2,
                       borderRadius: "10px",
                       textTransform: "none",
-                      fontFamily: fonts.body,
+                      fontFamily: fonts.button,
                       fontWeight: 700,
                       fontSize: "1rem",
                       ...(highlighted
                         ? {
-                            backgroundColor: "#fff",
-                            color: "#e0523a",
-                            "&:hover": { backgroundColor: "#f5f5f5" },
+                            backgroundColor: "secondary.main",
+                            color: "primary.main",
+                            "&:hover": {
+                              backgroundColor: "secondary.light",
+                            },
                           }
                         : {
-                            borderColor: "rgba(255,255,255,0.7)",
-                            color: "#fff",
+                            borderColor: (theme) =>
+                              alpha(theme.palette.secondary.main, 0.7),
+                            color: "secondary.main",
                             "&:hover": {
-                              borderColor: "#fff",
-                              backgroundColor: "rgba(255,255,255,0.08)",
+                              borderColor: "secondary.main",
+                              backgroundColor: (theme) =>
+                                alpha(theme.palette.secondary.main, 0.08),
                             },
                           }),
                     }}
@@ -229,15 +247,15 @@ export default function PricingPage() {
           sx={{
             fontFamily: fonts.body,
             fontSize: "0.95rem",
-            color: "#2b2b2b",
+            color: "text.primary",
             mt: 5,
           }}
         >
-          Não possui conta?
+          Não possui conta?{" "}
           <Link
             component={RouterLink}
             to="cadastro-empreendedor"
-            sx={{ color: "#c43f2a", fontWeight: 700 }}
+            sx={{ color: "primary.main", fontWeight: 700 }}
             underline="hover"
           >
             Cadastre-se
