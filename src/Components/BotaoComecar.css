@@ -1,24 +1,17 @@
 .btn2 {
   width: 267px;
   height: 61px;
-
   padding: 11px 12px;
-
   border-radius: 10px;
   opacity: 1;
-
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   border: none;
   cursor: pointer;
-
-  background-color: #5b4343;
-
+  background-color: var(--mui-palette-primary-dark);
   font-family: "Montserrat", sans-serif;
   font-size: 32px;
-  color: white;
+  color: var(--mui-palette-secondary-main);
 }
-

@@ -12,6 +12,7 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import AprendizadoLayout from "./AprendizadoLayout";
@@ -44,6 +45,7 @@ const novaTrilha = (): TrilhaEntrada => ({
 });
 
 export default function TrilhasMentor() {
+  const theme = useTheme();
   const [params] = useSearchParams();
   const [trilhas, setTrilhas] = useState<Trilha[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -204,8 +206,8 @@ export default function TrilhasMentor() {
         <CircularProgress aria-label="Carregando trilhas" />
       ) : (
         <>
-          <Paper sx={{ p: 3, borderRadius: 3 }}>
-            <Typography variant="h6" mb={2}>
+          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}>
+            <Typography variant="h6" mb={2} sx={{ color: theme.palette.common.white }}>
               Acompanhamento dos inscritos
             </Typography>
             <TextField
@@ -250,7 +252,7 @@ export default function TrilhasMentor() {
             {acompanhamento.map((t) => (
               <Stack
                 key={t.id}
-                sx={{ mt: 2, p: 2, bgcolor: "#f9dde0", borderRadius: 2 }}
+                sx={{ mt: 2, p: 2, bgcolor: "secondary.light", borderRadius: 2 }}
               >
                 <Typography fontWeight={700}>
                   {t.titulo} — {t.progresso}%
@@ -275,7 +277,7 @@ export default function TrilhasMentor() {
           {trilhas.map((t) => (
             <Paper
               key={t.id}
-              sx={{ p: 3, borderRadius: 3, bgcolor: "#16161d", color: "white" }}
+              sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.background.default, color: theme.palette.common.white }}
             >
               <Typography variant="h6" sx={{ overflowWrap: "anywhere" }}>
                 {t.titulo}
@@ -291,7 +293,7 @@ export default function TrilhasMentor() {
                 aula(s)
               </Typography>
               <Button
-                sx={{ color: "#ffb4ab" }}
+                sx={{ color: theme.palette.primary.light }}
                 disabled={busy}
                 onClick={() => abrir(t)}
               >

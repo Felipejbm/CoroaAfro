@@ -107,7 +107,7 @@ export default function TestimonialsCarousel() {
   };
 
   return (
-    <Stack sx={{ backgroundColor: "#f7dde0", py: 6 }}>
+    <Stack sx={{ backgroundColor: "secondary.light", py: 6 }}>
       <Stack
         ref={ref}
         direction="row"
@@ -118,15 +118,11 @@ export default function TestimonialsCarousel() {
         sx={{
           overflowX: "auto",
           display: "flex",
-
           px: "10vw",
           gap: 12,
-
           userSelect: "none",
           cursor: "grab",
-
           scrollSnapType: "none",
-
           "&::-webkit-scrollbar": {
             display: "none",
           },

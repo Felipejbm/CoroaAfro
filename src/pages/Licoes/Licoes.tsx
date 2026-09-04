@@ -1,4 +1,5 @@
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
@@ -10,19 +11,22 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { objectives, topics } from "./Licoes.utils";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function Licoes() {
+  const theme = useTheme();
+
   return (
     <Stack>
       <NavBar />
 
-      <Stack sx={{ backgroundColor: "#f9dde0", minHeight: "100vh", pb: 9 }}>
+      <Stack sx={{ backgroundColor: theme.palette.secondary.light, minHeight: "100vh", pb: 9 }}>
         <Stack sx={{ maxWidth: 1100, mx: "auto", px: { xs: 2, md: 3 }, py: 4 }}>
           <Stack sx={{ display: "flex", gap: 1.5, mb: 2 }}>
             <Stack
               sx={{
-                backgroundColor: "#fff",
+                backgroundColor: theme.palette.common.white,
                 borderRadius: "20px",
                 px: 2,
                 py: 0.6,
@@ -30,10 +34,10 @@ export default function Licoes() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.75rem",
                   fontWeight: 700,
-                  color: "#2b2b2b",
+                  color: theme.palette.text.primary,
                 }}
               >
                 Lição 1 de 7
@@ -41,7 +45,7 @@ export default function Licoes() {
             </Stack>
             <Stack
               sx={{
-                backgroundColor: "#16161d",
+                backgroundColor: theme.palette.background.default,
                 borderRadius: "20px",
                 px: 2,
                 py: 0.6,
@@ -52,10 +56,10 @@ export default function Licoes() {
             >
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.75rem",
                   fontWeight: 700,
-                  color: "#fff",
+                  color: theme.palette.common.white,
                 }}
               >
                 🎓 Iniciante
@@ -65,10 +69,10 @@ export default function Licoes() {
 
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: { xs: "1.6rem", md: "2rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 1.5,
             }}
           >
@@ -76,9 +80,9 @@ export default function Licoes() {
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.95rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
               lineHeight: 1.6,
               mb: 2,
             }}
@@ -89,36 +93,36 @@ export default function Licoes() {
 
           <Stack sx={{ display: "flex", flexWrap: "wrap", gap: 3, mb: 3 }}>
             <Stack sx={{ display: "flex", alignItems: "center", gap: 0.7 }}>
-              <ScheduleIcon sx={{ fontSize: 18, color: "#3a3a3a" }} />
+              <ScheduleIcon sx={{ fontSize: 18, color: theme.palette.text.primary }} />
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#3a3a3a",
+                  color: theme.palette.text.primary,
                 }}
               >
                 8 minutos
               </Typography>
             </Stack>
             <Stack sx={{ display: "flex", alignItems: "center", gap: 0.7 }}>
-              <MenuBookIcon sx={{ fontSize: 18, color: "#3a3a3a" }} />
+              <MenuBookIcon sx={{ fontSize: 18, color: theme.palette.text.primary }} />
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#3a3a3a",
+                  color: theme.palette.text.primary,
                 }}
               >
                 Leitura e Vídeo
               </Typography>
             </Stack>
             <Stack sx={{ display: "flex", alignItems: "center", gap: 0.7 }}>
-              <ListAltIcon sx={{ fontSize: 18, color: "#3a3a3a" }} />
+              <ListAltIcon sx={{ fontSize: 18, color: theme.palette.text.primary }} />
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "#3a3a3a",
+                  color: theme.palette.text.primary,
                 }}
               >
                 4 tópicos
@@ -140,7 +144,7 @@ export default function Licoes() {
                 borderRadius: "14px",
                 overflow: "hidden",
                 background:
-                  "radial-gradient(circle at 30% 35%, #1a3d3a, #0c1a22 70%)",
+                  `radial-gradient(circle at 30% 35%, ${theme.palette.primary.main}, ${theme.palette.background.default} 70%)`,
                 position: "relative",
                 minHeight: 320,
                 display: "flex",
@@ -157,7 +161,7 @@ export default function Licoes() {
                   width: 90,
                   height: 70,
                   borderRadius: "10px",
-                  backgroundColor: "rgba(60,120,90,0.4)",
+                  backgroundColor: alpha(theme.palette.success.main, 0.4),
                 }}
               />
               <Stack
@@ -168,16 +172,16 @@ export default function Licoes() {
                   width: 60,
                   height: 60,
                   borderRadius: "50%",
-                  backgroundColor: "#000",
+                  backgroundColor: theme.palette.background.default,
                 }}
               />
 
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontWeight: 700,
                   fontSize: "1.6rem",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                   lineHeight: 1.2,
                 }}
               >
@@ -187,9 +191,9 @@ export default function Licoes() {
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "'Comfortaa', sans-serif",
+                  fontFamily: fonts.body,
                   fontSize: "0.85rem",
-                  color: "rgba(255,255,255,0.7)",
+                  color: alpha(theme.palette.common.white, 0.7),
                   mt: 1,
                   mb: 2,
                 }}
@@ -200,14 +204,14 @@ export default function Licoes() {
               </Typography>
 
               <Stack sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                <IconButton size="small" sx={{ color: "#fff" }}>
+                <IconButton size="small" sx={{ color: theme.palette.common.white }}>
                   <PlayArrowIcon />
                 </IconButton>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.7rem",
-                    color: "rgba(255,255,255,0.7)",
+                    color: alpha(theme.palette.common.white, 0.7),
                   }}
                 >
                   00:00
@@ -217,7 +221,7 @@ export default function Licoes() {
                     flex: 1,
                     height: 4,
                     borderRadius: 2,
-                    backgroundColor: "rgba(255,255,255,0.25)",
+                    backgroundColor: alpha(theme.palette.common.white, 0.25),
                     position: "relative",
                   }}
                 >
@@ -226,7 +230,7 @@ export default function Licoes() {
                       width: "12%",
                       height: "100%",
                       borderRadius: 2,
-                      backgroundColor: "#3ddc97",
+                      backgroundColor: theme.palette.success.main,
                     }}
                   />
                   <Stack
@@ -237,23 +241,23 @@ export default function Licoes() {
                       width: 10,
                       height: 10,
                       borderRadius: "50%",
-                      backgroundColor: "#3ddc97",
+                      backgroundColor: theme.palette.success.main,
                     }}
                   />
                 </Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.7rem",
-                    color: "rgba(255,255,255,0.7)",
+                    color: alpha(theme.palette.common.white, 0.7),
                   }}
                 >
                   08:25
                 </Typography>
-                <IconButton size="small" sx={{ color: "#fff" }}>
+                <IconButton size="small" sx={{ color: theme.palette.common.white }}>
                   <VolumeUpIcon fontSize="small" />
                 </IconButton>
-                <IconButton size="small" sx={{ color: "#fff" }}>
+                <IconButton size="small" sx={{ color: theme.palette.common.white }}>
                   <FullscreenIcon fontSize="small" />
                 </IconButton>
               </Stack>
@@ -269,17 +273,17 @@ export default function Licoes() {
             >
               <Stack
                 sx={{
-                  backgroundColor: "#16161d",
+                  backgroundColor: theme.palette.background.default,
                   borderRadius: "14px",
                   p: 2.5,
                 }}
               >
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                     fontSize: "1rem",
-                    color: "#fff",
+                    color: theme.palette.common.white,
                     mb: 0.3,
                   }}
                 >
@@ -287,9 +291,9 @@ export default function Licoes() {
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.75rem",
-                    color: "rgba(255,255,255,0.5)",
+                    color: alpha(theme.palette.common.white, 0.5),
                     mb: 2,
                   }}
                 >
@@ -305,13 +309,13 @@ export default function Licoes() {
                       sx={{ display: "flex", alignItems: "center", gap: 1.2 }}
                     >
                       <ChevronRightIcon
-                        sx={{ fontSize: 16, color: "#3ddc97" }}
+                        sx={{ fontSize: 16, color: theme.palette.success.main }}
                       />
                       <Typography
                         sx={{
-                          fontFamily: "'Comfortaa', sans-serif",
+                          fontFamily: fonts.body,
                           fontSize: "0.85rem",
-                          color: "rgba(255,255,255,0.5)",
+                          color: alpha(theme.palette.common.white, 0.5),
                           minWidth: 14,
                         }}
                       >
@@ -319,9 +323,9 @@ export default function Licoes() {
                       </Typography>
                       <Typography
                         sx={{
-                          fontFamily: "'Comfortaa', sans-serif",
+                          fontFamily: fonts.body,
                           fontSize: "0.85rem",
-                          color: "#fff",
+                          color: theme.palette.common.white,
                           flex: 1,
                         }}
                       >
@@ -329,9 +333,9 @@ export default function Licoes() {
                       </Typography>
                       <Typography
                         sx={{
-                          fontFamily: "'Comfortaa', sans-serif",
+                          fontFamily: fonts.body,
                           fontSize: "0.75rem",
-                          color: "rgba(255,255,255,0.5)",
+                          color: alpha(theme.palette.common.white, 0.5),
                         }}
                       >
                         {topic.duration}
@@ -343,7 +347,7 @@ export default function Licoes() {
 
               <Stack
                 sx={{
-                  backgroundColor: "#16161d",
+                  backgroundColor: theme.palette.background.default,
                   borderRadius: "14px",
                   p: 2.5,
                   position: "relative",
@@ -355,7 +359,7 @@ export default function Licoes() {
                     position: "absolute",
                     top: 10,
                     right: 10,
-                    color: "rgba(255,255,255,0.5)",
+                    color: alpha(theme.palette.common.white, 0.5),
                   }}
                 >
                   <CloseIcon fontSize="small" />
@@ -368,13 +372,13 @@ export default function Licoes() {
                     mb: 1,
                   }}
                 >
-                  <InfoOutlinedIcon sx={{ fontSize: 18, color: "#fff" }} />
+                  <InfoOutlinedIcon sx={{ fontSize: 18, color: theme.palette.common.white }} />
                   <Typography
                     sx={{
-                      fontFamily: "'Comfortaa', sans-serif",
+                      fontFamily: fonts.body,
                       fontWeight: 700,
                       fontSize: "0.9rem",
-                      color: "#fff",
+                      color: theme.palette.common.white,
                     }}
                   >
                     Dica
@@ -382,9 +386,9 @@ export default function Licoes() {
                 </Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.8rem",
-                    color: "rgba(255,255,255,0.7)",
+                    color: alpha(theme.palette.common.white, 0.7),
                     lineHeight: 1.5,
                   }}
                 >
@@ -397,10 +401,10 @@ export default function Licoes() {
 
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontWeight: 700,
               fontSize: { xs: "1.4rem", md: "1.7rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 1,
             }}
           >
@@ -408,9 +412,9 @@ export default function Licoes() {
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.9rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
               mb: 2.5,
             }}
           >
@@ -422,7 +426,7 @@ export default function Licoes() {
               <Stack
                 key={i}
                 sx={{
-                  backgroundColor: "#16161d",
+                  backgroundColor: theme.palette.background.default,
                   borderRadius: "12px",
                   p: 2.5,
                   width: { xs: "100%", sm: 220 },
@@ -436,7 +440,7 @@ export default function Licoes() {
                     width: 36,
                     height: 36,
                     borderRadius: "8px",
-                    backgroundColor: "rgba(255,255,255,0.08)",
+                    backgroundColor: alpha(theme.palette.common.white, 0.08),
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -446,9 +450,9 @@ export default function Licoes() {
                 </Stack>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.85rem",
-                    color: "#fff",
+                    color: theme.palette.common.white,
                     lineHeight: 1.4,
                   }}
                 >
@@ -464,16 +468,16 @@ export default function Licoes() {
             position: "fixed",
             bottom: 80,
             right: 24,
-            backgroundColor: "#3ddc97",
-            color: "#0c1a22",
-            fontFamily: "'Comfortaa', sans-serif",
+            backgroundColor: theme.palette.success.main,
+            color: theme.palette.text.primary,
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "0.85rem",
             textTransform: "none",
             borderRadius: "8px",
             px: 2.5,
             py: 1,
-            "&:hover": { backgroundColor: "#33c789" },
+            "&:hover": { backgroundColor: theme.palette.success.dark },
           }}
         >
           Tirar Duvidas
@@ -485,7 +489,7 @@ export default function Licoes() {
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: "#16161d",
+            backgroundColor: theme.palette.background.default,
             px: { xs: 2, md: 4 },
             py: 1.5,
             display: "flex",
@@ -496,19 +500,19 @@ export default function Licoes() {
           <Stack>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.7rem",
-                color: "rgba(255,255,255,0.5)",
+                color: alpha(theme.palette.common.white, 0.5),
               }}
             >
               Módulo 1 · Lição 1 de 7
             </Typography>
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.9rem",
-                color: "#fff",
+                color: theme.palette.common.white,
               }}
             >
               O que é Identidade Visual?
@@ -520,10 +524,10 @@ export default function Licoes() {
               startIcon={<ChevronLeftIcon />}
               disabled
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 textTransform: "none",
-                color: "rgba(255,255,255,0.4)",
+                color: alpha(theme.palette.common.white, 0.4),
               }}
             >
               Lição anterior
@@ -531,15 +535,15 @@ export default function Licoes() {
             <Button
               endIcon={<ChevronRightIcon />}
               sx={{
-                backgroundColor: "#3ddc97",
-                color: "#0c1a22",
-                fontFamily: "'Comfortaa', sans-serif",
+                backgroundColor: theme.palette.success.main,
+                color: theme.palette.text.primary,
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "6px",
                 px: 2.5,
-                "&:hover": { backgroundColor: "#33c789" },
+                "&:hover": { backgroundColor: theme.palette.success.dark },
               }}
             >
               Próxima lição

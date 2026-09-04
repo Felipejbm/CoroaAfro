@@ -1,9 +1,10 @@
-import { Box, Typography, Container, Stack } from "@mui/material";
+import { Box, Typography, Container, Stack, useTheme, alpha } from "@mui/material";
 import type { TeamMember } from "./Equipe.types";
 import { founders, developers } from "./Equipe.utils";
-import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
-import FooterLandPage from "../../Components/FooterLandPage/FooterLandPage";
-import Layout from "../../Components/Layout/Layout";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
+import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
+import Layout from "../../components/Layout/Layout";
+import { fonts } from "../../styles/theme";
 
 function MemberCard({
   member,
@@ -12,13 +13,14 @@ function MemberCard({
   member: TeamMember;
   isDev?: boolean;
 }) {
+  const theme = useTheme();
   return (
     <Box
       sx={{
         width: { xs: "100%", sm: isDev ? 130 : 150 },
         borderRadius: "10px",
         overflow: "hidden",
-        boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+        boxShadow: `0 4px 14px ${alpha(theme.palette.common.black, 0.25)}`,
         display: "flex",
         flexDirection: "column",
       }}
@@ -36,8 +38,8 @@ function MemberCard({
       />
       <Box
         sx={{
-          backgroundColor: isDev ? "#1c1c1c" : "#7a1f4a",
-          color: "#fff",
+          backgroundColor: isDev ? theme.palette.background.default : theme.palette.primary.dark,
+          color: theme.palette.getContrastText(isDev ? theme.palette.background.default : theme.palette.primary.dark),
           px: isDev ? 1.2 : 1.5,
           py: isDev ? 1 : 1.2,
           flexGrow: 1,
@@ -45,7 +47,7 @@ function MemberCard({
       >
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: isDev ? "0.85rem" : "1rem",
           }}
@@ -54,7 +56,7 @@ function MemberCard({
         </Typography>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: isDev ? "0.6rem" : "0.65rem",
             opacity: isDev ? 0.75 : 0.85,
             mb: isDev ? 0.6 : 0.8,
@@ -64,7 +66,7 @@ function MemberCard({
         </Typography>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.65rem",
             lineHeight: isDev ? 1.35 : 1.4,
           }}
@@ -77,20 +79,21 @@ function MemberCard({
 }
 
 export default function TeamPage() {
+  const theme = useTheme();
   return (
     <Layout>
       <Stack>
         <NavBarLandPage />
 
-        <Box sx={{ backgroundColor: "#f7dde0", py: { xs: 5, md: 7 } }}>
+        <Box sx={{ backgroundColor: theme.palette.secondary.light, py: { xs: 5, md: 7 } }}>
           <Container maxWidth="md">
             <Typography
               align="center"
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontWeight: 700,
                 fontSize: { xs: "2.2rem", md: "3rem" },
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
                 mb: 4,
               }}
             >
@@ -99,7 +102,7 @@ export default function TeamPage() {
 
             <Box
               sx={{
-                background: "linear-gradient(160deg, #f0623e, #d8456a)",
+                background: `linear-gradient(160deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
                 borderRadius: "20px",
                 p: { xs: 3, md: 4 },
               }}
@@ -107,9 +110,9 @@ export default function TeamPage() {
               <Typography
                 align="center"
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: fonts.hero,
                   fontSize: { xs: "1.4rem", md: "1.7rem" },
-                  color: "#2b2b2b",
+                  color: theme.palette.text.primary,
                   mb: 3,
                 }}
               >
@@ -134,9 +137,9 @@ export default function TeamPage() {
               <Typography
                 align="center"
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: fonts.hero,
                   fontSize: { xs: "1.4rem", md: "1.7rem" },
-                  color: "#2b2b2b",
+                  color: theme.palette.text.primary,
                   mb: 3,
                 }}
               >

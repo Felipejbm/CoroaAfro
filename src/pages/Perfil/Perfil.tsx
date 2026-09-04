@@ -9,13 +9,26 @@ import {
   DialogActions,
   DialogTitle,
   TextField,
+  DialogContent,
+  useTheme,
 } from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import { useEffect, useState } from "react";
-import { Logout } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import {
+  buscarSessao,
+  type SessaoUsuario,
+} from "../../services/Auth/controllers/auth";
+import {
+  buscarMinhaEmpresa,
+  mensagemErroApi,
+  type Empresa,
+} from "../../services/Auth/controllers/empresa";
+import api from "../../api/axios";
 
 export default function Perfil() {
-   const navigate = useNavigate();
+  const theme = useTheme();
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState<SessaoUsuario | null>(null);
   const [empresa, setEmpresa] = useState<Empresa | null>(null);
   const [loading, setLoading] = useState(true);
@@ -28,16 +41,31 @@ export default function Perfil() {
 
   useEffect(() => {
     let active = true;
-    Promise.all([buscarSessao(), buscarMinhaEmpresa()]).then(([pessoa, negocio]) => {
-      if (active) { setUsuario(pessoa); setEmpresa(negocio); }
-    }).catch((error) => { if (active) setErro(mensagemErroApi(error)); })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
+    Promise.all([buscarSessao(), buscarMinhaEmpresa()])
+      .then(([pessoa, negocio]) => {
+        if (active) {
+          setUsuario(pessoa);
+          setEmpresa(negocio);
+        }
+      })
+      .catch((error) => {
+        if (active) setErro(mensagemErroApi(error));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const editar = () => {
     if (!usuario) return;
-    setForm({ nome: usuario.nome, email: usuario.email, telefone: usuario.telefone });
+    setForm({
+      nome: usuario.nome,
+      email: usuario.email,
+      telefone: usuario.telefone,
+    });
     setErroEdicao("");
     setEditando(true);
   };
@@ -51,14 +79,24 @@ export default function Perfil() {
       setUsuario(await buscarSessao());
       setEditando(false);
       setSucesso("Dados do empreendedor atualizados.");
-    } catch (error) { setErroEdicao(mensagemErroApi(error)); }
-    finally { setSalvando(false); }
+    } catch (error) {
+      setErroEdicao(mensagemErroApi(error));
+    } finally {
+      setSalvando(false);
+    }
   };
 
-  const card = { flex: 1, bgcolor: "#16161d", borderRadius: "12px", p: 3, color: "#fff", gap: 1.5 };
+  const card = {
+    flex: 1,
+    bgcolor: theme.palette.background.default,
+    borderRadius: "12px",
+    p: 3,
+    color: theme.palette.getContrastText(theme.palette.background.default),
+    gap: 1.5,
+  };
 
   return (
-    <Stack direction="row" sx={{ minHeight: "100vh", bgcolor: "#f9dde0" }}>
+    <Stack direction="row" sx={{ minHeight: "100vh", bgcolor: theme.palette.secondary.light }}>
       <NavBar />
       <Stack
         sx={{
@@ -86,7 +124,7 @@ export default function Perfil() {
         )}
         {usuario && (
           <>
-            <Avatar sx={{ width: 80, height: 80, bgcolor: "#16161d" }}>
+            <Avatar sx={{ width: 80, height: 80, bgcolor: theme.palette.background.default }}>
               {usuario.nome.charAt(0).toUpperCase()}
             </Avatar>
             <Stack alignItems="center">
@@ -181,7 +219,7 @@ export default function Perfil() {
           fullWidth
           maxWidth="sm"
           slotProps={{
-            paper: { sx: { bgcolor: "#e7d2d3", borderRadius: "20px" } },
+            paper: { sx: { bgcolor: theme.palette.secondary.main, borderRadius: "20px" } },
           }}
         >
           <Stack component="form" onSubmit={(event) => void salvar(event)}>

@@ -1,6 +1,8 @@
+import theme from "../../styles/theme";
+
 export const backgrounds: Record<string, string> = {
-    "/": "#C2B1B1",
-    "/planos": "#f9dde0",
-    "/equipe": "#e0f7fa",
-    "/login": "#16161d",
+    "/": theme.palette.secondary.dark,
+    "/planos": theme.palette.secondary.light,
+    "/equipe": theme.palette.secondary.main,
+    "/login": theme.palette.background.default,
 };

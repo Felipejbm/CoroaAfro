@@ -1,4 +1,4 @@
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Avatar, Stack, Typography, useTheme } from "@mui/material";
 import { type Testemunhos } from "../LandPage.types";
 
 type Props = {
@@ -6,12 +6,14 @@ type Props = {
 };
 
 export function TestimonialCard({ item }: Props) {
+  const theme = useTheme();
+
   return (
     <Stack
       sx={{
-        backgroundColor: "#FC6B52",
+        backgroundColor: theme.palette.primary.main,
         borderRadius: "16px",
-        color: "#fff",
+        color: theme.palette.secondary.light,
 
         width: "100%",
         minHeight: 200,

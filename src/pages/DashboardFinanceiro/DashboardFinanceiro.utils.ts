@@ -3,7 +3,7 @@ import type { MetricCard, ProgressItem } from "./DashboardFinanceiro.types";
 export const metricCards: MetricCard[] = [
     { label: "Faturamento Gerado", value: "$ 28.400,00" },
     { label: "ROI", value: "4.5x" },
-    { label: "CAC", value: "R$ 120,00", note: "-5% este mês", noteColor: "#4ade80" },
+    { label: "CAC", value: "R$ 120,00", note: "-5% este mês", noteColor: "success.main" },
 ];
 
 export const weeklyAnalysis: ProgressItem[] = [

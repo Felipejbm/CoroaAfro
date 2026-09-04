@@ -1,10 +1,12 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { lessons, trails } from "./CriarAtividades.utils";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 import { useNavigate } from "react-router-dom";
 
 export default function CriarAtividades() {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   return (
@@ -14,8 +16,8 @@ export default function CriarAtividades() {
       <Stack
         sx={{
           flex: 1,
-          minWidth: 0, 
-          backgroundColor: "#f9dde0",
+          minWidth: 0,
+          backgroundColor: theme.palette.secondary.light,
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
@@ -26,7 +28,7 @@ export default function CriarAtividades() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.6rem", md: "2rem" },
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 1,
           }}
         >
@@ -36,7 +38,7 @@ export default function CriarAtividades() {
           sx={{
             fontFamily: fonts.body,
             fontSize: "0.9rem",
-            color: "#3a3a3a",
+            color: theme.palette.text.primary,
             mb: 4,
           }}
         >
@@ -48,7 +50,7 @@ export default function CriarAtividades() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 2,
           }}
         >
@@ -65,15 +67,15 @@ export default function CriarAtividades() {
           {trails.map((t, idx) => (
             <Stack
               key={idx}
-              sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
+              sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 3 }}
             >
               <Typography
-                sx={{ color: "#fff", fontSize: "0.85rem", fontWeight: 700 }}
+                sx={{ color: theme.palette.common.white, fontSize: "0.85rem", fontWeight: 700 }}
               >
                 {t.titulo}
               </Typography>
               <Typography
-                sx={{ color: "rgba(255,255,255,0.7)", fontSize: "0.8rem" }}
+                sx={{ color: alpha(theme.palette.common.white, 0.7), fontSize: "0.8rem" }}
               >
                 {t.mentorado}
               </Typography>
@@ -86,7 +88,7 @@ export default function CriarAtividades() {
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: "1.1rem",
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 2,
           }}
         >
@@ -103,15 +105,15 @@ export default function CriarAtividades() {
           {lessons.map((l, idx) => (
             <Stack
               key={idx}
-              sx={{ backgroundColor: "#16161d", borderRadius: "10px", p: 3 }}
+              sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 3 }}
             >
               <Typography
-                sx={{ color: "#fff", fontSize: "0.85rem", fontWeight: 700 }}
+                sx={{ color: theme.palette.common.white, fontSize: "0.85rem", fontWeight: 700 }}
               >
                 {l.titulo}
               </Typography>
               <Typography
-                sx={{ color: "rgba(255,255,255,0.7)", fontSize: "0.8rem" }}
+                sx={{ color: alpha(theme.palette.common.white, 0.7), fontSize: "0.8rem" }}
               >
                 {l.mentorado}
               </Typography>
@@ -125,7 +127,7 @@ export default function CriarAtividades() {
             justifyContent: "flex-end",
             gap: 2,
             flexWrap: "wrap",
-            mt: "auto", 
+            mt: "auto",
           }}
         >
           <Button
@@ -133,15 +135,15 @@ export default function CriarAtividades() {
               navigate("/criar-licao");
             }}
             sx={{
-              backgroundColor: "#16161d",
-              color: "#fff",
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.common.white,
               fontFamily: fonts.body,
               fontSize: "0.85rem",
               textTransform: "none",
               borderRadius: "8px",
               px: 2.5,
               py: 1,
-              "&:hover": { backgroundColor: "#26262f" },
+              "&:hover": { backgroundColor: theme.palette.primary.dark },
             }}
           >
             Criar Lição
@@ -151,15 +153,15 @@ export default function CriarAtividades() {
               navigate("/criar-trilha");
             }}
             sx={{
-              backgroundColor: "#16161d",
-              color: "#fff",
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.common.white,
               fontFamily: fonts.body,
               fontSize: "0.85rem",
               textTransform: "none",
               borderRadius: "8px",
               px: 2.5,
               py: 1,
-              "&:hover": { backgroundColor: "#26262f" },
+              "&:hover": { backgroundColor: theme.palette.primary.dark },
             }}
           >
             Criar Trilha

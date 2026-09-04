@@ -11,7 +11,9 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useState } from "react";
 import {
   fieldRows,
@@ -26,13 +28,15 @@ import {
   criarEmpreendedor,
   mensagemErroCadastro,
 } from "../../../services/Auth/controllers/empreendedor";
-import Layout from "../../../Components/Layout/Layout";
-import NavBarLandPage from "../../../Components/NavBarLandPage/NavBarLandPage";
+import Layout from "../../../components/Layout/Layout";
+import NavBarLandPage from "../../../components/NavBarLandPage/NavBarLandPage";
 
 import { useNavigate } from "react-router-dom";
-import FooterLandPage from "../../../Components/FooterLandPage/FooterLandPage";
+import FooterLandPage from "../../../components/FooterLandPage/FooterLandPage";
+import { fonts } from "../../../styles/theme";
 
 export default function CadastroEmpreendedor() {
+  const theme = useTheme();
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -86,7 +90,7 @@ export default function CadastroEmpreendedor() {
 
   return (
     <Layout>
-      <Stack sx={{ backgroundColor: "#f7dde0", minHeight: "100vh" }}>
+      <Stack sx={{ backgroundColor: theme.palette.secondary.light, minHeight: "100vh" }}>
         <NavBarLandPage />
 
         <Container maxWidth="md" sx={{ py: { xs: 5, md: 7 } }}>
@@ -94,19 +98,19 @@ export default function CadastroEmpreendedor() {
             component="form"
             onSubmit={handleSubmit}
             sx={{
-              backgroundColor: "#e7d2d3",
+              backgroundColor: theme.palette.secondary.main,
               borderRadius: "16px",
-              boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
+              boxShadow: (theme) => `0 10px 24px ${alpha(theme.palette.common.black, 0.2)}`,
               px: { xs: 3, md: 5 },
               py: 4,
             }}
           >
             <Typography
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontWeight: 700,
                 fontSize: { xs: "1.6rem", md: "1.9rem" },
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
               }}
             >
               Formulário de cadastro
@@ -114,9 +118,9 @@ export default function CadastroEmpreendedor() {
 
             <Typography
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontSize: { xs: "1.1rem", md: "1.3rem" },
-                color: "#2b2b2b",
+                color: theme.palette.text.primary,
                 mb: 4,
               }}
             >
@@ -176,17 +180,17 @@ export default function CadastroEmpreendedor() {
                 type="submit"
                 disabled={loading}
                 sx={{
-                  background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
-                  color: "#fff",
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                  color: theme.palette.getContrastText(theme.palette.primary.main),
+                  fontFamily: fonts.hero,
                   fontSize: "1rem",
                   textTransform: "none",
                   borderRadius: "8px",
                   px: 6,
                   py: 1.1,
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.25)",
+                  boxShadow: (theme) => `0 4px 10px ${alpha(theme.palette.common.black, 0.25)}`,
                   "&:hover": {
-                    background: "linear-gradient(90deg, #e0523a, #7a1942)",
+                    background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                   },
                 }}
               >
@@ -211,9 +215,9 @@ export default function CadastroEmpreendedor() {
             paper: {
               sx: {
                 borderRadius: "20px",
-                bgcolor: "#e7d2d3",
+               bgcolor: theme.palette.secondary.main,
                 backgroundImage: "none",
-                boxShadow: "0 18px 50px rgba(44, 20, 34, 0.35)",
+                boxShadow: (theme) => `0 18px 50px ${alpha(theme.palette.primary.dark, 0.35)}`,
                 px: { xs: 1, sm: 2 },
                 py: 1,
               },
@@ -223,10 +227,10 @@ export default function CadastroEmpreendedor() {
           <DialogTitle
             sx={{
               textAlign: "center",
-              fontFamily: "'Playfair Display', Georgia, serif",
+              fontFamily: fonts.hero,
               fontWeight: 700,
               fontSize: "1.7rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               pt: 3,
             }}
           >
@@ -236,8 +240,8 @@ export default function CadastroEmpreendedor() {
             <Typography
               sx={{
                 textAlign: "center",
-                fontFamily: "'Inter', sans-serif",
-                color: "#4a3a40",
+                fontFamily: fonts.body,
+                color: theme.palette.text.primary,
                 lineHeight: 1.6,
               }}
             >
@@ -250,16 +254,16 @@ export default function CadastroEmpreendedor() {
               fullWidth
               onClick={goToLogin}
               sx={{
-                background: "linear-gradient(90deg, #f0623e, #8a1f4a)",
-                color: "#fff",
-                fontFamily: "'Playfair Display', Georgia, serif",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                color: theme.palette.getContrastText(theme.palette.primary.main),
+                fontFamily: fonts.hero,
                 fontSize: "1rem",
                 textTransform: "none",
                 borderRadius: "10px",
                 py: 1.2,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.22)",
+                boxShadow: (theme) => `0 4px 12px ${alpha(theme.palette.common.black, 0.22)}`,
                 "&:hover": {
-                  background: "linear-gradient(90deg, #e0523a, #7a1942)",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                 },
               }}
             >

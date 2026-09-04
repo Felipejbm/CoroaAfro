@@ -1,4 +1,5 @@
 import {
+  alpha,
   Avatar,
   Button,
   List,
@@ -38,7 +39,7 @@ export default function NavBarMentor() {
       sx={{
         width: "15%",
         minHeight: "100vh",
-        backgroundColor: "#15151c",
+        backgroundColor: "background.default",
         py: 3,
       }}
     >
@@ -53,9 +54,9 @@ export default function NavBarMentor() {
         />
         <Typography
           sx={{
-            fontFamily: "'Playfair Display', Georgia, serif",
+            fontFamily: fonts.logo,
             fontSize: "1.2rem",
-            color: "#fff",
+            color: "secondary.main",
           }}
         >
           Coroa Afro
@@ -76,17 +77,16 @@ export default function NavBarMentor() {
                 gap: 2,
                 px: 3,
                 py: 1.4,
-                borderLeft: isActive
-                  ? "4px solid #e0523a"
-                  : "4px solid transparent",
+                borderLeft: isActive ? "4px solid" : "4px solid transparent",
+                borderColor: isActive ? "primary.light" : "transparent",
                 backgroundColor: isActive
-                  ? "rgba(122, 31, 42, 0.35)"
+                  ? (theme) => alpha(theme.palette.primary.main, 0.25)
                   : "transparent",
                 transition: "all 0.4s ease",
                 "&:hover": {
                   backgroundColor: isActive
-                    ? "rgba(122, 31, 42, 0.45)"
-                    : "rgba(255,255,255,0.04)",
+                    ? (theme) => alpha(theme.palette.primary.main, 0.35)
+                    : (theme) => alpha(theme.palette.common.white, 0.04),
                 },
               }}
             >
@@ -95,7 +95,9 @@ export default function NavBarMentor() {
                   width: 18,
                   height: 18,
                   borderRadius: "30%",
-                  backgroundColor: isActive ? "#e0523a" : "#f0a3a0",
+                  backgroundColor: isActive
+                    ? "primary.light"
+                    : "secondary.dark",
                   flexShrink: 0,
                   transition: "all 0.4s ease",
                   transform: isActive
@@ -105,9 +107,9 @@ export default function NavBarMentor() {
               />
               <Typography
                 sx={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: fonts.navbar,
                   fontSize: "1.1rem",
-                  color: "#fff",
+                  color: isActive ? "secondary.main" : "secondary.dark",
                   transition: "color 0.4s ease",
                 }}
               >
@@ -124,23 +126,28 @@ export default function NavBarMentor() {
           onClick={() => void sair()}
           disabled={saindo}
           sx={{
-            background: "linear-gradient(90deg, #f0623e, #e0523a)",
-            color: "#fff",
+            background: (theme) =>
+              `linear-gradient(90deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
+            color: "secondary.main",
             textTransform: "none",
             borderRadius: "8px",
             py: 1.1,
-            fontFamily: fonts.body,
+            fontFamily: fonts.button,
             fontWeight: 700,
-            boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+            boxShadow: (theme) => `0 6px 18px ${alpha(theme.palette.common.black, 0.25)}`,
             "&:hover": {
-              background: "linear-gradient(90deg, #e0523a, #c43f2a)",
+              background: (theme) =>
+                `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
             },
           }}
         >
           Sair
         </Button>
         {erroSaida && (
-          <Typography role="alert" sx={{ color: "#ffb4ab", fontSize: 12 }}>
+          <Typography
+            role="alert"
+            sx={{ color: "common.black", fontSize: 12, mt: 1 }}
+          >
             {erroSaida}
           </Typography>
         )}

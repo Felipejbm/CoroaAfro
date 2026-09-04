@@ -1,13 +1,16 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import type { Pace } from "./CriarTrilhaPersonalizada.types";
 import { days, paceOptions } from "./CriarTrilhaPersonalizada.utils";
-import NavBar from "../../../Components/NavBar/NavBar";
+import NavBar from "../../../components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
+import { fonts } from "../../../styles/theme";
 
 export default function CriarTrilhaPersonalizada4() {
+  const theme = useTheme();
   const totalSteps = 5;
   const currentStep = 4;
 
@@ -30,7 +33,7 @@ export default function CriarTrilhaPersonalizada4() {
         sx={{
           flex: 1,
           minWidth: 0,
-          backgroundColor: "#f9dde0",
+          backgroundColor: "secondary.light",
           display: "flex",
           flexDirection: "column",
         }}
@@ -47,19 +50,19 @@ export default function CriarTrilhaPersonalizada4() {
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.heading,
               fontWeight: 700,
               fontSize: { xs: "1.8rem", md: "2.3rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
             }}
           >
             Criar Trilha Personalizada
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.85rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
               mb: 2,
             }}
           >
@@ -75,15 +78,15 @@ export default function CriarTrilhaPersonalizada4() {
                 width: 28,
                 height: 3,
                 borderRadius: 2,
-                backgroundColor: "#e0523a",
+                backgroundColor: theme.palette.primary.main,
               }}
             />
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.7rem",
-                color: "#c43f2a",
+                color: theme.palette.primary.main,
               }}
             >
               Passo {currentStep} de {totalSteps}
@@ -92,10 +95,10 @@ export default function CriarTrilhaPersonalizada4() {
 
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.heading,
               fontWeight: 700,
               fontSize: "1.3rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 0.8,
             }}
           >
@@ -111,15 +114,15 @@ export default function CriarTrilhaPersonalizada4() {
                 <Stack
                   key={opt.id}
                   onClick={() => setPace(opt.id)}
-                  direction={"row"} 
+                  direction={"row"}
                   sx={{
                     alignItems: "center",
                     gap: 1.5,
                     backgroundColor: isSelected
-                      ? "rgba(224,82,58,0.15)"
-                      : "#16161d",
+                      ? alpha(theme.palette.primary.main, 0.15)
+                      : theme.palette.background.default,
                     border: isSelected
-                      ? "1px solid #e0523a"
+                      ? `1px solid ${theme.palette.primary.main}`
                       : "1px solid transparent",
                     borderRadius: "10px",
                     px: 2,
@@ -133,21 +136,21 @@ export default function CriarTrilhaPersonalizada4() {
                   <Stack direction={"column"}>
                     <Typography
                       sx={{
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontWeight: 700,
                         fontSize: "0.9rem",
-                        color: isSelected ? "#2b2b2b" : "#fff",
+                        color: isSelected ? theme.palette.text.primary : theme.palette.common.white,
                       }}
                     >
                       {opt.title}
                     </Typography>
                     <Typography
                       sx={{
-                        fontFamily: "'Comfortaa', sans-serif",
+                        fontFamily: fonts.body,
                         fontSize: "0.75rem",
                         color: isSelected
-                          ? "rgba(43,43,43,0.6)"
-                          : "rgba(255,255,255,0.6)",
+                          ? alpha(theme.palette.text.primary, 0.6)
+                          : alpha(theme.palette.common.white, 0.6),
                       }}
                     >
                       {opt.description}
@@ -160,10 +163,10 @@ export default function CriarTrilhaPersonalizada4() {
 
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.heading,
               fontWeight: 700,
               fontSize: "1.1rem",
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 1,
             }}
           >
@@ -171,9 +174,9 @@ export default function CriarTrilhaPersonalizada4() {
           </Typography>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.8rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
               mb: 2,
             }}
           >
@@ -191,16 +194,16 @@ export default function CriarTrilhaPersonalizada4() {
                   key={day}
                   onClick={() => toggleDay(day)}
                   sx={{
-                    backgroundColor: isSelected ? "#e0523a" : "#16161d",
-                    color: "#fff",
-                    fontFamily: "'Comfortaa', sans-serif",
+                    backgroundColor: isSelected ? theme.palette.primary.main : theme.palette.background.default,
+                    color: theme.palette.common.white,
+                    fontFamily: fonts.body,
                     fontSize: "0.85rem",
                     textTransform: "none",
                     borderRadius: "8px",
                     px: 2,
                     py: 0.8,
                     "&:hover": {
-                      backgroundColor: isSelected ? "#c43f2a" : "#26262f",
+                      backgroundColor: isSelected ? theme.palette.primary.dark : theme.palette.primary.dark,
                     },
                   }}
                 >
@@ -212,8 +215,8 @@ export default function CriarTrilhaPersonalizada4() {
 
           <Stack
             sx={{
-              backgroundColor: "#16161d",
-              color: "#fff",
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.common.white,
               borderRadius: "10px",
               px: 3,
               py: 2,
@@ -221,7 +224,7 @@ export default function CriarTrilhaPersonalizada4() {
           >
             <Typography
               sx={{
-                fontFamily: "'Comfortaa', sans-serif",
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
               }}
             >
@@ -238,36 +241,35 @@ export default function CriarTrilhaPersonalizada4() {
             alignItems: "center",
             px: { xs: 2, md: 4 },
             py: 2,
-            borderTop: "1px solid rgba(0,0,0,0.05)",
+            borderTop: `1px solid ${alpha(theme.palette.common.black, 0.05)}`,
           }}
         >
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.body,
               fontSize: "0.75rem",
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
             }}
           >
             Passo {currentStep} de {totalSteps}
           </Typography>
 
           <Stack direction={"row"} sx={{ gap: 1.5 }}>
-   
             <Button
               onClick={() => {
                 navigate("/criar-trilha-personalizada-3");
               }}
               startIcon={<ArrowBackIcon fontSize="small" />}
               sx={{
-                backgroundColor: "#16161d",
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.common.white,
+                fontFamily: fonts.body,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 2.5,
                 py: 1,
-                "&:hover": { backgroundColor: "#26262f" },
+                "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.1) },
               }}
             >
               Voltar
@@ -278,16 +280,16 @@ export default function CriarTrilhaPersonalizada4() {
               }}
               endIcon={<ArrowForwardIcon fontSize="small" />}
               sx={{
-                backgroundColor: "#e0523a",
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.common.white,
+                fontFamily: fonts.body,
                 fontWeight: 700,
                 fontSize: "0.85rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 2.5,
                 py: 1,
-                "&:hover": { backgroundColor: "#c43f2a" },
+                "&:hover": { backgroundColor: theme.palette.primary.dark },
               }}
             >
               Continuar

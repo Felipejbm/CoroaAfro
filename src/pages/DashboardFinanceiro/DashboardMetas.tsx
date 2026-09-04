@@ -15,7 +15,9 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
@@ -50,6 +52,7 @@ const numero = (value: string | number) =>
 
 export default function DashboardMetas() {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [empresa, setEmpresa] = useState("Minha empresa");
   const [empresaError, setEmpresaError] = useState("");
   const [metas, setMetas] = useState<Meta[]>([]);
@@ -159,7 +162,7 @@ export default function DashboardMetas() {
         sx={{
           flex: 1,
           minWidth: 0,
-          bgcolor: "#f9dde0",
+          bgcolor: "secondary.light",
           p: { xs: 2, md: 4 },
           gap: 3,
         }}
@@ -199,8 +202,8 @@ export default function DashboardMetas() {
             <Paper
               key={label}
               sx={{
-                bgcolor: "#1c1830",
-                color: "white",
+                bgcolor: theme.palette.background.default,
+                color: theme.palette.common.white,
                 p: 3,
                 borderRadius: 3,
                 flex: 1,
@@ -217,8 +220,8 @@ export default function DashboardMetas() {
           sx={{
             p: { xs: 2, md: 3 },
             borderRadius: 3,
-            bgcolor: "#1c1830",
-            color: "white",
+            bgcolor: theme.palette.background.default,
+            color: theme.palette.common.white,
           }}
         >
           <Stack
@@ -235,7 +238,7 @@ export default function DashboardMetas() {
             <Stack direction="row" gap={1}>
               <Button
                 disabled={loading}
-                sx={{ color: "#f0a3a0" }}
+                sx={{ color: theme.palette.primary.light }}
                 onClick={atualizar}
               >
                 Atualizar
@@ -243,14 +246,14 @@ export default function DashboardMetas() {
               <Button
                 disabled={loading || !!error}
                 variant="contained"
-                sx={{ bgcolor: "#e0523a" }}
+                sx={{ bgcolor: theme.palette.primary.main }}
                 onClick={() => abrir()}
               >
                 Adicionar meta
               </Button>
             </Stack>
           </Stack>
-          <Typography sx={{ color: "rgba(255,255,255,.7)", mb: 2 }}>
+          <Typography sx={{ color: alpha(theme.palette.common.white, 0.7), mb: 2 }}>
             Atualização manual: informe os valores em “Editar / atualizar”.
             Ainda não há sincronização automática com o Instagram.
           </Typography>
@@ -259,7 +262,7 @@ export default function DashboardMetas() {
               <Checkbox
                 checked={arquivadas}
                 onChange={(event) => setArquivadas(event.target.checked)}
-                sx={{ color: "#f0a3a0" }}
+                sx={{ color: theme.palette.primary.light }}
               />
             }
             label="Mostrar arquivadas"
@@ -284,7 +287,7 @@ export default function DashboardMetas() {
                     key={meta.id}
                     sx={{
                       p: 2,
-                      border: "1px solid #514761",
+                      border: `1px solid ${theme.palette.primary.light}`,
                       borderRadius: 2,
                       gap: 1,
                     }}
@@ -298,7 +301,7 @@ export default function DashboardMetas() {
                       <Typography variant="h6">{meta.titulo}</Typography>
                       <Chip
                         label={labels[meta.status]}
-                        sx={{ bgcolor: "#f0a3a0" }}
+                        sx={{ bgcolor: theme.palette.primary.light }}
                       />
                     </Stack>
                     <Typography>
@@ -312,8 +315,8 @@ export default function DashboardMetas() {
                       sx={{
                         height: 8,
                         borderRadius: 4,
-                        bgcolor: "#514761",
-                        "& .MuiLinearProgress-bar": { bgcolor: "#e0523a" },
+                        bgcolor: alpha(theme.palette.common.white, 0.18),
+                        "& .MuiLinearProgress-bar": { bgcolor: theme.palette.primary.main },
                       }}
                     />
                     <Typography variant="body2">
@@ -321,7 +324,7 @@ export default function DashboardMetas() {
                       {meta.prazo.split("-").reverse().join("/")}
                     </Typography>
                     <Button
-                      sx={{ alignSelf: "flex-start", color: "#f0a3a0" }}
+                      sx={{ alignSelf: "flex-start", color: theme.palette.primary.light }}
                       onClick={() => abrir(meta)}
                     >
                       Editar / atualizar
@@ -348,7 +351,7 @@ export default function DashboardMetas() {
           }}
           fullWidth
           maxWidth="sm"
-          PaperProps={{ sx: { bgcolor: "#f9dde0", borderRadius: 3 } }}
+          PaperProps={{ sx: { bgcolor: "secondary.light", borderRadius: 3 } }}
         >
           <form onSubmit={(event) => void salvar(event)}>
             <DialogTitle>{editing ? "Editar meta" : "Nova meta"}</DialogTitle>
@@ -434,7 +437,7 @@ export default function DashboardMetas() {
                 type="submit"
                 disabled={saving}
                 variant="contained"
-                sx={{ bgcolor: "#e0523a" }}
+                sx={{ bgcolor: theme.palette.primary.main }}
               >
                 {saving ? "Salvando…" : "Salvar meta"}
               </Button>

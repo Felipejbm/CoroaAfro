@@ -10,7 +10,9 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
@@ -50,6 +52,7 @@ function HistoricoConversa({
   onRascunho: (r: Rascunho) => void;
   onBusy: (busy: boolean) => void;
 }) {
+  const theme = useTheme();
   const chave = chaveConversa(conversa);
   const [mensagens, setMensagens] = useState<Mensagem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -189,7 +192,7 @@ function HistoricoConversa({
         direction="row"
         justifyContent="space-between"
         gap={2}
-        sx={{ p: 2, bgcolor: "#16161d", color: "white" }}
+        sx={{ p: 2, bgcolor: theme.palette.background.default, color: theme.palette.common.white }}
       >
         <Box>
           <Typography variant="h6">{conversa.nome}</Typography>
@@ -198,7 +201,7 @@ function HistoricoConversa({
           </Typography>
         </Box>
         <Button
-          sx={{ color: "#ffb4ab" }}
+          sx={{ color: theme.palette.primary.light }}
           disabled={enviando || loading || carregandoAntigas}
           onClick={() => setRetry((r) => r + 1)}
         >
@@ -224,7 +227,7 @@ function HistoricoConversa({
           gap: 2,
           height: { xs: 380, md: 440 },
           overflowY: "auto",
-          bgcolor: "#fdf3f4",
+          bgcolor: alpha(theme.palette.primary.main, 0.04),
         }}
       >
         {loading ? (
@@ -259,8 +262,8 @@ function HistoricoConversa({
                   sx={{
                     p: 1.5,
                     borderRadius: 3,
-                    bgcolor: m.minha ? "#c43f2a" : "#16161d",
-                    color: "white",
+                    bgcolor: m.minha ? theme.palette.primary.main : theme.palette.background.default,
+                    color: theme.palette.common.white,
                   }}
                 >
                   <Typography
@@ -326,6 +329,7 @@ function HistoricoConversa({
 }
 
 export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
+  const theme = useTheme();
   const [params] = useSearchParams();
   const [conversas, setConversas] = useState<Conversa[]>([]);
   const [selecionada, setSelecionada] = useState("");
@@ -396,8 +400,8 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
             width: { xs: "100%", lg: 280 },
             flexShrink: 0,
             p: 2,
-            bgcolor: "#16161d",
-            color: "white",
+            bgcolor: theme.palette.background.default,
+            color: theme.palette.common.white,
             borderRadius: 3,
           }}
         >
@@ -406,10 +410,10 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
             label="Buscar conversa"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            sx={{ bgcolor: "white", borderRadius: 1, mb: 2 }}
+            sx={{ bgcolor: theme.palette.common.white, borderRadius: 1, mb: 2 }}
           />
           <Button
-            sx={{ color: "#ffb4ab" }}
+            sx={{ color: theme.palette.primary.light }}
             disabled={busy || loading}
             onClick={() => setRetry((r) => r + 1)}
           >
@@ -436,7 +440,7 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
                   onClick={() => setSelecionada(chaveConversa(c))}
                   sx={{
                     borderRadius: 2,
-                    "&.Mui-selected": { bgcolor: "#6d2634" },
+                    "&.Mui-selected": { bgcolor: theme.palette.primary.dark },
                   }}
                 >
                   <Box sx={{ minWidth: 0 }}>
@@ -444,7 +448,7 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
                     <Typography
                       variant="body2"
                       noWrap
-                      sx={{ color: "#ecd5d8" }}
+                      sx={{ color: alpha(theme.palette.common.white, 0.7) }}
                     >
                       {c.ultima_mensagem?.texto || "Começar conversa"}
                     </Typography>

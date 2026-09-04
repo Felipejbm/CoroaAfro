@@ -1,20 +1,22 @@
-import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { alpha, Avatar, Button, Stack, Typography, useTheme } from "@mui/material";
 import type { ModuleItem } from "./TrilhaPersonalizada.types";
 import { useState } from "react";
 import { modules } from "./TrilhasPersonalizada.utils";
-import NavBar from "../../../Components/NavBar/NavBar";
+import NavBar from "../../../components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
+import { fonts } from "../../../styles/theme";
 
 function ModuleCard({ module }: { module: ModuleItem }) {
+  const theme = useTheme();
   return (
     <Stack
       sx={{
         position: "relative",
-        backgroundColor: "#16161d",
-        borderRadius: "14px", 
-        borderLeft: "4px solid #d97a6a", 
+        backgroundColor: theme.palette.background.default,
+        borderRadius: "14px",
+        borderLeft: `4px solid ${theme.palette.primary.light}`,
         width: { xs: "100%", sm: 340 },
-        p: 2.5, 
+        p: 2.5,
       }}
       direction={"column"}
     >
@@ -30,9 +32,9 @@ function ModuleCard({ module }: { module: ModuleItem }) {
       >
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
-            fontSize: "0.7rem", 
-            color: "rgba(255,255,255,0.55)",
+            fontFamily: fonts.body,
+            fontSize: "0.7rem",
+            color: alpha(theme.palette.common.white, 0.55),
           }}
         >
           Meu Módulo
@@ -44,7 +46,7 @@ function ModuleCard({ module }: { module: ModuleItem }) {
             sx={{
               width: 32,
               height: 32,
-              border: "2px solid #16161d",
+              border: `2px solid ${theme.palette.background.default}`,
             }}
           />
         )}
@@ -52,10 +54,10 @@ function ModuleCard({ module }: { module: ModuleItem }) {
 
       <Typography
         sx={{
-          fontFamily: "'Comfortaa', sans-serif",
+          fontFamily: fonts.body,
           fontWeight: 700,
           fontSize: "1.05rem",
-          color: "#fff",
+          color: theme.palette.getContrastText(theme.palette.background.default),
           mb: 1.5,
         }}
       >
@@ -64,10 +66,10 @@ function ModuleCard({ module }: { module: ModuleItem }) {
 
       <Typography
         sx={{
-          fontFamily: "'Comfortaa', sans-serif",
-          fontSize: "0.8rem", 
-          color: "rgba(255,255,255,0.7)", 
-          lineHeight: 1.5, 
+          fontFamily: fonts.body,
+          fontSize: "0.8rem",
+          color: alpha(theme.palette.common.white, 0.7),
+          lineHeight: 1.5,
           mb: 2,
         }}
       >
@@ -77,10 +79,10 @@ function ModuleCard({ module }: { module: ModuleItem }) {
       <Stack sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
-            fontSize: "0.75rem", 
-            fontWeight: 700, 
-            color: "#d97a6a",
+            fontFamily: fonts.body,
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            color: theme.palette.primary.light,
             cursor: "pointer",
           }}
         >
@@ -92,14 +94,15 @@ function ModuleCard({ module }: { module: ModuleItem }) {
 }
 
 function TimelineDot() {
+  const theme = useTheme();
   return (
     <Stack
       sx={{
         width: 16,
         height: 16,
         borderRadius: "50%",
-        border: `3px solid #d97a6a`,
-        backgroundColor: "#16161d",
+        border: `3px solid ${theme.palette.primary.light}`,
+        backgroundColor: theme.palette.background.default,
         zIndex: 2,
       }}
     />
@@ -107,6 +110,7 @@ function TimelineDot() {
 }
 
 export default function TrilhaPersonalizada() {
+  const theme = useTheme();
   const [tab, setTab] = useState<"guiada" | "personalizada">("personalizada");
   const navigate = useNavigate();
 
@@ -118,7 +122,7 @@ export default function TrilhaPersonalizada() {
         sx={{
           flex: 1,
           minWidth: 0,
-          backgroundColor: "#f9dde0",
+          backgroundColor: theme.palette.secondary.light,
           display: "flex",
           flexDirection: "column",
         }}
@@ -126,10 +130,10 @@ export default function TrilhaPersonalizada() {
         <Stack sx={{ p: { xs: 3, md: 4 }, flex: 1 }}>
           <Typography
             sx={{
-              fontFamily: "'Comfortaa', sans-serif",
+              fontFamily: fonts.hero,
               fontWeight: 700,
               fontSize: { xs: "1.4rem", md: "1.8rem" },
-              color: "#2b2b2b",
+              color: theme.palette.text.primary,
               mb: 2,
             }}
           >
@@ -149,14 +153,14 @@ export default function TrilhaPersonalizada() {
             <Button
               onClick={() => navigate("/trilha-guiada")}
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontVariant: "small-caps",
                 fontSize: "0.8rem",
-                color: "#fff",
-                backgroundColor: tab === "guiada" ? "#c43f2a" : "#d97a6a",
+                color: theme.palette.getContrastText(tab === "guiada" ? theme.palette.primary.main : theme.palette.primary.light),
+                backgroundColor: tab === "guiada" ? theme.palette.primary.main : theme.palette.primary.light,
                 borderRadius: 0,
                 px: 2,
-                "&:hover": { backgroundColor: "#c43f2a" },
+                "&:hover": { backgroundColor: theme.palette.primary.main },
               }}
             >
               Trilha guiada
@@ -164,15 +168,15 @@ export default function TrilhaPersonalizada() {
             <Button
               onClick={() => setTab("personalizada")}
               sx={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: fonts.hero,
                 fontVariant: "small-caps",
                 fontSize: "0.8rem",
-                color: "#fff",
+                color: theme.palette.getContrastText(tab === "personalizada" ? theme.palette.primary.main : theme.palette.primary.light),
                 backgroundColor:
-                  tab === "personalizada" ? "#c43f2a" : "#d97a6a",
+                  tab === "personalizada" ? theme.palette.primary.main : theme.palette.primary.light,
                 borderRadius: 0,
                 px: 2,
-                "&:hover": { backgroundColor: "#c43f2a" },
+                "&:hover": { backgroundColor: theme.palette.primary.main },
               }}
             >
               Trilha personalizada
@@ -198,7 +202,7 @@ export default function TrilhaPersonalizada() {
                 top: 20,
                 bottom: 20,
                 width: "2px",
-                backgroundColor: "rgba(0,0,0,0.15)",
+                backgroundColor: alpha(theme.palette.common.black, 0.15),
                 zIndex: 1,
               }}
             />
@@ -250,15 +254,15 @@ export default function TrilhaPersonalizada() {
             <Button
               onClick={() => navigate("/criar-trilha-personalizada-1")}
               sx={{
-                backgroundColor: "#16161d",
-                color: "#fff",
-                fontFamily: "'Comfortaa', sans-serif",
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.common.white,
+                fontFamily: fonts.body,
                 fontSize: "0.95rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 4,
                 py: 1.2,
-                "&:hover": { backgroundColor: "#26262f" },
+                "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.08) },
               }}
             >
               Criar Trilha

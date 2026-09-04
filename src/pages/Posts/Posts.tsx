@@ -1,30 +1,29 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useState } from "react";
 import type { PostWithImage } from "./Posts.types";
 import { initialPosts } from "./Posts.utils";
-import NavBar from "../../Components/NavBar/NavBar";
-
+import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 
 export default function Posts() {
-  const postsWithMockImages: PostWithImage[] = initialPosts.map(
-    (post, index) => {
-      if (index === 0) {
-        return {
-          ...post,
-          image:
-            "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
-        };
-      }
-      if (index === 2) {
-        return {
-          ...post,
-          image:
-            "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60",
-        };
-      }
-      return post;
-    },
-  );
+  const theme = useTheme();
+
+  const postsWithMockImages: PostWithImage[] = initialPosts.map((post, index) => {
+    if (index === 0) {
+      return {
+        ...post,
+        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
+      };
+    }
+    if (index === 2) {
+      return {
+        ...post,
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60",
+      };
+    }
+    return post;
+  });
 
   const [posts, setPosts] = useState<PostWithImage[]>(postsWithMockImages);
   const [newComment, setNewComment] = useState<Record<string, string>>({});
@@ -35,10 +34,7 @@ export default function Posts() {
       post.id === postId
         ? {
             ...post,
-            comments: [
-              ...post.comments,
-              { author: "Você", text: newComment[postId] },
-            ],
+            comments: [...post.comments, { author: "Você", text: newComment[postId] }],
           }
         : post,
     );
@@ -47,12 +43,12 @@ export default function Posts() {
   };
 
   return (
-    <Stack direction={"row"} sx={{ width: "100vw", maxWidth: "100%" }}>
+    <Stack direction="row" sx={{ width: "100vw", maxWidth: "100%" }}>
       <NavBar />
       <Stack
         sx={{
           flexGrow: 1,
-          backgroundColor: "#f9dde0",
+          backgroundColor: theme.palette.secondary.light,
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
           py: 5,
@@ -60,10 +56,10 @@ export default function Posts() {
       >
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.8rem", md: "2.3rem" },
-            color: "#2b2b2b",
+            color: theme.palette.text.primary,
             mb: 1,
           }}
         >
@@ -71,9 +67,9 @@ export default function Posts() {
         </Typography>
         <Typography
           sx={{
-            fontFamily: "'Comfortaa', sans-serif",
+            fontFamily: fonts.body,
             fontSize: "0.9rem",
-            color: "#3a3a3a",
+            color: theme.palette.text.secondary,
             mb: 3,
           }}
         >
@@ -85,18 +81,18 @@ export default function Posts() {
             placeholder="Pesquisar empresas ou assuntos..."
             variant="outlined"
             size="small"
-            sx={{ flex: 1, backgroundColor: "#fff", borderRadius: "8px" }}
+            sx={{ flex: 1, backgroundColor: theme.palette.background.paper, borderRadius: "8px" }}
           />
           <Button
             sx={{
-              backgroundColor: "#e0523a",
-              color: "#fff",
-              fontFamily: "'Comfortaa', sans-serif",
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.common.white,
+              fontFamily: fonts.body,
               fontWeight: 700,
               textTransform: "none",
               borderRadius: "8px",
               px: 2.5,
-              "&:hover": { backgroundColor: "#c43f2a" },
+              "&:hover": { backgroundColor: theme.palette.primary.dark },
             }}
           >
             Add Postagem +
@@ -108,7 +104,7 @@ export default function Posts() {
             <Stack key={post.id} sx={{ flexDirection: "column" }}>
               <Stack
                 sx={{
-                  backgroundColor: "#16161d",
+                  backgroundColor: theme.palette.background.default,
                   borderRadius: "10px 10px 0px 0px",
                   p: 3,
                   position: "relative",
@@ -117,19 +113,19 @@ export default function Posts() {
               >
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontWeight: 700,
                     fontSize: "1rem",
-                    color: "#fff",
+                    color: theme.palette.common.white,
                   }}
                 >
                   {post.company}
                 </Typography>
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.8rem",
-                    color: "rgba(255,255,255,0.6)",
+                    color: alpha(theme.palette.common.white, 0.6),
                     mb: 2,
                   }}
                 >
@@ -138,10 +134,10 @@ export default function Posts() {
 
                 <Typography
                   sx={{
-                    fontFamily: "'Comfortaa', sans-serif",
+                    fontFamily: fonts.body,
                     fontSize: "0.9rem",
-                    color: "#fff",
-                    mb: post.image ? 2 : 0, // Adiciona margem embaixo apenas se houver imagem
+                    color: theme.palette.common.white,
+                    mb: post.image ? 2 : 0,
                   }}
                 >
                   “{post.content}”
@@ -164,10 +160,10 @@ export default function Posts() {
 
               <Stack
                 sx={{
-                  backgroundColor: "#f0f0f0",
+                  backgroundColor: alpha(theme.palette.common.white, 0.8),
                   borderRadius: "0px 0px 10px 10px",
                   p: 3,
-                  borderTop: "1px solid #e0e0e0",
+                  borderTop: `1px solid ${alpha(theme.palette.common.black, 0.08)}`,
                   gap: 2,
                 }}
               >
@@ -177,28 +173,23 @@ export default function Posts() {
                       <Typography
                         key={idx}
                         sx={{
-                          fontFamily: "'Comfortaa', sans-serif",
+                          fontFamily: fonts.body,
                           fontSize: "0.85rem",
-                          color: "#333333",
-                          backgroundColor: "#fff",
+                          color: theme.palette.text.primary,
+                          backgroundColor: theme.palette.common.white,
                           p: 1.5,
                           borderRadius: "6px",
-                          boxShadow: "0px 1px 3px rgba(0,0,0,0.05)",
+                          boxShadow: `0px 1px 3px ${alpha(theme.palette.common.black, 0.05)}`,
                         }}
                       >
-                        <strong style={{ color: "#e0523a" }}>
-                          {c.author}:
-                        </strong>
+                        <strong style={{ color: theme.palette.primary.main }}>{c.author}:</strong>
                         {c.text}
                       </Typography>
                     ))}
                   </Stack>
                 )}
 
-                <Stack
-                  direction="row"
-                  sx={{ gap: 1.5, mt: post.comments.length > 0 ? 1 : 0 }}
-                >
+                <Stack direction="row" sx={{ gap: 1.5, mt: post.comments.length > 0 ? 1 : 0 }}>
                   <TextField
                     placeholder="Escreva um comentário..."
                     variant="outlined"
@@ -212,21 +203,21 @@ export default function Posts() {
                     }
                     sx={{
                       flex: 1,
-                      backgroundColor: "#fff",
+                      backgroundColor: theme.palette.common.white,
                       borderRadius: "8px",
                     }}
                   />
                   <Button
                     onClick={() => handleAddComment(post.id)}
                     sx={{
-                      backgroundColor: "#e0523a",
-                      color: "#fff",
-                      fontFamily: "'Comfortaa', sans-serif",
+                      backgroundColor: theme.palette.primary.main,
+                      color: theme.palette.common.white,
+                      fontFamily: fonts.body,
                       fontWeight: 700,
                       textTransform: "none",
                       borderRadius: "8px",
                       px: 2.5,
-                      "&:hover": { backgroundColor: "#c43f2a" },
+                      "&:hover": { backgroundColor: theme.palette.primary.dark },
                     }}
                   >
                     Comentar

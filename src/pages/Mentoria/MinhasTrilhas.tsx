@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, CircularProgress, LinearProgress, Paper, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, CircularProgress, LinearProgress, Paper, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CatalogoTrilhas from "./CatalogoTrilhas";
 import AprendizadoLayout from "./AprendizadoLayout";
@@ -9,6 +10,7 @@ import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
 
 export default function MinhasTrilhas() {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [aba, setAba] = useState<"minhas" | "catalogo">("minhas");
   const [trilhas, setTrilhas] = useState<Trilha[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,7 @@ export default function MinhasTrilhas() {
       <Typography sx={{ my: 2, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{t.descricao}</Typography>
       <Typography>{t.progresso}% · {t.aulas.filter(a => a.concluida).length} de {t.aulas.length} aulas concluídas</Typography>
       <LinearProgress aria-label={`Progresso de ${t.titulo}`} variant="determinate" value={t.progresso} sx={{ my: 2, height: 8, borderRadius: 2 }} />
-      {t.aulas.map((a, i) => <Accordion key={a.id} disableGutters sx={{ "&:before": { display: "none" }, border: "1px solid #ead5d8" }}>
+      {t.aulas.map((a, i) => <Accordion key={a.id} disableGutters sx={{ "&:before": { display: "none" }, border: `1px solid ${alpha(theme.palette.primary.main, 0.25)}` }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id={`aula-${a.id}-titulo`} aria-controls={`aula-${a.id}-conteudo`}>
           <Typography sx={{ overflowWrap: "anywhere" }}>{i + 1}. {a.titulo} — {a.concluida ? "Concluída" : "Pendente"}</Typography>
         </AccordionSummary>

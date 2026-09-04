@@ -1,16 +1,17 @@
 import type { Conversation, Message } from "./Chat.types";
+import theme from "../../styles/theme";
 
 export const onlineNow: Conversation[] = [
-    { id: "1", name: "Karla Lima", initials: "KL", lastMessage: "Boa! Você conseguiu aplicar...", time: "14:32", unread: 2, color: "#8a3fae", online: true },
-    { id: "2", name: "Mentora Beatriz", initials: "MB", lastMessage: "Viu os resultados da semana?", time: "13:18", color: "#c4621f", online: true },
-    { id: "3", name: "Grupo Reels", initials: "GR", lastMessage: "Ana: Qual câmera vocês usam?", time: "11:45", unread: 7, color: "#c43f5a", online: true },
+    { id: "1", name: "Karla Lima", initials: "KL", lastMessage: "Boa! Você conseguiu aplicar...", time: "14:32", unread: 2, color: theme.palette.primary.main, online: true },
+    { id: "2", name: "Mentora Beatriz", initials: "MB", lastMessage: "Viu os resultados da semana?", time: "13:18", color: theme.palette.primary.light, online: true },
+    { id: "3", name: "Grupo Reels", initials: "GR", lastMessage: "Ana: Qual câmera vocês usam?", time: "11:45", unread: 7, color: theme.palette.secondary.dark, online: true },
 ];
 
 export const recents: Conversation[] = [
-    { id: "4", name: "Tutoria de Setembro", initials: "TS", lastMessage: "Lembre de enviar o relatório", time: "Ontem", color: "#1f9aa3" },
-    { id: "5", name: "Paula Fonseca", initials: "PF", lastMessage: "Obrigada pelo feedback! 🙏", time: "Seg", color: "#7a8a3f" },
-    { id: "6", name: "Renata Costa", initials: "RC", lastMessage: "Quando abre nova turma?", time: "Dom", color: "#a35a1f" },
-    { id: "7", name: "Módulo Conteúdo", initials: "MC", lastMessage: "Novo material disponível", time: "Sáb", color: "#c43f3f" },
+    { id: "4", name: "Tutoria de Setembro", initials: "TS", lastMessage: "Lembre de enviar o relatório", time: "Ontem", color: theme.palette.primary.dark },
+    { id: "5", name: "Paula Fonseca", initials: "PF", lastMessage: "Obrigada pelo feedback! 🙏", time: "Seg", color: theme.palette.secondary.main },
+    { id: "6", name: "Renata Costa", initials: "RC", lastMessage: "Quando abre nova turma?", time: "Dom", color: theme.palette.primary.light },
+    { id: "7", name: "Módulo Conteúdo", initials: "MC", lastMessage: "Novo material disponível", time: "Sáb", color: theme.palette.primary.main },
 ];
 
 export const messages: Message[] = [

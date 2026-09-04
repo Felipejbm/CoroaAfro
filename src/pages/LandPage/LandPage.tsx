@@ -7,19 +7,20 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import NavBarLandPage from "../../Components/NavBarLandPage/NavBarLandPage";
+import { alpha } from "@mui/material/styles";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import { styles } from "./LandPage.styles";
 import { items } from "./LandPage.utils";
 import TestimonialsCarousel from "./Carrosel/Carrosel";
-import Footer from "../../Components/FooterLandPage/FooterLandPage";
-import PricingPage from "../../Components/Planos/Planos";
-import Layout from "../../Components/Layout/Layout";
+import Footer from "../../components/FooterLandPage/FooterLandPage";
+import PricingPage from "../../components/Planos/Planos";
+import Layout from "../../components/Layout/Layout";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-export default function LandPage() {
-  
+import theme from "../../styles/theme";
 
-    const navigate = useNavigate();
+export default function LandPage() {
+  const navigate = useNavigate();
 
   return (
     <Layout>
@@ -50,7 +51,7 @@ export default function LandPage() {
                 sx={{
                   fontWeight: 600,
                   fontSize: { xs: "2rem", md: "3.2rem" },
-                  color: "#2b2b2b",
+                  color: theme.palette.text.primary,
                   lineHeight: 1.15,
                 }}
               >
@@ -61,7 +62,7 @@ export default function LandPage() {
                 sx={{
                   fontWeight: 600,
                   fontSize: { xs: "2rem", md: "3.2rem" },
-                  color: "#2b2b2b",
+                  color: theme.palette.text.primary,
                   lineHeight: 1.15,
                 }}
               >
@@ -74,7 +75,7 @@ export default function LandPage() {
             align="center"
             sx={{
               fontSize: { xs: "1rem", md: "2rem" },
-              color: "#3a3a3a",
+              color: theme.palette.text.primary,
               mb: 6,
             }}
           >
@@ -83,26 +84,27 @@ export default function LandPage() {
           </Typography>
 
           <Stack sx={{ display: "flex", justifyContent: "center" }}>
-
             <Button
               component={RouterLink}
-              to ="/planos"
+              to="/planos"
               variant="contained"
               disableElevation
               onClick={() => navigate("/login")}
               sx={{
-                background: "linear-gradient(90deg, #7b1f3a, #e0523a)",
-                color: "#fff",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                color: theme.palette.getContrastText(
+                  theme.palette.primary.main,
+                ),
                 fontSize: "1.1rem",
                 textTransform: "none",
                 borderRadius: "8px",
                 px: 4,
                 py: 1.2,
-                boxShadow: "0 3px 8px rgba(0,0,0,0.25)",
+                boxShadow: (theme) =>
+                  `0 3px 8px ${alpha(theme.palette.common.black, 0.25)}`,
                 "&:hover": {
-                  background: "linear-gradient(90deg, #6a1a32, #c43f2a)",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                 },
-                
               }}
             >
               Quero transformar meu negócio
@@ -113,7 +115,7 @@ export default function LandPage() {
         <Divider
           sx={{
             my: 4,
-            borderColor: "#000000",
+            borderColor: theme.palette.text.primary,
             opacity: 0.3,
             borderWidth: 0.5,
           }}
@@ -126,9 +128,9 @@ export default function LandPage() {
             borderRadius: "20px",
             overflow: "hidden",
             p: { xs: 4, md: 5 },
-            background:
-              "radial-gradient(circle at center, #f0623e 0%, #d8456a 55%, #8a1f4a 100%)",
-            boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
+            background: `radial-gradient(circle at center, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 55%, ${theme.palette.primary.dark} 100%)`,
+            boxShadow: (theme) =>
+              `0 6px 20px ${alpha(theme.palette.common.black, 0.25)}`,
           }}
         >
           <Typography
@@ -137,8 +139,9 @@ export default function LandPage() {
               fontVariant: "small-caps",
               letterSpacing: 2,
               fontSize: { xs: "1.6rem", md: "2.2rem" },
-              color: "#fff",
-              textShadow: "0 2px 6px rgba(0,0,0,0.3)",
+              color: theme.palette.secondary.light,
+              textShadow: (theme) =>
+                `0 2px 6px ${alpha(theme.palette.common.white, 0.3)}`,
               mb: 4,
             }}
           >
@@ -160,7 +163,7 @@ export default function LandPage() {
                 <Stack
                   component="span"
                   sx={{
-                    color: "#fff",
+                    color: theme.palette.secondary.light,
                     fontSize: "1.1rem",
                     lineHeight: 1,
                   }}
@@ -169,7 +172,7 @@ export default function LandPage() {
                 </Stack>
                 <Typography
                   sx={{
-                    color: "#fff",
+                    color: theme.palette.secondary.light,
                     fontSize: { xs: "1rem", md: "1.15rem" },
                   }}
                 >
@@ -182,7 +185,7 @@ export default function LandPage() {
 
         <Divider
           sx={{
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.common.white,
             width: "60%",
             margin: "0 auto",
             height: "2px",
