@@ -12,10 +12,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import {
   developers,
-  Administration,
   aboutLinks,
   socialLinks,
   currentYear,
+  administration,
 } from "../FooterLandPage/FooterLandPage.utils";
 import type { SocialLink } from "./FooterLandPage.types";
 import { fonts } from "../../styles/theme";
@@ -117,28 +117,37 @@ export default function FooterLandPage() {
 
             <Stack sx={{ gap: 1 }}>
               {developers.map((dev) => (
-                <Stack
+                <Link
                   key={dev.name}
-                  direction="row"
-                  sx={{ alignItems: "center", gap: 1 }}
+                  href={dev.href}
+                  underline="hover"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 1,
+                    color: (theme) =>
+                      alpha(theme.palette.secondary.light, 0.85),
+                  }}
                 >
                   <GitHubIcon
                     sx={{
                       fontSize: 16,
-                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                      color: (theme) =>
+                        alpha(theme.palette.secondary.light, 0.85),
                     }}
                   />
 
                   <Typography
                     sx={{
                       fontFamily: fonts.body,
-                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                      color: (theme) =>
+                        alpha(theme.palette.secondary.light, 0.85),
                       fontSize: "0.95rem",
                     }}
                   >
                     {dev.name}
                   </Typography>
-                </Stack>
+                </Link>
               ))}
             </Stack>
           </Stack>
@@ -156,33 +165,36 @@ export default function FooterLandPage() {
             </Typography>
 
             <Stack sx={{ gap: 1 }}>
-              {Administration.map((Adm) => (
+              {administration.map((adm) => (
                 <Link
-                  key={Adm.name}
-                  href={Adm.href}
+                  key={adm.name}
+                  href={adm.href}
                   underline="hover"
                   sx={{
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 1,
-                    color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                    color: (theme) =>
+                      alpha(theme.palette.secondary.light, 0.85),
                   }}
                 >
                   <InstagramIcon
                     sx={{
                       fontSize: 16,
-                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                      color: (theme) =>
+                        alpha(theme.palette.secondary.light, 0.85),
                     }}
                   />
 
                   <Typography
                     sx={{
                       fontFamily: fonts.body,
-                      color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                      color: (theme) =>
+                        alpha(theme.palette.secondary.light, 0.85),
                       fontSize: "0.95rem",
                     }}
                   >
-                    {Adm.name}
+                    {adm.name}
                   </Typography>
                 </Link>
               ))}
@@ -190,7 +202,13 @@ export default function FooterLandPage() {
           </Stack>
 
           <Stack sx={{ flex: { xs: "1 1 100%", md: "1 1 30%" } }}>
-            <Stack sx={{ gap: 1 }}>
+            <Stack
+              sx={{
+                gap: 1,
+                width: "fit-content",
+                alignItems: "flex-start",
+              }}
+            >
               {aboutLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -198,7 +216,8 @@ export default function FooterLandPage() {
                   underline="hover"
                   sx={{
                     fontFamily: fonts.body,
-                    color: (theme) => alpha(theme.palette.secondary.light, 0.85),
+                    color: (theme) =>
+                      alpha(theme.palette.secondary.light, 0.85),
                     fontSize: "0.95rem",
                   }}
                 >
@@ -227,8 +246,7 @@ export default function FooterLandPage() {
                 fontSize: "0.85rem",
               }}
             >
-              © {currentYear} Coroa Afro - Etec MCM | Etec Maria Cristina
-              Medeiros 3° ano C
+              © {currentYear} Coroa Afro | Etec Maria Cristina Medeiros 3° ano C
             </Typography>
           </Stack>
         </Stack>
