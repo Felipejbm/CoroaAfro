@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import {
   buscarSessao,
+  atualizarSessao,
   type SessaoUsuario,
 } from "../../services/Auth/controllers/auth";
 import {
@@ -10,6 +11,9 @@ import {
   mensagemErroApi,
   type Empresa,
 } from "../../services/Auth/controllers/empresa";
+import { buscarFotoPerfil, salvarFotoPerfil } from "../../services/Auth/controllers/perfil";
+import type { FormularioPerfil } from "./Perfil.types";
+import { formatosFotoPerfil, limiteFotoPerfil } from "./Perfil.utils";
 
 export function usePerfil() {
   const navigate = useNavigate();
@@ -30,7 +34,102 @@ export function usePerfil() {
 
   const [sucesso, setSucesso] = useState("");
 
-  const [form, setForm] = useState({ nome: "", email: "", telefone: "" });
+  const [form, setForm] = useState<FormularioPerfil>({ nome: "", email: "", telefone: "" });
+  const [fotoAtual, setFotoAtual] = useState("");
+  const [editandoFoto, setEditandoFoto] = useState(false);
+  const [arquivoFoto, setArquivoFoto] = useState<File | null>(null);
+  const [previaFoto, setPreviaFoto] = useState("");
+  const [erroFoto, setErroFoto] = useState("");
+  const [erroCarregarFoto, setErroCarregarFoto] = useState("");
+  const [salvandoFoto, setSalvandoFoto] = useState(false);
+  const seletorFoto = useRef<HTMLInputElement>(null);
+  const envioFotoEmAndamento = useRef(false);
+
+  useEffect(() => {
+    if (!arquivoFoto) {
+      setPreviaFoto("");
+      return;
+    }
+    const url = URL.createObjectURL(arquivoFoto);
+    setPreviaFoto(url);
+    return () => URL.revokeObjectURL(url);
+  }, [arquivoFoto]);
+
+  useEffect(() => {
+    const controle = new AbortController();
+    let url = "";
+    setFotoAtual("");
+    setErroCarregarFoto("");
+    if (usuario?.foto_perfil_url) {
+      buscarFotoPerfil(controle.signal)
+        .then((foto) => {
+          if (controle.signal.aborted) return;
+          url = URL.createObjectURL(foto);
+          setFotoAtual(url);
+        })
+        .catch(() => {
+          if (!controle.signal.aborted) {
+            setErroCarregarFoto("Não foi possível carregar sua foto. Recarregue a página para tentar novamente.");
+          }
+        });
+    }
+    return () => {
+      controle.abort();
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [usuario?.foto_perfil_url]);
+
+  const abrirFoto = () => {
+    setArquivoFoto(null);
+    setErroFoto("");
+    setEditandoFoto(true);
+  };
+
+  const fecharFoto = () => {
+    if (envioFotoEmAndamento.current) return;
+    setEditandoFoto(false);
+    setArquivoFoto(null);
+    setErroFoto("");
+  };
+
+  const selecionarFoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const arquivo = event.target.files?.[0];
+    event.target.value = "";
+    if (!arquivo) return;
+    setErroFoto("");
+    setArquivoFoto(null);
+    if (!formatosFotoPerfil.includes(arquivo.type)) {
+      setErroFoto("Escolha uma imagem JPG, PNG ou WebP.");
+      return;
+    }
+    if (!arquivo.size || arquivo.size > limiteFotoPerfil) {
+      setErroFoto("A foto deve ter conteúdo e no máximo 5 MB.");
+      return;
+    }
+    setArquivoFoto(arquivo);
+  };
+
+  const salvarFoto = async () => {
+    if (!arquivoFoto || !usuario || envioFotoEmAndamento.current) return;
+    envioFotoEmAndamento.current = true;
+    setSalvandoFoto(true);
+    setErroFoto("");
+    try {
+      const atualizado = await salvarFotoPerfil(arquivoFoto);
+      setUsuario(atualizado);
+      atualizarSessao(atualizado);
+      setEditandoFoto(false);
+      setArquivoFoto(null);
+      setSucesso("Foto de perfil atualizada.");
+    } catch (error) {
+      setErroFoto(mensagemErroApi(error));
+    } finally {
+      envioFotoEmAndamento.current = false;
+      setSalvandoFoto(false);
+    }
+  };
+
+  const escolherArquivoFoto = () => seletorFoto.current?.click();
 
   useEffect(() => {
     let active = true;
@@ -96,5 +195,18 @@ export function usePerfil() {
     setForm,
     editar,
     salvar,
+    fotoAtual,
+    editandoFoto,
+    previaFoto,
+    arquivoFoto,
+    erroFoto,
+    erroCarregarFoto,
+    salvandoFoto,
+    seletorFoto,
+    abrirFoto,
+    fecharFoto,
+    selecionarFoto,
+    salvarFoto,
+    escolherArquivoFoto,
   };
 }

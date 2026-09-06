@@ -25,6 +25,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
 import { useDashboardMetas } from "./DashboardMetas.hook";
 import { labels, numero } from "./DashboardMetas.utils";
+import AvatarUsuario from "../../components/AvatarUsuario/AvatarUsuario";
 
 export default function DashboardMetas() {
   const {
@@ -92,6 +93,7 @@ export default function DashboardMetas() {
             sx={{ position: "relative", zIndex: 1 }}
           >
             <Stack gap={0.75}>
+              <AvatarUsuario atual sx={{ width: 64, height: 64, mb: 1, bgcolor: "primary.light" }} />
               <Typography
                 variant="overline"
                 sx={{

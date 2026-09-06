@@ -20,6 +20,7 @@ import AprendizadoLayout from "./AprendizadoLayout";
 import { useChatMentoria, useHistoricoConversa } from "./ChatMentoria.hook";
 import type { ChatMentoriaProps, HistoricoConversaProps } from "./ChatMentoria.types";
 import { horario } from "./ChatMentoria.utils";
+import AvatarUsuario from "../../components/AvatarUsuario/AvatarUsuario";
 
 function HistoricoConversa({
   conversa,
@@ -61,12 +62,15 @@ function HistoricoConversa({
         gap={2}
         sx={{ p: 2, bgcolor: theme.palette.primary.main, color: theme.palette.secondary.light }}
       >
-        <Box>
+        <Stack direction="row" alignItems="center" gap={1.5}>
+          <AvatarUsuario nome={conversa.nome} fotoUrl={conversa.foto_perfil_url} />
+          <Box>
           <Typography variant="h6">{conversa.nome}</Typography>
           <Typography variant="body2">
             Conversa privada · {conversa.papel}
           </Typography>
-        </Box>
+          </Box>
+        </Stack>
         <Button
           sx={{ color: theme.palette.primary.light }}
           disabled={enviando || loading || carregandoAntigas}
@@ -117,13 +121,18 @@ function HistoricoConversa({
               </Typography>
             )}
             {mensagens.map((m) => (
-              <Box
+              <Stack
                 key={m.id}
+                direction={m.minha ? "row-reverse" : "row"}
+                gap={1}
+                alignItems="flex-start"
                 sx={{
                   alignSelf: m.minha ? "flex-end" : "flex-start",
                   maxWidth: "85%",
                 }}
               >
+                <AvatarUsuario atual={m.minha} nome={m.minha ? "Você" : conversa.nome} fotoUrl={m.minha ? undefined : conversa.foto_perfil_url} sx={{ width: 28, height: 28, fontSize: "0.75rem" }} />
+                <Box sx={{ minWidth: 0 }}>
                 <Paper
                   elevation={0}
                   sx={{
@@ -142,7 +151,8 @@ function HistoricoConversa({
                 <Typography variant="caption">
                   {m.minha ? "Você" : conversa.nome} · {horario(m.criado_em)}
                 </Typography>
-              </Box>
+                </Box>
+              </Stack>
             ))}
           </>
         )}
@@ -280,6 +290,7 @@ export default function ChatMentoria({ mentor = false }: ChatMentoriaProps) {
                     "&.Mui-selected": { bgcolor: theme.palette.secondary.main },
                   }}
                 >
+                  <AvatarUsuario nome={c.nome} fotoUrl={c.foto_perfil_url} sx={{ mr: 1.5, width: 36, height: 36 }} />
                   <Box sx={{ minWidth: 0 }}>
                     <Typography fontWeight={700}>{c.nome}</Typography>
                     <Typography

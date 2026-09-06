@@ -5,9 +5,10 @@ import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
 import { usePosts } from "./Posts.hook";
+import AvatarUsuario from "../../components/AvatarUsuario/AvatarUsuario";
 
 export default function Posts() {
-  const { newComment, setNewComment, busca, setBusca, postsVisiveis, handleAddComment } = usePosts();
+  const { usuario, newComment, setNewComment, busca, setBusca, postsVisiveis, handleAddComment } = usePosts();
 
   const theme = useTheme();
 
@@ -60,6 +61,7 @@ export default function Posts() {
         </Stack>
 
         <Stack direction={{ xs: "column", sm: "row" }} sx={{ gap: 2, p: 2, borderRadius: 3, bgcolor: "secondary.light", border: "1px solid", borderColor: "secondary.main" }}>
+          <AvatarUsuario atual sx={{ width: 40, height: 40 }} />
           <TextField
             placeholder="Pesquisar empresas ou assuntos..."
             variant="outlined"
@@ -168,8 +170,13 @@ export default function Posts() {
                 {post.comments.length > 0 && (
                   <Stack sx={{ gap: 1.2 }}>
                     {post.comments.map((c, idx) => (
+                      <Stack key={idx} direction="row" alignItems="flex-start" gap={1}>
+                        <AvatarUsuario
+                          atual={!!usuario && c.autorId === usuario.id && c.autorPapel === usuario.papel}
+                          nome={c.author}
+                          sx={{ width: 30, height: 30, fontSize: "0.75rem" }}
+                        />
                       <Typography
-                        key={idx}
                         sx={{
                           fontFamily: fonts.body,
                           fontSize: "0.85rem",
@@ -183,11 +190,13 @@ export default function Posts() {
                         <strong style={{ color: theme.palette.primary.main }}>{c.author}: </strong>
                         {c.text}
                       </Typography>
+                      </Stack>
                     ))}
                   </Stack>
                 )}
 
                 <Stack direction={{ xs: "column", sm: "row" }} sx={{ gap: 1.5, mt: post.comments.length > 0 ? 1 : 0 }}>
+                  <AvatarUsuario atual sx={{ width: 36, height: 36 }} />
                   <TextField
                     placeholder="Escreva um comentário..."
                     variant="outlined"

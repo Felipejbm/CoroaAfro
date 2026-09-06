@@ -16,6 +16,8 @@ import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
 import { usePerfil } from "./Perfil.hook";
+import { ajudaFotoPerfil, formatosFotoPerfil } from "./Perfil.utils";
+import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
 
 export default function Perfil() {
   const {
@@ -34,6 +36,19 @@ export default function Perfil() {
     setForm,
     editar,
     salvar,
+    fotoAtual,
+    editandoFoto,
+    previaFoto,
+    arquivoFoto,
+    erroFoto,
+    erroCarregarFoto,
+    salvandoFoto,
+    seletorFoto,
+    abrirFoto,
+    fecharFoto,
+    selecionarFoto,
+    salvarFoto,
+    escolherArquivoFoto,
   } = usePerfil();
 
   const theme = useTheme();
@@ -92,8 +107,8 @@ export default function Perfil() {
         )}
         {usuario && (
           <>
-            <Stack direction="row" alignItems="center" gap={2}>
-            <Avatar sx={{ width: 80, height: 80, bgcolor: theme.palette.primary.main }}>
+            <Stack direction={{ xs: "column", sm: "row" }} alignItems="center" gap={2}>
+            <Avatar src={fotoAtual || undefined} alt={`Foto de ${usuario.nome}`} sx={{ width: 80, height: 80, bgcolor: theme.palette.primary.main }}>
               {usuario.nome.charAt(0).toUpperCase()}
             </Avatar>
             <Stack alignItems="center">
@@ -101,8 +116,12 @@ export default function Perfil() {
                 {empresa?.nome ?? "Sua empresa ainda não foi cadastrada"}
               </Typography>
               <Typography color="text.secondary">{usuario.nome}</Typography>
+              <Button startIcon={<PhotoCameraOutlinedIcon />} onClick={abrirFoto}>
+                {usuario.foto_perfil_url ? "Alterar foto" : "Adicionar foto"}
+              </Button>
             </Stack>
             </Stack>
+            {erroCarregarFoto && <Alert severity="warning">{erroCarregarFoto}</Alert>}
             <Stack
               direction={{ xs: "column", md: "row" }}
               sx={{ gap: 3, width: "100%", maxWidth: 1000 }}
@@ -181,6 +200,53 @@ export default function Perfil() {
             </Button>
           </>
         )}
+        <Dialog
+          open={editandoFoto}
+          onClose={fecharFoto}
+          fullWidth
+          maxWidth="xs"
+          aria-labelledby="titulo-foto-perfil"
+        >
+          <DialogTitle id="titulo-foto-perfil">Foto de perfil</DialogTitle>
+          <DialogContent>
+            <Stack alignItems="center" gap={2} sx={{ pt: 1 }}>
+              {erroFoto && <Alert severity="error" sx={{ width: "100%" }}>{erroFoto}</Alert>}
+              <Avatar
+                src={previaFoto || fotoAtual || undefined}
+                alt="Prévia da foto de perfil"
+                sx={{ width: 180, height: 180, bgcolor: theme.palette.primary.main, fontSize: "3rem" }}
+              >
+                {usuario?.nome.charAt(0).toUpperCase()}
+              </Avatar>
+              <input
+                ref={seletorFoto}
+                type="file"
+                accept={formatosFotoPerfil.join(",")}
+                onChange={selecionarFoto}
+                disabled={salvandoFoto}
+                hidden
+                aria-label="Escolher foto de perfil"
+              />
+              <Button variant="outlined" startIcon={<PhotoCameraOutlinedIcon />} onClick={escolherArquivoFoto} disabled={salvandoFoto}>
+                {arquivoFoto ? "Escolher outra foto" : "Escolher imagem"}
+              </Button>
+              <Typography variant="body2" color="text.secondary" textAlign="center">
+                {ajudaFotoPerfil} A foto será atualizada ao salvar.
+              </Typography>
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={fecharFoto} disabled={salvandoFoto}>Cancelar</Button>
+            <Button
+              variant="contained"
+              onClick={() => void salvarFoto()}
+              disabled={!arquivoFoto || salvandoFoto}
+              startIcon={salvandoFoto ? <CircularProgress size={16} color="inherit" /> : undefined}
+            >
+              {salvandoFoto ? "Salvando..." : "Salvar foto"}
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Dialog
           open={editando}
           onClose={() => {

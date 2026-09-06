@@ -1,8 +1,10 @@
 import { useState } from "react";
 import type { PostWithImage } from "./Posts.types";
 import { postsWithMockImages } from "./Posts.utils";
+import { useSessaoAtual } from "../../hooks/useSessaoAtual";
 
 export function usePosts() {
+  const usuario = useSessaoAtual();
   const [posts, setPosts] = useState<PostWithImage[]>(postsWithMockImages);
 
   const [newComment, setNewComment] = useState<Record<string, string>>({});
@@ -14,12 +16,12 @@ export function usePosts() {
   );
 
   const handleAddComment = (postId: string) => {
-    if (!newComment[postId]?.trim()) return;
+    if (!usuario || !newComment[postId]?.trim()) return;
     const updatedPosts = posts.map((post) =>
       post.id === postId
         ? {
           ...post,
-          comments: [...post.comments, { author: "Você", text: newComment[postId] }],
+          comments: [...post.comments, { author: usuario.nome, text: newComment[postId], autorId: usuario.id, autorPapel: usuario.papel }],
         }
         : post,
     );
@@ -27,5 +29,5 @@ export function usePosts() {
     setNewComment((prev) => ({ ...prev, [postId]: "" }));
   };
 
-  return { newComment, setNewComment, busca, setBusca, postsVisiveis, handleAddComment };
+  return { usuario, newComment, setNewComment, busca, setBusca, postsVisiveis, handleAddComment };
 }
