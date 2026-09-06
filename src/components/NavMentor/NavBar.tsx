@@ -100,7 +100,16 @@ export default function NavBarMentor() {
                     ? "primary.light"
                     : "secondary.dark",
                   flexShrink: 0,
-                  transition: "all 0.4s ease",
+                  transition: "transform 0.4s ease, background-color 0.4s ease",
+                  animation: isActive ? "navSquareRotate 0.4s ease" : "none",
+                  "@keyframes navSquareRotate": {
+                    from: { transform: "scale(1) rotate(0deg)" },
+                    to: { transform: "scale(1.2) rotate(180deg)" },
+                  },
+                  "@media (prefers-reduced-motion: reduce)": {
+                    animation: "none",
+                    transition: "none",
+                  },
                   transform: isActive
                     ? "scale(1.2) rotate(180deg)"
                     : "scale(1) rotate(0deg)",

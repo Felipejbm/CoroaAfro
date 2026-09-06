@@ -1,3 +1,4 @@
+import MentorHeader from "./MentorHeader";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -92,38 +93,16 @@ export default function Mentoria({
           flex: 1,
           minWidth: 0,
           backgroundColor: theme.palette.secondary.light,
-          p: { xs: 2, md: 5 },
+          p: { xs: 2, md: 4, lg: 5 },
           gap: 3,
           fontFamily: fonts.body,
         }}
       >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          flexWrap="wrap"
-          gap={2}
-        >
-          <Typography variant="h4" sx={{ fontFamily: fonts.hero, color: theme.palette.text.primary }}>
-            {painel
-              ? "Meu painel de mentoria"
-              : detalhe
-                ? "Detalhes do mentorado"
-                : "Meus mentorados"}
-          </Typography>
-          <Button
-            disabled={saindo}
-            onClick={() => void sair()}
-            sx={{
-              backgroundColor: theme.palette.background.default,
-              color: theme.palette.common.white,
-              textTransform: "none",
-              borderRadius: "10px",
-            }}
-          >
-            Sair
-          </Button>
-        </Stack>
+        <MentorHeader
+          title={painel ? "Meu painel de mentoria" : detalhe ? "Detalhes do mentorado" : "Meus mentorados"}
+          description={detalhe ? "Acompanhe o empreendedor, suas trilhas e os próximos passos da mentoria." : "Fortaleça conexões e acompanhe o desenvolvimento de quem empreende."}
+          action={<Button disabled={saindo} onClick={() => void sair()} variant="outlined" sx={{ color: "secondary.light", borderColor: "secondary.main", borderRadius: 2.5, px: 3 }}>Sair</Button>}
+        />
         {loading ? (
           <CircularProgress aria-label="Carregando mentoria" />
         ) : error ? (
@@ -155,25 +134,25 @@ export default function Mentoria({
                 key={aluno.id}
                 sx={{
                   p: 3,
-                  backgroundColor: theme.palette.background.default,
-                  color: theme.palette.common.white,
-                  borderRadius: 3,
-                  boxShadow: `0 12px 24px ${alpha(theme.palette.common.black, 0.12)}`,
+                  backgroundColor: theme.palette.secondary.light,
+                  color: theme.palette.text.primary,
+                  borderRadius: 3, border: "1px solid", borderColor: alpha(theme.palette.primary.dark, 0.12),
+                  boxShadow: `0 12px 24px ${alpha(theme.palette.primary.dark, 0.08)}`,
                 }}
               >
-                <Typography variant="h6" sx={{ color: theme.palette.common.white }}>{aluno.nome}</Typography>
-                <Typography sx={{ color: alpha(theme.palette.common.white, 0.72) }}>
+                <Typography variant="h6" sx={{ color: theme.palette.text.primary }}>{aluno.nome}</Typography>
+                <Typography sx={{ color: alpha(theme.palette.text.primary, 0.72) }}>
                   {aluno.empresa || "Empresa ainda não cadastrada"}
                 </Typography>
                 <Button
-                  sx={{ color: theme.palette.primary.light, mt: 1, textTransform: "none" }}
+                  variant="outlined" sx={{ color: theme.palette.primary.main, mt: 2, mr: 1, borderRadius: 2 }}
                   onClick={() => navigate(`/chat-mentor?empreendedor=${aluno.id}`)}
                 >
                   Conversar
                 </Button>
                 {!detalhe && (
                   <Button
-                    sx={{ color: theme.palette.primary.light, mt: 1, textTransform: "none" }}
+                    variant="outlined" sx={{ color: theme.palette.primary.main, mt: 2, mr: 1, borderRadius: 2 }}
                     onClick={() => navigate(`/detalhes-mentorado/${aluno.id}`)}
                   >
                     Ver perfil

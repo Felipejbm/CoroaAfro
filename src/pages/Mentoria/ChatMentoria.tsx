@@ -192,7 +192,7 @@ function HistoricoConversa({
         direction="row"
         justifyContent="space-between"
         gap={2}
-        sx={{ p: 2, bgcolor: theme.palette.background.default, color: theme.palette.common.white }}
+        sx={{ p: 2, bgcolor: theme.palette.primary.main, color: theme.palette.secondary.light }}
       >
         <Box>
           <Typography variant="h6">{conversa.nome}</Typography>
@@ -262,8 +262,8 @@ function HistoricoConversa({
                   sx={{
                     p: 1.5,
                     borderRadius: 3,
-                    bgcolor: m.minha ? theme.palette.primary.main : theme.palette.background.default,
-                    color: theme.palette.common.white,
+                    bgcolor: m.minha ? theme.palette.primary.main : theme.palette.secondary.main,
+                    color: m.minha ? theme.palette.secondary.light : theme.palette.text.primary,
                   }}
                 >
                   <Typography
@@ -400,8 +400,11 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
             width: { xs: "100%", lg: 280 },
             flexShrink: 0,
             p: 2,
-            bgcolor: theme.palette.background.default,
-            color: theme.palette.common.white,
+            bgcolor: theme.palette.secondary.light,
+            color: theme.palette.text.primary,
+            border: "1px solid",
+            borderColor: theme.palette.secondary.main,
+            boxShadow: "0 8px 24px rgba(77,0,18,0.06)",
             borderRadius: 3,
           }}
         >
@@ -410,7 +413,7 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
             label="Buscar conversa"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            sx={{ bgcolor: theme.palette.common.white, borderRadius: 1, mb: 2 }}
+            sx={{ bgcolor: theme.palette.secondary.light, borderRadius: 2, mb: 2 }}
           />
           <Button
             sx={{ color: theme.palette.primary.light }}
@@ -440,7 +443,7 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
                   onClick={() => setSelecionada(chaveConversa(c))}
                   sx={{
                     borderRadius: 2,
-                    "&.Mui-selected": { bgcolor: theme.palette.primary.dark },
+                    "&.Mui-selected": { bgcolor: theme.palette.secondary.main },
                   }}
                 >
                   <Box sx={{ minWidth: 0 }}>
@@ -448,7 +451,7 @@ export default function ChatMentoria({ mentor = false }: { mentor?: boolean }) {
                     <Typography
                       variant="body2"
                       noWrap
-                      sx={{ color: alpha(theme.palette.common.white, 0.7) }}
+                      sx={{ color: alpha(theme.palette.text.primary, 0.7) }}
                     >
                       {c.ultima_mensagem?.texto || "Começar conversa"}
                     </Typography>

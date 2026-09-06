@@ -152,8 +152,17 @@ export default function NavBar() {
                       ? "primary.light"
                       : "secondary.dark",
                     flexShrink: 0,
-                    transition: "all 0.3s ease",
-                    transform: isActive ? "scale(1.15)" : "scale(1)",
+                    transition: "transform 0.4s ease, background-color 0.4s ease",
+                    transform: isActive ? "scale(1.2) rotate(180deg)" : "scale(1) rotate(0deg)",
+                    animation: isActive ? "navSquareRotate 0.4s ease" : "none",
+                    "@keyframes navSquareRotate": {
+                      from: { transform: "scale(1) rotate(0deg)" },
+                      to: { transform: "scale(1.2) rotate(180deg)" },
+                    },
+                    "@media (prefers-reduced-motion: reduce)": {
+                      animation: "none",
+                      transition: "none",
+                    },
                     zIndex: 1,
                   }}
                 />
