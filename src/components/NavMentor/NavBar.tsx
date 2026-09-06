@@ -1,3 +1,4 @@
+import ResponsiveNavigation from "../ResponsiveNavigation/ResponsiveNavigation";
 import {
   alpha,
   Avatar,
@@ -35,9 +36,9 @@ export default function NavBarMentor() {
   }
 
   return (
-    <Stack
+    <ResponsiveNavigation><Stack
       sx={{
-        width: "15%",
+        width: 260, minWidth: 260, flexShrink: 0, position: "sticky", top: 0, height: "100dvh", overflowY: "auto",
         minHeight: "100vh",
         backgroundColor: "background.default",
         py: 3,
@@ -152,6 +153,6 @@ export default function NavBarMentor() {
           </Typography>
         )}
       </Stack>
-    </Stack>
+    </Stack></ResponsiveNavigation>
   );
 }

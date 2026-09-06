@@ -13,6 +13,16 @@ export const fonts = {
 
 const theme = createTheme({
   cssVariables: true,
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        "html, body, #root": { minWidth: 0, width: "100%" },
+        "img, video": { maxWidth: "100%" },
+      },
+    },
+    MuiTypography: { styleOverrides: { root: { overflowWrap: "anywhere" } } },
+    MuiDialog: { styleOverrides: { paper: { margin: 16, maxWidth: "calc(100% - 32px)" } } },
+  },
   palette: {
     primary: {
       main: "#71011C",

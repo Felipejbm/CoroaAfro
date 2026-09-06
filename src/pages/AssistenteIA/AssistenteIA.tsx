@@ -135,13 +135,15 @@ export default function AssistenteIA() {
   const modoAtivo = modos.find((item) => item.id === modo);
 
   return (
-    <Stack direction="row" sx={{ width: "100%", height: "100vh", bgcolor: "secondary.light" }}>
+    <Stack direction="row" sx={{ width: "100%", height: "100dvh", bgcolor: "secondary.light" }}>
       <NavBar />
-      <Stack direction="row" sx={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
+      <Stack direction={{ xs: "column", md: "row" }} sx={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
         <Stack
           component="aside"
           sx={{
-            width: { xs: 210, lg: 275 },
+            width: { xs: "100%", md: 210, lg: 275 },
+            maxHeight: { xs: "30dvh", md: "none" },
+            overflowY: "auto",
             flexShrink: 0,
             bgcolor: alpha(theme.palette.primary.dark, 0.97),
             color: "secondary.light",
@@ -207,7 +209,7 @@ export default function AssistenteIA() {
           </Stack>
         </Stack>
 
-        <Stack component="main" sx={{ flex: 1, minWidth: 0, height: "100%" }}>
+        <Stack component="main" sx={{ flex: 1, minWidth: 0, minHeight: 0 }}>
           <Stack
             direction="row"
             alignItems="center"

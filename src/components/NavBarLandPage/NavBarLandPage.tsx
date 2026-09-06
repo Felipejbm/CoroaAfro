@@ -1,4 +1,6 @@
-import { Toolbar, Box, Button, Avatar, Stack, Menu, MenuItem, Divider, ListSubheader, alpha, useTheme } from "@mui/material";
+import { Toolbar, Box, Button, Avatar, Stack, Menu, MenuItem, Divider, ListSubheader, IconButton, alpha, useTheme } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -13,6 +15,7 @@ export default function NavBarLandPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
@@ -42,9 +45,20 @@ export default function NavBarLandPage() {
           sx={{ width: 70, height: 70 }}
         />
 
+        <IconButton aria-label={mobileOpen ? "Fechar navegação" : "Abrir navegação"} aria-expanded={mobileOpen} aria-controls="public-navigation" onClick={() => setMobileOpen(!mobileOpen)} sx={{ display: { xs: "inline-flex", md: "none" }, color: "primary.main" }}>
+          {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+        </IconButton>
         <Box
+          id="public-navigation"
           sx={{
-            display: "flex",
+            display: { xs: mobileOpen ? "flex" : "none", md: "flex" },
+            position: { xs: "absolute", md: "static" },
+            top: menuHeight,
+            left: 0,
+            right: 0,
+            flexDirection: { xs: "column", md: "row" },
+            bgcolor: { xs: "secondary.main", md: "transparent" },
+            p: { xs: 2, md: 0 },
             alignItems: "center",
             gap: { xs: 2, md: 5 },
           }}
@@ -94,6 +108,7 @@ export default function NavBarLandPage() {
         </ListSubheader>
         <MenuItem sx={{ color: "text.primary" }} onClick={() => {
           setAnchor(null);
+          setMobileOpen(false);
           navigate("/planos");
         }}>
           Conhecer os planos Bronze, Prata e Ouro
@@ -105,6 +120,7 @@ export default function NavBarLandPage() {
         {[{ id: "servicos-avulsos", nome: "Todos os serviços avulsos" }, ...servicos].map((servico) => (
           <MenuItem key={servico.id} sx={{ whiteSpace: "normal", color: "text.primary" }} onClick={() => {
             setAnchor(null);
+            setMobileOpen(false);
             if (location.pathname === "/" && location.hash === `#${servico.id}`) {
               document.getElementById(servico.id)?.scrollIntoView({ block: "start" });
             } else {

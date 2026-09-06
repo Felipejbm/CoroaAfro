@@ -1,3 +1,4 @@
+import ResponsiveNavigation from "../ResponsiveNavigation/ResponsiveNavigation";
 import {
   Avatar,
   List,
@@ -36,13 +37,13 @@ export default function NavBar() {
   };
 
   return (
-    <Stack
+    <ResponsiveNavigation><Stack
       sx={{
         width: 260,
         minWidth: 260,
         maxWidth: 260,
         flexShrink: 0,
-        height: "100vh",
+        height: "100dvh",
         position: "sticky",
         top: 0,
         alignSelf: "flex-start",
@@ -209,6 +210,6 @@ export default function NavBar() {
           </Typography>
         )}
       </Stack>
-    </Stack>
+    </Stack></ResponsiveNavigation>
   );
 }

@@ -3,6 +3,7 @@ import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import PricingPage from "../../components/Planos/Planos";
 import Layout from "../../components/Layout/Layout";
+import Servicos from "../../components/Servicos/Servicos";
 
 export default function Planos() {
   return (
@@ -11,7 +12,7 @@ export default function Planos() {
         <NavBarLandPage />
 
         <PricingPage />
-
+        <Servicos />
         <FooterLandPage />
       </Stack>
     </Layout>
