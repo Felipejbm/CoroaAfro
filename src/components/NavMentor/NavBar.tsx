@@ -1,3 +1,4 @@
+import ResponsiveNavigation from "../ResponsiveNavigation/ResponsiveNavigation";
 import {
   alpha,
   Avatar,
@@ -35,9 +36,9 @@ export default function NavBarMentor() {
   }
 
   return (
-    <Stack
+    <ResponsiveNavigation><Stack
       sx={{
-        width: "15%",
+        width: 260, minWidth: 260, flexShrink: 0, position: "sticky", top: 0, height: "100dvh", overflowY: "auto",
         minHeight: "100vh",
         backgroundColor: "background.default",
         py: 3,
@@ -99,7 +100,16 @@ export default function NavBarMentor() {
                     ? "primary.light"
                     : "secondary.dark",
                   flexShrink: 0,
-                  transition: "all 0.4s ease",
+                  transition: "transform 0.4s ease, background-color 0.4s ease",
+                  animation: isActive ? "navSquareRotate 0.4s ease" : "none",
+                  "@keyframes navSquareRotate": {
+                    from: { transform: "scale(1) rotate(0deg)" },
+                    to: { transform: "scale(1.2) rotate(180deg)" },
+                  },
+                  "@media (prefers-reduced-motion: reduce)": {
+                    animation: "none",
+                    transition: "none",
+                  },
                   transform: isActive
                     ? "scale(1.2) rotate(180deg)"
                     : "scale(1) rotate(0deg)",
@@ -152,6 +162,6 @@ export default function NavBarMentor() {
           </Typography>
         )}
       </Stack>
-    </Stack>
+    </Stack></ResponsiveNavigation>
   );
 }

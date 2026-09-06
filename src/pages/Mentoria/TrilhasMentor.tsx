@@ -206,8 +206,8 @@ export default function TrilhasMentor() {
         <CircularProgress aria-label="Carregando trilhas" />
       ) : (
         <>
-          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}>
-            <Typography variant="h6" mb={2} sx={{ color: theme.palette.common.white }}>
+          <Paper sx={{ p: { xs: 2, md: 3 }, borderRadius: 3, border: "1px solid", borderColor: "secondary.main", boxShadow: "0 8px 24px rgba(77,0,18,0.06)", backgroundColor: theme.palette.secondary.light, color: theme.palette.text.primary }}>
+            <Typography variant="h6" mb={2} sx={{ color: theme.palette.text.primary }}>
               Acompanhamento dos inscritos
             </Typography>
             <TextField
@@ -277,7 +277,7 @@ export default function TrilhasMentor() {
           {trilhas.map((t) => (
             <Paper
               key={t.id}
-              sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.background.default, color: theme.palette.common.white }}
+              sx={{ p: { xs: 2, md: 3 }, borderRadius: 3, border: "1px solid", borderColor: "secondary.main", boxShadow: "0 8px 24px rgba(77,0,18,0.06)", bgcolor: theme.palette.secondary.light, color: theme.palette.text.primary }}
             >
               <Typography variant="h6" sx={{ overflowWrap: "anywhere" }}>
                 {t.titulo}

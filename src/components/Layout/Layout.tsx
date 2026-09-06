@@ -12,23 +12,12 @@ export default function Layout({
     <Stack
       direction="row"
       sx={{
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100dvh",
         overflow: "hidden",
       }}
     >
-      {showSidebar && <Stack
-        component="aside"
-        sx={{
-          width: 260,
-          minWidth: 260,
-          maxWidth: 260,
-          height: "100%",
-          flexShrink: 0,
-        }}
-      >
-        <NavBar />
-      </Stack>}
+      {showSidebar && <NavBar />}
       <Stack
         component="main"
         sx={{

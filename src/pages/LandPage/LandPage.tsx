@@ -31,12 +31,13 @@ export default function LandPage() {
       <Stack sx={styles.page}>
         <NavBarLandPage />
 
-        <Stack sx={{ alignItems: "center", p: 10 }}>
+        <Stack sx={{ alignItems: "center", px: { xs: 2, sm: 4, md: 8 }, py: { xs: 5, md: 10 }, maxWidth: 1400, mx: "auto", width: "100%" }}>
           <Stack
             sx={{
               display: "flex",
               alignItems: "center",
-              flexDirection: "row",
+              flexDirection: { xs: "column", sm: "row" },
+              textAlign: { xs: "center", sm: "left" },
               gap: { xs: 2, md: 4 },
               mb: 5,
             }}

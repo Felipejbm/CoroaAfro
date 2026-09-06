@@ -88,7 +88,7 @@ export default function Posts() {
         </Typography>
         </Stack>
 
-        <Stack direction="row" sx={{ gap: 2, mb: 4 }}>
+        <Stack direction={{ xs: "column", sm: "row" }} sx={{ gap: 2, mb: 4 }}>
           <TextField
             placeholder="Pesquisar empresas ou assuntos..."
             variant="outlined"

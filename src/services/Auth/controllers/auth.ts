@@ -3,24 +3,11 @@ import axios from "axios";
 
 import type { LoginReq } from "../schema/authSchema";
 
+class RespostaAutenticacaoInvalida extends Error {}
+
 export async function login(data: LoginReq) {
     const resp = await api.post("auth/login", data)
-
-    const usuario = resp.data.Usuario ?? resp.data.Empreendedor;
-    const id = usuario?.id ?? usuario?.id_empreendedor ?? usuario?.id_mentor;
-
-    if (!id || !usuario?.nome || !usuario?.email) {
-        throw new Error("Resposta de login inválida");
-    }
-
-    const usuarioNormalizado = data.papel === "mentor"
-        ? { ...usuario, id, id_mentor: id, papel: "mentor" }
-        : { ...usuario, id, id_empreendedor: id, papel: "empreendedor" };
-
-    localStorage.setItem(
-        "empreendedor",
-        JSON.stringify(usuarioNormalizado)
-    );
+    await buscarSessao();
 
     return resp.data
 }
@@ -41,8 +28,16 @@ export interface SessaoUsuario {
 
 export async function buscarSessao(): Promise<SessaoUsuario> {
     const response = await api.get<SessaoUsuario>("/auth/me");
-    localStorage.setItem("empreendedor", JSON.stringify(response.data));
-    return response.data;
+    const usuario = response.data;
+    if (!usuario || typeof usuario.id !== "number" || !usuario.nome ||
+        !usuario.email || !["mentor", "empreendedor"].includes(usuario.papel)) {
+        throw new RespostaAutenticacaoInvalida("O servidor retornou dados de sessão inválidos. Não foi possível confirmar sua conta.");
+    }
+    const usuarioNormalizado = usuario.papel === "mentor"
+        ? { ...usuario, id_mentor: usuario.id }
+        : { ...usuario, id_empreendedor: usuario.id };
+    localStorage.setItem("empreendedor", JSON.stringify(usuarioNormalizado));
+    return usuarioNormalizado;
 }
 
 export function getUsuarioLogado() {
@@ -56,7 +51,11 @@ export function getUsuarioLogado() {
 }
 
 export function mensagemErroLogin(error: unknown) {
+    if (error instanceof RespostaAutenticacaoInvalida) return error.message;
     if (axios.isAxiosError<{ detail?: string }>(error)) {
+        if (!error.response) {
+            return "Não foi possível conectar ao servidor. Verifique sua conexão e se o backend está ligado.";
+        }
         if (error.response?.status === 404) {
             return "Não encontramos uma conta com esse e-mail.";
         }
@@ -65,5 +64,5 @@ export function mensagemErroLogin(error: unknown) {
         }
         return error.response?.data?.detail ?? "Não foi possível entrar agora.";
     }
-    return "Não foi possível entrar agora. Verifique se o backend está ligado.";
+    return "Não foi possível concluir o login no navegador. Tente novamente.";
 }
