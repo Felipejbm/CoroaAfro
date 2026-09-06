@@ -13,10 +13,9 @@ import { styles } from "./LandPage.styles";
 import { items } from "./LandPage.utils";
 import TestimonialsCarousel from "./Carrosel/Carrosel";
 import Footer from "../../components/FooterLandPage/FooterLandPage";
-import PricingPage from "../../components/Planos/Planos";
+import Servicos from "../../components/Servicos/Servicos";
 import Layout from "../../components/Layout/Layout";
 import { Link as RouterLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import theme from "../../styles/theme";
 
 const socialDescriptions = [
@@ -26,7 +25,6 @@ const socialDescriptions = [
 ];
 
 export default function LandPage() {
-  const navigate = useNavigate();
 
   return (
     <Layout showSidebar={false}>
@@ -92,10 +90,9 @@ export default function LandPage() {
           <Stack sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               component={RouterLink}
-              to="/planos"
+              to="/#servicos-avulsos"
               variant="contained"
               disableElevation
-              onClick={() => navigate("/login")}
               sx={{
                 background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
                 color: theme.palette.getContrastText(
@@ -220,7 +217,7 @@ export default function LandPage() {
 
         <TestimonialsCarousel></TestimonialsCarousel>
 
-        <PricingPage></PricingPage>
+        <Servicos />
 
         <Footer></Footer>
       </Stack>

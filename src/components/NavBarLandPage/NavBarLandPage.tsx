@@ -1,4 +1,8 @@
-import { Toolbar, Box, Button, Avatar, Stack, alpha, useTheme } from "@mui/material";
+import { Toolbar, Box, Button, Avatar, Stack, Menu, MenuItem, Divider, ListSubheader, alpha, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { servicos } from "../Servicos/Servicos.utils";
 import { fonts } from "../../styles/theme";
 import { navLinks } from "./NavBarLandPage.utils";
 
@@ -6,6 +10,9 @@ const menuHeight = 86;
 
 export default function NavBarLandPage() {
   const theme = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
   return (
     <>
@@ -47,7 +54,13 @@ export default function NavBarLandPage() {
             return (
               <Button
                 key={link.label}
-                href={link.href}
+                href={link.href === "/planos" ? undefined : link.href}
+                onClick={link.href === "/planos" ? (event) => setAnchor(event.currentTarget) : undefined}
+                id={link.href === "/planos" ? "servicos-menu-button" : undefined}
+                aria-haspopup={link.href === "/planos" ? "menu" : undefined}
+                aria-expanded={link.href === "/planos" ? Boolean(anchor) : undefined}
+                aria-controls={link.href === "/planos" && anchor ? "servicos-menu" : undefined}
+                endIcon={link.href === "/planos" ? <ExpandMoreIcon /> : undefined}
                 disableElevation
                 sx={{
                   background: isActive
@@ -75,6 +88,33 @@ export default function NavBarLandPage() {
           })}
         </Box>
       </Toolbar>
+      <Menu id="servicos-menu" anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)} MenuListProps={{ "aria-labelledby": "servicos-menu-button" }} slotProps={{ paper: { sx: { maxHeight: "70vh", maxWidth: "calc(100vw - 32px)", bgcolor: "secondary.light" } } }}>
+        <ListSubheader disableSticky sx={{ bgcolor: "secondary.light", color: "primary.main", fontWeight: 700 }}>
+          PLANOS
+        </ListSubheader>
+        <MenuItem sx={{ color: "text.primary" }} onClick={() => {
+          setAnchor(null);
+          navigate("/planos");
+        }}>
+          Conhecer os planos Bronze, Prata e Ouro
+        </MenuItem>
+        <Divider />
+        <ListSubheader disableSticky sx={{ bgcolor: "secondary.light", color: "primary.main", fontWeight: 700 }}>
+          SERVIÇOS AVULSOS
+        </ListSubheader>
+        {[{ id: "servicos-avulsos", nome: "Todos os serviços avulsos" }, ...servicos].map((servico) => (
+          <MenuItem key={servico.id} sx={{ whiteSpace: "normal", color: "text.primary" }} onClick={() => {
+            setAnchor(null);
+            if (location.pathname === "/" && location.hash === `#${servico.id}`) {
+              document.getElementById(servico.id)?.scrollIntoView({ block: "start" });
+            } else {
+              navigate(`/#${servico.id}`);
+            }
+          }}>
+            {servico.nome}
+          </MenuItem>
+        ))}
+      </Menu>
     </Stack>
     <Box
       aria-hidden="true"
