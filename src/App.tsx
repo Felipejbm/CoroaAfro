@@ -14,6 +14,7 @@ import Planos from "./pages/Planos/Planos";
 import Posts from "./pages/Posts/Posts";
 import CadastroEmpreendedor from "./pages/Cadastro/CadastroEmpreendedor/CadastroEmpreendedor";
 import CadastroEmpresa from "./pages/Cadastro/CadastroEmpresa/CadastroEmpresa";
+import AssistenteIA from "./pages/AssistenteIA/AssistenteIA";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
         element={
           <RequireLogin>
             <Chat />
+          </RequireLogin>
+        }
+      />
+      <Route
+        path="/assistente"
+        element={
+          <RequireLogin papel="empreendedor">
+            <AssistenteIA />
           </RequireLogin>
         }
       />
