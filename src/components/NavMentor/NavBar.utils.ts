@@ -5,5 +5,6 @@ export const navItems: NavItem[] = [
     { label: "Mentorados", href: "/controle-mentorados" },
     { label: "Trilhas e aulas", href: "/criar-trilha" },
     { label: "Chats", href: "/chat-mentor" },
+    { label: "Comunidade", href: "/posts" },
 
 ];

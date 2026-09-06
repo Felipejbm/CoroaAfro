@@ -15,4 +15,8 @@ export interface Post {
 
 export interface PostWithImage extends Post {
     image?: string;
+    imageUrl?: string;
+    uploadedImage?: boolean;
+    minha: boolean;
+    autorFotoUrl?: string | null;
 }

@@ -39,7 +39,7 @@ export function useLogin() {
         return;
       }
       const empresa = await buscarMinhaEmpresa();
-      navigate(empresa ? "/dashboard-financeiro" : "/cadastro-empresa", {
+      navigate(empresa ? "/dashboard-metas" : "/cadastro-empresa", {
         replace: true,
       });
     } catch (requestError) {

@@ -165,10 +165,25 @@ export function usePerfil() {
   const salvar = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!usuario || salvando) return;
+    const nome = form.nome.trim();
+    const email = form.email.trim().toLowerCase();
+    const telefone = form.telefone.trim();
+    if (nome.length < 2) {
+      setErroEdicao("Informe seu nome completo.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErroEdicao("Informe um e-mail válido.");
+      return;
+    }
+    if (telefone.replace(/\D/g, "").length < 10) {
+      setErroEdicao("Informe um telefone com DDD.");
+      return;
+    }
     setSalvando(true);
     setErroEdicao("");
     try {
-      await api.patch(`/empreendedor/${usuario.id}`, form);
+      await api.patch(`/empreendedor/${usuario.id}`, { nome, email, telefone });
       setUsuario(await buscarSessao());
       setEditando(false);
       setSucesso("Dados do empreendedor atualizados.");
