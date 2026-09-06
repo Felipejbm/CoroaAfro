@@ -64,7 +64,7 @@ export default function Login() {
   }
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack>
         <NavBarLandPage />
 

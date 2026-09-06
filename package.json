@@ -25,6 +25,7 @@
     "@react-navigation/elements": "^2.9.37",
     "@react-navigation/native-stack": "^7.18.7",
     "axios": "^1.19.0",
+    "framer-motion": "^13.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.18.2"

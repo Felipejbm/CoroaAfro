@@ -85,7 +85,7 @@ function MemberCard({
 
 export default function TeamPage() {
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack>
         <NavBarLandPage />
 

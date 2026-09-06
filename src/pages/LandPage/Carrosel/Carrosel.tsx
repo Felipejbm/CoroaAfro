@@ -1,141 +1,90 @@
-import { Stack } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { IconButton, Stack } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useRef, useState, type PointerEvent } from "react";
 import { testimonials } from "../LandPage.utils";
 import { TestimonialCard } from "../Card/Card";
 
 export default function TestimonialsCarousel() {
   const ref = useRef<HTMLDivElement | null>(null);
+  const drag = useRef<{ pointerId: number; x: number; scroll: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
 
-  const isDown = useRef(false);
-
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-
-  const velocity = useRef(0);
-  const lastX = useRef(0);
-  const lastTime = useRef(0);
-
-  let momentumFrame: number;
-
-  const fullList = [...testimonials, ...testimonials];
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    requestAnimationFrame(() => {
-      el.scrollLeft = el.scrollWidth / 2;
-    });
-  }, []);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-
-    isDown.current = true;
-
-    startX.current = e.pageX - ref.current.offsetLeft;
-    scrollLeft.current = ref.current.scrollLeft;
-
-    lastX.current = e.pageX;
-    lastTime.current = performance.now();
-
-    cancelAnimationFrame(momentumFrame);
+  const stopDrag = () => {
+    drag.current = null;
+    setDragging(false);
   };
 
-  const onMouseUp = () => {
-    isDown.current = false;
-    applyMomentum();
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    const el = event.currentTarget;
+    drag.current = { pointerId: event.pointerId, x: event.clientX, scroll: el.scrollLeft };
+    el.setPointerCapture(event.pointerId);
+    setDragging(true);
   };
 
-  const onMouseLeave = () => {
-    isDown.current = false;
-    applyMomentum();
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDown.current || !ref.current) return;
-
-    e.preventDefault();
-
-    const x = e.pageX - ref.current.offsetLeft;
-    const walk = (x - startX.current) * 1.3;
-
-    ref.current.scrollLeft = scrollLeft.current - walk;
-
-    const now = performance.now();
-    const dt = now - lastTime.current;
-
-    if (dt > 0) {
-      velocity.current = (e.pageX - lastX.current) / dt;
+  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const current = drag.current;
+    if (!current || current.pointerId !== event.pointerId) return;
+    if (event.buttons === 0) {
+      stopDrag();
+      return;
     }
-
-    lastX.current = e.pageX;
-    lastTime.current = now;
+    event.currentTarget.scrollLeft = current.scroll - (event.clientX - current.x);
   };
 
-  const applyMomentum = () => {
+  const navigate = (direction: number) => {
     const el = ref.current;
     if (!el) return;
-
-    let v = velocity.current * 18;
-    const decay = 0.94;
-
-    const animate = () => {
-      if (!ref.current) return;
-
-      const el = ref.current;
-
-      el.scrollLeft -= v;
-      v *= decay;
-
-      const half = el.scrollWidth / 2;
-
-      if (el.scrollLeft >= half) {
-        el.scrollLeft -= half;
-      }
-
-      if (el.scrollLeft <= 0) {
-        el.scrollLeft += half;
-      }
-
-      if (Math.abs(v) > 0.5) {
-        momentumFrame = requestAnimationFrame(animate);
-      }
-    };
-
-    momentumFrame = requestAnimationFrame(animate);
+    const card = el.firstElementChild;
+    const step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(el).columnGap) : el.clientWidth;
+    el.scrollBy({
+      left: direction * step,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
   };
 
   return (
-    <Stack sx={{ backgroundColor: "secondary.light", py: 6 }}>
+    <Stack component="section" aria-label="Depoimentos" sx={{ backgroundColor: "secondary.light", py: 6 }}>
+      <Stack direction="row" sx={{ justifyContent: "flex-end", gap: 1, px: { xs: 2, md: "10vw" }, mb: 2 }}>
+        <IconButton aria-label="Depoimento anterior" onClick={() => navigate(-1)} sx={{ color: "primary.main" }}>
+          <ArrowBackIcon />
+        </IconButton>
+        <IconButton aria-label="Próximo depoimento" onClick={() => navigate(1)} sx={{ color: "primary.main" }}>
+          <ArrowForwardIcon />
+        </IconButton>
+      </Stack>
       <Stack
         ref={ref}
         direction="row"
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
-        onMouseMove={onMouseMove}
+        tabIndex={0}
+        aria-label="Lista de depoimentos; use as setas para navegar"
+        onKeyDown={(event) => {
+          if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
+            navigate(event.key === "ArrowLeft" ? -1 : 1);
+          }
+        }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={stopDrag}
+        onPointerCancel={stopDrag}
+        onLostPointerCapture={stopDrag}
+        onDragStart={(event) => event.preventDefault()}
         sx={{
           overflowX: "auto",
-          display: "flex",
-          px: "10vw",
-          gap: 12,
+          px: { xs: 2, md: "10vw" },
+          gap: { xs: 2, md: 4 },
           userSelect: "none",
-          cursor: "grab",
-          scrollSnapType: "none",
-          "&::-webkit-scrollbar": {
-            display: "none",
-          },
+          cursor: dragging ? "grabbing" : "grab",
+          overscrollBehaviorX: "contain",
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": { display: "none" },
+          "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: -2 },
         }}
       >
-        {fullList.map((item, i) => (
-          <Stack
-            key={i}
-            sx={{
-              flex: "0 0 40vw",
-              minWidth: "320px",
-            }}
-          >
+        {testimonials.map((item, i) => (
+          <Stack key={i} sx={{ flex: { xs: "0 0 85%", md: "0 0 40vw" }, minWidth: 0 }}>
             <TestimonialCard item={item} />
           </Stack>
         ))}

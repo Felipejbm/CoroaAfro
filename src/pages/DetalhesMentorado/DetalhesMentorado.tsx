@@ -26,7 +26,6 @@ export default function DetalhesMentorado() {
           py: 5,
         }}
       >
-        {/* BOTÃO RETORNAR: Posicionado no topo esquerdo com margem inferior */}
         <Stack direction="row" sx={{ mb: 2 }}>
           <IconButton
             onClick={() => window.history.back()}
@@ -39,8 +38,6 @@ export default function DetalhesMentorado() {
             <ArrowBackIcon />
           </IconButton>
         </Stack>
-
-        {/* Bloco do Perfil */}
         <Stack direction="row" sx={{ alignItems: "center", gap: 2, mb: 4 }}>
           <Avatar sx={{ width: 70, height: 70, bgcolor: theme.palette.background.default }}>DS</Avatar>
           <Stack>
@@ -75,8 +72,6 @@ export default function DetalhesMentorado() {
             </Typography>
           </Stack>
         </Stack>
-
-        {/* Grid de Métricas */}
         <Stack
           sx={{
             display: "grid",
@@ -138,8 +133,6 @@ export default function DetalhesMentorado() {
             </Typography>
           </Stack>
         </Stack>
-
-        {/* Evolução da Trilha */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -198,8 +191,6 @@ export default function DetalhesMentorado() {
             />
           </Stack>
         </Stack>
-
-        {/* Atividades Recentes */}
         <Typography
           sx={{
             fontFamily: fonts.body,
@@ -234,8 +225,6 @@ export default function DetalhesMentorado() {
             </Typography>
           ))}
         </Stack>
-
-        {/* Informações de Contato */}
         <Typography
           sx={{
             fontFamily: fonts.body,

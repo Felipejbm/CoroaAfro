@@ -12,7 +12,9 @@ import {
   DialogContent,
   useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
+import { fonts } from "../../styles/theme";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -88,11 +90,13 @@ export default function Perfil() {
 
   const card = {
     flex: 1,
-    bgcolor: theme.palette.background.default,
-    borderRadius: "12px",
+    bgcolor: theme.palette.secondary.light,
+    border: `1px solid ${alpha(theme.palette.primary.dark, 0.1)}`,
+    borderRadius: 3,
     p: 3,
-    color: theme.palette.getContrastText(theme.palette.background.default),
+    color: theme.palette.text.primary,
     gap: 1.5,
+    boxShadow: `0 10px 24px ${alpha(theme.palette.primary.dark, 0.08)}`,
   };
 
   return (
@@ -102,12 +106,27 @@ export default function Perfil() {
         sx={{
           flex: 1,
           minWidth: 0,
-          p: { xs: 2, md: 5 },
-          alignItems: "center",
+          p: { xs: 2.5, md: 4, lg: 5 },
+          alignItems: "stretch",
           gap: 3,
         }}
       >
-        <Typography variant="h2">Meu perfil</Typography>
+        <Stack
+          sx={{
+            p: { xs: 2.5, md: 3.5 },
+            borderRadius: 4,
+            color: "secondary.light",
+            background: `linear-gradient(125deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+            boxShadow: `0 16px 34px ${alpha(theme.palette.primary.dark, 0.2)}`,
+          }}
+        >
+          <Typography variant="h2" sx={{ fontFamily: fonts.hero, fontSize: { xs: "2rem", md: "2.6rem" } }}>
+            Meu perfil
+          </Typography>
+          <Typography sx={{ color: alpha(theme.palette.secondary.light, 0.78) }}>
+            Gerencie seus dados e as informações do seu negócio.
+          </Typography>
+        </Stack>
         {loading && <CircularProgress aria-label="Carregando perfil" />}
         {erro && (
           <Alert severity="error">
@@ -124,14 +143,16 @@ export default function Perfil() {
         )}
         {usuario && (
           <>
-            <Avatar sx={{ width: 80, height: 80, bgcolor: theme.palette.background.default }}>
+            <Stack direction="row" alignItems="center" gap={2}>
+            <Avatar sx={{ width: 80, height: 80, bgcolor: theme.palette.primary.main }}>
               {usuario.nome.charAt(0).toUpperCase()}
             </Avatar>
             <Stack alignItems="center">
-              <Typography variant="h3">
+              <Typography variant="h3" sx={{ fontFamily: fonts.heading, color: theme.palette.primary.dark }}>
                 {empresa?.nome ?? "Sua empresa ainda não foi cadastrada"}
               </Typography>
-              <Typography>{usuario.nome}</Typography>
+              <Typography color="text.secondary">{usuario.nome}</Typography>
+            </Stack>
             </Stack>
             <Stack
               direction={{ xs: "column", md: "row" }}

@@ -89,7 +89,7 @@ export default function CadastroEmpreendedor() {
   };
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack sx={{ backgroundColor: theme.palette.secondary.light, minHeight: "100vh" }}>
         <NavBarLandPage />
 

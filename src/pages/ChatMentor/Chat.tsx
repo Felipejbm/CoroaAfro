@@ -255,10 +255,10 @@ export default function ChatMentor() {
   };
 
   return (
-    <Stack direction="row" sx={{ width: "100vw", maxWidth: "100%", height: "100vh", overflow: "hidden" }}>
+    <Stack direction="row" sx={{ width: "100%", maxWidth: "100%", height: "100vh", overflow: "hidden" }}>
       <NavBarMentor />
 
-      <Stack direction="row" sx={{ flexGrow: 1, height: "100vh", backgroundColor: theme.palette.secondary.light }}>
+      <Stack direction="row" sx={{ flex: 1, minWidth: 0, height: "100vh", backgroundColor: theme.palette.secondary.light }}>
         <Stack
           sx={{
             width: 280,
