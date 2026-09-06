@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
   Link as MuiLink,
-  useTheme,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -20,12 +19,11 @@ import { useState } from "react";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../components/Layout/Layout";
-import { fonts } from "../../styles/theme";
+import theme, { fonts } from "../../styles/theme";
 import { login, mensagemErroLogin } from "../../services/Auth/controllers/auth";
 import { buscarMinhaEmpresa } from "../../services/Auth/controllers/empresa";
 
 export default function Login() {
-  const theme = useTheme();
   const [email, setEmail] = useState("");
   const [papel, setPapel] = useState<"empreendedor" | "mentor">("empreendedor");
   const [senha, setSenha] = useState("");
@@ -66,7 +64,7 @@ export default function Login() {
   }
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack>
         <NavBarLandPage />
 
@@ -161,27 +159,40 @@ export default function Login() {
             >
               <IconButton
                 sx={{
-                  backgroundColor: theme.palette.common.white,
-                  "&:hover": { backgroundColor: theme.palette.secondary.light },
+                  backgroundColor: theme.palette.secondary.main,
+                  "&:hover": { backgroundColor: theme.palette.primary.light },
+                  border: "2px solid",
+                  borderColor: "primary.dark",
+                  padding: "10px",
                 }}
               >
-                <GoogleIcon sx={{ color: theme.palette.primary.main }} />
+                <GoogleIcon
+                  sx={{
+                    color: theme.palette.primary.dark,
+                  }}
+                />
               </IconButton>
               <IconButton
                 sx={{
-                  backgroundColor: theme.palette.primary.dark,
-                  "&:hover": { backgroundColor: theme.palette.primary.main },
+                  backgroundColor: theme.palette.secondary.main,
+                  "&:hover": { backgroundColor: theme.palette.primary.light },
+                  border: "2px solid", 
+                  borderColor: "primary.dark",
+                  padding: "10px",
                 }}
               >
-                <LinkedInIcon sx={{ color: theme.palette.common.white }} />
+                <LinkedInIcon sx={{ color: theme.palette.primary.dark }} />
               </IconButton>
               <IconButton
                 sx={{
-                  backgroundColor: theme.palette.primary.light,
-                  "&:hover": { backgroundColor: theme.palette.primary.dark },
+                  backgroundColor: theme.palette.secondary.main,
+                  "&:hover": { backgroundColor: theme.palette.primary.light },
+                  border: "2px solid", 
+                  borderColor: "primary.dark",
+                  padding: "10px",
                 }}
               >
-                <EmailIcon sx={{ color: theme.palette.common.white }} />
+                <EmailIcon sx={{ color: theme.palette.primary.dark }} />
               </IconButton>
             </Stack>
 
@@ -279,14 +290,17 @@ export default function Login() {
               disabled={loading}
               sx={{
                 background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-                color: theme.palette.getContrastText(theme.palette.primary.main),
+                color: theme.palette.getContrastText(
+                  theme.palette.primary.main,
+                ),
                 fontFamily: fonts.hero,
                 fontSize: "1.1rem",
                 textTransform: "none",
                 borderRadius: "10px",
                 py: 1.3,
                 mb: 2,
-                boxShadow: (theme) => `0 4px 10px ${alpha(theme.palette.common.black, 0.25)}`,
+                boxShadow: (theme) =>
+                  `0 4px 10px ${alpha(theme.palette.common.black, 0.25)}`,
                 "&:hover": {
                   background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                 },

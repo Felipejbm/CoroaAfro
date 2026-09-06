@@ -1,3 +1,4 @@
+import type { MetaEntrada } from "../../services/Auth/controllers/metas";
 import type { MetricCard, ProgressItem } from "./DashboardFinanceiro.types";
 
 export const metricCards: MetricCard[] = [
@@ -30,3 +31,22 @@ export const chartData = [
     { day: 9, vendas: 63, whatsapp: 27 },
     { day: 10, vendas: 68, whatsapp: 28 },
 ];
+
+export const vazio: MetaEntrada = {
+    titulo: "",
+    unidade: "seguidores",
+    valor_inicial: "0",
+    valor_atual: "0",
+    valor_alvo: "",
+    prazo: "",
+    arquivada: false,
+};
+
+export const labels = {
+    arquivada: "Arquivada",
+    atingida: "Atingida",
+    prazo_encerrado: "Prazo encerrado",
+    em_andamento: "Em andamento",
+};
+export const numero = (value: string | number) =>
+    Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 2 });

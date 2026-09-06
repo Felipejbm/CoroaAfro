@@ -1,5 +1,6 @@
 export interface Developer {
     name: string;
+    href: string;
 }
 
 export interface Adm {

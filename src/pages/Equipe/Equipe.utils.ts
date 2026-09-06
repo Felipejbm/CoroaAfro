@@ -4,7 +4,7 @@ export const founders: TeamMember[] = [
     {
         name: "Emilio",
         role: "Fundador",
-        bio: "",
+        bio: "A persistência transforma pequenos esforços em grandes conquistas.",
         photo: "/emilio.png",
     },
     {
@@ -37,7 +37,7 @@ export const developers: TeamMember[] = [
     {
         name: "Daniel",
         role: "Desenvolvedor",
-        bio: "",
+        bio: "Ser feliz sem motivo é a mais autêntica forma de felicidade",
         photo: "/daniel.png",
     },
     {

@@ -41,7 +41,7 @@ function ConversationItem({
         px: 2,
         py: 1.2,
         cursor: "pointer",
-        backgroundColor: isActive ? alpha(theme.palette.common.white, 0.08) : "transparent",
+        backgroundColor: isActive ? alpha(theme.palette.primary.light, 0.28) : "transparent",
         "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.04) },
       }}
     >
@@ -260,7 +260,7 @@ export default function Chat() {
     <Stack
       direction={"row"}
       sx={{
-        width: "100vw",
+        width: "100%",
         maxWidth: "100%",
         height: "100vh",
         overflow: "hidden",
@@ -270,7 +270,7 @@ export default function Chat() {
 
       <Stack
         direction={"row"}
-        sx={{ flexGrow: 1, height: "100vh", backgroundColor: theme.palette.secondary.light }}
+        sx={{ flex: 1, minWidth: 0, height: "100vh", backgroundColor: theme.palette.secondary.light }}
       >
         <Stack
           sx={{
@@ -376,7 +376,7 @@ export default function Chat() {
           <Stack
             direction="row"
             sx={{
-              backgroundColor: alpha(theme.palette.primary.main, 0.5),
+              backgroundColor: theme.palette.primary.dark,
               alignItems: "center",
               justifyContent: "space-between",
               px: 2.5,
@@ -421,19 +421,19 @@ export default function Chat() {
             <Stack direction="row" sx={{ gap: 1 }}>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}
+                sx={{ backgroundColor: alpha(theme.palette.secondary.light, 0.12), color: theme.palette.secondary.light }}
               >
                 <VideocamIcon fontSize="small" />
               </IconButton>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}
+                sx={{ backgroundColor: alpha(theme.palette.secondary.light, 0.12), color: theme.palette.secondary.light }}
               >
                 <AttachFileIcon fontSize="small" />
               </IconButton>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.common.white }}
+                sx={{ backgroundColor: alpha(theme.palette.secondary.light, 0.12), color: theme.palette.secondary.light }}
               >
                 <MoreHorizIcon fontSize="small" />
               </IconButton>

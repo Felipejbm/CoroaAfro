@@ -14,22 +14,23 @@ import {
   weeklyAnalysis,
 } from "./DashboardFinanceiro.utils";
 import NavBar from "../../components/NavBar/NavBar";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"; 
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
-import { fonts } from "../../styles/theme";
+import theme, { fonts } from "../../styles/theme";
 
 function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
-  const theme = useTheme();
-
   return (
     <Stack
-      sx={{ backgroundColor: theme.palette.background.default, borderRadius: "12px", p: 2.5, flex: 1 }}
+      sx={{
+        borderRadius: "12px",
+        p: 2.5,
+        flex: 1,
+      }}
     >
       <Typography
         sx={{
           fontFamily: fonts.body,
           fontSize: "0.8rem",
-          color: alpha(theme.palette.common.white, 0.6),
           mb: 1,
         }}
       >
@@ -40,7 +41,7 @@ function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
           fontFamily: fonts.body,
           fontWeight: 700,
           fontSize: "1.5rem",
-          color: theme.palette.common.white,
+          color: theme.palette.secondary.main,
         }}
       >
         {value}
@@ -71,7 +72,13 @@ function ProgressPanel({
   const theme = useTheme();
 
   return (
-    <Stack sx={{ backgroundColor: theme.palette.background.default, borderRadius: "12px", p: 2.5 }}>
+    <Stack
+      sx={{
+        backgroundColor: theme.palette.background.default,
+        borderRadius: "12px",
+        p: 2.5,
+      }}
+    >
       <Typography
         sx={{
           fontFamily: fonts.body,
@@ -135,7 +142,13 @@ export default function DashboardFinanceiro() {
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />
 
-      <Stack sx={{ backgroundColor: theme.palette.secondary.light, p: { xs: 2, md: 3 }, flex: 1 }}>
+      <Stack
+        sx={{
+          backgroundColor: theme.palette.secondary.light,
+          p: { xs: 2, md: 3 },
+          flex: 1,
+        }}
+      >
         <Stack
           sx={{
             display: "flex",
@@ -170,7 +183,13 @@ export default function DashboardFinanceiro() {
               py: 1,
             }}
           >
-            <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 36, height: 36 }} />
+            <Avatar
+              sx={{
+                bgcolor: theme.palette.primary.main,
+                width: 36,
+                height: 36,
+              }}
+            />
             <Stack direction="row" sx={{ alignItems: "center", gap: 2 }}>
               <Stack>
                 <Typography
@@ -193,8 +212,6 @@ export default function DashboardFinanceiro() {
                   Plano Premium
                 </Typography>
               </Stack>
-
-              {/* Botão de Perfil adicionado */}
               <Button
                 variant="contained"
                 startIcon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
@@ -291,7 +308,11 @@ export default function DashboardFinanceiro() {
         </Stack>
 
         <Stack
-          sx={{ backgroundColor: theme.palette.background.default, borderRadius: "12px", p: 2.5 }}
+          sx={{
+            backgroundColor: theme.palette.background.default,
+            borderRadius: "12px",
+            p: 2.5,
+          }}
         >
           <Stack>Gráfico aqui</Stack>
         </Stack>

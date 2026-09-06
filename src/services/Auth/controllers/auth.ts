@@ -7,7 +7,7 @@ export async function login(data: LoginReq) {
     const resp = await api.post("auth/login", data)
 
     const empreendedor = resp.data.Usuario ?? resp.data.Empreendedor;
-    if (!empreendedor?.id || !empreendedor?.nome || !empreendedor?.email) {
+    if (!empreendedor?.id_empreendedor || !empreendedor?.nome || !empreendedor?.email) {
         throw new Error("Resposta de login inválida");
     }
 

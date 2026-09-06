@@ -128,8 +128,6 @@ export default function CriarTrilhasMentor() {
           onChange={(e) => setContent(e.target.value)}
           sx={{ backgroundColor: theme.palette.common.white, borderRadius: "8px", mb: 3 }}
         />
-
-        {/* AJUSTE: Botões "Salvar Rascunho" e "Publicar" alinhados na horizontal */}
         <Stack
           direction="row"
           sx={{

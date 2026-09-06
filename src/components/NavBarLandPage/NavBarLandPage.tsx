@@ -2,10 +2,13 @@ import { Toolbar, Box, Button, Avatar, Stack, alpha, useTheme } from "@mui/mater
 import { fonts } from "../../styles/theme";
 import { navLinks } from "./NavBarLandPage.utils";
 
+const menuHeight = 86;
+
 export default function NavBarLandPage() {
   const theme = useTheme();
 
   return (
+    <>
     <Stack
       sx={{
         position: "fixed",
@@ -22,6 +25,8 @@ export default function NavBarLandPage() {
           justifyContent: "space-between",
           px: { xs: 2, md: 6 },
           py: 1,
+          height: menuHeight,
+          flexShrink: 0,
         }}
       >
         <Avatar
@@ -71,5 +76,14 @@ export default function NavBarLandPage() {
         </Box>
       </Toolbar>
     </Stack>
+    <Box
+      aria-hidden="true"
+      sx={{
+        height: menuHeight + 24,
+        flexShrink: 0,
+        backgroundColor: "secondary.light",
+      }}
+    />
+    </>
   );
 }

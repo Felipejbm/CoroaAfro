@@ -4,6 +4,7 @@ export const styles = {
   page: {
     background: theme.palette.secondary.light,
     minHeight: "100vh",
+    flexShrink: 0,
   },
 
   /* NAVBAR */

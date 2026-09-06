@@ -43,24 +43,35 @@ export default function Posts() {
   };
 
   return (
-    <Stack direction="row" sx={{ width: "100vw", maxWidth: "100%" }}>
+    <Stack direction="row" sx={{ width: "100%", maxWidth: "100%", minWidth: 0 }}>
       <NavBar />
       <Stack
         sx={{
-          flexGrow: 1,
+          flex: 1,
+          minWidth: 0,
           backgroundColor: theme.palette.secondary.light,
           minHeight: "100vh",
           px: { xs: 2, md: 4 },
-          py: 5,
+          py: { xs: 2.5, md: 4 },
+          gap: 2,
         }}
       >
+        <Stack
+          sx={{
+            p: { xs: 2.5, md: 3.5 },
+            borderRadius: 4,
+            color: "secondary.light",
+            background: `linear-gradient(125deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+            boxShadow: `0 16px 34px ${alpha(theme.palette.primary.dark, 0.2)}`,
+          }}
+        >
         <Typography
           sx={{
             fontFamily: fonts.body,
             fontWeight: 700,
             fontSize: { xs: "1.8rem", md: "2.3rem" },
-            color: theme.palette.text.primary,
-            mb: 1,
+            color: theme.palette.secondary.light,
+            mb: 0.75,
           }}
         >
           Comunidade de Empresas
@@ -69,12 +80,13 @@ export default function Posts() {
           sx={{
             fontFamily: fonts.body,
             fontSize: "0.9rem",
-            color: theme.palette.text.secondary,
-            mb: 3,
+            color: alpha(theme.palette.secondary.light, 0.78),
+            mb: 0,
           }}
         >
           Compartilhe experiências, dúvidas e ideias com outros empreendedores
         </Typography>
+        </Stack>
 
         <Stack direction="row" sx={{ gap: 2, mb: 4 }}>
           <TextField
@@ -104,8 +116,8 @@ export default function Posts() {
             <Stack key={post.id} sx={{ flexDirection: "column" }}>
               <Stack
                 sx={{
-                  backgroundColor: theme.palette.background.default,
-                  borderRadius: "10px 10px 0px 0px",
+                  backgroundColor: theme.palette.primary.dark,
+                  borderRadius: "14px 14px 0 0",
                   p: 3,
                   position: "relative",
                   zIndex: 2,
@@ -116,7 +128,7 @@ export default function Posts() {
                     fontFamily: fonts.body,
                     fontWeight: 700,
                     fontSize: "1rem",
-                    color: theme.palette.common.white,
+                    color: theme.palette.secondary.light,
                   }}
                 >
                   {post.company}
@@ -125,7 +137,7 @@ export default function Posts() {
                   sx={{
                     fontFamily: fonts.body,
                     fontSize: "0.8rem",
-                    color: alpha(theme.palette.common.white, 0.6),
+                    color: alpha(theme.palette.secondary.light, 0.7),
                     mb: 2,
                   }}
                 >
@@ -136,7 +148,7 @@ export default function Posts() {
                   sx={{
                     fontFamily: fonts.body,
                     fontSize: "0.9rem",
-                    color: theme.palette.common.white,
+                    color: theme.palette.secondary.light,
                     mb: post.image ? 2 : 0,
                   }}
                 >
@@ -161,7 +173,7 @@ export default function Posts() {
               <Stack
                 sx={{
                   backgroundColor: alpha(theme.palette.common.white, 0.8),
-                  borderRadius: "0px 0px 10px 10px",
+                  borderRadius: "0 0 14px 14px",
                   p: 3,
                   borderTop: `1px solid ${alpha(theme.palette.common.black, 0.08)}`,
                   gap: 2,
@@ -176,7 +188,7 @@ export default function Posts() {
                           fontFamily: fonts.body,
                           fontSize: "0.85rem",
                           color: theme.palette.text.primary,
-                          backgroundColor: theme.palette.common.white,
+                          backgroundColor: theme.palette.secondary.light,
                           p: 1.5,
                           borderRadius: "6px",
                           boxShadow: `0px 1px 3px ${alpha(theme.palette.common.black, 0.05)}`,
@@ -203,7 +215,7 @@ export default function Posts() {
                     }
                     sx={{
                       flex: 1,
-                      backgroundColor: theme.palette.common.white,
+                      backgroundColor: theme.palette.secondary.light,
                       borderRadius: "8px",
                     }}
                   />

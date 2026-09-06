@@ -16,22 +16,20 @@ export default function AprendizadoLayout({
   const theme = useTheme();
   return (
     <Stack
-      direction={{ xs: "column", md: "row" }}
-      sx={{ minHeight: "100vh", bgcolor: theme.palette.secondary.light }}
+      direction={mentor ? { xs: "column", md: "row" } : "row"}
+      sx={{ width: "100%", minHeight: "100vh", bgcolor: theme.palette.secondary.light }}
     >
-      <Stack
+      {mentor ? <Stack
         sx={{
-          width: { xs: "100%", md: 220 },
-          flexShrink: 0,
-          "& > *": {
-            width: "100%",
-            minHeight: { xs: "auto", md: "100vh" },
-            height: "auto",
-          },
+          width: { xs: 220, md: "clamp(220px, 16vw, 280px)" },
+          minWidth: { xs: 220, md: "clamp(220px, 16vw, 280px)" },
+          flex: { xs: "0 0 220px", md: "0 0 clamp(220px, 16vw, 280px)" },
+          minHeight: { xs: "100vh", md: "100vh" },
+          "& > *": { width: "100%" },
         }}
       >
-        {mentor ? <NavBarMentor /> : <NavBar />}
-      </Stack>
+        <NavBarMentor />
+      </Stack> : <NavBar />}
       <Stack
         component="main"
         sx={{ flex: 1, minWidth: 0, p: { xs: 2, md: 4 }, gap: 3 }}

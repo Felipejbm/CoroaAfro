@@ -17,15 +17,15 @@ export function TestimonialCard({ item }: Props) {
 
         width: "100%",
         minHeight: 200,
-        maxHeight: 360,
+        height: "100%",
 
-        px: 4,
+        px: { xs: 3, md: 4 },
         py: 4,
 
         display: "flex",
-        flexDirection: "row",
+        flexDirection: { xs: "column", md: "row" },
         alignItems: "center",
-        gap: 4,
+        gap: { xs: 2, md: 4 },
       }}
     >
       <Stack

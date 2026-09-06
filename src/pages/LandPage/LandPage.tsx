@@ -19,11 +19,17 @@ import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import theme from "../../styles/theme";
 
+const socialDescriptions = [
+  "Dar visibilidade a negócios afro e fortalecer quem transforma sua comunidade por meio do empreendedorismo.",
+  "Valorizar identidades, histórias e talentos para que mais pessoas se reconheçam no mundo dos negócios.",
+  "Compartilhar aprendizados e ferramentas para desenvolver autonomia e ampliar a presença digital.",
+];
+
 export default function LandPage() {
   const navigate = useNavigate();
 
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack sx={styles.page}>
         <NavBarLandPage />
 
@@ -123,14 +129,16 @@ export default function LandPage() {
         <Stack
           sx={{
             position: "relative",
-            maxWidth: 700,
+            width: { xs: "calc(100% - 32px)", md: "calc(100% - 64px)" },
+            maxWidth: 1000,
+            flexShrink: 0,
             mx: "auto",
             borderRadius: "20px",
             overflow: "hidden",
-            p: { xs: 4, md: 5 },
+            p: { xs: 3, md: 5 },
             background: `radial-gradient(circle at center, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 55%, ${theme.palette.primary.dark} 100%)`,
             boxShadow: (theme) =>
-              `0 6px 20px ${alpha(theme.palette.common.black, 0.25)}`,
+              `0 12px 32px ${alpha(theme.palette.primary.dark, 0.14)}`,
           }}
         >
           <Typography
@@ -142,22 +150,29 @@ export default function LandPage() {
               color: theme.palette.secondary.light,
               textShadow: (theme) =>
                 `0 2px 6px ${alpha(theme.palette.common.white, 0.3)}`,
-              mb: 4,
+              mb: 1.5,
             }}
           >
             Proposta Social
           </Typography>
-
-          <List sx={{ px: { xs: 1, md: 4 } }}>
-            {items.map((item) => (
+          <Typography sx={{ color: theme.palette.secondary.light, textAlign: "center", maxWidth: 580, mx: "auto", mb: 4, lineHeight: 1.7 }}>
+            Fortalecer o empreendedorismo afro é abrir espaço para histórias,
+            conexões e novas oportunidades.
+          </Typography>
+          <List sx={{ p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
+            {items.map((item, index) => (
               <ListItem
                 key={item}
                 disableGutters
                 sx={{
                   display: "flex",
-                  alignItems: "center",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
                   gap: 1.5,
-                  py: 1.2,
+                  p: 2.5,
+                  borderRadius: 3,
+                  backgroundColor: alpha(theme.palette.common.white, 0.07),
+                  border: `1px solid ${alpha(theme.palette.secondary.light, 0.18)}`,
                 }}
               >
                 <Stack
@@ -166,6 +181,12 @@ export default function LandPage() {
                     color: theme.palette.secondary.light,
                     fontSize: "1.1rem",
                     lineHeight: 1,
+                    width: 36,
+                    height: 36,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%",
+                    backgroundColor: alpha(theme.palette.secondary.light, 0.12),
                   }}
                 >
                   ✓
@@ -174,9 +195,13 @@ export default function LandPage() {
                   sx={{
                     color: theme.palette.secondary.light,
                     fontSize: { xs: "1rem", md: "1.15rem" },
+                    fontWeight: 600,
                   }}
                 >
                   {item}
+                </Typography>
+                <Typography sx={{ color: theme.palette.secondary.light, opacity: 0.9, fontSize: "0.95rem", lineHeight: 1.7 }}>
+                  {socialDescriptions[index]}
                 </Typography>
               </ListItem>
             ))}

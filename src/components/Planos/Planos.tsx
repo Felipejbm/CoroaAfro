@@ -59,8 +59,10 @@ export default function PricingPage() {
                     pb: 4,
                     mt: highlighted ? 0 : { xs: 0, md: 2 },
                     boxShadow: highlighted
-                      ? (theme) => `0 14px 30px ${alpha(theme.palette.common.black, 0.3)}`
-                      : (theme) => `0 8px 18px ${alpha(theme.palette.common.black, 0.2)}`,
+                      ? (theme) =>
+                          `0 14px 30px ${alpha(theme.palette.common.black, 0.3)}`
+                      : (theme) =>
+                          `0 8px 18px ${alpha(theme.palette.common.black, 0.2)}`,
                     transform: { md: highlighted ? "scale(1.05)" : "none" },
                     transition: "transform 0.2s ease-in-out",
                   }}

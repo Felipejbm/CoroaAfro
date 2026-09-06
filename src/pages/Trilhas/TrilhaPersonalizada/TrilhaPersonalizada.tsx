@@ -12,11 +12,18 @@ function ModuleCard({ module }: { module: ModuleItem }) {
     <Stack
       sx={{
         position: "relative",
-        backgroundColor: theme.palette.background.default,
-        borderRadius: "14px",
+        backgroundColor: theme.palette.secondary.light,
+        borderRadius: 3,
+        border: `1px solid ${alpha(theme.palette.primary.dark, 0.1)}`,
         borderLeft: `4px solid ${theme.palette.primary.light}`,
         width: { xs: "100%", sm: 340 },
         p: 2.5,
+        boxShadow: `0 10px 24px ${alpha(theme.palette.primary.dark, 0.08)}`,
+        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        "&:hover": {
+          transform: "translateY(-3px)",
+          boxShadow: `0 16px 30px ${alpha(theme.palette.primary.dark, 0.14)}`,
+        },
       }}
       direction={"column"}
     >
@@ -57,7 +64,7 @@ function ModuleCard({ module }: { module: ModuleItem }) {
           fontFamily: fonts.body,
           fontWeight: 700,
           fontSize: "1.05rem",
-          color: theme.palette.getContrastText(theme.palette.background.default),
+          color: theme.palette.primary.dark,
           mb: 1.5,
         }}
       >
@@ -68,7 +75,7 @@ function ModuleCard({ module }: { module: ModuleItem }) {
         sx={{
           fontFamily: fonts.body,
           fontSize: "0.8rem",
-          color: alpha(theme.palette.common.white, 0.7),
+          color: theme.palette.text.primary,
           lineHeight: 1.5,
           mb: 2,
         }}
@@ -102,7 +109,7 @@ function TimelineDot() {
         height: 16,
         borderRadius: "50%",
         border: `3px solid ${theme.palette.primary.light}`,
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: theme.palette.secondary.light,
         zIndex: 2,
       }}
     />
@@ -127,14 +134,14 @@ export default function TrilhaPersonalizada() {
           flexDirection: "column",
         }}
       >
-        <Stack sx={{ p: { xs: 3, md: 4 }, flex: 1 }}>
+        <Stack sx={{         p: { xs: 2.5, md: 4, lg: 5 }, flex: 1 }}>
           <Typography
             sx={{
               fontFamily: fonts.hero,
               fontWeight: 700,
               fontSize: { xs: "1.4rem", md: "1.8rem" },
-              color: theme.palette.text.primary,
-              mb: 2,
+              color: theme.palette.primary.dark,
+              mb: 0.75,
             }}
           >
             Acompanhe o caminho percorrido

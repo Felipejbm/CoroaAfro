@@ -14,12 +14,14 @@ import { fonts } from "../../styles/theme";
 import { useState } from "react";
 import { logout } from "../../services/Auth/controllers/auth.ts";
 import { mensagemErroApi } from "../../services/Auth/controllers/empresa.ts";
+import { motion } from "framer-motion";
 
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [saindo, setSaindo] = useState(false);
   const [erroSaida, setErroSaida] = useState("");
+
   const sair = async () => {
     setSaindo(true);
     setErroSaida("");
@@ -36,19 +38,35 @@ export default function NavBar() {
   return (
     <Stack
       sx={{
-        width: "15%",
+        width: 260,
+        minWidth: 260,
+        maxWidth: 260,
+        flexShrink: 0,
         height: "100vh",
+        position: "sticky",
+        top: 0,
+        alignSelf: "flex-start",
+        boxSizing: "border-box",
         backgroundColor: "background.default",
-        py: 3,
+        py: { xs: 2, md: 3 },
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        overflow: "hidden",
+        zIndex: 1,
       }}
     >
-      <Stack>
+      <Stack sx={{ minHeight: 0, flex: 1 }}>
         <Stack
           direction={"row"}
-          sx={{ display: "flex", alignItems: "center", gap: 1.5, px: 3, mb: 4 }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            px: { xs: 2, md: 3 },
+            mb: { xs: 2.5, md: 4 },
+            flexShrink: 0,
+          }}
         >
           <Avatar
             src="/src/assets/LogoTipo.png"
@@ -74,34 +92,56 @@ export default function NavBar() {
             p: 0,
             flex: 1,
             overflowY: "auto",
+            overflowX: "hidden",
+            minHeight: 0,
+            scrollbarWidth: "thin",
+            scrollbarColor: (theme) =>
+              `${alpha(theme.palette.secondary.dark, 0.7)} transparent`,
           }}
         >
           {navItems.map(({ label, href }) => {
-            const isActive = location.pathname === href;
+            const isActive =
+              location.pathname === href ||
+              location.pathname.startsWith(`${href}/`) ||
+              (href === "/trilha-guiada" &&
+                (location.pathname.startsWith("/trilha-") ||
+                  location.pathname.startsWith("/criar-trilha")));
 
             return (
               <ListItemButton
                 key={label}
                 onClick={() => navigate(href)}
+                disableRipple
                 sx={{
+                  position: "relative",
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  px: 3,
-                  py: 1.4,
-                  borderLeft: isActive ? "4px solid" : "4px solid transparent",
-                  borderColor: isActive ? "primary.light" : "transparent",
-                  backgroundColor: isActive
-                    ? (theme) => alpha(theme.palette.primary.main, 0.25)
-                    : "transparent",
-                  transition: "all 0.4s ease",
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 1.2, md: 1.4 },
+                  backgroundColor: "transparent",
+                  flexShrink: 0,
                   "&:hover": {
-                    backgroundColor: isActive
-                      ? (theme) => alpha(theme.palette.primary.main, 0.35)
-                      : (theme) => alpha(theme.palette.common.white, 0.04),
+                    backgroundColor: (theme) =>
+                      alpha(theme.palette.common.white, 0.04),
                   },
                 }}
               >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTabIndicator"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderLeft:
+                        "4px solid var(--mui-palette-primary-light, #f06292)",
+                      backgroundColor: "rgba(233, 30, 99, 0.25)",
+                      pointerEvents: "none",
+                    }}
+                  />
+                )}
+
                 <Stack
                   sx={{
                     width: 18,
@@ -111,18 +151,20 @@ export default function NavBar() {
                       ? "primary.light"
                       : "secondary.dark",
                     flexShrink: 0,
-                    transition: "all 0.4s ease",
-                    transform: isActive
-                      ? "scale(1.2) rotate(180deg)"
-                      : "scale(1) rotate(0deg)",
+                    transition: "all 0.3s ease",
+                    transform: isActive ? "scale(1.15)" : "scale(1)",
+                    zIndex: 1,
                   }}
                 />
+
                 <Typography
                   sx={{
                     fontFamily: fonts.navbar,
                     fontSize: "1.1rem",
                     color: isActive ? "secondary.main" : "secondary.dark",
-                    transition: "color 0.4s ease",
+                    transition: "color 0.25s ease",
+                    whiteSpace: "nowrap",
+                    zIndex: 1,
                   }}
                 >
                   {label}
@@ -133,7 +175,7 @@ export default function NavBar() {
         </List>
       </Stack>
 
-      <Stack sx={{ mt: "auto", px: 3, pt: 3 }}>
+      <Stack sx={{ mt: "auto", px: { xs: 2, md: 3 }, pt: 3, flexShrink: 0 }}>
         <Button
           fullWidth
           startIcon={<LogoutIcon />}
@@ -148,7 +190,8 @@ export default function NavBar() {
             py: 1.1,
             fontFamily: fonts.button,
             fontWeight: 700,
-            boxShadow: (theme) => `0 6px 18px ${alpha(theme.palette.common.black, 0.25)}`,
+            boxShadow: (theme) =>
+              `0 6px 18px ${alpha(theme.palette.common.black, 0.25)}`,
             "&:hover": {
               background: (theme) =>
                 `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,

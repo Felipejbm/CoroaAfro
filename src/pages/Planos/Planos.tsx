@@ -6,7 +6,7 @@ import Layout from "../../components/Layout/Layout";
 
 export default function Planos() {
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack>
         <NavBarLandPage />
 

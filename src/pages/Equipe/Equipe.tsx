@@ -1,10 +1,10 @@
-import { Box, Typography, Container, Stack, useTheme, alpha } from "@mui/material";
+import { Box, Typography, Container, Stack, alpha } from "@mui/material";
 import type { TeamMember } from "./Equipe.types";
 import { founders, developers } from "./Equipe.utils";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import Layout from "../../components/Layout/Layout";
-import { fonts } from "../../styles/theme";
+import theme, { fonts } from "../../styles/theme";
 
 function MemberCard({
   member,
@@ -13,7 +13,6 @@ function MemberCard({
   member: TeamMember;
   isDev?: boolean;
 }) {
-  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -38,8 +37,14 @@ function MemberCard({
       />
       <Box
         sx={{
-          backgroundColor: isDev ? theme.palette.background.default : theme.palette.primary.dark,
-          color: theme.palette.getContrastText(isDev ? theme.palette.background.default : theme.palette.primary.dark),
+          backgroundColor: isDev
+            ? theme.palette.background.default
+            : theme.palette.primary.dark,
+          color: theme.palette.getContrastText(
+            isDev
+              ? theme.palette.background.default
+              : theme.palette.primary.dark,
+          ),
           px: isDev ? 1.2 : 1.5,
           py: isDev ? 1 : 1.2,
           flexGrow: 1,
@@ -79,13 +84,17 @@ function MemberCard({
 }
 
 export default function TeamPage() {
-  const theme = useTheme();
   return (
-    <Layout>
+    <Layout showSidebar={false}>
       <Stack>
         <NavBarLandPage />
 
-        <Box sx={{ backgroundColor: theme.palette.secondary.light, py: { xs: 5, md: 7 } }}>
+        <Box
+          sx={{
+            backgroundColor: theme.palette.secondary.light,
+            py: { xs: 5, md: 7 },
+          }}
+        >
           <Container maxWidth="md">
             <Typography
               align="center"
@@ -112,7 +121,7 @@ export default function TeamPage() {
                 sx={{
                   fontFamily: fonts.hero,
                   fontSize: { xs: "1.4rem", md: "1.7rem" },
-                  color: theme.palette.text.primary,
+                  color: theme.palette.secondary.main,
                   mb: 3,
                 }}
               >
@@ -139,7 +148,7 @@ export default function TeamPage() {
                 sx={{
                   fontFamily: fonts.hero,
                   fontSize: { xs: "1.4rem", md: "1.7rem" },
-                  color: theme.palette.text.primary,
+                  color: theme.palette.secondary.main,
                   mb: 3,
                 }}
               >
