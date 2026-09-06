@@ -1,3 +1,6 @@
+import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
+import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
 import {
   Alert,
   Avatar,
@@ -6,7 +9,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   Stack,
   TextField,
   Typography,
@@ -200,21 +202,21 @@ export default function Perfil() {
             </Button>
           </>
         )}
-        <Dialog
+        <Dialog aria-labelledby="foto-perfil"
           open={editandoFoto}
           onClose={fecharFoto}
           fullWidth
           maxWidth="xs"
-          aria-labelledby="titulo-foto-perfil"
+          
         >
-          <DialogTitle id="titulo-foto-perfil">Foto de perfil</DialogTitle>
+          <ModalHeader id="foto-perfil" titulo={"Foto de perfil"} categoria="Sua identidade" descricao="Escolha uma foto para que as pessoas reconheçam você." icone={<PhotoCameraOutlinedIcon />} onClose={fecharFoto} ocupado={salvandoFoto} />
           <DialogContent>
-            <Stack alignItems="center" gap={2} sx={{ pt: 1 }}>
+            <Stack alignItems="center" gap={2.5} sx={{ p: 2.5, border: "1px dashed", borderColor: "secondary.dark", borderRadius: 4, bgcolor: "#fffdf9" }}>
               {erroFoto && <Alert severity="error" sx={{ width: "100%" }}>{erroFoto}</Alert>}
               <Avatar
                 src={previaFoto || fotoAtual || undefined}
                 alt="Prévia da foto de perfil"
-                sx={{ width: 180, height: 180, bgcolor: theme.palette.primary.main, fontSize: "3rem" }}
+                sx={{ width: 152, height: 152, bgcolor: theme.palette.primary.main, fontSize: "3rem", border: "5px solid", borderColor: "secondary.light", boxShadow: "0 0 0 1px #e1cebf, 0 10px 24px #4d001214" }}
               >
                 {usuario?.nome.charAt(0).toUpperCase()}
               </Avatar>
@@ -247,24 +249,25 @@ export default function Perfil() {
             </Button>
           </DialogActions>
         </Dialog>
-        <Dialog
+        <Dialog aria-labelledby="dados-perfil"
           open={editando}
           onClose={() => {
             if (!salvando) setEditando(false);
           }}
           fullWidth
           maxWidth="sm"
-          slotProps={{
-            paper: { sx: { bgcolor: theme.palette.secondary.main, borderRadius: "20px" } },
-          }}
+          
         >
           <Stack component="form" onSubmit={(event) => void salvar(event)}>
-            <DialogTitle>Editar meus dados</DialogTitle>
+            <ModalHeader id="dados-perfil" titulo={"Editar meus dados"} categoria="Meu perfil" descricao="Mantenha suas informações atualizadas para continuar suas conexões." icone={<PersonOutlineRoundedIcon />} onClose={() => setEditando(false)} ocupado={salvando} />
             <DialogContent>
-              <Stack sx={{ gap: 2, pt: 1 }}>
+              <Stack sx={{ gap: 2.5 }}>
                 {erroEdicao && <Alert severity="error">{erroEdicao}</Alert>}
+                <SecaoFormulario titulo="Suas informações" descricao="É assim que você se apresenta na comunidade. Campos com * são obrigatórios.">
                 <TextField
-                  label="Nome"
+                  autoFocus
+                  autoComplete="name"
+                  label="Nome completo"
                   required
                   value={form.nome}
                   disabled={salvando}
@@ -272,6 +275,7 @@ export default function Perfil() {
                   slotProps={{ htmlInput: { maxLength: 255 } }}
                 />
                 <TextField
+                  autoComplete="email"
                   label="E-mail"
                   type="email"
                   required
@@ -281,6 +285,9 @@ export default function Perfil() {
                   slotProps={{ htmlInput: { maxLength: 255 } }}
                 />
                 <TextField
+                  type="tel"
+                  autoComplete="tel"
+                  helperText="Inclua o DDD. Ex.: (11) 99999-9999."
                   label="Telefone"
                   required
                   value={form.telefone}
@@ -290,6 +297,7 @@ export default function Perfil() {
                   }
                   slotProps={{ htmlInput: { maxLength: 20 } }}
                 />
+                </SecaoFormulario>
               </Stack>
             </DialogContent>
             <DialogActions>
@@ -297,7 +305,7 @@ export default function Perfil() {
                 Cancelar
               </Button>
               <Button type="submit" variant="contained" disabled={salvando}>
-                {salvando ? "Salvando..." : "Salvar"}
+                {salvando ? "Salvando..." : "Salvar alterações"}
               </Button>
             </DialogActions>
           </Stack>

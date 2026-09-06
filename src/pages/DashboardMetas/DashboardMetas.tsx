@@ -1,3 +1,5 @@
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
+import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
@@ -12,7 +14,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormControlLabel,
   LinearProgress,
   Paper,
@@ -456,25 +457,27 @@ export default function DashboardMetas() {
         >
           Ver desempenho nas redes
         </Button>
-        <Dialog
+        <Dialog aria-labelledby="editar-meta"
           open={open}
           onClose={() => {
             if (!saving) setOpen(false);
           }}
           fullWidth
           maxWidth="sm"
-          PaperProps={{ sx: { bgcolor: "secondary.light", borderRadius: 3 } }}
+          
         >
           <form onSubmit={salvar}>
-            <DialogTitle>{editing ? "Editar meta" : "Nova meta"}</DialogTitle>
+            <ModalHeader id="editar-meta" titulo={editing ? "Editar meta" : "Nova meta"} categoria="Um passo de cada vez" descricao="Transforme seus planos em um objetivo que você pode acompanhar." icone={<FlagRoundedIcon />} onClose={() => setOpen(false)} ocupado={saving} />
             <DialogContent>
-              <Stack gap={2} sx={{ pt: 1 }}>
+              <Stack gap={3}>
                 {formError && <Alert severity="error">{formError}</Alert>}
-
+                <SecaoFormulario titulo="O que você quer conquistar?" descricao="Campos com * são obrigatórios.">
                 <TextField
+                  autoFocus
                   required
                   disabled={saving}
                   label="Título"
+                  placeholder="Ex.: Aumentar minhas vendas"
                   value={form.titulo}
                   inputProps={{ maxLength: 120 }}
                   onChange={(event) =>
@@ -485,7 +488,9 @@ export default function DashboardMetas() {
                 <TextField
                   required
                   disabled={saving}
-                  label="Unidade (ex.: seguidores, publicações, vendas)"
+                  label="O que vamos medir?"
+                  placeholder="Ex.: vendas, seguidores ou publicações"
+                  helperText="Use a mesma unidade para os três valores abaixo."
                   value={form.unidade}
                   inputProps={{ maxLength: 30 }}
                   onChange={(event) =>
@@ -493,6 +498,9 @@ export default function DashboardMetas() {
                   }
                 />
 
+                </SecaoFormulario>
+                <SecaoFormulario titulo="Do ponto de partida à conquista" descricao="Informe onde começou, onde está hoje e aonde quer chegar.">
+                <Stack sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
                 {(
                   [
                     ["valor_inicial", "Valor inicial"],
@@ -513,20 +521,21 @@ export default function DashboardMetas() {
                     }
                   />
                 ))}
-
+                </Stack>
                 <TextField
                   required
                   disabled={saving}
                   type="date"
                   label="Prazo"
+                  helperText="Até quando você pretende alcançar essa meta?"
                   InputLabelProps={{ shrink: true }}
                   value={form.prazo}
                   onChange={(event) =>
                     setForm({ ...form, prazo: event.target.value })
                   }
                 />
-
-                <Typography variant="body2">
+                </SecaoFormulario>
+                <Typography variant="body2" sx={{ p: 2, bgcolor: "secondary.main", borderRadius: 2, color: "primary.dark", lineHeight: 1.6 }}>
                   O progresso mede o avanço do valor inicial até o alvo. Metas
                   com prazo passado podem ser registradas para acompanhamento.
                 </Typography>

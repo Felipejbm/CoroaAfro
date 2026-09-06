@@ -1,3 +1,7 @@
+import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
+import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
 import {
   Alert,
   Button,
@@ -5,7 +9,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   MenuItem,
   Paper,
   Stack,
@@ -188,7 +191,7 @@ export default function TrilhasMentor() {
           ))}
         </>
       )}
-      <Dialog
+      <Dialog aria-labelledby="editar-trilha"
         open={dialog}
         onClose={() => {
           if (!busy) setDialog(false);
@@ -196,19 +199,16 @@ export default function TrilhasMentor() {
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle>
-          {atual?.publicada
+        <ModalHeader id="editar-trilha" titulo={atual?.publicada
             ? "Conteúdo publicado"
             : atual
               ? "Editar rascunho"
-              : "Nova trilha"}
-        </DialogTitle>
+              : "Nova trilha"} categoria="Compartilhe seu conhecimento" descricao="Organize sua trilha em aulas e ajude outros negócios a crescer." icone={<MenuBookRoundedIcon />} onClose={() => setDialog(false)} ocupado={busy} />
         <DialogContent>
           <Stack
             component="form"
             id="form-trilha"
-            gap={2}
-            sx={{ pt: 1 }}
+            gap={3}
             onSubmit={(e) => {
               e.preventDefault();
               void salvar();
@@ -221,7 +221,9 @@ export default function TrilhasMentor() {
                 categoria e o público da trilha sem afetar o progresso.
               </Alert>
             )}
+            <SecaoFormulario titulo="Apresente sua trilha" descricao="Dê um nome claro e conte o que as pessoas vão aprender. Campos com * são obrigatórios.">
             <TextField
+              autoFocus
               label="Título da trilha"
               required
               value={dados.titulo}
@@ -231,6 +233,7 @@ export default function TrilhasMentor() {
             />
             <TextField
               label="Descrição"
+              placeholder="O que o empreendedor será capaz de fazer ao concluir?"
               multiline
               minRows={2}
               value={dados.descricao}
@@ -265,10 +268,12 @@ export default function TrilhasMentor() {
                 setDados({ ...dados, publico_alvo: e.target.value })
               }
             />
+            </SecaoFormulario>
+            <SecaoFormulario titulo="Construa o caminho de aprendizado" descricao={`${dados.aulas.length} de 30 aulas · Cada aula deve ter um título e um conteúdo.`}>
             {dados.aulas.map((a, i) => (
-              <Paper variant="outlined" key={i} sx={{ p: 2 }}>
+              <Paper variant="outlined" key={i} sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 3, borderColor: "secondary.main", bgcolor: "#fffdf9", boxShadow: "0 4px 18px #4d001205" }}>
                 <Stack gap={2}>
-                  <Typography variant="h6">Aula {i + 1}</Typography>
+                  <Typography variant="h6" sx={{ color: "primary.main", fontSize: "1rem", pb: 1.5, borderBottom: "1px solid", borderColor: "secondary.main" }}>Aula {String(i + 1).padStart(2, "0")}</Typography>
                   <TextField
                     label={`Título da aula ${i + 1}`}
                     required
@@ -300,6 +305,8 @@ export default function TrilhasMentor() {
                     <Button
                       disabled={busy}
                       onClick={() => removerAula(i)}
+                      color="error"
+                      sx={{ alignSelf: "flex-start" }}
                     >
                       Remover aula {i + 1} do rascunho
                     </Button>
@@ -311,10 +318,13 @@ export default function TrilhasMentor() {
               <Button
                 disabled={busy || dados.aulas.length >= 30}
                 onClick={adicionarAula}
+                variant="outlined"
+                sx={{ borderStyle: "dashed", py: 1.5 }}
               >
                 Adicionar aula
               </Button>
             )}
+            </SecaoFormulario>
           </Stack>
         </DialogContent>
         <DialogActions>
@@ -335,13 +345,13 @@ export default function TrilhasMentor() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog
+      <Dialog aria-labelledby="publicar-trilha"
         open={!!confirmar}
         onClose={() => {
           if (!busy) setConfirmar(undefined);
         }}
       >
-        <DialogTitle>Publicar trilha?</DialogTitle>
+        <ModalHeader id="publicar-trilha" titulo={"Publicar trilha?"} categoria="Pronta para a comunidade" descricao="Confira os detalhes antes de disponibilizar sua trilha no catálogo." icone={<AutoAwesomeRoundedIcon />} onClose={() => setConfirmar(undefined)} ocupado={busy} />
         <DialogContent>
           Após publicar, as aulas desta versão não poderão ser alteradas,
           preservando o progresso dos mentorados. A trilha ficará visível no

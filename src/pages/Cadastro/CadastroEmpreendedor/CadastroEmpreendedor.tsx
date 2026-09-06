@@ -1,3 +1,5 @@
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
+import ModalHeader from "../../../components/ModalHeader/ModalHeader";
 import {
   Alert,
   Button,
@@ -5,9 +7,7 @@ import {
   Container,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogTitle,
-  MenuItem,
+  DialogContent,  MenuItem,
   Stack,
   TextField,
   Typography,
@@ -171,37 +171,14 @@ export default function CadastroEmpreendedor() {
 
         <FooterLandPage />
 
-        <Dialog
+        <Dialog aria-labelledby="cadastro-concluido"
           open={successOpen}
           onClose={goToLogin}
           fullWidth
           maxWidth="xs"
-          slotProps={{
-            paper: {
-              sx: {
-                borderRadius: "20px",
-                bgcolor: theme.palette.secondary.main,
-                backgroundImage: "none",
-                boxShadow: (theme) =>
-                  `0 18px 50px ${alpha(theme.palette.primary.dark, 0.35)}`,
-                px: { xs: 1, sm: 2 },
-                py: 1,
-              },
-            },
-          }}
+          
         >
-          <DialogTitle
-            sx={{
-              textAlign: "center",
-              fontFamily: fonts.hero,
-              fontWeight: 700,
-              fontSize: "1.7rem",
-              color: theme.palette.text.primary,
-              pt: 3,
-            }}
-          >
-            Conta criada com sucesso!
-          </DialogTitle>
+          <ModalHeader id="cadastro-concluido" titulo={"Conta criada com sucesso!"} categoria="Bem-vindo ao Coroa Afro" descricao="Sua história agora faz parte desta comunidade." icone={<CheckCircleOutlineRoundedIcon />} onClose={goToLogin}  />
           <DialogContent>
             <Typography
               sx={{

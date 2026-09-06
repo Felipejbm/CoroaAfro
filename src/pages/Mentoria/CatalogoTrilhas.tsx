@@ -1,3 +1,5 @@
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
 import {
   Alert,
   Button,
@@ -5,7 +7,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   MenuItem,
   Pagination,
   Paper,
@@ -152,7 +153,7 @@ export default function CatalogoTrilhas({
           </>
         )
       )}
-      <Dialog
+      <Dialog aria-labelledby="comecar-trilha"
         open={!!escolhida}
         onClose={() => {
           if (!busy) setEscolhida(undefined);
@@ -160,7 +161,7 @@ export default function CatalogoTrilhas({
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>Começar {escolhida?.titulo}?</DialogTitle>
+        <ModalHeader id="comecar-trilha" titulo={"Começar {escolhida?.titulo}?"} categoria="Seu próximo aprendizado" descricao="Conheça o conteúdo e dê o primeiro passo com seu mentor." icone={<MenuBookRoundedIcon />} onClose={() => setEscolhida(undefined)} ocupado={busy} />
         <DialogContent>
           <Stack gap={2}>
             {erroInscricao && <Alert severity="error">{erroInscricao}</Alert>}
@@ -169,9 +170,10 @@ export default function CatalogoTrilhas({
             </Typography>
             <Typography variant="h6">O que você vai estudar</Typography>
             {escolhida?.aulas.map((a, i) => (
-              <Typography key={i}>
-                {i + 1}. {a.titulo}
-              </Typography>
+              <Stack key={i} direction="row" alignItems="center" gap={1.5} sx={{ p: 1.5, borderRadius: 2, bgcolor: "#fffdf9", border: "1px solid", borderColor: "secondary.main" }}>
+                <Typography sx={{ bgcolor: "secondary.main", color: "primary.main", borderRadius: 2, minWidth: 32, py: 0.5, textAlign: "center", fontWeight: 700, fontSize: "0.8rem" }}>{String(i + 1).padStart(2, "0")}</Typography>
+                <Typography variant="body2">{a.titulo}</Typography>
+              </Stack>
             ))}
             <Alert severity="info">
               Ao confirmar, você escolhe este mentor. Ele poderá ver seu nome, o

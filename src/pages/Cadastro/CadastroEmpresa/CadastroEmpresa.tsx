@@ -1,3 +1,5 @@
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
+import ModalHeader from "../../../components/ModalHeader/ModalHeader";
 import {
   Alert,
   Button,
@@ -5,9 +7,7 @@ import {
   Container,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogTitle,
-  Stack,
+  DialogContent,  Stack,
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
@@ -117,25 +117,15 @@ export default function CadastroEmpresa() {
           </Stack>
         </Container>
       </Stack>
-      <Dialog
+      <Dialog aria-labelledby="empresa-salva"
         open={sucesso}
         fullWidth
         maxWidth="xs"
-        slotProps={{
-          paper: {
-            sx: {
-              bgcolor: theme.palette.secondary.main,
-              borderRadius: 3,
-              p: 2,
-            },
-          },
-        }}
+        
       >
-        <DialogTitle>
-          {empresaId
+        <ModalHeader id="empresa-salva" titulo={empresaId
             ? "Empresa atualizada!"
-            : "Empresa cadastrada com sucesso!"}
-        </DialogTitle>
+            : "Empresa cadastrada com sucesso!"} categoria="Seu negócio no Coroa" descricao="Mais um passo para fortalecer a sua jornada empreendedora." icone={<CheckCircleOutlineRoundedIcon />}   />
         <DialogContent>
           <Typography>
             Os dados foram salvos e vinculados à sua conta.
