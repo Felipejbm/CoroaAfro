@@ -1,3 +1,7 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import {
   Alert,
   Avatar,
@@ -10,42 +14,25 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
-import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { fonts } from "../../styles/theme";
-import {
-  buscarAlcanceInstagram,
-  buscarMidiasInstagram,
-  buscarPerfilInstagram,
-  getEmpreendedorLogado,
-  iniciarConexaoInstagram,
-  mensagemErroInstagram,
-} from "../../services/Auth/controllers/instagram";
-import type {
-  InstagramInsight,
-  InstagramMedia,
-  InstagramProfile,
-} from "../../services/Auth/schema/instagramSchema";
+import { useDashboardRedes } from "./DashboardRedes.hook";
 
 export default function DashboardRedes() {
-  const theme = useTheme();
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const usuario = useMemo(() => getEmpreendedorLogado(), []);
-  const [profile, setProfile] = useState<InstagramProfile | null>(null);
-  const [media, setMedia] = useState<InstagramMedia[]>([]);
-  const [reach, setReach] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const connected = searchParams.get("instagram") === "connected";
+  const {
+    navigate,
+    usuario,
+    profile,
+    loading,
+    error,
+    connected,
+    loadInstagram,
+    popularPosts,
+    handleConnect,
+    metricasPerfil,
+    metricasInteracoes,
+  } = useDashboardRedes();
 
+  const theme = useTheme();
   const cardSx = {
     backgroundColor: theme.palette.secondary.light,
     border: `1px solid ${alpha(theme.palette.primary.dark, 0.1)}`,
@@ -53,73 +40,6 @@ export default function DashboardRedes() {
     p: 2.5,
     minWidth: 0,
     boxShadow: `0 8px 24px ${alpha(theme.palette.primary.dark, 0.06)}`,
-  };
-
-  const loadInstagram = useCallback(async () => {
-    if (!usuario) {
-      setError("Entre na sua conta para conectar o Instagram.");
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    try {
-      const [profileData, mediaData, insightsData] = await Promise.all([
-        buscarPerfilInstagram(usuario.id),
-        buscarMidiasInstagram(usuario.id),
-        buscarAlcanceInstagram(usuario.id),
-      ]);
-      const reachMetric = insightsData.data.find(
-        (item: InstagramInsight) => item.name === "reach",
-      );
-      const latestReach = reachMetric?.values.at(-1)?.value;
-
-      setProfile(profileData);
-      setMedia(mediaData);
-      setReach(typeof latestReach === "number" ? latestReach : 0);
-    } catch (requestError) {
-      setError(mensagemErroInstagram(requestError));
-      setProfile(null);
-      setMedia([]);
-      setReach(0);
-    } finally {
-      setLoading(false);
-    }
-  }, [usuario]);
-
-  useEffect(() => {
-    void loadInstagram();
-  }, [loadInstagram]);
-
-  useEffect(() => {
-    if (!connected) return;
-    const timer = window.setTimeout(() => {
-      setSearchParams({}, { replace: true });
-    }, 5000);
-    return () => window.clearTimeout(timer);
-  }, [connected, setSearchParams]);
-
-  const likes = media.reduce((total, item) => total + (item.like_count ?? 0), 0);
-  const comments = media.reduce(
-    (total, item) => total + (item.comments_count ?? 0),
-    0,
-  );
-  const popularPosts = [...media]
-    .sort(
-      (a, b) =>
-        (b.like_count ?? 0) +
-        (b.comments_count ?? 0) -
-        ((a.like_count ?? 0) + (a.comments_count ?? 0)),
-    )
-    .slice(0, 3);
-
-  const handleConnect = () => {
-    if (!usuario) {
-      navigate("/login");
-      return;
-    }
-    iniciarConexaoInstagram(usuario.id);
   };
 
   return (
@@ -273,15 +193,10 @@ export default function DashboardRedes() {
             gap: 2,
           }}
         >
-          {[
-            { label: "Seguidores", value: profile?.followers_count ?? "--", icon: <TrendingUpRoundedIcon /> },
-            { label: "Publicações", value: profile?.media_count ?? "--", icon: <InstagramIcon /> },
-            { label: "Alcance hoje", value: profile ? reach : "--", icon: <AutoAwesomeRoundedIcon /> },
-            { label: "Curtidas nos posts", value: profile ? likes : "--", icon: <FavoriteBorderRoundedIcon /> },
-          ].map(({ label, value, icon }) => (
+          {metricasPerfil.map(({ label, value, icon: Icon }) => (
             <Stack key={label} sx={cardSx}>
               <Stack direction="row" alignItems="center" gap={1} sx={{ color: theme.palette.primary.main }}>
-                {icon}
+                <Icon />
                 <Typography variant="body2" color="text.secondary">{label}</Typography>
               </Stack>
               <Typography
@@ -309,13 +224,10 @@ export default function DashboardRedes() {
             gap: 2,
           }}
         >
-          {[
-            { label: "Curtidas", value: likes, icon: <FavoriteBorderRoundedIcon /> },
-            { label: "Comentários", value: comments, icon: <ChatBubbleOutlineRoundedIcon /> },
-          ].map(({ label, value, icon }) => (
+          {metricasInteracoes.map(({ label, value, icon: Icon }) => (
             <Stack key={label} sx={cardSx}>
               <Stack direction="row" alignItems="center" gap={1} sx={{ color: theme.palette.primary.main }}>
-                {icon}
+                <Icon />
                 <Typography color="text.secondary">{label}</Typography>
               </Stack>
               <Typography

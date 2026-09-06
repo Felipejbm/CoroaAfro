@@ -1,21 +1,23 @@
-import { Button, Stack, Switch, Typography, useTheme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { fonts } from "../../../styles/theme";
-import { useNavigate } from "react-router-dom";
+import { Button, Stack, Switch, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../../components/NavBar/NavBar";
+import { fonts } from "../../../styles/theme";
+import { useCriarTrilhaPersonalizada5 } from "./CriarTrilhaPersonalizada.hook";
+import { currentStep, totalSteps } from "./CriarTrilhaPersonalizada.utils";
 export default function CriarTrilhaPersonalizada5() {
+  const {
+    reminders,
+    setReminders,
+    achievements,
+    setAchievements,
+    shareProgress,
+    setShareProgress,
+    navigate,
+  } = useCriarTrilhaPersonalizada5();
+
   const theme = useTheme();
-  const totalSteps = 5;
-  const currentStep = 5;
-
-  const [reminders, setReminders] = useState(true);
-  const [achievements, setAchievements] = useState(true);
-  const [shareProgress, setShareProgress] = useState(false);
-
-  const navigate = useNavigate();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

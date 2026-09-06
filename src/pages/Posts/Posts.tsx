@@ -1,52 +1,15 @@
-import { Avatar, Button, Chip, InputAdornment, Stack, TextField, Typography, useTheme } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import SearchIcon from "@mui/icons-material/Search";
+import { Avatar, Button, Chip, InputAdornment, Stack, TextField, Typography, useTheme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { useState } from "react";
-import type { PostWithImage } from "./Posts.types";
-import { initialPosts } from "./Posts.utils";
 import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
+import { usePosts } from "./Posts.hook";
 
 export default function Posts() {
+  const { newComment, setNewComment, busca, setBusca, postsVisiveis, handleAddComment } = usePosts();
+
   const theme = useTheme();
-
-  const postsWithMockImages: PostWithImage[] = initialPosts.map((post, index) => {
-    if (index === 0) {
-      return {
-        ...post,
-        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=60",
-      };
-    }
-    if (index === 2) {
-      return {
-        ...post,
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60",
-      };
-    }
-    return post;
-  });
-
-  const [posts, setPosts] = useState<PostWithImage[]>(postsWithMockImages);
-  const [newComment, setNewComment] = useState<Record<string, string>>({});
-  const [busca, setBusca] = useState("");
-  const postsVisiveis = posts.filter((post) =>
-    `${post.company} ${post.segment} ${post.content}`.toLocaleLowerCase().includes(busca.trim().toLocaleLowerCase()),
-  );
-
-  const handleAddComment = (postId: string) => {
-    if (!newComment[postId]?.trim()) return;
-    const updatedPosts = posts.map((post) =>
-      post.id === postId
-        ? {
-            ...post,
-            comments: [...post.comments, { author: "Você", text: newComment[postId] }],
-          }
-        : post,
-    );
-    setPosts(updatedPosts);
-    setNewComment((prev) => ({ ...prev, [postId]: "" }));
-  };
 
   return (
     <Stack direction="row" sx={{ width: "100%", maxWidth: "100%", minWidth: 0 }}>

@@ -1,18 +1,15 @@
-import { Box, Typography, Container, Stack, alpha } from "@mui/material";
-import type { TeamMember } from "./Equipe.types";
-import { founders, developers } from "./Equipe.utils";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
+import { Box, Container, Stack, Typography, alpha } from "@mui/material";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
 import Layout from "../../components/Layout/Layout";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import theme, { fonts } from "../../styles/theme";
+import type { MemberCardProps } from "./Equipe.types";
+import { developers, founders } from "./Equipe.utils";
 
 function MemberCard({
   member,
   isDev = false,
-}: {
-  member: TeamMember;
-  isDev?: boolean;
-}) {
+}: MemberCardProps) {
   return (
     <Box
       sx={{

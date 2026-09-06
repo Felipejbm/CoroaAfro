@@ -1,4 +1,8 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import {
   Alert,
   Button,
@@ -17,154 +21,35 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
-import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
-import {
-  listarMetas,
-  salvarMeta,
-  type Meta,
-  type MetaEntrada,
-} from "../../services/Auth/controllers/metas";
-import {
-  buscarMinhaEmpresa,
-  mensagemErroApi,
-} from "../../services/Auth/controllers/empresa";
-import { labels, numero, vazio } from "./DashboardFinanceiro.utils";
+import { useDashboardMetas } from "./DashboardMetas.hook";
+import { labels, numero } from "./DashboardMetas.utils";
 
 export default function DashboardMetas() {
-  const navigate = useNavigate();
-
-  const [empresa, setEmpresa] = useState("Minha empresa");
-  const [empresaError, setEmpresaError] = useState("");
-  const [metas, setMetas] = useState<Meta[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [retry, setRetry] = useState(0);
-  const [arquivadas, setArquivadas] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const [editing, setEditing] = useState<Meta | undefined>();
-  const [form, setForm] = useState<MetaEntrada>(vazio);
-  const [saving, setSaving] = useState(false);
-  const [formError, setFormError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-
-    buscarMinhaEmpresa()
-      .then((value) => {
-        if (active) setEmpresa(value?.nome || "Empresa ainda não cadastrada");
-      })
-      .catch(() => {
-        if (active)
-          setEmpresaError("Não foi possível carregar os dados da empresa.");
-      });
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let active = true;
-
-    listarMetas()
-      .then((items) => {
-        if (active) {
-          setMetas(items);
-          setError("");
-        }
-      })
-      .catch((err) => {
-        if (active) setError(mensagemErroApi(err));
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [retry]);
-
-  const atualizar = useCallback(() => {
-    setLoading(true);
-    setRetry((value) => value + 1);
-  }, []);
-
-  const abrirModal = useCallback((meta?: Meta) => {
-    setEditing(meta);
-    setForm(
-      meta
-        ? {
-            titulo: meta.titulo,
-            unidade: meta.unidade,
-            valor_inicial: String(meta.valor_inicial),
-            valor_atual: String(meta.valor_atual),
-            valor_alvo: String(meta.valor_alvo),
-            prazo: meta.prazo,
-            arquivada: meta.arquivada,
-          }
-        : { ...vazio },
-    );
-    setFormError("");
-    setSuccess("");
-    setOpen(true);
-  }, []);
-
-  const salvar = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (saving) return;
-
-    if (
-      !form.titulo.trim() ||
-      !form.unidade.trim() ||
-      Number(form.valor_alvo) <= Number(form.valor_inicial)
-    ) {
-      setFormError(
-        "Preencha título e unidade. O alvo deve ser maior que o valor inicial.",
-      );
-      return;
-    }
-
-    setSaving(true);
-    setFormError("");
-
-    try {
-      const result = await salvarMeta(form, editing);
-      setMetas((items) =>
-        editing
-          ? items.map((item) => (item.id === result.id ? result : item))
-          : [result, ...items],
-      );
-      setOpen(false);
-      setSuccess(
-        editing ? "Meta atualizada com sucesso." : "Meta criada com sucesso.",
-      );
-    } catch (err) {
-      setFormError(mensagemErroApi(err));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const ativas = useMemo(
-    () => metas.filter((meta) => !meta.arquivada),
-    [metas],
-  );
-
-  const metasExibidas = useMemo(
-    () => metas.filter((meta) => arquivadas || !meta.arquivada),
-    [metas, arquivadas],
-  );
+  const {
+    navigate,
+    empresa,
+    empresaError,
+    loading,
+    error,
+    success,
+    setSuccess,
+    arquivadas,
+    setArquivadas,
+    open,
+    setOpen,
+    editing,
+    form,
+    setForm,
+    saving,
+    formError,
+    atualizar,
+    abrirModal,
+    salvar,
+    metasExibidas,
+    resumoMetas,
+  } = useDashboardMetas();
 
   return (
     <Stack direction="row" sx={{ minHeight: "100vh" }}>
@@ -262,18 +147,7 @@ export default function DashboardMetas() {
         )}
 
         <Stack direction={{ xs: "column", sm: "row" }} gap={2}>
-          {[
-            {
-              label: "Metas ativas",
-              value: ativas.length,
-              icon: <FlagRoundedIcon />,
-            },
-            {
-              label: "Metas atingidas",
-              value: ativas.filter((meta) => meta.status === "atingida").length,
-              icon: <CheckCircleOutlineRoundedIcon />,
-            },
-          ].map(({ label, value, icon }) => (
+          {resumoMetas.map(({ label, value, icon: Icon }) => (
             <Paper
               key={label}
               elevation={0}
@@ -297,7 +171,7 @@ export default function DashboardMetas() {
                     bgcolor: alpha(theme.palette.primary.main, 0.1),
                   }}
                 >
-                  {icon}
+                  <Icon />
                 </Stack>
                 <Stack>
                   <Typography

@@ -1,41 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, CircularProgress, LinearProgress, Paper, Stack, Typography, useTheme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CatalogoTrilhas from "./CatalogoTrilhas";
 import AprendizadoLayout from "./AprendizadoLayout";
-import { concluirAula, minhasTrilhas, type Aula, type Trilha } from "../../services/Auth/controllers/aprendizado";
-import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
+import CatalogoTrilhas from "./CatalogoTrilhas";
+import { useMinhasTrilhas } from "./MinhasTrilhas.hook";
 
 export default function MinhasTrilhas() {
-  const navigate = useNavigate();
+  const {
+    navigate,
+    aba,
+    setAba,
+    trilhas,
+    loading,
+    busy,
+    error,
+    sucesso,
+    setSucesso,
+    setRetry,
+    marcar,
+  } = useMinhasTrilhas();
+
   const theme = useTheme();
-  const [aba, setAba] = useState<"minhas" | "catalogo">("minhas");
-  const [trilhas, setTrilhas] = useState<Trilha[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const [sucesso, setSucesso] = useState("");
-  const [retry, setRetry] = useState(0);
-  useEffect(() => {
-    let active = true;
-    setLoading(true); setError("");
-    minhasTrilhas().then(ts => { if (active) setTrilhas(ts); })
-      .catch(err => { if (active) { setError(mensagemErroApi(err)); setTrilhas([]); } })
-      .finally(() => { if (active) setLoading(false); });
-    return () => { active = false; };
-  }, [retry]);
-  async function marcar(t: Trilha, a: Aula) {
-    if (busy) return;
-    setBusy(true); setError(""); setSucesso("");
-    try {
-      const atualizada = await concluirAula(t.id, a.id, !a.concluida);
-      setTrilhas(ts => ts.map(item => item.id === atualizada.id ? atualizada : item));
-      setSucesso(a.concluida ? "Aula marcada como pendente." : "Aula concluída! Seu progresso foi salvo.");
-    } catch (err) { setError(mensagemErroApi(err)); }
-    finally { setBusy(false); }
-  }
   return <AprendizadoLayout titulo="Minhas trilhas">
     <Typography>Trilhas que você escolheu e seus conteúdos. Marque como concluídas conforme estudar; isso informa seu progresso ao mentor.</Typography>
     <Stack direction="row" gap={2}>

@@ -1,67 +1,39 @@
+import EmailIcon from "@mui/icons-material/Email";
+import GoogleIcon from "@mui/icons-material/Google";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import {
   Alert,
-  MenuItem,
   Button,
   CircularProgress,
   Container,
   IconButton,
+  MenuItem,
+  Link as MuiLink,
   Stack,
   TextField,
   Typography,
-  Link as MuiLink,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import GoogleIcon from "@mui/icons-material/Google";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import EmailIcon from "@mui/icons-material/Email";
-import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Layout from "../../components/Layout/Layout";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import theme, { fonts } from "../../styles/theme";
-import { login, mensagemErroLogin } from "../../services/Auth/controllers/auth";
-import { buscarMinhaEmpresa } from "../../services/Auth/controllers/empresa";
+import { useLogin } from "./Login.hook";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [papel, setPapel] = useState<"empreendedor" | "mentor">("empreendedor");
-  const [senha, setSenha] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
-
-  async function handleLogin(event?: React.FormEvent) {
-    event?.preventDefault();
-    setError(null);
-
-    if (!email.trim() || !senha) {
-      setError("Preencha o e-mail e a senha para entrar.");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await login({
-        email: email.trim(),
-        senha,
-        papel,
-      });
-
-      if (papel === "mentor") {
-        navigate("/dashboard-mentor", { replace: true });
-        return;
-      }
-      const empresa = await buscarMinhaEmpresa();
-      navigate(empresa ? "/dashboard-financeiro" : "/cadastro-empresa", {
-        replace: true,
-      });
-    } catch (requestError) {
-      setError(mensagemErroLogin(requestError));
-    } finally {
-      setLoading(false);
-    }
-  }
+  const {
+    email,
+    setEmail,
+    papel,
+    setPapel,
+    senha,
+    setSenha,
+    loading,
+    error,
+    setError,
+    handleLogin,
+  } = useLogin();
 
   return (
     <Layout showSidebar={false}>

@@ -1,18 +1,24 @@
-import { useTheme, Button, Stack, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Button, Stack, TextField, Typography, useTheme } from "@mui/material";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
-import { useNavigate } from "react-router-dom";
+import { useCriarTrilhasMentor } from "./CriarTrilhas.hook";
 
 export default function CriarTrilhasMentor() {
-  const theme = useTheme();
-  const [title, setTitle] = useState("");
-  const [level, setLevel] = useState("");
-  const [duration, setDuration] = useState("");
-  const [category, setCategory] = useState("");
-  const [content, setContent] = useState("");
+  const {
+    title,
+    setTitle,
+    level,
+    setLevel,
+    duration,
+    setDuration,
+    category,
+    setCategory,
+    content,
+    setContent,
+    navigate,
+  } = useCriarTrilhasMentor();
 
-  const navigate = useNavigate();
+  const theme = useTheme();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

@@ -1,9 +1,5 @@
 import { Avatar, Stack, Typography, useTheme } from "@mui/material";
-import { type Testemunhos } from "../LandPage.types";
-
-type Props = {
-  item: Testemunhos;
-};
+import type { Props } from "./Card.types";
 
 export function TestimonialCard({ item }: Props) {
   const theme = useTheme();

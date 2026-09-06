@@ -1,18 +1,12 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import type { Module } from "./TrilhaGuiada.types";
-import { modules, statusConfig } from "./TrilhaGuiada.utils";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import theme, { fonts } from "../../../styles/theme";
+import { useModuleCard, useTrilhaGuiada } from "./TrilhaGuiada.hook";
+import type { ModuleCardProps, TimelineDotProps } from "./TrilhaGuiada.types";
+import { modules } from "./TrilhaGuiada.utils";
 
-function ModuleCard({ module }: { module: Module }) {
-  const { number, title, description, status, icon } = module;
-  const config = statusConfig[status];
-  const statusColor =
-    status === "concluido"
-      ? theme.palette.primary.main
-      : theme.palette.primary.light;
+function ModuleCard({ module }: ModuleCardProps) {
+  const { number, title, description, icon, config, statusColor } = useModuleCard({ module });
 
   return (
     <Stack
@@ -118,7 +112,7 @@ function ModuleCard({ module }: { module: Module }) {
   );
 }
 
-function TimelineDot({ color }: { color: string }) {
+function TimelineDot({ color }: TimelineDotProps) {
   return (
     <Stack
       sx={{
@@ -134,8 +128,7 @@ function TimelineDot({ color }: { color: string }) {
 }
 
 export default function TrilhaGuiada() {
-  const [tab, setTab] = useState<"guiada" | "personalizada">("guiada");
-  const navigate = useNavigate();
+  const { tab, setTab, navigate } = useTrilhaGuiada();
 
   return (
     <Stack

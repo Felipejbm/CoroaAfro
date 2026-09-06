@@ -1,19 +1,15 @@
-import type { ReactNode } from "react";
 import { Stack, Typography, useTheme } from "@mui/material";
-import NavBarMentor from "../../components/NavMentor/NavBar";
 import NavBar from "../../components/NavBar/NavBar";
+import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
+import type { AprendizadoLayoutProps } from "./AprendizadoLayout.types";
 import MentorHeader from "./MentorHeader";
 
 export default function AprendizadoLayout({
   mentor = false,
   titulo,
   children,
-}: {
-  mentor?: boolean;
-  titulo: string;
-  children: ReactNode;
-}) {
+}: AprendizadoLayoutProps) {
   const theme = useTheme();
   return (
     <Stack

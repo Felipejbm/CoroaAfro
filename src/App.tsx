@@ -5,7 +5,8 @@ import RequireLogin from "./components/RequireLogin/RequireLogin";
 import LandPage from "./pages/LandPage/LandPage";
 import Chat from "./pages/Mentoria/ChatMentoria";
 import Mentoria from "./pages/Mentoria/Mentoria";
-import DashboardFinanceiro from "./pages/DashboardFinanceiro/DashboardMetas";
+import DashboardFinanceiro from "./pages/DashboardFinanceiro/DashboardFinanceiro";
+import DashboardMetas from "./pages/DashboardMetas/DashboardMetas";
 import DashboardRedes from "./pages/DashboardRedes/DashboardRedes";
 import Equipe from "./pages/Equipe/Equipe";
 import Login from "./pages/Login/Login";
@@ -122,6 +123,14 @@ function App() {
         element={
           <RequireLogin>
             <DashboardFinanceiro />
+          </RequireLogin>
+        }
+      />
+      <Route
+        path="/dashboard-metas"
+        element={
+          <RequireLogin>
+            <DashboardMetas />
           </RequireLogin>
         }
       />
