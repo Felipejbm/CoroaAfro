@@ -16,6 +16,7 @@ import {
   DialogContent,
   FormControlLabel,
   LinearProgress,
+  MenuItem,
   Paper,
   Stack,
   TextField,
@@ -25,7 +26,14 @@ import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
 import { useDashboardMetas } from "./DashboardMetas.hook";
-import { labels, numero } from "./DashboardMetas.utils";
+import {
+  formatarEntradaNumerica,
+  formatarValorMeta,
+  labels,
+  numero,
+  unidadesMeta,
+  valorNumerico,
+} from "./DashboardMetas.utils";
 import AvatarUsuario from "../../components/AvatarUsuario/AvatarUsuario";
 
 export default function DashboardMetas() {
@@ -363,8 +371,9 @@ export default function DashboardMetas() {
                   </Stack>
 
                   <Typography variant="body2" color="text.secondary">
-                    {numero(meta.valor_atual)} / {numero(meta.valor_alvo)}{" "}
-                    {meta.unidade} · Inicial: {numero(meta.valor_inicial)}
+                    {formatarValorMeta(meta.valor_atual, meta.unidade)} /{" "}
+                    {formatarValorMeta(meta.valor_alvo, meta.unidade)}{" "}
+                    {meta.unidade !== "R$" && `${meta.unidade} · `}Inicial: {formatarValorMeta(meta.valor_inicial, meta.unidade)}
                   </Typography>
 
                   <Stack gap={1}>
@@ -377,13 +386,13 @@ export default function DashboardMetas() {
                         variant="body2"
                         sx={{ fontWeight: 600, color: "text.primary" }}
                       >
-                        {numero(meta.valor_atual)}{" "}
+                        {formatarValorMeta(meta.valor_atual, meta.unidade)}{" "}
                         <Typography
                           component="span"
                           variant="caption"
                           color="text.secondary"
                         >
-                          / {numero(meta.valor_alvo)} {meta.unidade}
+                          / {formatarValorMeta(meta.valor_alvo, meta.unidade)} {meta.unidade !== "R$" && meta.unidade}
                         </Typography>
                       </Typography>
                       <Typography
@@ -421,7 +430,7 @@ export default function DashboardMetas() {
                   >
                     <Typography variant="caption" color="text.secondary">
                       Prazo: {meta.prazo.split("-").reverse().join("/")} ·
-                      Inicial: {numero(meta.valor_inicial)}
+                      Inicial: {formatarValorMeta(meta.valor_inicial, meta.unidade)}
                     </Typography>
 
                     <Button
@@ -488,15 +497,23 @@ export default function DashboardMetas() {
                 <TextField
                   required
                   disabled={saving}
+                  select
                   label="O que vamos medir?"
-                  placeholder="Ex.: vendas, seguidores ou publicações"
-                  helperText="Use a mesma unidade para os três valores abaixo."
+                  helperText="Escolha uma unidade para manter os valores comparáveis."
                   value={form.unidade}
-                  inputProps={{ maxLength: 30 }}
                   onChange={(event) =>
                     setForm({ ...form, unidade: event.target.value })
                   }
-                />
+                >
+                  {unidadesMeta.map((unidade) => (
+                    <MenuItem key={unidade.value} value={unidade.value}>
+                      {unidade.label}
+                    </MenuItem>
+                  ))}
+                  {!unidadesMeta.some((unidade) => unidade.value === form.unidade) && (
+                    <MenuItem value={form.unidade}>{form.unidade}</MenuItem>
+                  )}
+                </TextField>
 
                 </SecaoFormulario>
                 <SecaoFormulario titulo="Do ponto de partida à conquista" descricao="Informe onde começou, onde está hoje e aonde quer chegar.">
@@ -507,20 +524,47 @@ export default function DashboardMetas() {
                     ["valor_atual", "Valor atual"],
                     ["valor_alvo", "Valor-alvo"],
                   ] as const
-                ).map(([field, label]) => (
-                  <TextField
-                    key={field}
-                    required
-                    disabled={saving}
-                    type="number"
-                    label={label}
-                    value={form[field]}
-                    inputProps={{ min: 0, max: 999999999999.99, step: "0.01" }}
-                    onChange={(event) =>
-                      setForm({ ...form, [field]: event.target.value })
-                    }
-                  />
-                ))}
+                ).map(([field, label]) => {
+                  const dinheiro = form.unidade === "R$";
+                  const valor = valorNumerico(form[field]);
+                  const erro =
+                    !form[field].trim() ||
+                    !Number.isFinite(valor) ||
+                    valor < 0 ||
+                    (field === "valor_alvo" &&
+                      Number.isFinite(valorNumerico(form.valor_inicial)) &&
+                      valor <= valorNumerico(form.valor_inicial));
+                  return (
+                    <TextField
+                      key={field}
+                      required
+                      disabled={saving}
+                      type="text"
+                      inputMode="decimal"
+                      label={label}
+                      value={form[field]}
+                      error={erro}
+                      helperText={
+                        erro
+                          ? field === "valor_alvo"
+                            ? "O alvo deve ser maior que o valor inicial."
+                            : "Informe um valor igual ou maior que zero."
+                          : dinheiro
+                            ? "Digite o valor em reais."
+                            : "Use apenas números."
+                      }
+                      onChange={(event) =>
+                        setForm({
+                          ...form,
+                          [field]: formatarEntradaNumerica(
+                            event.target.value,
+                            dinheiro,
+                          ),
+                        })
+                      }
+                    />
+                  );
+                })}
                 </Stack>
                 <TextField
                   required

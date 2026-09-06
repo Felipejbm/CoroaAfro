@@ -10,7 +10,12 @@ import {
   type Meta,
   type MetaEntrada,
 } from "../../services/Auth/controllers/metas";
-import { resumoMetasConfig, vazio } from "./DashboardMetas.utils";
+import {
+  formatarValorEntrada,
+  resumoMetasConfig,
+  valorNumerico,
+  vazio,
+} from "./DashboardMetas.utils";
 
 export function useDashboardMetas() {
   const navigate = useNavigate();
@@ -92,9 +97,9 @@ export function useDashboardMetas() {
         ? {
           titulo: meta.titulo,
           unidade: meta.unidade,
-          valor_inicial: String(meta.valor_inicial),
-          valor_atual: String(meta.valor_atual),
-          valor_alvo: String(meta.valor_alvo),
+          valor_inicial: formatarValorEntrada(meta.valor_inicial, meta.unidade === "R$"),
+          valor_atual: formatarValorEntrada(meta.valor_atual, meta.unidade === "R$"),
+          valor_alvo: formatarValorEntrada(meta.valor_alvo, meta.unidade === "R$"),
           prazo: meta.prazo,
           arquivada: meta.arquivada,
         }
@@ -109,13 +114,21 @@ export function useDashboardMetas() {
     event.preventDefault();
     if (saving) return;
 
+    const inicial = valorNumerico(form.valor_inicial);
+    const atual = valorNumerico(form.valor_atual);
+    const alvo = valorNumerico(form.valor_alvo);
     if (
       !form.titulo.trim() ||
       !form.unidade.trim() ||
-      Number(form.valor_alvo) <= Number(form.valor_inicial)
+      !Number.isFinite(inicial) ||
+      !Number.isFinite(atual) ||
+      !Number.isFinite(alvo) ||
+      inicial < 0 ||
+      atual < 0 ||
+      alvo <= inicial
     ) {
       setFormError(
-        "Preencha título e unidade. O alvo deve ser maior que o valor inicial.",
+        "Preencha os campos e informe valores válidos. O alvo deve ser maior que o valor inicial.",
       );
       return;
     }
@@ -124,7 +137,15 @@ export function useDashboardMetas() {
     setFormError("");
 
     try {
-      const result = await salvarMeta(form, editing);
+      const result = await salvarMeta(
+        {
+          ...form,
+          valor_inicial: String(inicial),
+          valor_atual: String(atual),
+          valor_alvo: String(alvo),
+        },
+        editing,
+      );
       setMetas((items) =>
         editing
           ? items.map((item) => (item.id === result.id ? result : item))

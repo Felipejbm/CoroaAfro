@@ -293,7 +293,14 @@ export default function Perfil() {
                   value={form.telefone}
                   disabled={salvando}
                   onChange={(e) =>
-                    setForm({ ...form, telefone: e.target.value })
+                    setForm({
+                      ...form,
+                      telefone: e.target.value
+                        .replace(/\D/g, "")
+                        .slice(0, 11)
+                        .replace(/^(\d{2})(\d)/, "($1) $2")
+                        .replace(/(\d{5})(\d)/, "$1-$2"),
+                    })
                   }
                   slotProps={{ htmlInput: { maxLength: 20 } }}
                 />
