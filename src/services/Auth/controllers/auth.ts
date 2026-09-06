@@ -6,14 +6,20 @@ import type { LoginReq } from "../schema/authSchema";
 export async function login(data: LoginReq) {
     const resp = await api.post("auth/login", data)
 
-    const empreendedor = resp.data.Usuario ?? resp.data.Empreendedor;
-    if (!empreendedor?.id_empreendedor || !empreendedor?.nome || !empreendedor?.email) {
+    const usuario = resp.data.Usuario ?? resp.data.Empreendedor;
+    const id = usuario?.id ?? usuario?.id_empreendedor ?? usuario?.id_mentor;
+
+    if (!id || !usuario?.nome || !usuario?.email) {
         throw new Error("Resposta de login inválida");
     }
 
+    const usuarioNormalizado = data.papel === "mentor"
+        ? { ...usuario, id, id_mentor: id, papel: "mentor" }
+        : { ...usuario, id, id_empreendedor: id, papel: "empreendedor" };
+
     localStorage.setItem(
         "empreendedor",
-        JSON.stringify(empreendedor)
+        JSON.stringify(usuarioNormalizado)
     );
 
     return resp.data
