@@ -10,7 +10,7 @@ export default function RequireLogin({
   papel = "empreendedor",
 }: {
   children: ReactNode;
-  papel?: "empreendedor" | "mentor";
+  papel?: "empreendedor" | "mentor" | "ambos";
 }) {
   const [status, setStatus] = useState("loading");
   const location = useLocation();
@@ -18,7 +18,7 @@ export default function RequireLogin({
     let active = true;
     buscarSessao()
       .then((user) => {
-        if (active) setStatus(user.papel === papel ? "ready" : "forbidden");
+        if (active) setStatus(papel === "ambos" || user.papel === papel ? "ready" : "forbidden");
       })
       .catch((error) => {
         if (!active) return;

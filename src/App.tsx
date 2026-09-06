@@ -180,7 +180,7 @@ function App() {
       <Route
         path="/posts"
         element={
-          <RequireLogin>
+          <RequireLogin papel="ambos">
             <Posts />
           </RequireLogin>
         }
