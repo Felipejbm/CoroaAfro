@@ -8,21 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
-import { styles } from "./LandPage.styles";
-import { items } from "./LandPage.utils";
-import TestimonialsCarousel from "./Carrosel/Carrosel";
-import Footer from "../../components/FooterLandPage/FooterLandPage";
-import Servicos from "../../components/Servicos/Servicos";
-import Layout from "../../components/Layout/Layout";
 import { Link as RouterLink } from "react-router-dom";
+import Footer from "../../components/FooterLandPage/FooterLandPage";
+import Layout from "../../components/Layout/Layout";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
+import Servicos from "../../components/Servicos/Servicos";
 import theme from "../../styles/theme";
-
-const socialDescriptions = [
-  "Dar visibilidade a negócios afro e fortalecer quem transforma sua comunidade por meio do empreendedorismo.",
-  "Valorizar identidades, histórias e talentos para que mais pessoas se reconheçam no mundo dos negócios.",
-  "Compartilhar aprendizados e ferramentas para desenvolver autonomia e ampliar a presença digital.",
-];
+import TestimonialsCarousel from "./Carrosel/Carrosel";
+import { styles } from "./LandPage.styles";
+import { items, socialDescriptions } from "./LandPage.utils";
 
 export default function LandPage() {
 

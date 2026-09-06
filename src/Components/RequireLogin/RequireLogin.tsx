@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import axios from "axios";
 import { Alert, Button, CircularProgress, Stack } from "@mui/material";
 import { Navigate, useLocation } from "react-router-dom";
-import { buscarSessao } from "../../services/Auth/controllers/auth";
+import { atualizarSessao, buscarSessao } from "../../services/Auth/controllers/auth";
 
 export default function RequireLogin({
   children,
@@ -26,7 +26,7 @@ export default function RequireLogin({
           axios.isAxiosError(error) &&
           [401, 403].includes(error.response?.status ?? 0)
         ) {
-          localStorage.removeItem("empreendedor");
+          atualizarSessao(null);
           setStatus("login");
         } else setStatus("error");
       });

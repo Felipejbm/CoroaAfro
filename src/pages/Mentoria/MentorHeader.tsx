@@ -1,8 +1,8 @@
 import { Stack, Typography, alpha } from "@mui/material";
-import type { ReactNode } from "react";
 import { fonts } from "../../styles/theme";
+import type { MentorHeaderProps } from "./MentorHeader.types";
 
-export default function MentorHeader({ title, description, action }: { title: string; description: string; action?: ReactNode }) {
+export default function MentorHeader({ title, description, action }: MentorHeaderProps) {
   return (
     <Stack sx={{
       position: "relative", overflow: "hidden", p: { xs: 2.5, md: 4 }, borderRadius: 4,

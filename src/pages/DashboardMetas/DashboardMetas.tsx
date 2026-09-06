@@ -1,4 +1,10 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
+import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import {
   Alert,
   Button,
@@ -8,7 +14,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormControlLabel,
   LinearProgress,
   Paper,
@@ -17,154 +22,36 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import FlagRoundedIcon from "@mui/icons-material/FlagRounded";
-import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
-import {
-  listarMetas,
-  salvarMeta,
-  type Meta,
-  type MetaEntrada,
-} from "../../services/Auth/controllers/metas";
-import {
-  buscarMinhaEmpresa,
-  mensagemErroApi,
-} from "../../services/Auth/controllers/empresa";
-import { labels, numero, vazio } from "./DashboardFinanceiro.utils";
+import { useDashboardMetas } from "./DashboardMetas.hook";
+import { labels, numero } from "./DashboardMetas.utils";
+import AvatarUsuario from "../../components/AvatarUsuario/AvatarUsuario";
 
 export default function DashboardMetas() {
-  const navigate = useNavigate();
-
-  const [empresa, setEmpresa] = useState("Minha empresa");
-  const [empresaError, setEmpresaError] = useState("");
-  const [metas, setMetas] = useState<Meta[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [retry, setRetry] = useState(0);
-  const [arquivadas, setArquivadas] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const [editing, setEditing] = useState<Meta | undefined>();
-  const [form, setForm] = useState<MetaEntrada>(vazio);
-  const [saving, setSaving] = useState(false);
-  const [formError, setFormError] = useState("");
-
-  useEffect(() => {
-    let active = true;
-
-    buscarMinhaEmpresa()
-      .then((value) => {
-        if (active) setEmpresa(value?.nome || "Empresa ainda não cadastrada");
-      })
-      .catch(() => {
-        if (active)
-          setEmpresaError("Não foi possível carregar os dados da empresa.");
-      });
-
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let active = true;
-
-    listarMetas()
-      .then((items) => {
-        if (active) {
-          setMetas(items);
-          setError("");
-        }
-      })
-      .catch((err) => {
-        if (active) setError(mensagemErroApi(err));
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [retry]);
-
-  const atualizar = useCallback(() => {
-    setLoading(true);
-    setRetry((value) => value + 1);
-  }, []);
-
-  const abrirModal = useCallback((meta?: Meta) => {
-    setEditing(meta);
-    setForm(
-      meta
-        ? {
-            titulo: meta.titulo,
-            unidade: meta.unidade,
-            valor_inicial: String(meta.valor_inicial),
-            valor_atual: String(meta.valor_atual),
-            valor_alvo: String(meta.valor_alvo),
-            prazo: meta.prazo,
-            arquivada: meta.arquivada,
-          }
-        : { ...vazio },
-    );
-    setFormError("");
-    setSuccess("");
-    setOpen(true);
-  }, []);
-
-  const salvar = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (saving) return;
-
-    if (
-      !form.titulo.trim() ||
-      !form.unidade.trim() ||
-      Number(form.valor_alvo) <= Number(form.valor_inicial)
-    ) {
-      setFormError(
-        "Preencha título e unidade. O alvo deve ser maior que o valor inicial.",
-      );
-      return;
-    }
-
-    setSaving(true);
-    setFormError("");
-
-    try {
-      const result = await salvarMeta(form, editing);
-      setMetas((items) =>
-        editing
-          ? items.map((item) => (item.id === result.id ? result : item))
-          : [result, ...items],
-      );
-      setOpen(false);
-      setSuccess(
-        editing ? "Meta atualizada com sucesso." : "Meta criada com sucesso.",
-      );
-    } catch (err) {
-      setFormError(mensagemErroApi(err));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const ativas = useMemo(
-    () => metas.filter((meta) => !meta.arquivada),
-    [metas],
-  );
-
-  const metasExibidas = useMemo(
-    () => metas.filter((meta) => arquivadas || !meta.arquivada),
-    [metas, arquivadas],
-  );
+  const {
+    navigate,
+    empresa,
+    empresaError,
+    loading,
+    error,
+    success,
+    setSuccess,
+    arquivadas,
+    setArquivadas,
+    open,
+    setOpen,
+    editing,
+    form,
+    setForm,
+    saving,
+    formError,
+    atualizar,
+    abrirModal,
+    salvar,
+    metasExibidas,
+    resumoMetas,
+  } = useDashboardMetas();
 
   return (
     <Stack direction="row" sx={{ minHeight: "100vh" }}>
@@ -207,6 +94,7 @@ export default function DashboardMetas() {
             sx={{ position: "relative", zIndex: 1 }}
           >
             <Stack gap={0.75}>
+              <AvatarUsuario atual sx={{ width: 64, height: 64, mb: 1, bgcolor: "primary.light" }} />
               <Typography
                 variant="overline"
                 sx={{
@@ -262,18 +150,7 @@ export default function DashboardMetas() {
         )}
 
         <Stack direction={{ xs: "column", sm: "row" }} gap={2}>
-          {[
-            {
-              label: "Metas ativas",
-              value: ativas.length,
-              icon: <FlagRoundedIcon />,
-            },
-            {
-              label: "Metas atingidas",
-              value: ativas.filter((meta) => meta.status === "atingida").length,
-              icon: <CheckCircleOutlineRoundedIcon />,
-            },
-          ].map(({ label, value, icon }) => (
+          {resumoMetas.map(({ label, value, icon: Icon }) => (
             <Paper
               key={label}
               elevation={0}
@@ -297,7 +174,7 @@ export default function DashboardMetas() {
                     bgcolor: alpha(theme.palette.primary.main, 0.1),
                   }}
                 >
-                  {icon}
+                  <Icon />
                 </Stack>
                 <Stack>
                   <Typography
@@ -580,25 +457,27 @@ export default function DashboardMetas() {
         >
           Ver desempenho nas redes
         </Button>
-        <Dialog
+        <Dialog aria-labelledby="editar-meta"
           open={open}
           onClose={() => {
             if (!saving) setOpen(false);
           }}
           fullWidth
           maxWidth="sm"
-          PaperProps={{ sx: { bgcolor: "secondary.light", borderRadius: 3 } }}
+          
         >
           <form onSubmit={salvar}>
-            <DialogTitle>{editing ? "Editar meta" : "Nova meta"}</DialogTitle>
+            <ModalHeader id="editar-meta" titulo={editing ? "Editar meta" : "Nova meta"} categoria="Um passo de cada vez" descricao="Transforme seus planos em um objetivo que você pode acompanhar." icone={<FlagRoundedIcon />} onClose={() => setOpen(false)} ocupado={saving} />
             <DialogContent>
-              <Stack gap={2} sx={{ pt: 1 }}>
+              <Stack gap={3}>
                 {formError && <Alert severity="error">{formError}</Alert>}
-
+                <SecaoFormulario titulo="O que você quer conquistar?" descricao="Campos com * são obrigatórios.">
                 <TextField
+                  autoFocus
                   required
                   disabled={saving}
                   label="Título"
+                  placeholder="Ex.: Aumentar minhas vendas"
                   value={form.titulo}
                   inputProps={{ maxLength: 120 }}
                   onChange={(event) =>
@@ -609,7 +488,9 @@ export default function DashboardMetas() {
                 <TextField
                   required
                   disabled={saving}
-                  label="Unidade (ex.: seguidores, publicações, vendas)"
+                  label="O que vamos medir?"
+                  placeholder="Ex.: vendas, seguidores ou publicações"
+                  helperText="Use a mesma unidade para os três valores abaixo."
                   value={form.unidade}
                   inputProps={{ maxLength: 30 }}
                   onChange={(event) =>
@@ -617,6 +498,9 @@ export default function DashboardMetas() {
                   }
                 />
 
+                </SecaoFormulario>
+                <SecaoFormulario titulo="Do ponto de partida à conquista" descricao="Informe onde começou, onde está hoje e aonde quer chegar.">
+                <Stack sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
                 {(
                   [
                     ["valor_inicial", "Valor inicial"],
@@ -637,20 +521,21 @@ export default function DashboardMetas() {
                     }
                   />
                 ))}
-
+                </Stack>
                 <TextField
                   required
                   disabled={saving}
                   type="date"
                   label="Prazo"
+                  helperText="Até quando você pretende alcançar essa meta?"
                   InputLabelProps={{ shrink: true }}
                   value={form.prazo}
                   onChange={(event) =>
                     setForm({ ...form, prazo: event.target.value })
                   }
                 />
-
-                <Typography variant="body2">
+                </SecaoFormulario>
+                <Typography variant="body2" sx={{ p: 2, bgcolor: "secondary.main", borderRadius: 2, color: "primary.dark", lineHeight: 1.6 }}>
                   O progresso mede o avanço do valor inicial até o alvo. Metas
                   com prazo passado podem ser registradas para acompanhamento.
                 </Typography>

@@ -1,13 +1,14 @@
 import { Button, Stack, Typography, useTheme } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { lessons, trails } from "./CriarAtividades.utils";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
-import { useNavigate } from "react-router-dom";
+import { useCriarAtividades } from "./CriarAtividades.hook";
+import { lessons, trails } from "./CriarAtividades.utils";
 
 export default function CriarAtividades() {
+  const { navigate } = useCriarAtividades();
+
   const theme = useTheme();
-  const navigate = useNavigate();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

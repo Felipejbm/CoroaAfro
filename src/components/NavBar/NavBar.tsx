@@ -16,10 +16,13 @@ import { useState } from "react";
 import { logout } from "../../services/Auth/controllers/auth.ts";
 import { mensagemErroApi } from "../../services/Auth/controllers/empresa.ts";
 import { motion } from "framer-motion";
+import AvatarUsuario from "../AvatarUsuario/AvatarUsuario";
+import { useSessaoAtual } from "../../hooks/useSessaoAtual";
 
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const usuario = useSessaoAtual();
   const [saindo, setSaindo] = useState(false);
   const [erroSaida, setErroSaida] = useState("");
 
@@ -186,6 +189,13 @@ export default function NavBar() {
       </Stack>
 
       <Stack sx={{ mt: "auto", px: { xs: 2, md: 3 }, pt: 3, flexShrink: 0 }}>
+        <Button onClick={() => navigate("/perfil")} sx={{ mb: 2, gap: 1.5, justifyContent: "flex-start", color: "secondary.light", textTransform: "none" }}>
+          <AvatarUsuario atual sx={{ width: 36, height: 36, bgcolor: "primary.main" }} />
+          <Stack sx={{ minWidth: 0, textAlign: "left" }}>
+            <Typography noWrap variant="body2">{usuario?.nome ?? "Meu perfil"}</Typography>
+            <Typography variant="caption">Ver perfil</Typography>
+          </Stack>
+        </Button>
         <Button
           fullWidth
           startIcon={<LogoutIcon />}

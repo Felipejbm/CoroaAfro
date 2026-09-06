@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
+import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
 import {
   Alert,
   Button,
@@ -6,7 +9,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   MenuItem,
   Paper,
   Stack,
@@ -14,165 +16,42 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
 import AprendizadoLayout from "./AprendizadoLayout";
-import {
-  acompanharTrilhas,
-  categoriasTrilhas,
-  listarMentorados,
-  listarTrilhas,
-  publicarTrilha,
-  salvarTrilha,
-  type AulaEntrada,
-  type Categoria,
-  type Mentorado,
-  type Trilha,
-  type TrilhaEntrada,
-} from "../../services/Auth/controllers/aprendizado";
-import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
-
-const novaAula = (): AulaEntrada => ({
-  titulo: "",
-  conteudo: "",
-  video_url: "",
-});
-const novaTrilha = (): TrilhaEntrada => ({
-  titulo: "",
-  descricao: "",
-  categoria: "",
-  publico_alvo: "",
-  aulas: [novaAula()],
-});
+import { useTrilhasMentor } from "./TrilhasMentor.hook";
 
 export default function TrilhasMentor() {
+  const {
+    trilhas,
+    categorias,
+    alunos,
+    aluno,
+    setAluno,
+    acompanhamento,
+    loading,
+    loadingAluno,
+    error,
+    erroAluno,
+    sucesso,
+    setSucesso,
+    setRetry,
+    busy,
+    dialog,
+    setDialog,
+    atual,
+    dados,
+    setDados,
+    erroForm,
+    confirmar,
+    setConfirmar,
+    abrir,
+    mudarAula,
+    salvar,
+    publicar,
+    adicionarAula,
+    removerAula,
+  } = useTrilhasMentor();
+
   const theme = useTheme();
-  const [params] = useSearchParams();
-  const [trilhas, setTrilhas] = useState<Trilha[]>([]);
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [alunos, setAlunos] = useState<Mentorado[]>([]);
-  const [aluno, setAluno] = useState(params.get("mentorado") || "");
-  const [acompanhamento, setAcompanhamento] = useState<Trilha[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingAluno, setLoadingAluno] = useState(false);
-  const [error, setError] = useState("");
-  const [erroAluno, setErroAluno] = useState("");
-  const [sucesso, setSucesso] = useState("");
-  const [retry, setRetry] = useState(0);
-  const [busy, setBusy] = useState(false);
-  const [dialog, setDialog] = useState(false);
-  const [atual, setAtual] = useState<Trilha>();
-  const [dados, setDados] = useState<TrilhaEntrada>(novaTrilha);
-  const [erroForm, setErroForm] = useState("");
-  const [confirmar, setConfirmar] = useState<Trilha>();
-
-  useEffect(() => {
-    let active = true;
-    setLoading(true);
-    setError("");
-    Promise.all([listarTrilhas(), listarMentorados(), categoriasTrilhas(true)])
-      .then(([ts, ms, cs]) => {
-        if (active) {
-          setTrilhas(ts);
-          setAlunos(ms);
-          setCategorias(cs);
-        }
-      })
-      .catch((err) => {
-        if (active) setError(mensagemErroApi(err));
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, [retry]);
-  useEffect(() => {
-    let active = true;
-    setAcompanhamento([]);
-    setErroAluno("");
-    if (!aluno) {
-      setLoadingAluno(false);
-      return;
-    }
-    setLoadingAluno(true);
-    acompanharTrilhas(Number(aluno))
-      .then((ts) => {
-        if (active) setAcompanhamento(ts);
-      })
-      .catch((err) => {
-        if (active) setErroAluno(mensagemErroApi(err));
-      })
-      .finally(() => {
-        if (active) setLoadingAluno(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, [aluno, retry]);
-
-  function abrir(t?: Trilha) {
-    setAtual(t);
-    setErroForm("");
-    setDados(
-      t
-        ? {
-            titulo: t.titulo,
-            descricao: t.descricao,
-            categoria: t.categoria,
-            publico_alvo: t.publico_alvo,
-            aulas: t.aulas.map((a) => ({
-              titulo: a.titulo,
-              conteudo: a.conteudo,
-              video_url: a.video_url,
-            })),
-          }
-        : novaTrilha(),
-    );
-    setDialog(true);
-  }
-  function mudarAula(index: number, key: keyof AulaEntrada, value: string) {
-    setDados((d) => ({
-      ...d,
-      aulas: d.aulas.map((a, i) => (i === index ? { ...a, [key]: value } : a)),
-    }));
-  }
-  async function salvar() {
-    if (busy) return;
-    setBusy(true);
-    setErroForm("");
-    try {
-      await salvarTrilha(dados, atual);
-      setDialog(false);
-      setSucesso(
-        atual?.publicada
-          ? "Categoria e público da trilha atualizados."
-          : "Rascunho salvo. Revise e publique quando estiver pronto.",
-      );
-      setRetry((r) => r + 1);
-    } catch (err) {
-      setErroForm(mensagemErroApi(err));
-    } finally {
-      setBusy(false);
-    }
-  }
-  async function publicar() {
-    if (!confirmar || busy) return;
-    setBusy(true);
-    setError("");
-    try {
-      await publicarTrilha(confirmar);
-      setSucesso(
-        "Trilha publicada no catálogo. Os empreendedores já podem se inscrever.",
-      );
-      setRetry((r) => r + 1);
-    } catch (err) {
-      setError(mensagemErroApi(err));
-    } finally {
-      setBusy(false);
-      setConfirmar(undefined);
-    }
-  }
 
   return (
     <AprendizadoLayout mentor titulo="Trilhas e aulas">
@@ -312,7 +191,7 @@ export default function TrilhasMentor() {
           ))}
         </>
       )}
-      <Dialog
+      <Dialog aria-labelledby="editar-trilha"
         open={dialog}
         onClose={() => {
           if (!busy) setDialog(false);
@@ -320,19 +199,16 @@ export default function TrilhasMentor() {
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle>
-          {atual?.publicada
+        <ModalHeader id="editar-trilha" titulo={atual?.publicada
             ? "Conteúdo publicado"
             : atual
               ? "Editar rascunho"
-              : "Nova trilha"}
-        </DialogTitle>
+              : "Nova trilha"} categoria="Compartilhe seu conhecimento" descricao="Organize sua trilha em aulas e ajude outros negócios a crescer." icone={<MenuBookRoundedIcon />} onClose={() => setDialog(false)} ocupado={busy} />
         <DialogContent>
           <Stack
             component="form"
             id="form-trilha"
-            gap={2}
-            sx={{ pt: 1 }}
+            gap={3}
             onSubmit={(e) => {
               e.preventDefault();
               void salvar();
@@ -345,7 +221,9 @@ export default function TrilhasMentor() {
                 categoria e o público da trilha sem afetar o progresso.
               </Alert>
             )}
+            <SecaoFormulario titulo="Apresente sua trilha" descricao="Dê um nome claro e conte o que as pessoas vão aprender. Campos com * são obrigatórios.">
             <TextField
+              autoFocus
               label="Título da trilha"
               required
               value={dados.titulo}
@@ -355,6 +233,7 @@ export default function TrilhasMentor() {
             />
             <TextField
               label="Descrição"
+              placeholder="O que o empreendedor será capaz de fazer ao concluir?"
               multiline
               minRows={2}
               value={dados.descricao}
@@ -389,10 +268,12 @@ export default function TrilhasMentor() {
                 setDados({ ...dados, publico_alvo: e.target.value })
               }
             />
+            </SecaoFormulario>
+            <SecaoFormulario titulo="Construa o caminho de aprendizado" descricao={`${dados.aulas.length} de 30 aulas · Cada aula deve ter um título e um conteúdo.`}>
             {dados.aulas.map((a, i) => (
-              <Paper variant="outlined" key={i} sx={{ p: 2 }}>
+              <Paper variant="outlined" key={i} sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 3, borderColor: "secondary.main", bgcolor: "#fffdf9", boxShadow: "0 4px 18px #4d001205" }}>
                 <Stack gap={2}>
-                  <Typography variant="h6">Aula {i + 1}</Typography>
+                  <Typography variant="h6" sx={{ color: "primary.main", fontSize: "1rem", pb: 1.5, borderBottom: "1px solid", borderColor: "secondary.main" }}>Aula {String(i + 1).padStart(2, "0")}</Typography>
                   <TextField
                     label={`Título da aula ${i + 1}`}
                     required
@@ -423,12 +304,9 @@ export default function TrilhasMentor() {
                   {!atual?.publicada && (
                     <Button
                       disabled={busy}
-                      onClick={() =>
-                        setDados((d) => ({
-                          ...d,
-                          aulas: d.aulas.filter((_, index) => index !== i),
-                        }))
-                      }
+                      onClick={() => removerAula(i)}
+                      color="error"
+                      sx={{ alignSelf: "flex-start" }}
                     >
                       Remover aula {i + 1} do rascunho
                     </Button>
@@ -439,13 +317,14 @@ export default function TrilhasMentor() {
             {!atual?.publicada && (
               <Button
                 disabled={busy || dados.aulas.length >= 30}
-                onClick={() =>
-                  setDados((d) => ({ ...d, aulas: [...d.aulas, novaAula()] }))
-                }
+                onClick={adicionarAula}
+                variant="outlined"
+                sx={{ borderStyle: "dashed", py: 1.5 }}
               >
                 Adicionar aula
               </Button>
             )}
+            </SecaoFormulario>
           </Stack>
         </DialogContent>
         <DialogActions>
@@ -466,13 +345,13 @@ export default function TrilhasMentor() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog
+      <Dialog aria-labelledby="publicar-trilha"
         open={!!confirmar}
         onClose={() => {
           if (!busy) setConfirmar(undefined);
         }}
       >
-        <DialogTitle>Publicar trilha?</DialogTitle>
+        <ModalHeader id="publicar-trilha" titulo={"Publicar trilha?"} categoria="Pronta para a comunidade" descricao="Confira os detalhes antes de disponibilizar sua trilha no catálogo." icone={<AutoAwesomeRoundedIcon />} onClose={() => setConfirmar(undefined)} ocupado={busy} />
         <DialogContent>
           Após publicar, as aulas desta versão não poderão ser alteradas,
           preservando o progresso dos mentorados. A trilha ficará visível no

@@ -1,29 +1,16 @@
-import { Button, Stack, Typography, useTheme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import type { Pace } from "./CriarTrilhaPersonalizada.types";
-import { days, paceOptions } from "./CriarTrilhaPersonalizada.utils";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../../components/NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
 import { fonts } from "../../../styles/theme";
+import { useCriarTrilhaPersonalizada4 } from "./CriarTrilhaPersonalizada.hook";
+import { currentStep, days, paceOptions, totalSteps } from "./CriarTrilhaPersonalizada.utils";
 
 export default function CriarTrilhaPersonalizada4() {
+  const { pace, setPace, selectedDays, toggleDay, navigate } = useCriarTrilhaPersonalizada4();
+
   const theme = useTheme();
-  const totalSteps = 5;
-  const currentStep = 4;
-
-  const [pace, setPace] = useState<Pace>("Moderado");
-  const [selectedDays, setSelectedDays] = useState<string[]>(["Ter", "Qui"]);
-
-  const toggleDay = (day: string) => {
-    setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day],
-    );
-  };
-
-  const navigate = useNavigate();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

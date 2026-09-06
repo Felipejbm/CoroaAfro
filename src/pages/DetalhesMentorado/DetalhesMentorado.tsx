@@ -1,15 +1,16 @@
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Avatar,
+  IconButton,
   LinearProgress,
   Stack,
   Typography,
-  IconButton,
   useTheme,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
+import { atividadesRecentes } from "./DetalhesMentorado.utils";
 export default function DetalhesMentorado() {
   const theme = useTheme();
   return (
@@ -205,12 +206,7 @@ export default function DetalhesMentorado() {
         <Stack
           sx={{ backgroundColor: theme.palette.background.default, borderRadius: "10px", p: 3, mb: 4 }}
         >
-          {[
-            "Concluiu a lição 'Identidade Visual'",
-            "Iniciou o módulo 'Redes Sociais'",
-            "Recebeu nova trilha personalizada",
-            "Comentou na comunidade",
-          ].map((act, idx) => (
+          {atividadesRecentes.map((act, idx) => (
             <Typography
               key={idx}
               sx={{

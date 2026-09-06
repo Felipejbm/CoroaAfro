@@ -1,28 +1,18 @@
-import { Button, Stack, Typography, useTheme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { useState } from "react";
-import { objectives } from "./CriarTrilhaPersonalizada.utils";
-import PushPinIcon from "@mui/icons-material/PushPin";
-import CheckIcon from "@mui/icons-material/Check";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CheckIcon from "@mui/icons-material/Check";
+import PushPinIcon from "@mui/icons-material/PushPin";
+import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../../components/NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
 import { fonts } from "../../../styles/theme";
+import { useCriarTrilhaPersonalizada2 } from "./CriarTrilhaPersonalizada.hook";
+import { currentStep, objectives, totalSteps } from "./CriarTrilhaPersonalizada.utils";
 
 export default function CriarTrilhaPersonalizada2() {
+  const { selected, toggleObjective, navigate } = useCriarTrilhaPersonalizada2();
+
   const theme = useTheme();
-  const totalSteps = 5;
-  const currentStep = 2;
-  const [selected, setSelected] = useState<string[]>(["vendas"]);
-
-  const toggleObjective = (id: string) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-    );
-  };
-
-  const navigate = useNavigate();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

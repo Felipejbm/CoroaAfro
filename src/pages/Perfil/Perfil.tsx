@@ -1,93 +1,59 @@
+import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
+import ModalHeader from "../../components/ModalHeader/ModalHeader";
+import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
 import {
+  Alert,
   Avatar,
   Button,
-  Stack,
-  Typography,
-  Alert,
   CircularProgress,
   Dialog,
   DialogActions,
-  DialogTitle,
-  TextField,
   DialogContent,
+  Stack,
+  TextField,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  buscarSessao,
-  type SessaoUsuario,
-} from "../../services/Auth/controllers/auth";
-import {
-  buscarMinhaEmpresa,
-  mensagemErroApi,
-  type Empresa,
-} from "../../services/Auth/controllers/empresa";
-import api from "../../api/axios";
+import { usePerfil } from "./Perfil.hook";
+import { ajudaFotoPerfil, formatosFotoPerfil } from "./Perfil.utils";
+import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
 
 export default function Perfil() {
+  const {
+    navigate,
+    usuario,
+    empresa,
+    loading,
+    erro,
+    editando,
+    setEditando,
+    salvando,
+    erroEdicao,
+    sucesso,
+    setSucesso,
+    form,
+    setForm,
+    editar,
+    salvar,
+    fotoAtual,
+    editandoFoto,
+    previaFoto,
+    arquivoFoto,
+    erroFoto,
+    erroCarregarFoto,
+    salvandoFoto,
+    seletorFoto,
+    abrirFoto,
+    fecharFoto,
+    selecionarFoto,
+    salvarFoto,
+    escolherArquivoFoto,
+  } = usePerfil();
+
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [usuario, setUsuario] = useState<SessaoUsuario | null>(null);
-  const [empresa, setEmpresa] = useState<Empresa | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState("");
-  const [editando, setEditando] = useState(false);
-  const [salvando, setSalvando] = useState(false);
-  const [erroEdicao, setErroEdicao] = useState("");
-  const [sucesso, setSucesso] = useState("");
-  const [form, setForm] = useState({ nome: "", email: "", telefone: "" });
-
-  useEffect(() => {
-    let active = true;
-    Promise.all([buscarSessao(), buscarMinhaEmpresa()])
-      .then(([pessoa, negocio]) => {
-        if (active) {
-          setUsuario(pessoa);
-          setEmpresa(negocio);
-        }
-      })
-      .catch((error) => {
-        if (active) setErro(mensagemErroApi(error));
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const editar = () => {
-    if (!usuario) return;
-    setForm({
-      nome: usuario.nome,
-      email: usuario.email,
-      telefone: usuario.telefone,
-    });
-    setErroEdicao("");
-    setEditando(true);
-  };
-  const salvar = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!usuario || salvando) return;
-    setSalvando(true);
-    setErroEdicao("");
-    try {
-      await api.patch(`/empreendedor/${usuario.id}`, form);
-      setUsuario(await buscarSessao());
-      setEditando(false);
-      setSucesso("Dados do empreendedor atualizados.");
-    } catch (error) {
-      setErroEdicao(mensagemErroApi(error));
-    } finally {
-      setSalvando(false);
-    }
-  };
-
   const card = {
     flex: 1,
     bgcolor: theme.palette.secondary.light,
@@ -143,8 +109,8 @@ export default function Perfil() {
         )}
         {usuario && (
           <>
-            <Stack direction="row" alignItems="center" gap={2}>
-            <Avatar sx={{ width: 80, height: 80, bgcolor: theme.palette.primary.main }}>
+            <Stack direction={{ xs: "column", sm: "row" }} alignItems="center" gap={2}>
+            <Avatar src={fotoAtual || undefined} alt={`Foto de ${usuario.nome}`} sx={{ width: 80, height: 80, bgcolor: theme.palette.primary.main }}>
               {usuario.nome.charAt(0).toUpperCase()}
             </Avatar>
             <Stack alignItems="center">
@@ -152,8 +118,12 @@ export default function Perfil() {
                 {empresa?.nome ?? "Sua empresa ainda não foi cadastrada"}
               </Typography>
               <Typography color="text.secondary">{usuario.nome}</Typography>
+              <Button startIcon={<PhotoCameraOutlinedIcon />} onClick={abrirFoto}>
+                {usuario.foto_perfil_url ? "Alterar foto" : "Adicionar foto"}
+              </Button>
             </Stack>
             </Stack>
+            {erroCarregarFoto && <Alert severity="warning">{erroCarregarFoto}</Alert>}
             <Stack
               direction={{ xs: "column", md: "row" }}
               sx={{ gap: 3, width: "100%", maxWidth: 1000 }}
@@ -232,24 +202,72 @@ export default function Perfil() {
             </Button>
           </>
         )}
-        <Dialog
+        <Dialog aria-labelledby="foto-perfil"
+          open={editandoFoto}
+          onClose={fecharFoto}
+          fullWidth
+          maxWidth="xs"
+          
+        >
+          <ModalHeader id="foto-perfil" titulo={"Foto de perfil"} categoria="Sua identidade" descricao="Escolha uma foto para que as pessoas reconheçam você." icone={<PhotoCameraOutlinedIcon />} onClose={fecharFoto} ocupado={salvandoFoto} />
+          <DialogContent>
+            <Stack alignItems="center" gap={2.5} sx={{ p: 2.5, border: "1px dashed", borderColor: "secondary.dark", borderRadius: 4, bgcolor: "#fffdf9" }}>
+              {erroFoto && <Alert severity="error" sx={{ width: "100%" }}>{erroFoto}</Alert>}
+              <Avatar
+                src={previaFoto || fotoAtual || undefined}
+                alt="Prévia da foto de perfil"
+                sx={{ width: 152, height: 152, bgcolor: theme.palette.primary.main, fontSize: "3rem", border: "5px solid", borderColor: "secondary.light", boxShadow: "0 0 0 1px #e1cebf, 0 10px 24px #4d001214" }}
+              >
+                {usuario?.nome.charAt(0).toUpperCase()}
+              </Avatar>
+              <input
+                ref={seletorFoto}
+                type="file"
+                accept={formatosFotoPerfil.join(",")}
+                onChange={selecionarFoto}
+                disabled={salvandoFoto}
+                hidden
+                aria-label="Escolher foto de perfil"
+              />
+              <Button variant="outlined" startIcon={<PhotoCameraOutlinedIcon />} onClick={escolherArquivoFoto} disabled={salvandoFoto}>
+                {arquivoFoto ? "Escolher outra foto" : "Escolher imagem"}
+              </Button>
+              <Typography variant="body2" color="text.secondary" textAlign="center">
+                {ajudaFotoPerfil} A foto será atualizada ao salvar.
+              </Typography>
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={fecharFoto} disabled={salvandoFoto}>Cancelar</Button>
+            <Button
+              variant="contained"
+              onClick={() => void salvarFoto()}
+              disabled={!arquivoFoto || salvandoFoto}
+              startIcon={salvandoFoto ? <CircularProgress size={16} color="inherit" /> : undefined}
+            >
+              {salvandoFoto ? "Salvando..." : "Salvar foto"}
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog aria-labelledby="dados-perfil"
           open={editando}
           onClose={() => {
             if (!salvando) setEditando(false);
           }}
           fullWidth
           maxWidth="sm"
-          slotProps={{
-            paper: { sx: { bgcolor: theme.palette.secondary.main, borderRadius: "20px" } },
-          }}
+          
         >
           <Stack component="form" onSubmit={(event) => void salvar(event)}>
-            <DialogTitle>Editar meus dados</DialogTitle>
+            <ModalHeader id="dados-perfil" titulo={"Editar meus dados"} categoria="Meu perfil" descricao="Mantenha suas informações atualizadas para continuar suas conexões." icone={<PersonOutlineRoundedIcon />} onClose={() => setEditando(false)} ocupado={salvando} />
             <DialogContent>
-              <Stack sx={{ gap: 2, pt: 1 }}>
+              <Stack sx={{ gap: 2.5 }}>
                 {erroEdicao && <Alert severity="error">{erroEdicao}</Alert>}
+                <SecaoFormulario titulo="Suas informações" descricao="É assim que você se apresenta na comunidade. Campos com * são obrigatórios.">
                 <TextField
-                  label="Nome"
+                  autoFocus
+                  autoComplete="name"
+                  label="Nome completo"
                   required
                   value={form.nome}
                   disabled={salvando}
@@ -257,6 +275,7 @@ export default function Perfil() {
                   slotProps={{ htmlInput: { maxLength: 255 } }}
                 />
                 <TextField
+                  autoComplete="email"
                   label="E-mail"
                   type="email"
                   required
@@ -266,6 +285,9 @@ export default function Perfil() {
                   slotProps={{ htmlInput: { maxLength: 255 } }}
                 />
                 <TextField
+                  type="tel"
+                  autoComplete="tel"
+                  helperText="Inclua o DDD. Ex.: (11) 99999-9999."
                   label="Telefone"
                   required
                   value={form.telefone}
@@ -275,6 +297,7 @@ export default function Perfil() {
                   }
                   slotProps={{ htmlInput: { maxLength: 20 } }}
                 />
+                </SecaoFormulario>
               </Stack>
             </DialogContent>
             <DialogActions>
@@ -282,7 +305,7 @@ export default function Perfil() {
                 Cancelar
               </Button>
               <Button type="submit" variant="contained" disabled={salvando}>
-                {salvando ? "Salvando..." : "Salvar"}
+                {salvando ? "Salvando..." : "Salvar alterações"}
               </Button>
             </DialogActions>
           </Stack>

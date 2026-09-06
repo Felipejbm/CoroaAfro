@@ -5,6 +5,27 @@ import type { LoginReq } from "../schema/authSchema";
 
 class RespostaAutenticacaoInvalida extends Error {}
 
+let sessaoAtual: SessaoUsuario | null = null;
+const ouvintesSessao = new Set<() => void>();
+export const obterSessaoAtual = () => sessaoAtual;
+export const observarSessao = (ouvinte: () => void) => {
+    ouvintesSessao.add(ouvinte);
+    return () => { ouvintesSessao.delete(ouvinte); };
+};
+
+export function atualizarSessao(usuario: SessaoUsuario | null) {
+    sessaoAtual = usuario;
+    if (usuario) {
+        const normalizado = usuario.papel === "mentor"
+            ? { ...usuario, id_mentor: usuario.id }
+            : { ...usuario, id_empreendedor: usuario.id };
+        localStorage.setItem("empreendedor", JSON.stringify(normalizado));
+    } else {
+        localStorage.removeItem("empreendedor");
+    }
+    ouvintesSessao.forEach(ouvinte => ouvinte());
+}
+
 export async function login(data: LoginReq) {
     const resp = await api.post("auth/login", data)
     await buscarSessao();
@@ -14,7 +35,7 @@ export async function login(data: LoginReq) {
 
 export async function logout() {
     await api.post("/auth/logout");
-    localStorage.removeItem("empreendedor")
+    atualizarSessao(null);
 }
 
 export interface SessaoUsuario {
@@ -24,6 +45,7 @@ export interface SessaoUsuario {
     email: string;
     telefone: string;
     data_cadastro: string;
+    foto_perfil_url?: string | null;
 }
 
 export async function buscarSessao(): Promise<SessaoUsuario> {
@@ -36,7 +58,7 @@ export async function buscarSessao(): Promise<SessaoUsuario> {
     const usuarioNormalizado = usuario.papel === "mentor"
         ? { ...usuario, id_mentor: usuario.id }
         : { ...usuario, id_empreendedor: usuario.id };
-    localStorage.setItem("empreendedor", JSON.stringify(usuarioNormalizado));
+    atualizarSessao(usuarioNormalizado);
     return usuarioNormalizado;
 }
 

@@ -1,6 +1,8 @@
 export interface Comment {
     author: string;
     text: string;
+    autorId?: number;
+    autorPapel?: "empreendedor" | "mentor";
 }
 
 export interface Post {

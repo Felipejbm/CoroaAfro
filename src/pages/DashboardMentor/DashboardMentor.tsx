@@ -1,13 +1,12 @@
 import { Avatar, Button, Stack, Typography, useTheme } from "@mui/material";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
+import { useDashboardMentor } from "./DashboardMentor.hook";
 
 export default function DashboardMentor() {
-  const theme = useTheme();
+  const { handleLogout } = useDashboardMentor();
 
-  const handleLogout = () => {
-    console.log("Sair");
-  };
+  const theme = useTheme();
 
   return (
     <Stack direction="row" sx={{ width: "100%", minHeight: "100vh" }}>

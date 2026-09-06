@@ -1,29 +1,18 @@
-import { Button, Checkbox, Stack, Typography, useTheme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { moduleOptions } from "./CriarTrilhaPersonalizada.utils";
-import { getLevelColors } from "./CriarTrilhaPersonalizada.styles";
+import { Button, Checkbox, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../../components/NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
 import { fonts } from "../../../styles/theme";
+import { useCriarTrilhaPersonalizada3 } from "./CriarTrilhaPersonalizada.hook";
+import { getLevelColors } from "./CriarTrilhaPersonalizada.styles";
+import { currentStep, moduleOptions, totalSteps } from "./CriarTrilhaPersonalizada.utils";
 
 export default function CriarTrilhaPersonalizada3() {
+  const { selected, toggleModule, navigate } = useCriarTrilhaPersonalizada3();
+
   const theme = useTheme();
-  const totalSteps = 5;
-  const currentStep = 3;
-
-  const [selected, setSelected] = useState<string[]>(["fotografia", "reels"]);
   const levelColors = getLevelColors(theme);
-
-  const toggleModule = (id: string) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-    );
-  };
-
-  const navigate = useNavigate()
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

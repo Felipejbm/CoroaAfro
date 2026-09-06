@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import { dialogComponents } from "./dialogs";
 
 export const fonts = {
   logo: '"Cinzel", serif',
@@ -21,7 +22,7 @@ const theme = createTheme({
       },
     },
     MuiTypography: { styleOverrides: { root: { overflowWrap: "anywhere" } } },
-    MuiDialog: { styleOverrides: { paper: { margin: 16, maxWidth: "calc(100% - 32px)" } } },
+    ...dialogComponents,
   },
   palette: {
     primary: {

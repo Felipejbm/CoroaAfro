@@ -1,32 +1,23 @@
-import { Button, InputBase, Stack, Typography, useTheme } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { useState } from "react";
-import type { Suggestion } from "./CriarTrilhaPersonalizada.types";
-import { suggestions } from "./CriarTrilhaPersonalizada.utils";
-import PushPinIcon from "@mui/icons-material/PushPin";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PushPinIcon from "@mui/icons-material/PushPin";
+import { Button, InputBase, Stack, Typography, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import NavBar from "../../../components/NavBar/NavBar";
 import { fonts } from "../../../styles/theme";
-import { useNavigate } from "react-router-dom";
+import { useCriarTrilhaPersonalizada1 } from "./CriarTrilhaPersonalizada.hook";
+import { currentStep, suggestions, totalSteps } from "./CriarTrilhaPersonalizada.utils";
 
 export default function CriarTrilhaPersonalizada1() {
+  const {
+    trailName,
+    setTrailName,
+    selectedSuggestion,
+    handleSelectSuggestion,
+    navigate,
+  } = useCriarTrilhaPersonalizada1();
+
   const theme = useTheme();
-  const totalSteps = 5;
-  const currentStep = 1;
-
-  const [trailName, setTrailName] = useState("");
-  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(
-    null,
-  );
-
-  const handleSelectSuggestion = (suggestion: Suggestion) => {
-    setSelectedSuggestion(suggestion.id);
-    setTrailName(suggestion.title);
-  };
-
-  const navigate = useNavigate()
-
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

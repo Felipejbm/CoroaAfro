@@ -1,3 +1,4 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   Avatar,
   Button,
@@ -7,16 +8,15 @@ import {
   useTheme,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import type { MetricCard, ProgressItem } from "./DashboardFinanceiro.types";
+import NavBar from "../../components/NavBar/NavBar";
+import theme, { fonts } from "../../styles/theme";
+import { useDashboardFinanceiro } from "./DashboardFinanceiro.hook";
+import type { MetricCard, ProgressPanelProps } from "./DashboardFinanceiro.types";
 import {
   metricCards,
   monthlyGoals,
   weeklyAnalysis,
 } from "./DashboardFinanceiro.utils";
-import NavBar from "../../components/NavBar/NavBar";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
-import theme, { fonts } from "../../styles/theme";
 
 function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
   return (
@@ -65,10 +65,7 @@ function MetricCardItem({ label, value, note, noteColor }: MetricCard) {
 function ProgressPanel({
   title,
   items,
-}: {
-  title: string;
-  items: ProgressItem[];
-}) {
+}: ProgressPanelProps) {
   const theme = useTheme();
 
   return (
@@ -136,8 +133,9 @@ function ProgressPanel({
 }
 
 export default function DashboardFinanceiro() {
+  const { navigate } = useDashboardFinanceiro();
+
   const theme = useTheme();
-  const navigate = useNavigate();
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>
       <NavBar />

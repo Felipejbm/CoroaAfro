@@ -10,12 +10,12 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { mentorados } from "./ControleMentorados.utils";
 import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
-import { useNavigate } from "react-router-dom";
+import { useControleMentorados } from "./ControleMentorado.hook";
+import { mentorados } from "./ControleMentorado.utils";
 export default function ControleMentorados() {
-  const navigate = useNavigate();
+  const { navigate } = useControleMentorados();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%", minHeight: "100vh" }}>

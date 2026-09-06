@@ -1,52 +1,32 @@
-import type { MetaEntrada } from "../../services/Auth/controllers/metas";
 import type { MetricCard, ProgressItem } from "./DashboardFinanceiro.types";
 
 export const metricCards: MetricCard[] = [
-    { label: "Faturamento Gerado", value: "$ 28.400,00" },
-    { label: "ROI", value: "4.5x" },
-    { label: "CAC", value: "R$ 120,00", note: "-5% este mês", noteColor: "success.main" },
+  { label: "Faturamento Gerado", value: "$ 28.400,00" },
+  { label: "ROI", value: "4.5x" },
+  { label: "CAC", value: "R$ 120,00", note: "-5% este mês", noteColor: "success.main" },
 ];
 
 export const weeklyAnalysis: ProgressItem[] = [
-    { label: "Engajamento", value: 90 },
-    { label: "Crescimento do Perfil", value: 63 },
-    { label: "", value: 65 },
+  { label: "Engajamento", value: 90 },
+  { label: "Crescimento do Perfil", value: 63 },
+  { label: "", value: 65 },
 ];
 
 export const monthlyGoals: ProgressItem[] = [
-    { label: "Engajamento", value: 90 },
-    { label: "Crescimento do Perfil", value: 82 },
-    { label: "", value: 65 },
+  { label: "Engajamento", value: 90 },
+  { label: "Crescimento do Perfil", value: 82 },
+  { label: "", value: 65 },
 ];
 
 export const chartData = [
-    { day: 1, vendas: 30, whatsapp: 15 },
-    { day: 2, vendas: 33, whatsapp: 16 },
-    { day: 3, vendas: 36, whatsapp: 17 },
-    { day: 4, vendas: 40, whatsapp: 18 },
-    { day: 5, vendas: 44, whatsapp: 20 },
-    { day: 6, vendas: 48, whatsapp: 22 },
-    { day: 7, vendas: 53, whatsapp: 24 },
-    { day: 8, vendas: 58, whatsapp: 26 },
-    { day: 9, vendas: 63, whatsapp: 27 },
-    { day: 10, vendas: 68, whatsapp: 28 },
+  { day: 1, vendas: 30, whatsapp: 15 },
+  { day: 2, vendas: 33, whatsapp: 16 },
+  { day: 3, vendas: 36, whatsapp: 17 },
+  { day: 4, vendas: 40, whatsapp: 18 },
+  { day: 5, vendas: 44, whatsapp: 20 },
+  { day: 6, vendas: 48, whatsapp: 22 },
+  { day: 7, vendas: 53, whatsapp: 24 },
+  { day: 8, vendas: 58, whatsapp: 26 },
+  { day: 9, vendas: 63, whatsapp: 27 },
+  { day: 10, vendas: 68, whatsapp: 28 },
 ];
-
-export const vazio: MetaEntrada = {
-    titulo: "",
-    unidade: "seguidores",
-    valor_inicial: "0",
-    valor_atual: "0",
-    valor_alvo: "",
-    prazo: "",
-    arquivada: false,
-};
-
-export const labels = {
-    arquivada: "Arquivada",
-    atingida: "Atingida",
-    prazo_encerrado: "Prazo encerrado",
-    em_andamento: "Em andamento",
-};
-export const numero = (value: string | number) =>
-    Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 2 });

@@ -1,12 +1,11 @@
 import { alpha, Avatar, Button, Stack, Typography, useTheme } from "@mui/material";
-import type { ModuleItem } from "./TrilhaPersonalizada.types";
-import { useState } from "react";
-import { modules } from "./TrilhasPersonalizada.utils";
 import NavBar from "../../../components/NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
 import { fonts } from "../../../styles/theme";
+import { useTrilhaPersonalizada } from "./TrilhaPersonalizada.hook";
+import type { ModuleCardProps } from "./TrilhaPersonalizada.types";
+import { modules } from "./TrilhaPersonalizada.utils";
 
-function ModuleCard({ module }: { module: ModuleItem }) {
+function ModuleCard({ module }: ModuleCardProps) {
   const theme = useTheme();
   return (
     <Stack
@@ -117,9 +116,9 @@ function TimelineDot() {
 }
 
 export default function TrilhaPersonalizada() {
+  const { tab, setTab, navigate } = useTrilhaPersonalizada();
+
   const theme = useTheme();
-  const [tab, setTab] = useState<"guiada" | "personalizada">("personalizada");
-  const navigate = useNavigate();
 
   return (
     <Stack direction={"row"} sx={{ width: "100%" }}>

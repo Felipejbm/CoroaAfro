@@ -1,260 +1,34 @@
-import { useTheme,
+import {
   Avatar,
   IconButton,
   InputBase,
   Stack,
   Typography,
+  alpha,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import type { Conversation, Message } from "./Chat.types";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
 import VideocamIcon from "@mui/icons-material/Videocam";
-import { useState } from "react";
-import { messages, onlineNow, recents } from "./Chats.utils";
+import { onlineNow, recents } from "./Chat.utils";
 import NavBar from "../../components/NavBar/NavBar";
-import { fonts } from "../../styles/theme";
-
-function ConversationItem({
-  conv,
-  isActive,
-  onClick,
-}: {
-  conv: Conversation;
-  isActive: boolean;
-  onClick: () => void;
-}) {
-  const theme = useTheme();
-
-  return (
-    <Stack
-      direction="row"
-      onClick={onClick}
-      sx={{
-        alignItems: "center",
-        gap: 1.5,
-        px: 2,
-        py: 1.2,
-        cursor: "pointer",
-        backgroundColor: isActive ? alpha(theme.palette.primary.light, 0.28) : "transparent",
-        "&:hover": { backgroundColor: alpha(theme.palette.common.white, 0.04) },
-      }}
-    >
-      <Stack sx={{ position: "relative" }}>
-        <Avatar
-          sx={{
-            bgcolor: conv.color,
-            width: 38,
-            height: 38,
-            fontSize: "0.8rem",
-          }}
-        >
-          {conv.initials}
-        </Avatar>
-        {conv.online && (
-          <Stack
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              right: 0,
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              backgroundColor: theme.palette.success.main,
-              border: `2px solid ${theme.palette.background.default}`,
-            }}
-          />
-        )}
-      </Stack>
-      <Stack sx={{ flex: 1, minWidth: 0 }}>
-        <Typography
-          sx={{
-            fontFamily: fonts.body,
-            fontWeight: 700,
-            fontSize: "0.85rem",
-            color: theme.palette.common.white,
-          }}
-        >
-          {conv.name}
-        </Typography>
-        <Typography
-          noWrap
-          sx={{
-            fontFamily: fonts.body,
-            fontSize: "0.75rem",
-            color: alpha(theme.palette.common.white, 0.5),
-          }}
-        >
-          {conv.lastMessage}
-        </Typography>
-      </Stack>
-      <Stack
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          gap: 0.5,
-        }}
-      >
-        <Typography
-          sx={{
-            fontFamily: fonts.body,
-            fontSize: "0.7rem",
-            color: alpha(theme.palette.common.white, 0.4),
-          }}
-        >
-          {conv.time}
-        </Typography>
-        {conv.unread && !isActive && (
-          <Stack
-            sx={{
-              backgroundColor: theme.palette.primary.main,
-              borderRadius: "10px",
-              minWidth: 18,
-              height: 18,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              px: 0.5,
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: fonts.body,
-                fontSize: "0.65rem",
-                color: theme.palette.common.white,
-                fontWeight: 700,
-              }}
-            >
-              {conv.unread}
-            </Typography>
-          </Stack>
-        )}
-      </Stack>
-    </Stack>
-  );
-}
-
-function MessageBubble({ message }: { message: Message }) {
-  const theme = useTheme();
-  const { fromMe, text, time, highlight } = message;
-
-  return (
-    <Stack
-      direction="row"
-      sx={{
-        justifyContent: fromMe ? "flex-end" : "flex-start",
-        mb: 1.5,
-      }}
-    >
-      <Stack
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: fromMe ? "flex-end" : "flex-start",
-          maxWidth: "60%",
-        }}
-      >
-        <Stack
-          sx={{
-            backgroundColor: fromMe ? theme.palette.primary.main : theme.palette.background.default,
-            color: theme.palette.common.white,
-            borderRadius: "14px",
-            px: 2,
-            py: 1.3,
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: fonts.body,
-              fontSize: "0.85rem",
-              lineHeight: 1.5,
-            }}
-          >
-            {text}
-          </Typography>
-
-          {highlight && (
-            <Stack
-              sx={{
-                backgroundColor: theme.palette.background.default,
-                borderRadius: "10px",
-                p: 1.5,
-                mt: 1.2,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.65rem",
-                  color: theme.palette.success.main,
-                  mb: 0.5,
-                }}
-              >
-                {highlight.tag}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: fonts.body,
-                  fontWeight: 700,
-                  fontSize: "0.85rem",
-                  color: theme.palette.common.white,
-                  mb: 0.4,
-                }}
-              >
-                {highlight.title}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.72rem",
-                  color: alpha(theme.palette.common.white, 0.6),
-                  lineHeight: 1.4,
-                }}
-              >
-                {highlight.subtitle}
-              </Typography>
-            </Stack>
-          )}
-        </Stack>
-        <Stack direction="row" sx={{ alignItems: "center", gap: 0.4, mt: 0.4 }}>
-          {fromMe && <DoneAllIcon sx={{ fontSize: 12, color: theme.palette.success.main }} />}
-          <Typography
-            sx={{
-              fontFamily: fonts.body,
-              fontSize: "0.65rem",
-              color: alpha(theme.palette.common.black, 0.4),
-            }}
-          >
-            {time}
-          </Typography>
-        </Stack>
-      </Stack>
-    </Stack>
-  );
-}
+import theme, { fonts } from "../../styles/theme";
+import useChat from "./Chat.hook";
 
 export default function Chat() {
-  const theme = useTheme();
-  const [input, setInput] = useState("");
-
-  const [activeConversation, setActiveConversation] = useState<Conversation>(
-    onlineNow[0] || recents[0],
-  );
-
-  const currentMessages =
-    messages.filter((msg) => msg.id === activeConversation.id) || [];
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    console.log(`Enviando para ${activeConversation.name}:`, input);
-    setInput("");
-  };
+  const {
+    ConversationItem,
+    MessageBubble,
+    currentMessages,
+    handleSend,
+    setActiveConversation,
+    activeConversation,
+    input,
+    setInput,
+  } = useChat();
 
   return (
     <Stack
@@ -270,7 +44,12 @@ export default function Chat() {
 
       <Stack
         direction={"row"}
-        sx={{ flex: 1, minWidth: 0, height: "100vh", backgroundColor: theme.palette.secondary.light }}
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          height: "100vh",
+          backgroundColor: theme.palette.secondary.light,
+        }}
       >
         <Stack
           sx={{
@@ -306,7 +85,10 @@ export default function Chat() {
               }}
             >
               <SearchIcon
-                sx={{ fontSize: 18, color: alpha(theme.palette.common.white, 0.5) }}
+                sx={{
+                  fontSize: 18,
+                  color: alpha(theme.palette.common.white, 0.5),
+                }}
               />
               <InputBase
                 placeholder="Buscar conversa..."
@@ -386,7 +168,8 @@ export default function Chat() {
             <Stack direction="row" sx={{ alignItems: "center", gap: 1.5 }}>
               <Avatar
                 sx={{
-                  bgcolor: activeConversation.color || theme.palette.primary.light,
+                  bgcolor:
+                    activeConversation.color || theme.palette.primary.light,
                   width: 38,
                   height: 38,
                   fontSize: "0.8rem",
@@ -410,8 +193,8 @@ export default function Chat() {
                     fontFamily: fonts.body,
                     fontSize: "0.7rem",
                     color: activeConversation.online
-                        ? theme.palette.success.main
-                        : alpha(theme.palette.common.white, 0.5),
+                      ? theme.palette.success.main
+                      : alpha(theme.palette.common.white, 0.5),
                   }}
                 >
                   {activeConversation.online ? "● Online agora" : "Offline"}
@@ -421,19 +204,28 @@ export default function Chat() {
             <Stack direction="row" sx={{ gap: 1 }}>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: alpha(theme.palette.secondary.light, 0.12), color: theme.palette.secondary.light }}
+                sx={{
+                  backgroundColor: alpha(theme.palette.secondary.light, 0.12),
+                  color: theme.palette.secondary.light,
+                }}
               >
                 <VideocamIcon fontSize="small" />
               </IconButton>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: alpha(theme.palette.secondary.light, 0.12), color: theme.palette.secondary.light }}
+                sx={{
+                  backgroundColor: alpha(theme.palette.secondary.light, 0.12),
+                  color: theme.palette.secondary.light,
+                }}
               >
                 <AttachFileIcon fontSize="small" />
               </IconButton>
               <IconButton
                 size="small"
-                sx={{ backgroundColor: alpha(theme.palette.secondary.light, 0.12), color: theme.palette.secondary.light }}
+                sx={{
+                  backgroundColor: alpha(theme.palette.secondary.light, 0.12),
+                  color: theme.palette.secondary.light,
+                }}
               >
                 <MoreHorizIcon fontSize="small" />
               </IconButton>
@@ -495,7 +287,8 @@ export default function Chat() {
               >
                 <Avatar
                   sx={{
-                    bgcolor: activeConversation.color || theme.palette.primary.light,
+                    bgcolor:
+                      activeConversation.color || theme.palette.primary.light,
                     width: 26,
                     height: 26,
                     fontSize: "0.65rem",
@@ -535,7 +328,10 @@ export default function Chat() {
               py: 1.5,
             }}
           >
-            <IconButton size="small" sx={{ color: alpha(theme.palette.common.white, 0.6) }}>
+            <IconButton
+              size="small"
+              sx={{ color: alpha(theme.palette.common.white, 0.6) }}
+            >
               <InsertEmoticonIcon fontSize="small" />
             </IconButton>
             <InputBase
@@ -552,10 +348,16 @@ export default function Chat() {
                 fontSize: "0.85rem",
               }}
             />
-            <IconButton size="small" sx={{ color: alpha(theme.palette.common.white, 0.6) }}>
+            <IconButton
+              size="small"
+              sx={{ color: alpha(theme.palette.common.white, 0.6) }}
+            >
               <AttachFileIcon fontSize="small" />
             </IconButton>
-            <IconButton size="small" sx={{ color: alpha(theme.palette.common.white, 0.6) }}>
+            <IconButton
+              size="small"
+              sx={{ color: alpha(theme.palette.common.white, 0.6) }}
+            >
               <EditIcon fontSize="small" />
             </IconButton>
             <IconButton
