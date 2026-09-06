@@ -145,7 +145,7 @@ export default function AssistenteIA() {
             maxHeight: { xs: "30dvh", md: "none" },
             overflowY: "auto",
             flexShrink: 0,
-            bgcolor: alpha(theme.palette.primary.dark, 0.97),
+            bgcolor: alpha(theme.palette.primary.main, 0.97),
             color: "secondary.light",
             borderLeft: `1px solid ${alpha(theme.palette.secondary.main, 0.08)}`,
           }}
