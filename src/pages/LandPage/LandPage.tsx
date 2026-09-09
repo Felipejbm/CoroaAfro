@@ -1,3 +1,4 @@
+import logoTipo from "../../assets/LogoTipo.png";
 import {
   Avatar,
   Button,
@@ -37,7 +38,7 @@ export default function LandPage() {
             }}
           >
             <Avatar
-              src="/src/assets/LogoTipo.png"
+              src={logoTipo}
               alt="Coroa Afro"
               sx={{
                 width: { xs: 90, md: 140 },

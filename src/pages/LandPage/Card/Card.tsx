@@ -32,7 +32,9 @@ export function TestimonialCard({ item }: Props) {
           gap: 1,
         }}
       >
-        <Avatar src={item.photo ?? undefined} sx={{ width: 78, height: 78 }} />
+        <Avatar src={item.photo || undefined} alt={item.name} sx={{ width: 78, height: 78 }}>
+          {item.name?.split(" ").filter(Boolean).slice(0, 2).map((nome) => nome[0]).join("")}
+        </Avatar>
 
         <Typography sx={{ fontWeight: 700, fontSize: "0.95rem" }}>
           {item.name ?? "Anônimo"}

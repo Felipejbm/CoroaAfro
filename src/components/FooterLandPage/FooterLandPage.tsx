@@ -1,3 +1,4 @@
+import logoTipo from "../../assets/LogoTipo.png";
 import React from "react";
 import {
   Typography,
@@ -52,7 +53,7 @@ export default function FooterLandPage() {
               }}
             >
               <Avatar
-                src="/src/assets/LogoTipo.png"
+                src={logoTipo}
                 alt="Coroa Afro"
                 sx={{ width: 50, height: 50 }}
               />

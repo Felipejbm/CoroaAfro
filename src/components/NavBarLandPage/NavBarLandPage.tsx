@@ -1,3 +1,4 @@
+import logoTipo from "../../assets/LogoTipo.png";
 import { Toolbar, Box, Button, Avatar, Stack, Menu, MenuItem, Divider, ListSubheader, IconButton, alpha, useTheme } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -40,7 +41,7 @@ export default function NavBarLandPage() {
         }}
       >
         <Avatar
-          src="/src/assets/LogoTipo.png"
+          src={logoTipo}
           alt="Coroa Afro"
           sx={{ width: 70, height: 70 }}
         />

@@ -1,3 +1,4 @@
+import logoTipo from "../../assets/LogoTipo.png";
 import ResponsiveNavigation from "../ResponsiveNavigation/ResponsiveNavigation";
 import {
   Avatar,
@@ -73,7 +74,7 @@ export default function NavBar() {
           }}
         >
           <Avatar
-            src="/src/assets/LogoTipo.png"
+            src={logoTipo}
             alt="Coroa Afro"
             sx={{ width: 44, height: 44 }}
           />
