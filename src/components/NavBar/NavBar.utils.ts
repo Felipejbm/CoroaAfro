@@ -7,5 +7,6 @@ export const navItems: NavItem[] = [
     { label: "Chats", href: "/chat" },
     { label: "Assistente IA", href: "/assistente" },
     { label: "Comunidade", href: "/posts" },
+    { label: "Meu Plano", href: "/checkout" },
     { label: "Perfil", href: "/perfil" },
 ];

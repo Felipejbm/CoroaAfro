@@ -11,6 +11,7 @@ import {
   DialogContent,
   MenuItem,
   Paper,
+  Rating,
   Stack,
   TextField,
   Typography,
@@ -28,6 +29,7 @@ export default function TrilhasMentor() {
     aluno,
     setAluno,
     acompanhamento,
+    avaliacoes,
     loading,
     loadingAluno,
     error,
@@ -94,13 +96,13 @@ export default function TrilhasMentor() {
               select
               fullWidth
               label="Mentorado"
-              value={alunos.some((a) => String(a.nome) === aluno) ? aluno : ""}
+              value={alunos.some((a) => String(a.id) === aluno) ? aluno : ""}
               disabled={busy}
               onChange={(e) => setAluno(e.target.value)}
             >
               <MenuItem value="">Selecione um mentorado</MenuItem>
               {alunos.map((a) => (
-                <MenuItem key={a.empresa} value={String(a.empresa)}>
+                <MenuItem key={a.id} value={String(a.id)}>
                   {a.nome}
                   {a.empresa ? ` — ${a.empresa}` : ""}
                 </MenuItem>
@@ -141,6 +143,11 @@ export default function TrilhasMentor() {
                   {t.aulas.filter((a) => a.concluida).length} de{" "}
                   {t.aulas.length} aulas concluídas
                 </Typography>
+                {t.avaliacao && <Stack sx={{ mt: 1.5, p: 2, borderRadius: 2, bgcolor: "background.paper" }} gap={.5}>
+                  <Typography fontWeight={700}>Avaliação recebida</Typography>
+                  <Stack direction={{xs:"column",sm:"row"}} gap={2}><Stack direction="row" gap={1}><Typography>Trilha:</Typography><Rating size="small" readOnly value={t.avaliacao.nota_trilha}/></Stack><Stack direction="row" gap={1}><Typography>Mentoria:</Typography><Rating size="small" readOnly value={t.avaliacao.nota_mentor}/></Stack></Stack>
+                  {t.avaliacao.comentario && <Typography>{t.avaliacao.comentario}</Typography>}
+                </Stack>}
                 {t.aulas.map((a) => (
                   <Typography key={a.id} variant="body2">
                     {a.concluida ? "Concluída" : "Pendente"}: {a.titulo}
@@ -148,6 +155,10 @@ export default function TrilhasMentor() {
                 ))}
               </Stack>
             ))}
+          </Paper>
+          <Paper sx={{ p: { xs: 2, md: 3 }, borderRadius: 3, border: "1px solid", borderColor: "secondary.main", bgcolor: theme.palette.secondary.light }}>
+            <Typography variant="h6" mb={2}>Avaliações recebidas</Typography>
+            {!avaliacoes.length ? <Alert severity="info">Você ainda não recebeu avaliações. Elas ficam disponíveis quando um mentorado conclui uma trilha.</Alert> : <Stack gap={2}>{avaliacoes.map(a=><Stack key={a.id} sx={{p:2,borderRadius:2,bgcolor:"background.paper"}} gap={.5}><Typography fontWeight={700}>{a.trilha_titulo}</Typography><Typography variant="body2">Avaliação de {a.empreendedor_nome}</Typography><Stack direction={{xs:"column",sm:"row"}} gap={2}><Stack direction="row" gap={1}><Typography>Trilha:</Typography><Rating size="small" readOnly value={a.nota_trilha}/></Stack><Stack direction="row" gap={1}><Typography>Mentoria:</Typography><Rating size="small" readOnly value={a.nota_mentor}/></Stack></Stack>{a.comentario&&<Typography sx={{mt:1}}>{a.comentario}</Typography>}</Stack>)}</Stack>}
           </Paper>
           {!trilhas.length && !error && (
             <Alert severity="info">

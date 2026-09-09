@@ -1,11 +1,10 @@
 import TrilhasMentor from "./pages/Mentoria/TrilhasMentor";
 import MinhasTrilhas from "./pages/Mentoria/MinhasTrilhas";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import RequireLogin from "./components/RequireLogin/RequireLogin";
 import LandPage from "./pages/LandPage/LandPage";
 import Chat from "./pages/Mentoria/ChatMentoria";
 import Mentoria from "./pages/Mentoria/Mentoria";
-import DashboardFinanceiro from "./pages/DashboardFinanceiro/DashboardFinanceiro";
 import DashboardMetas from "./pages/DashboardMetas/DashboardMetas";
 import DashboardRedes from "./pages/DashboardRedes/DashboardRedes";
 import Equipe from "./pages/Equipe/Equipe";
@@ -17,14 +16,20 @@ import Posts from "./pages/Posts/Posts";
 import CadastroEmpreendedor from "./pages/Cadastro/CadastroEmpreendedor/CadastroEmpreendedor";
 import CadastroEmpresa from "./pages/Cadastro/CadastroEmpresa/CadastroEmpresa";
 import AssistenteIA from "./pages/AssistenteIA/AssistenteIA";
+import CheckoutPlano from "./pages/CheckoutPlano/CheckoutPlano";
+import CadastroMentor from "./pages/CadastroMentor/CadastroMentor";
+import Admin from "./pages/Admin/Admin";
+import PaginaNaoEncontrada from "./pages/PaginaNaoEncontrada/PaginaNaoEncontrada";
+import FeedbackModal from "./components/Feedback/FeedbackModal";
 
 function App() {
   return (
+    <>
     <Routes>
       <Route path="/" element={<LandPage />} />
-      <Route path="/recuperar-senha" element={<RecuperarSenha key="solicitar" />} />
-      <Route path="/redefinir-senha" element={<RecuperarSenha key="redefinir" />} />
       <Route path="/cadastro-empreendedor" element={<CadastroEmpreendedor />} />
+      <Route path="/cadastro-mentor" element={<CadastroMentor />} />
+      <Route path="/admin" element={<Admin />} />
       <Route
         path="/cadastro-empresa"
         element={
@@ -59,60 +64,17 @@ function App() {
       />
       <Route
         path="/criar-atividade"
-        element={
-          <RequireLogin papel="mentor">
-            <TrilhasMentor />
-          </RequireLogin>
-        }
+        element={<Navigate to="/criar-trilha" replace />}
       />
       <Route
         path="/criar-licao"
-        element={
-          <RequireLogin papel="mentor">
-            <TrilhasMentor />
-          </RequireLogin>
-        }
+        element={<Navigate to="/criar-trilha" replace />}
       />
-      <Route
-        path="/criar-trilha-personalizada-1"
-        element={
-          <RequireLogin>
-            <MinhasTrilhas />
-          </RequireLogin>
-        }
-      />
-      <Route
-        path="/criar-trilha-personalizada-2"
-        element={
-          <RequireLogin>
-            <MinhasTrilhas />
-          </RequireLogin>
-        }
-      />
-      <Route
-        path="/criar-trilha-personalizada-3"
-        element={
-          <RequireLogin>
-            <MinhasTrilhas />
-          </RequireLogin>
-        }
-      />
-      <Route
-        path="/criar-trilha-personalizada-4"
-        element={
-          <RequireLogin>
-            <MinhasTrilhas />
-          </RequireLogin>
-        }
-      />
-      <Route
-        path="/criar-trilha-personalizada-5"
-        element={
-          <RequireLogin>
-            <MinhasTrilhas />
-          </RequireLogin>
-        }
-      />
+      <Route path="/criar-trilha-personalizada-1" element={<Navigate to="/trilha-personalizada" replace />} />
+      <Route path="/criar-trilha-personalizada-2" element={<Navigate to="/trilha-personalizada" replace />} />
+      <Route path="/criar-trilha-personalizada-3" element={<Navigate to="/trilha-personalizada" replace />} />
+      <Route path="/criar-trilha-personalizada-4" element={<Navigate to="/trilha-personalizada" replace />} />
+      <Route path="/criar-trilha-personalizada-5" element={<Navigate to="/trilha-personalizada" replace />} />
       <Route
         path="/criar-trilha"
         element={
@@ -123,11 +85,7 @@ function App() {
       />
       <Route
         path="/dashboard-financeiro"
-        element={
-          <RequireLogin>
-            <DashboardFinanceiro />
-          </RequireLogin>
-        }
+        element={<Navigate to="/dashboard-metas" replace />}
       />
       <Route
         path="/dashboard-metas"
@@ -147,11 +105,7 @@ function App() {
       />
       <Route
         path="/detalhes-mentorado"
-        element={
-          <RequireLogin papel="mentor">
-            <Mentoria detalhe />
-          </RequireLogin>
-        }
+        element={<Navigate to="/controle-mentorados" replace />}
       />
       <Route
         path="/detalhes-mentorado/:id"
@@ -164,13 +118,10 @@ function App() {
       <Route path="/equipe" element={<Equipe />} />
       <Route
         path="/licoes"
-        element={
-          <RequireLogin>
-            <MinhasTrilhas />
-          </RequireLogin>
-        }
+        element={<Navigate to="/trilha-guiada" replace />}
       />
       <Route path="/login" element={<Login />} />
+      <Route path="/recuperar-senha" element={<RecuperarSenha />} />
       <Route
         path="/perfil"
         element={
@@ -180,6 +131,14 @@ function App() {
         }
       />
       <Route path="/planos" element={<Planos />} />
+      <Route
+        path="/checkout"
+        element={
+          <RequireLogin papel="empreendedor">
+            <CheckoutPlano />
+          </RequireLogin>
+        }
+      />
       <Route
         path="/posts"
         element={
@@ -220,7 +179,10 @@ function App() {
           </RequireLogin>
         }
       />
+      <Route path="*" element={<PaginaNaoEncontrada />} />
     </Routes>
+    <FeedbackModal />
+    </>
   );
 }
 

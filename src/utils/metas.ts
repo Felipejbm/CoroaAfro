@@ -44,14 +44,15 @@ export function erroValorMeta(value: string, unidade: string) {
 export function errosMeta(form: MetaEntrada) {
   const erros: Partial<Record<keyof MetaEntrada, string>> = {};
   if (!form.titulo.trim()) erros.titulo = "Dê um título à meta.";
-  if (!unidadesMeta.some(u => u.value === form.unidade)) erros.unidade = "Selecione uma medida da lista.";
-  for (const field of ["valor_inicial", "valor_atual", "valor_alvo"] as const) {
+  if (form.tipo === "manual" && !unidadesMeta.some(u => u.value === form.unidade)) erros.unidade = "Selecione uma medida da lista.";
+  if (form.tipo === "instagram" && !form.metrica) erros.metrica = "Selecione uma métrica do Instagram.";
+  for (const field of (form.tipo === "instagram" ? ["valor_alvo"] : ["valor_inicial", "valor_atual", "valor_alvo"]) as ("valor_inicial" | "valor_atual" | "valor_alvo")[]) {
     const erro = erroValorMeta(form[field], form.unidade);
     if (erro) erros[field] = erro;
   }
-  if (!erros.valor_alvo && !erros.valor_inicial && valorNumerico(form.valor_alvo) <= valorNumerico(form.valor_inicial))
+  if (form.tipo === "manual" && !erros.valor_alvo && !erros.valor_inicial && valorNumerico(form.valor_alvo) <= valorNumerico(form.valor_inicial))
     erros.valor_alvo = "O alvo deve ser maior que o valor inicial.";
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(form.prazo) || !Number.isFinite(Date.parse(form.prazo)) || new Date(form.prazo).toISOString().slice(0, 10) !== form.prazo)
+  if (form.prazo && (!/^\d{4}-\d{2}-\d{2}$/.test(form.prazo) || !Number.isFinite(Date.parse(form.prazo)) || new Date(form.prazo).toISOString().slice(0, 10) !== form.prazo))
     erros.prazo = "Escolha uma data válida.";
   return erros;
 }

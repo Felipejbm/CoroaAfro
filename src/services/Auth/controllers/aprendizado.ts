@@ -24,6 +24,21 @@ export interface Trilha {
   versao: number;
   progresso: number;
   aulas: Aula[]
+  avaliacao: Avaliacao | null;
+}
+
+export interface Avaliacao {
+  id: number;
+  nota_trilha: number;
+  nota_mentor: number;
+  comentario: string;
+  criada_em: string;
+}
+
+export interface AvaliacaoMentor extends Avaliacao {
+  trilha_id: number;
+  trilha_titulo: string;
+  empreendedor_nome: string;
 }
 
 export interface AulaEntrada { 
@@ -78,6 +93,12 @@ export const publicarTrilha = async (trilha: Trilha) => (
 
   export const concluirAula = async (trilha: number, aula: number, concluida: boolean) =>
     (await api.put<Trilha>(`/mentoria/minhas-trilhas/${trilha}/aulas/${aula}`, { concluida })).data;
+
+  export const avaliarTrilha = async (trilha: number, dados: { nota_trilha: number; nota_mentor: number; comentario: string }) =>
+    (await api.post<Trilha>(`/mentoria/minhas-trilhas/${trilha}/avaliacao`, dados)).data;
+
+  export const listarAvaliacoesMentor = async () =>
+    (await api.get<AvaliacaoMentor[]>("/mentoria/avaliacoes")).data;
 
   export interface Categoria { 
     value: string; 
