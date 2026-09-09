@@ -47,7 +47,7 @@ export async function buscarMinhaEmpresa(): Promise<Empresa | null> {
 }
 
 export async function salvarEmpresa(data: DadosEmpresa, id?: number): Promise<Empresa> {
-  if (id) return (await api.patch<Empresa>(`/empresa/${id}`, data)).data;
+  if (id !== undefined) return (await api.patch<Empresa>(`/empresa/${id}`, data)).data;
   return (await api.post<{ Empresa: Empresa }>("/empresa/criar-empresa", data)).data.Empresa;
 }
 

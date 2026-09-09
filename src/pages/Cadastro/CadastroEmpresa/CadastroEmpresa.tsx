@@ -49,7 +49,7 @@ export default function CadastroEmpresa() {
             }}
           >
             <Typography variant="h4" sx={{ fontFamily: fonts.hero }}>
-              {empresaId ? "Editar empresa" : "Cadastre sua empresa"}
+              {empresaId !== undefined ? "Editar empresa" : "Cadastre sua empresa"}
             </Typography>
             <Typography>
               Dados organizados ajudam a conhecer seu negócio e sua região.
@@ -107,7 +107,7 @@ export default function CadastroEmpresa() {
             >
               {salvando
                 ? "Salvando..."
-                : empresaId
+                : empresaId !== undefined
                   ? "Salvar alterações"
                   : "Cadastrar empresa"}
             </Button>

@@ -10,6 +10,7 @@ import DashboardMetas from "./pages/DashboardMetas/DashboardMetas";
 import DashboardRedes from "./pages/DashboardRedes/DashboardRedes";
 import Equipe from "./pages/Equipe/Equipe";
 import Login from "./pages/Login/Login";
+import RecuperarSenha from "./pages/RecuperarSenha/RecuperarSenha";
 import Perfil from "./pages/Perfil/Perfil";
 import Planos from "./pages/Planos/Planos";
 import Posts from "./pages/Posts/Posts";
@@ -21,6 +22,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandPage />} />
+      <Route path="/recuperar-senha" element={<RecuperarSenha key="solicitar" />} />
+      <Route path="/redefinir-senha" element={<RecuperarSenha key="redefinir" />} />
       <Route path="/cadastro-empreendedor" element={<CadastroEmpreendedor />} />
       <Route
         path="/cadastro-empresa"

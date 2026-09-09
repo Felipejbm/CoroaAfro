@@ -244,7 +244,8 @@ export default function Login() {
             <Stack sx={{ textAlign: "center", mb: 3 }}>
               <MuiLink
                 component={RouterLink}
-                to="/recuperar-senha"
+                to={`/recuperar-senha?papel=${papel}`}
+                state={{ email }}
                 underline="hover"
                 sx={{
                   fontFamily: fonts.body,

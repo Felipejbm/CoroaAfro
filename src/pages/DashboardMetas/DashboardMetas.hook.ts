@@ -12,6 +12,7 @@ import {
 } from "../../services/Auth/controllers/metas";
 import {
   formatarValorEntrada,
+  errosMeta,
   resumoMetasConfig,
   valorNumerico,
   vazio,
@@ -45,6 +46,15 @@ export function useDashboardMetas() {
   const [saving, setSaving] = useState(false);
 
   const [formError, setFormError] = useState("");
+  const errosCampos = errosMeta(form);
+  const formularioValido = Object.keys(errosCampos).length === 0;
+  const mudarUnidade = (unidade: string) => setForm(prev => ({
+    ...prev, unidade,
+    ...Object.fromEntries((["valor_inicial", "valor_atual", "valor_alvo"] as const).map(campo => {
+      const valor = valorNumerico(prev[campo]);
+      return [campo, Number.isFinite(valor) ? formatarValorEntrada(valor, unidade === "R$") : prev[campo]];
+    })),
+  }));
 
   useEffect(() => {
     let active = true;
@@ -117,16 +127,7 @@ export function useDashboardMetas() {
     const inicial = valorNumerico(form.valor_inicial);
     const atual = valorNumerico(form.valor_atual);
     const alvo = valorNumerico(form.valor_alvo);
-    if (
-      !form.titulo.trim() ||
-      !form.unidade.trim() ||
-      !Number.isFinite(inicial) ||
-      !Number.isFinite(atual) ||
-      !Number.isFinite(alvo) ||
-      inicial < 0 ||
-      atual < 0 ||
-      alvo <= inicial
-    ) {
+    if (!formularioValido) {
       setFormError(
         "Preencha os campos e informe valores válidos. O alvo deve ser maior que o valor inicial.",
       );
@@ -193,6 +194,9 @@ export function useDashboardMetas() {
     setForm,
     saving,
     formError,
+    errosCampos,
+    formularioValido,
+    mudarUnidade,
     atualizar,
     abrirModal,
     salvar,

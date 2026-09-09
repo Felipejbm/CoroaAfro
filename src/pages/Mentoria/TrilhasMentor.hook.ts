@@ -14,7 +14,7 @@ import {
   type TrilhaEntrada,
 } from "../../services/Auth/controllers/aprendizado";
 import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
-import { novaAula, novaTrilha } from "./TrilhasMentor.utils";
+import { novaAula, novaTrilha, erroTrilha, normalizarVideo } from "./TrilhasMentor.utils";
 
 export function useTrilhasMentor() {
   const [params] = useSearchParams();
@@ -130,10 +130,12 @@ export function useTrilhasMentor() {
 
   async function salvar() {
     if (busy) return;
+    const erro = erroTrilha(dados, atual?.publicada);
+    if (erro) { setErroForm(erro); return; }
     setBusy(true);
     setErroForm("");
     try {
-      await salvarTrilha(dados, atual);
+      await salvarTrilha({ ...dados, aulas: dados.aulas.map(aula => ({ ...aula, video_url: normalizarVideo(aula.video_url) })) }, atual);
       setDialog(false);
       setSucesso(
         atual?.publicada
