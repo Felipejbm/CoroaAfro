@@ -15,6 +15,7 @@ import {
   DialogActions,
   DialogContent,
   FormControlLabel,
+  InputAdornment,
   LinearProgress,
   MenuItem,
   Paper,
@@ -27,7 +28,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
 import { useDashboardMetas } from "./DashboardMetas.hook";
 import {
-  formatarEntradaNumerica,
+  formatarValorEntrada,
   formatarValorMeta,
   labels,
   numero,
@@ -54,6 +55,9 @@ export default function DashboardMetas() {
     setForm,
     saving,
     formError,
+    errosCampos,
+    formularioValido,
+    mudarUnidade,
     atualizar,
     abrirModal,
     salvar,
@@ -373,7 +377,7 @@ export default function DashboardMetas() {
                   <Typography variant="body2" color="text.secondary">
                     {formatarValorMeta(meta.valor_atual, meta.unidade)} /{" "}
                     {formatarValorMeta(meta.valor_alvo, meta.unidade)}{" "}
-                    {meta.unidade !== "R$" && `${meta.unidade} · `}Inicial: {formatarValorMeta(meta.valor_inicial, meta.unidade)}
+                    {!["R$", "%"].includes(meta.unidade) && `${meta.unidade} · `}Inicial: {formatarValorMeta(meta.valor_inicial, meta.unidade)}
                   </Typography>
 
                   <Stack gap={1}>
@@ -392,7 +396,7 @@ export default function DashboardMetas() {
                           variant="caption"
                           color="text.secondary"
                         >
-                          / {formatarValorMeta(meta.valor_alvo, meta.unidade)} {meta.unidade !== "R$" && meta.unidade}
+                          / {formatarValorMeta(meta.valor_alvo, meta.unidade)} {!["R$", "%"].includes(meta.unidade) && meta.unidade}
                         </Typography>
                       </Typography>
                       <Typography
@@ -486,6 +490,8 @@ export default function DashboardMetas() {
                   required
                   disabled={saving}
                   label="Título"
+                  error={!!form.titulo && !!errosCampos.titulo}
+                  helperText={form.titulo ? errosCampos.titulo : "Descreva o resultado que deseja alcançar."}
                   placeholder="Ex.: Aumentar minhas vendas"
                   value={form.titulo}
                   inputProps={{ maxLength: 120 }}
@@ -498,11 +504,12 @@ export default function DashboardMetas() {
                   required
                   disabled={saving}
                   select
-                  label="O que vamos medir?"
-                  helperText="Escolha uma unidade para manter os valores comparáveis."
+                  label="Tipo de medida"
+                  error={!!form.unidade && !!errosCampos.unidade}
+                  helperText={errosCampos.unidade || (form.unidade === "R$" ? "Valores em reais, com centavos. Ex.: 1.250,50." : form.unidade === "%" ? "Percentual de 0 a 100. Ex.: 25,5%." : "Contagem: use números inteiros, sem casas decimais.")}
                   value={form.unidade}
                   onChange={(event) =>
-                    setForm({ ...form, unidade: event.target.value })
+                    mudarUnidade(event.target.value)
                   }
                 >
                   {unidadesMeta.map((unidade) => (
@@ -510,7 +517,7 @@ export default function DashboardMetas() {
                       {unidade.label}
                     </MenuItem>
                   ))}
-                  {!unidadesMeta.some((unidade) => unidade.value === form.unidade) && (
+                  {!!form.unidade && !unidadesMeta.some((unidade) => unidade.value === form.unidade) && (
                     <MenuItem value={form.unidade}>{form.unidade}</MenuItem>
                   )}
                 </TextField>
@@ -526,42 +533,36 @@ export default function DashboardMetas() {
                   ] as const
                 ).map(([field, label]) => {
                   const dinheiro = form.unidade === "R$";
-                  const valor = valorNumerico(form[field]);
-                  const erro =
-                    !form[field].trim() ||
-                    !Number.isFinite(valor) ||
-                    valor < 0 ||
-                    (field === "valor_alvo" &&
-                      Number.isFinite(valorNumerico(form.valor_inicial)) &&
-                      valor <= valorNumerico(form.valor_inicial));
+                  const erro = form[field].trim() ? errosCampos[field] : "";
                   return (
                     <TextField
                       key={field}
                       required
-                      disabled={saving}
+                      disabled={saving || !form.unidade}
                       type="text"
-                      inputMode="decimal"
+                      slotProps={{ htmlInput: { maxLength: 24, inputMode: dinheiro || form.unidade === "%" ? "decimal" : "numeric" }, input: {
+                        startAdornment: dinheiro ? <InputAdornment position="start">R$</InputAdornment> : undefined,
+                        endAdornment: form.unidade === "%" ? <InputAdornment position="end">%</InputAdornment> : undefined,
+                      } }}
                       label={label}
                       value={form[field]}
-                      error={erro}
+                      error={!!erro}
                       helperText={
                         erro
-                          ? field === "valor_alvo"
-                            ? "O alvo deve ser maior que o valor inicial."
-                            : "Informe um valor igual ou maior que zero."
+                          ? erro
                           : dinheiro
                             ? "Digite o valor em reais."
-                            : "Use apenas números."
+                            : form.unidade === "%" ? "De 0 a 100%." : "Apenas números inteiros."
                       }
                       onChange={(event) =>
                         setForm({
                           ...form,
-                          [field]: formatarEntradaNumerica(
-                            event.target.value,
-                            dinheiro,
-                          ),
+                          [field]: event.target.value,
                         })
                       }
+                      onBlur={() => {
+                        if (!errosCampos[field]) setForm(prev => ({ ...prev, [field]: formatarValorEntrada(valorNumerico(prev[field]), dinheiro) }));
+                      }}
                     />
                   );
                 })}
@@ -571,7 +572,8 @@ export default function DashboardMetas() {
                   disabled={saving}
                   type="date"
                   label="Prazo"
-                  helperText="Até quando você pretende alcançar essa meta?"
+                  error={!!form.prazo && !!errosCampos.prazo}
+                  helperText={(form.prazo && errosCampos.prazo) || "Até quando você pretende alcançar essa meta?"}
                   InputLabelProps={{ shrink: true }}
                   value={form.prazo}
                   onChange={(event) =>
@@ -607,7 +609,7 @@ export default function DashboardMetas() {
               </Button>
               <Button
                 type="submit"
-                disabled={saving}
+                disabled={saving || !formularioValido}
                 variant="contained"
                 sx={{ bgcolor: theme.palette.primary.main }}
               >

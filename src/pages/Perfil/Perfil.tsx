@@ -18,7 +18,7 @@ import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import { fonts } from "../../styles/theme";
 import { usePerfil } from "./Perfil.hook";
-import { ajudaFotoPerfil, formatosFotoPerfil } from "./Perfil.utils";
+import { ajudaFotoPerfil, formatosFotoPerfil, formatarTelefone, errosPerfil } from "./Perfil.utils";
 import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
 
 export default function Perfil() {
@@ -148,6 +148,9 @@ export default function Perfil() {
                 <Button variant="contained" onClick={editar}>
                   Editar meus dados
                 </Button>
+                <Button variant="outlined" onClick={() => navigate(`/recuperar-senha?papel=${usuario.papel}`, { state: { email: usuario.email } })}>
+                  Redefinir senha por e-mail
+                </Button>
               </Stack>
               <Stack sx={card}>
                 <Typography variant="h3" sx={{ fontSize: "1.2rem" }}>
@@ -268,6 +271,8 @@ export default function Perfil() {
                   autoFocus
                   autoComplete="name"
                   label="Nome completo"
+                  error={!!form.nome && !!errosPerfil(form).nome}
+                  helperText={form.nome ? errosPerfil(form).nome : "Como você quer ser identificado."}
                   required
                   value={form.nome}
                   disabled={salvando}
@@ -277,6 +282,9 @@ export default function Perfil() {
                 <TextField
                   autoComplete="email"
                   label="E-mail"
+                  error={!!form.email && !!errosPerfil(form).email}
+                  helperText={form.email ? errosPerfil(form).email : "Use seu e-mail de acesso."}
+                  onBlur={() => setForm(prev => ({ ...prev, email: prev.email.trim().toLowerCase() }))}
                   type="email"
                   required
                   value={form.email}
@@ -287,7 +295,8 @@ export default function Perfil() {
                 <TextField
                   type="tel"
                   autoComplete="tel"
-                  helperText="Inclua o DDD. Ex.: (11) 99999-9999."
+                  error={!!form.telefone && !!errosPerfil(form).telefone}
+                  helperText={(form.telefone && errosPerfil(form).telefone) || "Inclua o DDD. Aceita telefone fixo ou celular."}
                   label="Telefone"
                   required
                   value={form.telefone}
@@ -295,11 +304,7 @@ export default function Perfil() {
                   onChange={(e) =>
                     setForm({
                       ...form,
-                      telefone: e.target.value
-                        .replace(/\D/g, "")
-                        .slice(0, 11)
-                        .replace(/^(\d{2})(\d)/, "($1) $2")
-                        .replace(/(\d{5})(\d)/, "$1-$2"),
+                      telefone: formatarTelefone(e.target.value),
                     })
                   }
                   slotProps={{ htmlInput: { maxLength: 20 } }}
@@ -311,7 +316,7 @@ export default function Perfil() {
               <Button disabled={salvando} onClick={() => setEditando(false)}>
                 Cancelar
               </Button>
-              <Button type="submit" variant="contained" disabled={salvando}>
+              <Button type="submit" variant="contained" disabled={salvando || Object.values(errosPerfil(form)).some(Boolean)}>
                 {salvando ? "Salvando..." : "Salvar alterações"}
               </Button>
             </DialogActions>

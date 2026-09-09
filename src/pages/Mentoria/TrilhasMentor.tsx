@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import AprendizadoLayout from "./AprendizadoLayout";
 import { useTrilhasMentor } from "./TrilhasMentor.hook";
+import { erroVideo, normalizarVideo, erroTrilha } from "./TrilhasMentor.utils";
 
 export default function TrilhasMentor() {
   const {
@@ -294,12 +295,14 @@ export default function TrilhasMentor() {
                   />
                   <TextField
                     label="Link de vídeo (opcional)"
-                    type="url"
-                    helperText="Link HTTPS do YouTube ou Vimeo. O vídeo será aberto em outra aba."
+                    type="text"
+                    error={!!erroVideo(a.video_url)}
+                    helperText={erroVideo(a.video_url) || "Cole o link do YouTube ou Vimeo. HTTPS é adicionado automaticamente quando necessário."}
                     value={a.video_url}
                     disabled={busy || atual?.publicada}
-                    inputProps={{ maxLength: 2048 }}
+                    inputProps={{ maxLength: 2048, inputMode: "url" }}
                     onChange={(e) => mudarAula(i, "video_url", e.target.value)}
+                    onBlur={() => mudarAula(i, "video_url", normalizarVideo(a.video_url))}
                   />
                   {!atual?.publicada && (
                     <Button
@@ -335,7 +338,7 @@ export default function TrilhasMentor() {
             variant="contained"
             type="submit"
             form="form-trilha"
-            disabled={busy}
+            disabled={busy || !!erroTrilha(dados, atual?.publicada)}
           >
             {busy
               ? "Salvando..."

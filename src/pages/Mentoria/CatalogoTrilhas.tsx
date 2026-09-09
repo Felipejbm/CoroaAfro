@@ -161,7 +161,7 @@ export default function CatalogoTrilhas({
         fullWidth
         maxWidth="sm"
       >
-        <ModalHeader id="comecar-trilha" titulo={"Começar {escolhida?.titulo}?"} categoria="Seu próximo aprendizado" descricao="Conheça o conteúdo e dê o primeiro passo com seu mentor." icone={<MenuBookRoundedIcon />} onClose={() => setEscolhida(undefined)} ocupado={busy} />
+        <ModalHeader id="comecar-trilha" titulo={`Começar ${escolhida?.titulo ?? "trilha"}?`} categoria="Seu próximo aprendizado" descricao="Conheça o conteúdo e dê o primeiro passo com seu mentor." icone={<MenuBookRoundedIcon />} onClose={() => setEscolhida(undefined)} ocupado={busy} />
         <DialogContent>
           <Stack gap={2}>
             {erroInscricao && <Alert severity="error">{erroInscricao}</Alert>}

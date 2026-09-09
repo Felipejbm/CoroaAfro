@@ -13,7 +13,7 @@ import {
 } from "../../services/Auth/controllers/empresa";
 import { buscarFotoPerfil, salvarFotoPerfil } from "../../services/Auth/controllers/perfil";
 import type { FormularioPerfil } from "./Perfil.types";
-import { formatosFotoPerfil, limiteFotoPerfil } from "./Perfil.utils";
+import { formatosFotoPerfil, limiteFotoPerfil, errosPerfil, formatarTelefone } from "./Perfil.utils";
 
 export function usePerfil() {
   const navigate = useNavigate();
@@ -156,7 +156,7 @@ export function usePerfil() {
     setForm({
       nome: usuario.nome,
       email: usuario.email,
-      telefone: usuario.telefone,
+      telefone: formatarTelefone(usuario.telefone),
     });
     setErroEdicao("");
     setEditando(true);
@@ -176,7 +176,7 @@ export function usePerfil() {
       setErroEdicao("Informe um e-mail válido.");
       return;
     }
-    if (telefone.replace(/\D/g, "").length < 10) {
+    if (errosPerfil(form).telefone) {
       setErroEdicao("Informe um telefone com DDD.");
       return;
     }

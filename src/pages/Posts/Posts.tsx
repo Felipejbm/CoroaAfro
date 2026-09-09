@@ -9,6 +9,7 @@ import NavBarMentor from "../../components/NavMentor/NavBar";
 import { fonts } from "../../styles/theme";
 import { usePosts } from "./Posts.hook";
 import AvatarUsuario from "../../components/AvatarUsuario/AvatarUsuario";
+import { validarPost } from "./Posts.utils";
 
 export default function Posts() {
   const { usuario, newComment, setNewComment, busca, setBusca, postsVisiveis, handleAddComment,
@@ -115,7 +116,8 @@ export default function Posts() {
               </Button>
               <Typography variant="caption">JPG, PNG ou WebP. Até 5 MB.{arquivo ? ` Arquivo: ${arquivo.name}` : ""}</Typography>
               <TextField label="Ou use uma URL de imagem (opcional)" value={imagem} onChange={e => { limparImagem(); setImagem(e.target.value); }}
-                disabled={salvando} helperText="Link HTTP ou HTTPS, com até 255 caracteres."
+                error={!!imagem.trim() && !!validarPost("Texto", imagem)}
+                disabled={salvando} helperText={validarPost("Texto", imagem) || "Link HTTP ou HTTPS, com até 255 caracteres."}
                 slotProps={{ htmlInput: { maxLength: 255 } }} />
               {imagemPreview && <Stack gap={1}>
                 <Stack component="img" src={imagemPreview} alt="Prévia da imagem da postagem" referrerPolicy="no-referrer"
@@ -126,7 +128,7 @@ export default function Posts() {
           </DialogContent>
           <DialogActions>
             <Button disabled={salvando} onClick={() => setAberto(false)}>Cancelar</Button>
-            <Button variant="contained" disabled={salvando || !texto.trim()} onClick={publicar}>{salvando ? "Salvando..." : editando ? "Salvar alterações" : "Publicar"}</Button>
+            <Button variant="contained" disabled={salvando || !!validarPost(texto, imagem)} onClick={publicar}>{salvando ? "Salvando..." : editando ? "Salvar alterações" : "Publicar"}</Button>
           </DialogActions>
         </Dialog>
         <Dialog open={!!excluindo} onClose={() => { if (!apagando) setExcluindo(null); }} aria-labelledby="excluir-postagem-titulo">
