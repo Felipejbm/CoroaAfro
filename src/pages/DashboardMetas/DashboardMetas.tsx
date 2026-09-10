@@ -26,6 +26,7 @@ import {
 import { alpha } from "@mui/material/styles";
 import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
+import type { MetaEntrada } from "../../services/Auth/controllers/metas";
 import { useDashboardMetas } from "./DashboardMetas.hook";
 import {
   formatarValorEntrada,
@@ -433,7 +434,7 @@ export default function DashboardMetas() {
                     sx={{ pt: 1 }}
                   >
                     <Typography variant="caption" color="text.secondary">
-                      Prazo: {meta.prazo.split("-").reverse().join("/")} ·
+                      Prazo: {meta.prazo ? meta.prazo.split("-").reverse().join("/") : "Sem prazo"} ·
                       Inicial: {formatarValorMeta(meta.valor_inicial, meta.unidade)}
                     </Typography>
 
@@ -500,37 +501,28 @@ export default function DashboardMetas() {
                   }
                 />
 
-                <TextField
-                  required
-                  disabled={saving}
-                  select
-                  label="Tipo de medida"
-                  error={!!form.unidade && !!errosCampos.unidade}
-                  helperText={errosCampos.unidade || (form.unidade === "R$" ? "Valores em reais, com centavos. Ex.: 1.250,50." : form.unidade === "%" ? "Percentual de 0 a 100. Ex.: 25,5%." : "Contagem: use números inteiros, sem casas decimais.")}
-                  value={form.unidade}
-                  onChange={(event) =>
-                    mudarUnidade(event.target.value)
-                  }
-                >
-                  {unidadesMeta.map((unidade) => (
-                    <MenuItem key={unidade.value} value={unidade.value}>
-                      {unidade.label}
-                    </MenuItem>
-                  ))}
-                  {!!form.unidade && !unidadesMeta.some((unidade) => unidade.value === form.unidade) && (
-                    <MenuItem value={form.unidade}>{form.unidade}</MenuItem>
-                  )}
+                <TextField select required disabled={saving || Boolean(editing)} label="Como o progresso será atualizado?" value={form.tipo}
+                  onChange={(event) => { const tipo = event.target.value as MetaEntrada["tipo"]; setForm({ ...form, tipo, unidade: tipo === "instagram" ? "seguidores" : "", metrica: tipo === "instagram" ? "seguidores" : null, valor_inicial: "0", valor_atual: "0" }); }}>
+                  <MenuItem value="manual">Manualmente por mim</MenuItem><MenuItem value="instagram">Automaticamente pelo Instagram</MenuItem>
                 </TextField>
+                {form.tipo === "instagram" ? <TextField select required disabled={saving || Boolean(editing)} label="Métrica real do Instagram" value={form.metrica ?? ""}
+                  onChange={(event) => { const metrica = event.target.value as MetaEntrada["metrica"]; setForm({ ...form, metrica, unidade: metrica === "publicacoes" ? "publicações" : metrica === "alcance_7d" ? "alcance" : metrica === "interacoes_recentes" ? "interações" : "seguidores" }); }}>
+                  <MenuItem value="seguidores">Seguidores</MenuItem><MenuItem value="publicacoes">Total de publicações</MenuItem><MenuItem value="alcance_7d">Alcance nos últimos 7 dias</MenuItem><MenuItem value="interacoes_recentes">Interações nas publicações recentes</MenuItem>
+                </TextField> : <TextField required disabled={saving} select label="Tipo de medida" error={!!form.unidade && !!errosCampos.unidade}
+                  helperText={errosCampos.unidade || (form.unidade === "R$" ? "Valores em reais, com centavos. Ex.: 1.250,50." : form.unidade === "%" ? "Percentual de 0 a 100. Ex.: 25,5%." : "Contagem: use números inteiros, sem casas decimais.")}
+                  value={form.unidade} onChange={(event) => mudarUnidade(event.target.value)}>
+                  {unidadesMeta.map((unidade) => <MenuItem key={unidade.value} value={unidade.value}>{unidade.label}</MenuItem>)}
+                </TextField>}
 
                 </SecaoFormulario>
                 <SecaoFormulario titulo="Do ponto de partida à conquista" descricao="Informe onde começou, onde está hoje e aonde quer chegar.">
                 <Stack sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
                 {(
-                  [
+                  (form.tipo === "manual" ? [
                     ["valor_inicial", "Valor inicial"],
                     ["valor_atual", "Valor atual"],
                     ["valor_alvo", "Valor-alvo"],
-                  ] as const
+                  ] : [["valor_alvo", "Valor-alvo"]]) as readonly (readonly ["valor_inicial" | "valor_atual" | "valor_alvo", string])[]
                 ).map(([field, label]) => {
                   const dinheiro = form.unidade === "R$";
                   const erro = form[field].trim() ? errosCampos[field] : "";
@@ -568,22 +560,20 @@ export default function DashboardMetas() {
                 })}
                 </Stack>
                 <TextField
-                  required
                   disabled={saving}
                   type="date"
                   label="Prazo"
                   error={!!form.prazo && !!errosCampos.prazo}
                   helperText={(form.prazo && errosCampos.prazo) || "Até quando você pretende alcançar essa meta?"}
                   InputLabelProps={{ shrink: true }}
-                  value={form.prazo}
+                  value={form.prazo ?? ""}
                   onChange={(event) =>
-                    setForm({ ...form, prazo: event.target.value })
+                    setForm({ ...form, prazo: event.target.value || null })
                   }
                 />
                 </SecaoFormulario>
                 <Typography variant="body2" sx={{ p: 2, bgcolor: "secondary.main", borderRadius: 2, color: "primary.dark", lineHeight: 1.6 }}>
-                  O progresso mede o avanço do valor inicial até o alvo. Metas
-                  com prazo passado podem ser registradas para acompanhamento.
+                  {form.tipo === "instagram" ? "O valor inicial e o valor atual vêm automaticamente dos dados reais do Instagram. Você escolhe apenas o alvo e, se quiser, um prazo." : "O progresso mede o avanço do valor inicial até o alvo. O prazo é opcional."}
                 </Typography>
 
                 {editing && (

@@ -12,6 +12,9 @@ import { plans } from "../../pages/LandPage/LandPage.utils";
 import { fonts } from "../../styles/theme";
 import { Link as RouterLink } from "react-router-dom";
 
+const identificadorPlano = (nome: string) =>
+  nome.toLowerCase().includes("bronze") ? "bronze" : nome.toLowerCase().includes("prata") ? "prata" : "ouro";
+
 export default function PricingPage() {
   return (
     <Stack
@@ -206,6 +209,8 @@ export default function PricingPage() {
                   </Stack>
 
                   <Button
+                    component={RouterLink}
+                    to={`/checkout?plano=${identificadorPlano(name)}`}
                     fullWidth
                     variant={highlighted ? "contained" : "outlined"}
                     sx={{
@@ -256,7 +261,7 @@ export default function PricingPage() {
           Não possui conta?{" "}
           <Link
             component={RouterLink}
-            to="cadastro-empreendedor"
+            to="/cadastro-empreendedor"
             sx={{ color: "primary.main", fontWeight: 700 }}
             underline="hover"
           >

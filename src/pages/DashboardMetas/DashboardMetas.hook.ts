@@ -110,8 +110,11 @@ export function useDashboardMetas() {
           valor_inicial: formatarValorEntrada(meta.valor_inicial, meta.unidade === "R$"),
           valor_atual: formatarValorEntrada(meta.valor_atual, meta.unidade === "R$"),
           valor_alvo: formatarValorEntrada(meta.valor_alvo, meta.unidade === "R$"),
-          prazo: meta.prazo,
+          prazo: meta.prazo ?? null,
           arquivada: meta.arquivada,
+          tipo: meta.tipo,
+          origem: meta.origem,
+          metrica: meta.metrica,
         }
         : { ...vazio },
     );

@@ -38,6 +38,29 @@ export async function logout() {
     atualizarSessao(null);
 }
 
+export type PapelRecuperacao = "empreendedor" | "mentor";
+
+export async function solicitarRecuperacaoSenha(email: string, papel: PapelRecuperacao) {
+    const response = await api.post<{ message: string; demo_code?: string }>(
+        "/auth/password-reset/request",
+        { email, papel },
+    );
+    return response.data;
+}
+
+export async function confirmarRecuperacaoSenha(
+    email: string,
+    papel: PapelRecuperacao,
+    codigo: string,
+    novaSenha: string,
+) {
+    const response = await api.post<{ message: string }>(
+        "/auth/password-reset/confirm",
+        { email, papel, codigo, nova_senha: novaSenha },
+    );
+    return response.data;
+}
+
 export interface SessaoUsuario {
     administrador?: boolean;
     especialidade?: string;

@@ -4,6 +4,7 @@ import {
   acompanharTrilhas,
   categoriasTrilhas,
   listarMentorados,
+  listarAvaliacoesMentor,
   listarTrilhas,
   publicarTrilha,
   salvarTrilha,
@@ -12,6 +13,7 @@ import {
   type Mentorado,
   type Trilha,
   type TrilhaEntrada,
+  type AvaliacaoMentor,
 } from "../../services/Auth/controllers/aprendizado";
 import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
 import { novaAula, novaTrilha, erroTrilha, normalizarVideo } from "./TrilhasMentor.utils";
@@ -28,6 +30,7 @@ export function useTrilhasMentor() {
   const [aluno, setAluno] = useState(params.get("mentorado") || "");
 
   const [acompanhamento, setAcompanhamento] = useState<Trilha[]>([]);
+  const [avaliacoes, setAvaliacoes] = useState<AvaliacaoMentor[]>([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -57,12 +60,13 @@ export function useTrilhasMentor() {
     let active = true;
     setLoading(true);
     setError("");
-    Promise.all([listarTrilhas(), listarMentorados(), categoriasTrilhas(true)])
-      .then(([ts, ms, cs]) => {
+    Promise.all([listarTrilhas(), listarMentorados(), categoriasTrilhas(true), listarAvaliacoesMentor()])
+      .then(([ts, ms, cs, avs]) => {
         if (active) {
           setTrilhas(ts);
           setAlunos(ms);
           setCategorias(cs);
+          setAvaliacoes(avs);
         }
       })
       .catch((err) => {
@@ -181,6 +185,7 @@ export function useTrilhasMentor() {
     aluno,
     setAluno,
     acompanhamento,
+    avaliacoes,
     loading,
     loadingAluno,
     error,

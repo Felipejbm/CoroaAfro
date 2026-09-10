@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { concluirAula, minhasTrilhas, type Aula, type Trilha } from "../../services/Auth/controllers/aprendizado";
+import { avaliarTrilha, concluirAula, minhasTrilhas, type Aula, type Trilha } from "../../services/Auth/controllers/aprendizado";
 import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
 import type { AbaMinhasTrilhas } from "./MinhasTrilhas.types";
 
@@ -41,5 +41,17 @@ export function useMinhasTrilhas() {
     finally { setBusy(false); }
   }
 
-  return { navigate, aba, setAba, trilhas, loading, busy, error, sucesso, setSucesso, setRetry, marcar };
+  async function avaliar(t: Trilha, notaTrilha: number, notaMentor: number, comentario: string) {
+    if (busy) return false;
+    setBusy(true); setError(""); setSucesso("");
+    try {
+      const atualizada = await avaliarTrilha(t.id, { nota_trilha: notaTrilha, nota_mentor: notaMentor, comentario });
+      setTrilhas(ts => ts.map(item => item.id === atualizada.id ? atualizada : item));
+      setSucesso("Avaliação enviada! Obrigado por compartilhar sua experiência.");
+      return true;
+    } catch (err) { setError(mensagemErroApi(err)); return false; }
+    finally { setBusy(false); }
+  }
+
+  return { navigate, aba, setAba, trilhas, loading, busy, error, sucesso, setSucesso, setRetry, marcar, avaliar };
 }

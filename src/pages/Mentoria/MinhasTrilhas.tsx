@@ -1,5 +1,7 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, CircularProgress, LinearProgress, Paper, Stack, Typography, useTheme } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, LinearProgress, Paper, Rating, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
+import type { Trilha } from "../../services/Auth/controllers/aprendizado";
 import { alpha } from "@mui/material/styles";
 import AprendizadoLayout from "./AprendizadoLayout";
 import CatalogoTrilhas from "./CatalogoTrilhas";
@@ -18,7 +20,18 @@ export default function MinhasTrilhas() {
     setSucesso,
     setRetry,
     marcar,
+    avaliar,
   } = useMinhasTrilhas();
+
+  const [avaliando, setAvaliando] = useState<Trilha | null>(null);
+  const [notaTrilha, setNotaTrilha] = useState<number | null>(null);
+  const [notaMentor, setNotaMentor] = useState<number | null>(null);
+  const [comentario, setComentario] = useState("");
+  const fecharAvaliacao = () => { setAvaliando(null); setNotaTrilha(null); setNotaMentor(null); setComentario(""); };
+  const enviarAvaliacao = async () => {
+    if (!avaliando || !notaTrilha || !notaMentor) return;
+    if (await avaliar(avaliando, notaTrilha, notaMentor, comentario.trim())) fecharAvaliacao();
+  };
 
   const theme = useTheme();
   return <AprendizadoLayout titulo="Trilhas e aprendizado">
@@ -38,6 +51,11 @@ export default function MinhasTrilhas() {
       <Typography sx={{ my: 2, whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{t.descricao}</Typography>
       <Typography>{t.progresso}% · {t.aulas.filter(a => a.concluida).length} de {t.aulas.length} aulas concluídas</Typography>
       <LinearProgress aria-label={`Progresso de ${t.titulo}`} variant="determinate" value={t.progresso} sx={{ my: 2, height: 8, borderRadius: 2 }} />
+      {t.avaliacao ? <Stack sx={{ p: 2, mb: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, .08) }}>
+        <Typography fontWeight={700}>Sua avaliação</Typography>
+        <Stack direction={{ xs: "column", sm: "row" }} gap={2}><Stack direction="row" alignItems="center" gap={1}><Typography>Trilha:</Typography><Rating size="small" readOnly value={t.avaliacao.nota_trilha}/></Stack><Stack direction="row" alignItems="center" gap={1}><Typography>Mentor:</Typography><Rating size="small" readOnly value={t.avaliacao.nota_mentor}/></Stack></Stack>
+        {t.avaliacao.comentario && <Typography sx={{ mt: 1 }}>{t.avaliacao.comentario}</Typography>}
+      </Stack> : t.progresso === 100 && <Button variant="contained" sx={{ mb: 2, alignSelf: "flex-start" }} onClick={() => setAvaliando(t)}>Avaliar trilha e mentor</Button>}
       {t.aulas.map((a, i) => <Accordion key={a.id} disableGutters sx={{ "&:before": { display: "none" }, border: `1px solid ${alpha(theme.palette.primary.main, 0.25)}` }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id={`aula-${a.id}-titulo`} aria-controls={`aula-${a.id}-conteudo`}>
           <Typography sx={{ overflowWrap: "anywhere" }}>{i + 1}. {a.titulo} — {a.concluida ? "Concluída" : "Pendente"}</Typography>
@@ -52,5 +70,9 @@ export default function MinhasTrilhas() {
       </Accordion>)}
     </Paper>)}
     </>}
+    <Dialog open={!!avaliando} onClose={busy ? undefined : fecharAvaliacao} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 4 } }}>
+      <DialogContent><Stack gap={2.5}><Typography variant="h4">Avalie sua experiência</Typography><Typography color="text.secondary">Sua opinião ajuda o mentor a melhorar as próximas trilhas.</Typography><Stack><Typography fontWeight={700}>Como você avalia a trilha?</Typography><Rating size="large" value={notaTrilha} onChange={(_, valor) => setNotaTrilha(valor)}/></Stack><Stack><Typography fontWeight={700}>Como você avalia o mentor?</Typography><Rating size="large" value={notaMentor} onChange={(_, valor) => setNotaMentor(valor)}/></Stack><TextField label="Comentário (opcional)" multiline minRows={4} value={comentario} onChange={e => setComentario(e.target.value)} inputProps={{maxLength:1500}} helperText={`${comentario.length}/1500`}/>{(!notaTrilha || !notaMentor) && <Typography variant="caption" color="text.secondary">Escolha as duas notas para enviar.</Typography>}</Stack></DialogContent>
+      <DialogActions sx={{p:3,pt:0}}><Button onClick={fecharAvaliacao} disabled={busy}>Cancelar</Button><Button variant="contained" disabled={busy||!notaTrilha||!notaMentor} onClick={()=>void enviarAvaliacao()}>Enviar avaliação</Button></DialogActions>
+    </Dialog>
   </AprendizadoLayout>;
 }
