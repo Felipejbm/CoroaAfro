@@ -21,7 +21,7 @@ export default function MinhasTrilhas() {
   } = useMinhasTrilhas();
 
   const theme = useTheme();
-  return <AprendizadoLayout titulo="Minhas trilhas">
+  return <AprendizadoLayout titulo="Trilhas e aprendizado">
     <Typography>Trilhas que você escolheu e seus conteúdos. Marque como concluídas conforme estudar; isso informa seu progresso ao mentor.</Typography>
     <Stack direction="row" gap={2}>
       <Button variant={aba === "minhas" ? "contained" : "outlined"} disabled={busy} onClick={() => setAba("minhas")}>Minhas trilhas</Button>

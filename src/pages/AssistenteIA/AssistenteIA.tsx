@@ -20,7 +20,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import theme, { fonts } from "../../styles/theme";
 import useAssistenteIA from "./AssistenteIA.hook";
 
-export default function AssistenteIA() {
+export default function AssistenteIA({ mentor = false }: { mentor?: boolean }) {
   const {
     arquivar,
     carregando,
@@ -47,7 +47,7 @@ export default function AssistenteIA() {
       direction="row"
       sx={{ width: "100%", height: "100dvh", bgcolor: "secondary.light" }}
     >
-      <NavBar />
+      <NavBar mentor={mentor} />
       <Stack
         direction={{ xs: "column", md: "row" }}
         sx={{ flex: 1, minWidth: 0, overflow: "hidden" }}
@@ -230,7 +230,7 @@ export default function AssistenteIA() {
                       textAlign: "center",
                     }}
                   >
-                    Como posso ajudar seu negócio hoje?
+                    {mentor ? "Vamos preparar sua próxima mentoria?" : "Como posso ajudar seu negócio hoje?"}
                   </Typography>
                   <Typography
                     sx={{

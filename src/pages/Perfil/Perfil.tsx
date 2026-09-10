@@ -1,3 +1,4 @@
+import MentorHeader from "../Mentoria/MentorHeader";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import ModalHeader from "../../components/ModalHeader/ModalHeader";
 import SecaoFormulario from "../../components/SecaoFormulario/SecaoFormulario";
@@ -77,22 +78,7 @@ export default function Perfil() {
           gap: 3,
         }}
       >
-        <Stack
-          sx={{
-            p: { xs: 2.5, md: 3.5 },
-            borderRadius: 4,
-            color: "secondary.light",
-            background: `linear-gradient(125deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-            boxShadow: `0 16px 34px ${alpha(theme.palette.primary.dark, 0.2)}`,
-          }}
-        >
-          <Typography variant="h2" sx={{ fontFamily: fonts.hero, fontSize: { xs: "2rem", md: "2.6rem" } }}>
-            Meu perfil
-          </Typography>
-          <Typography sx={{ color: alpha(theme.palette.secondary.light, 0.78) }}>
-            Gerencie seus dados e as informações do seu negócio.
-          </Typography>
-        </Stack>
+        <MentorHeader eyebrow="Sua conta" title="Meu perfil" description="Gerencie seus dados e as informações do seu negócio." />
         {loading && <CircularProgress aria-label="Carregando perfil" />}
         {erro && (
           <Alert severity="error">

@@ -9,6 +9,7 @@ import {
   Button,
   alpha,
 } from "@mui/material";
+import { navItems as mentorItems } from "../NavMentor/NavBar.utils";
 import { navItems } from "./NavBar.utils.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -20,10 +21,11 @@ import { motion } from "framer-motion";
 import AvatarUsuario from "../AvatarUsuario/AvatarUsuario";
 import { useSessaoAtual } from "../../hooks/useSessaoAtual";
 
-export default function NavBar() {
+export default function NavBar({ mentor = false }: { mentor?: boolean }) {
   const location = useLocation();
   const navigate = useNavigate();
   const usuario = useSessaoAtual();
+  const itens = mentor ? [...mentorItems, ...(usuario?.administrador ? [{ label: "Administrar mentores", href: "/admin/mentores" }] : [])] : navItems;
   const [saindo, setSaindo] = useState(false);
   const [erroSaida, setErroSaida] = useState("");
 
@@ -104,7 +106,7 @@ export default function NavBar() {
               `${alpha(theme.palette.secondary.dark, 0.7)} transparent`,
           }}
         >
-          {navItems.map(({ label, href }) => {
+          {itens.map(({ label, href }) => {
             const isActive =
               location.pathname === href ||
               location.pathname.startsWith(`${href}/`) ||
@@ -190,7 +192,7 @@ export default function NavBar() {
       </Stack>
 
       <Stack sx={{ mt: "auto", px: { xs: 2, md: 3 }, pt: 3, flexShrink: 0 }}>
-        <Button onClick={() => navigate("/perfil")} sx={{ mb: 2, gap: 1.5, justifyContent: "flex-start", color: "secondary.light", textTransform: "none" }}>
+        <Button onClick={() => navigate(mentor ? "/perfil-mentor" : "/perfil")} sx={{ mb: 2, gap: 1.5, justifyContent: "flex-start", color: "secondary.light", textTransform: "none" }}>
           <AvatarUsuario atual sx={{ width: 36, height: 36, bgcolor: "primary.main" }} />
           <Stack sx={{ minWidth: 0, textAlign: "left" }}>
             <Typography noWrap variant="body2">{usuario?.nome ?? "Meu perfil"}</Typography>

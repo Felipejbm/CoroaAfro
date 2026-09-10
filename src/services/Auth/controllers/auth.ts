@@ -39,6 +39,9 @@ export async function logout() {
 }
 
 export interface SessaoUsuario {
+    administrador?: boolean;
+    especialidade?: string;
+    biografia?: string;
     papel: "empreendedor" | "mentor";
     id: number;
     nome: string;

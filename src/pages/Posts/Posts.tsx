@@ -1,3 +1,4 @@
+import MentorHeader from "../Mentoria/MentorHeader";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import SearchIcon from "@mui/icons-material/Search";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -36,39 +37,7 @@ export default function Posts() {
           "& > *": { width: "100%", maxWidth: 860, boxSizing: "border-box" },
         }}
       >
-        <Stack
-          sx={{
-            p: { xs: 2.5, md: 3.5 },
-            borderRadius: 4,
-            color: "secondary.light",
-            background: `linear-gradient(125deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-            boxShadow: `0 16px 34px ${alpha(theme.palette.primary.dark, 0.2)}`,
-          }}
-        >
-        <Typography variant="overline" sx={{ letterSpacing: "0.14em", opacity: 0.75, fontWeight: 700 }}>Conexões que fortalecem</Typography>
-        <Typography
-          component="h1"
-          sx={{
-            fontFamily: fonts.hero,
-            fontWeight: 700,
-            fontSize: { xs: "1.8rem", md: "2.3rem" },
-            color: theme.palette.secondary.light,
-            mb: 0.75,
-          }}
-        >
-          Comunidade Coroa Afro
-        </Typography>
-        <Typography
-          sx={{
-            fontFamily: fonts.body,
-            fontSize: "0.9rem",
-            color: alpha(theme.palette.secondary.light, 0.78),
-            mb: 0,
-          }}
-        >
-          Compartilhe experiências, dúvidas e ideias com empreendedores e mentores
-        </Typography>
-        </Stack>
+        <MentorHeader eyebrow="Conexões que fortalecem" title="Comunidade Coroa Afro" description="Compartilhe experiências, dúvidas e ideias com empreendedores e mentores." />
 
         <Stack direction={{ xs: "column", sm: "row" }} sx={{ gap: 1.5, p: 2, alignItems: { sm: "center" }, borderRadius: 3, bgcolor: "secondary.light", border: "1px solid", borderColor: "secondary.main" }}>
           <TextField

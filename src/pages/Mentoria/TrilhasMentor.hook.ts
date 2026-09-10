@@ -128,15 +128,16 @@ export function useTrilhasMentor() {
     }));
   }
 
-  async function salvar() {
+  async function salvar(revisarPublicacao = false) {
     if (busy) return;
     const erro = erroTrilha(dados, atual?.publicada);
     if (erro) { setErroForm(erro); return; }
     setBusy(true);
     setErroForm("");
     try {
-      await salvarTrilha({ ...dados, aulas: dados.aulas.map(aula => ({ ...aula, video_url: normalizarVideo(aula.video_url) })) }, atual);
+      const salva = await salvarTrilha({ ...dados, aulas: dados.aulas.map(aula => ({ ...aula, video_url: normalizarVideo(aula.video_url) })) }, atual);
       setDialog(false);
+      if (revisarPublicacao && !salva.publicada) setConfirmar(salva);
       setSucesso(
         atual?.publicada
           ? "Categoria e público da trilha atualizados."

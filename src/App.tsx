@@ -1,3 +1,5 @@
+import PerfilMentor from "./pages/Mentoria/PerfilMentor";
+import AdminMentores from "./pages/Mentoria/AdminMentores";
 import TrilhasMentor from "./pages/Mentoria/TrilhasMentor";
 import MinhasTrilhas from "./pages/Mentoria/MinhasTrilhas";
 import { Route, Routes } from "react-router-dom";
@@ -21,6 +23,9 @@ import AssistenteIA from "./pages/AssistenteIA/AssistenteIA";
 function App() {
   return (
     <Routes>
+      <Route path="/perfil-mentor" element={<RequireLogin papel="mentor"><PerfilMentor /></RequireLogin>} />
+      <Route path="/assistente-mentor" element={<RequireLogin papel="mentor"><AssistenteIA mentor /></RequireLogin>} />
+      <Route path="/admin/mentores" element={<RequireLogin papel="mentor"><AdminMentores /></RequireLogin>} />
       <Route path="/" element={<LandPage />} />
       <Route path="/recuperar-senha" element={<RecuperarSenha key="solicitar" />} />
       <Route path="/redefinir-senha" element={<RecuperarSenha key="redefinir" />} />

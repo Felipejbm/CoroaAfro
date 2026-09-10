@@ -1,6 +1,6 @@
+import MentorHeader from "../Mentoria/MentorHeader";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
-  Avatar,
   Button,
   LinearProgress,
   Stack,
@@ -143,98 +143,13 @@ export default function DashboardFinanceiro() {
       <Stack
         sx={{
           backgroundColor: theme.palette.secondary.light,
-          p: { xs: 2, md: 3 },
+          p: { xs: 2, md: 4, lg: 5 },
+          minWidth: 0,
+          gap: 3,
           flex: 1,
         }}
       >
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            justifyContent: "space-between",
-            alignItems: { xs: "flex-start", sm: "center" },
-            gap: 2,
-            mb: 3,
-            minWidth: 0,
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: fonts.body,
-              fontWeight: 700,
-              fontSize: { xs: "1.3rem", md: "1.6rem" },
-              color: theme.palette.text.primary,
-              maxWidth: 460,
-            }}
-          >
-            Acompanhe a evolução da sua marca no digital.
-          </Typography>
-
-          <Stack
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              backgroundColor: theme.palette.background.default,
-              borderRadius: "30px",
-              px: 2,
-              py: 1,
-            }}
-          >
-            <Avatar
-              sx={{
-                bgcolor: theme.palette.primary.main,
-                width: 36,
-                height: 36,
-              }}
-            />
-            <Stack direction="row" sx={{ alignItems: "center", gap: 2 }}>
-              <Stack>
-                <Typography
-                  sx={{
-                    fontFamily: fonts.body,
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    color: theme.palette.common.white,
-                  }}
-                >
-                  Café da Dandara
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: fonts.body,
-                    fontSize: "0.7rem",
-                    color: alpha(theme.palette.common.white, 0.6),
-                  }}
-                >
-                  Plano Premium
-                </Typography>
-              </Stack>
-              <Button
-                variant="contained"
-                startIcon={<AccountCircleIcon sx={{ fontSize: 16 }} />}
-                onClick={() => navigate("/perfil")}
-                sx={{
-                  backgroundColor: alpha(theme.palette.common.white, 0.1),
-                  color: theme.palette.common.white,
-                  fontFamily: fonts.body,
-                  fontSize: "0.75rem",
-                  textTransform: "none",
-                  borderRadius: "6px",
-                  px: 1.5,
-                  py: 0.5,
-                  boxShadow: "none",
-                  "&:hover": {
-                    backgroundColor: alpha(theme.palette.common.white, 0.2),
-                    boxShadow: "none",
-                  },
-                }}
-              >
-                Ver Perfil
-              </Button>
-            </Stack>
-          </Stack>
-        </Stack>
+        <MentorHeader eyebrow="Seu negócio" title="Painel financeiro" description="Acompanhe suas finanças, resultados e próximos objetivos." action={<Button variant="outlined" sx={{ color: "inherit", borderColor: "currentColor" }} startIcon={<AccountCircleIcon />} onClick={() => navigate("/perfil")}>Ver perfil</Button>} />
 
         <Stack
           sx={{

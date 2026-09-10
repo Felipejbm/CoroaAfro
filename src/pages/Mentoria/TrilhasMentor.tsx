@@ -56,6 +56,7 @@ export default function TrilhasMentor() {
 
   return (
     <AprendizadoLayout mentor titulo="Trilhas e aulas">
+      <Alert severity="info">Salvar rascunho não publica a trilha. Use “Publicar no catálogo” para disponibilizá-la aos empreendedores.</Alert>
       <Typography>
         Organize as aulas e publique no catálogo. Cada empreendedor escolhe a
         trilha e passa a ser seu mentorado. O progresso é informado pelo próprio
@@ -94,13 +95,13 @@ export default function TrilhasMentor() {
               select
               fullWidth
               label="Mentorado"
-              value={alunos.some((a) => String(a.nome) === aluno) ? aluno : ""}
+              value={alunos.some((a) => String(a.id) === aluno) ? aluno : ""}
               disabled={busy}
               onChange={(e) => setAluno(e.target.value)}
             >
               <MenuItem value="">Selecione um mentorado</MenuItem>
               {alunos.map((a) => (
-                <MenuItem key={a.empresa} value={String(a.empresa)}>
+                <MenuItem key={a.id} value={String(a.id)}>
                   {a.nome}
                   {a.empresa ? ` — ${a.empresa}` : ""}
                 </MenuItem>
@@ -169,7 +170,7 @@ export default function TrilhasMentor() {
               </Typography>
               <Typography sx={{ mt: 1 }}>{t.categoria_label}</Typography>
               <Typography sx={{ my: 1 }}>
-                {t.publicada ? "Publicada" : "Rascunho"} · {t.aulas.length}{" "}
+                {t.publicada ? "Visível no catálogo" : "Rascunho — ainda não aparece para empreendedores"} · {t.aulas.length}{" "}
                 aula(s)
               </Typography>
               <Button
@@ -330,7 +331,8 @@ export default function TrilhasMentor() {
             </SecaoFormulario>
           </Stack>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ flexWrap: "wrap", gap: 1 }}>
+          {!atual?.publicada && <Button variant="contained" disabled={busy || !!erroTrilha(dados) || !dados.aulas.length} onClick={() => void salvar(true)}>Salvar e revisar publicação</Button>}
           <Button disabled={busy} onClick={() => setDialog(false)}>
             {atual?.publicada ? "Fechar" : "Cancelar"}
           </Button>

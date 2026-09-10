@@ -7,7 +7,7 @@ import type { AbaMinhasTrilhas } from "./MinhasTrilhas.types";
 export function useMinhasTrilhas() {
   const navigate = useNavigate();
 
-  const [aba, setAba] = useState<AbaMinhasTrilhas>("minhas");
+  const [aba, setAba] = useState<AbaMinhasTrilhas>("catalogo");
 
   const [trilhas, setTrilhas] = useState<Trilha[]>([]);
 

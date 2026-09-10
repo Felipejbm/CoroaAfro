@@ -1,3 +1,5 @@
+import { obterSessaoAtual } from "./auth";
+const prefixoIA = () => obterSessaoAtual()?.papel === "mentor" ? "/ia/mentor" : "/ia";
 import axios from "axios";
 import api from "../../../api/axios";
 
@@ -31,19 +33,19 @@ export interface RespostaIA {
 }
 
 export async function buscarModosIA(): Promise<ModoIA[]> {
-  return (await api.get<ModoIA[]>("/ia/modos")).data;
+  return (await api.get<ModoIA[]>(`${prefixoIA()}/modos`)).data;
 }
 
 export async function listarConversasIA(): Promise<ConversaIA[]> {
-  return (await api.get<ConversaIA[]>("/ia/conversas")).data;
+  return (await api.get<ConversaIA[]>(`${prefixoIA()}/conversas`)).data;
 }
 
 export async function criarConversaIA(titulo: string): Promise<ConversaIA> {
-  return (await api.post<ConversaIA>("/ia/conversas", { titulo })).data;
+  return (await api.post<ConversaIA>(`${prefixoIA()}/conversas`, { titulo })).data;
 }
 
 export async function listarMensagensIA(id: number): Promise<MensagemIA[]> {
-  return (await api.get<MensagemIA[]>(`/ia/conversas/${id}/mensagens`)).data;
+  return (await api.get<MensagemIA[]>(`${prefixoIA()}/conversas/${id}/mensagens`)).data;
 }
 
 export async function enviarMensagemIA(
@@ -52,12 +54,12 @@ export async function enviarMensagemIA(
   modo: string,
 ): Promise<RespostaIA> {
   return (
-    await api.post<RespostaIA>(`/ia/conversas/${id}/mensagens`, { conteudo, modo })
+    await api.post<RespostaIA>(`${prefixoIA()}/conversas/${id}/mensagens`, { conteudo, modo })
   ).data;
 }
 
 export async function arquivarConversaIA(id: number): Promise<void> {
-  await api.patch(`/ia/conversas/${id}/arquivar`);
+  await api.patch(`${prefixoIA()}/conversas/${id}/arquivar`);
 }
 
 export function mensagemErroIA(error: unknown): string {
