@@ -13,8 +13,11 @@ export const vazio: MetaEntrada = {
   valor_inicial: "0",
   valor_atual: "0",
   valor_alvo: "",
-  prazo: "",
+  prazo: null,
   arquivada: false,
+  tipo: "manual",
+  origem: "manual",
+  metrica: null,
 };
 
 export { unidadesMeta, valorNumerico, formatarValorEntrada, formatarValorMeta, erroValorMeta, errosMeta } from "../../utils/metas";

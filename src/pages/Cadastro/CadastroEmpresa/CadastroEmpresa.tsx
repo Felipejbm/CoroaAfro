@@ -114,6 +114,11 @@ export default function CadastroEmpresa() {
             <Button disabled={salvando} onClick={() => navigate("/perfil")}>
               Voltar ao perfil
             </Button>
+            {!empresaId && (
+              <Button disabled={salvando} variant="outlined" onClick={() => navigate("/dashboard-metas", { replace: true })} sx={{ textTransform: "none" }}>
+                Cadastrar minha empresa depois
+              </Button>
+            )}
           </Stack>
         </Container>
       </Stack>

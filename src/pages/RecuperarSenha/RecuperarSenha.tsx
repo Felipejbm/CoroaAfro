@@ -1,76 +1,147 @@
-import { useState, type FormEvent } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { Alert, Button, Container, MenuItem, Paper, Stack, TextField, Typography } from "@mui/material";
-import LockResetIcon from "@mui/icons-material/LockReset";
-import api from "../../api/axios";
-import { atualizarSessao } from "../../services/Auth/controllers/auth";
-import { mensagemErroApi } from "../../services/Auth/controllers/empresa";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import LockResetRoundedIcon from "@mui/icons-material/LockResetRounded";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import axios from "axios";
+import { useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import FooterLandPage from "../../components/FooterLandPage/FooterLandPage";
+import Layout from "../../components/Layout/Layout";
+import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
+import {
+  confirmarRecuperacaoSenha,
+  solicitarRecuperacaoSenha,
+  type PapelRecuperacao,
+} from "../../services/Auth/controllers/auth";
+import theme, { fonts } from "../../styles/theme";
+
+type Etapa = "email" | "codigo" | "sucesso";
+
+function mensagemErro(error: unknown) {
+  if (axios.isAxiosError<{ detail?: string }>(error)) {
+    if (!error.response) return "Não foi possível conectar ao backend.";
+    return error.response.data?.detail ?? "Não foi possível concluir a solicitação.";
+  }
+  return "Ocorreu um erro inesperado. Tente novamente.";
+}
 
 export default function RecuperarSenha() {
-  const location = useLocation();
-  const [params] = useSearchParams();
-  const redefinir = location.pathname === "/redefinir-senha";
-  const [token] = useState(() => new URLSearchParams(window.location.hash.slice(1)).get("token") || "");
-  const [email, setEmail] = useState((location.state as { email?: string } | null)?.email || "");
-  const [papel, setPapel] = useState(params.get("papel") === "mentor" ? "mentor" : "empreendedor");
-  const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
+  const [etapa, setEtapa] = useState<Etapa>("email");
+  const [papel, setPapel] = useState<PapelRecuperacao>("empreendedor");
+  const [email, setEmail] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
   const [confirmacao, setConfirmacao] = useState("");
-  const [ocupado, setOcupado] = useState(false);
+  const [codigoDemo, setCodigoDemo] = useState("");
   const [erro, setErro] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const tokenValido = /^[A-Za-z0-9_-]{43}$/.test(token);
-  const senhaValida = senha.trim().length >= 12 && senha.length <= 128;
-  const podeEnviar = redefinir ? tokenValido && senhaValida && senha === confirmacao : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const [carregando, setCarregando] = useState(false);
 
-  async function enviar(event: FormEvent) {
+  const solicitar = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (ocupado || !podeEnviar) return;
-    setOcupado(true); setErro("");
+    if (!email.trim()) return setErro("Informe o e-mail da sua conta.");
+    setCarregando(true);
+    setErro("");
     try {
-      const r = redefinir
-        ? await api.post("/auth/redefinir-senha", { token, senha })
-        : await api.post("/auth/recuperar-senha", { email: email.trim().toLowerCase(), papel });
-      setMensagem(r.data.mensagem);
-      if (redefinir) {
-        setSenha(""); setConfirmacao(""); atualizarSessao(null);
-        window.history.replaceState(null, "", window.location.pathname);
-      }
-    } catch (error) { setErro(mensagemErroApi(error)); }
-    finally { setOcupado(false); }
-  }
+      const resposta = await solicitarRecuperacaoSenha(email.trim(), papel);
+      setCodigoDemo(resposta.demo_code ?? "");
+      setEtapa("codigo");
+    } catch (error) {
+      setErro(mensagemErro(error));
+    } finally {
+      setCarregando(false);
+    }
+  };
 
-  return <Stack sx={{ minHeight: "100vh", bgcolor: "secondary.light", justifyContent: "center", py: 5 }}>
-    <Container maxWidth="sm">
-      <Paper elevation={0} sx={{ p: { xs: 3, sm: 5 }, borderRadius: 4, border: "1px solid", borderColor: "secondary.main" }}>
-        <Stack gap={2.5} component="form" onSubmit={enviar}>
-          <LockResetIcon color="primary" sx={{ fontSize: 42 }} />
-          <Typography component="h1" variant="h4">{redefinir ? "Crie uma nova senha" : "Recupere seu acesso"}</Typography>
-          <Typography color="text.secondary">{redefinir ? "Escolha uma senha de 12 a 128 caracteres. Você precisará entrar novamente em seus dispositivos." : "Enviaremos um link de segurança para o e-mail cadastrado. Ele vale por 30 minutos."}</Typography>
-          {erro && <Alert severity="error">{erro}</Alert>}
-          {mensagem ? <>
-            <Alert severity="success">{mensagem}</Alert>
-            {!redefinir && <Typography variant="body2">Não recebeu? Confira o e-mail e o tipo de conta, verifique o spam e aguarde alguns minutos antes de tentar novamente.</Typography>}
-            <Button component={Link} to="/login" variant="contained">Voltar ao login</Button>
-            {!redefinir && <Button onClick={() => setMensagem("")}>Corrigir dados ou tentar novamente</Button>}
-          </> : redefinir ? <>
-            {!tokenValido ? <Alert severity="warning">Abra o link completo recebido por e-mail para redefinir sua senha.</Alert> : <>
-              <TextField label="Nova senha" type="password" autoComplete="new-password" required value={senha} disabled={ocupado}
-                onChange={e => setSenha(e.target.value)} error={!!senha && !senhaValida} helperText="Use pelo menos 12 caracteres. Uma frase com várias palavras é uma boa opção." slotProps={{ htmlInput: { minLength: 12, maxLength: 128 } }} />
-              <TextField label="Confirme a nova senha" type="password" autoComplete="new-password" required value={confirmacao} disabled={ocupado}
-                onChange={e => setConfirmacao(e.target.value)} error={!!confirmacao && senha !== confirmacao} helperText={confirmacao && senha !== confirmacao ? "As senhas precisam ser iguais." : "Digite a mesma senha novamente."} slotProps={{ htmlInput: { maxLength: 128 } }} />
-              <Button type="submit" variant="contained" disabled={ocupado || !podeEnviar}>{ocupado ? "Salvando..." : "Redefinir senha"}</Button>
-            </>}
-            <Button component={Link} to="/recuperar-senha">Solicitar um novo link</Button>
-          </> : <>
-            <TextField select label="Tipo de conta" value={papel} disabled={ocupado} onChange={e => setPapel(e.target.value)}>
-              <MenuItem value="empreendedor">Empreendedor</MenuItem><MenuItem value="mentor">Mentor</MenuItem>
-            </TextField>
-            <TextField label="E-mail cadastrado" type="email" autoComplete="email" required value={email} disabled={ocupado} onChange={e => setEmail(e.target.value)} slotProps={{ htmlInput: { maxLength: 255 } }} />
-            <Button type="submit" variant="contained" disabled={ocupado || !podeEnviar}>{ocupado ? "Solicitando..." : "Enviar link de segurança"}</Button>
-          </>}
-          {!mensagem && <Button component={Link} to="/login" disabled={ocupado}>Voltar ao login</Button>}
-        </Stack>
-      </Paper>
-    </Container>
-  </Stack>;
+  const redefinir = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!/^\d{6}$/.test(codigo)) return setErro("Digite o código de 6 números.");
+    if (novaSenha.length < 8) return setErro("A nova senha deve ter pelo menos 8 caracteres.");
+    if (novaSenha !== confirmacao) return setErro("As senhas digitadas não são iguais.");
+    setCarregando(true);
+    setErro("");
+    try {
+      await confirmarRecuperacaoSenha(email.trim(), papel, codigo, novaSenha);
+      setEtapa("sucesso");
+    } catch (error) {
+      setErro(mensagemErro(error));
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  return (
+    <Layout showSidebar={false}>
+      <NavBarLandPage />
+      <Stack sx={{ minHeight: "78vh", bgcolor: "secondary.light", justifyContent: "center", py: { xs: 5, md: 8 } }}>
+        <Container maxWidth="sm">
+          <Stack sx={{ bgcolor: "secondary.main", borderRadius: 5, px: { xs: 3, sm: 5 }, py: { xs: 4, sm: 5 }, boxShadow: `0 16px 42px ${alpha(theme.palette.primary.dark, 0.18)}` }}>
+            <Box sx={{ width: 58, height: 58, borderRadius: 3, display: "grid", placeItems: "center", bgcolor: alpha(theme.palette.primary.main, 0.1), color: "primary.main", mb: 2 }}>
+              <LockResetRoundedIcon sx={{ fontSize: 34 }} />
+            </Box>
+
+            {etapa === "sucesso" ? (
+              <Stack gap={2}>
+                <Typography component="h1" sx={{ fontFamily: fonts.hero, fontSize: { xs: "1.8rem", sm: "2.2rem" }, fontWeight: 700 }}>Senha redefinida!</Typography>
+                <Alert severity="success">Sua nova senha já está pronta para ser utilizada.</Alert>
+                <Button variant="contained" size="large" onClick={() => navigate("/login", { replace: true })} sx={{ borderRadius: 2.5, textTransform: "none", fontWeight: 700 }}>Entrar na minha conta</Button>
+              </Stack>
+            ) : (
+              <Stack component="form" onSubmit={etapa === "email" ? solicitar : redefinir} gap={2.2}>
+                <Box>
+                  <Typography component="h1" sx={{ fontFamily: fonts.hero, fontSize: { xs: "1.8rem", sm: "2.2rem" }, fontWeight: 700 }}>Recuperar senha</Typography>
+                  <Typography sx={{ mt: 1, color: alpha(theme.palette.text.primary, 0.72), lineHeight: 1.6 }}>
+                    {etapa === "email" ? "Informe os dados da sua conta para gerar um código de recuperação." : `Digite o código gerado para ${email} e escolha sua nova senha.`}
+                  </Typography>
+                </Box>
+
+                {erro && <Alert severity="error">{erro}</Alert>}
+                {etapa === "codigo" && codigoDemo && (
+                  <Alert severity="info">
+                    <strong>Modo de demonstração:</strong> seu código é <strong>{codigoDemo}</strong>. Em produção, ele será enviado por e-mail.
+                  </Alert>
+                )}
+
+                {etapa === "email" ? (
+                  <>
+                    <TextField select label="Tipo de conta" value={papel} disabled={carregando} onChange={(event) => setPapel(event.target.value as PapelRecuperacao)}>
+                      <MenuItem value="empreendedor">Empreendedor</MenuItem>
+                      <MenuItem value="mentor">Mentor</MenuItem>
+                    </TextField>
+                    <TextField label="E-mail" type="email" value={email} disabled={carregando} autoComplete="email" onChange={(event) => setEmail(event.target.value)} />
+                    <Button type="submit" variant="contained" size="large" disabled={carregando} sx={{ borderRadius: 2.5, textTransform: "none", fontWeight: 700 }}>
+                      {carregando ? <CircularProgress size={24} color="inherit" /> : "Gerar código de recuperação"}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <TextField label="Código de 6 números" value={codigo} disabled={carregando} inputProps={{ inputMode: "numeric", maxLength: 6 }} onChange={(event) => setCodigo(event.target.value.replace(/\D/g, "").slice(0, 6))} />
+                    <TextField label="Nova senha" type="password" value={novaSenha} disabled={carregando} autoComplete="new-password" helperText="Use pelo menos 8 caracteres." onChange={(event) => setNovaSenha(event.target.value)} />
+                    <TextField label="Confirme a nova senha" type="password" value={confirmacao} disabled={carregando} autoComplete="new-password" onChange={(event) => setConfirmacao(event.target.value)} />
+                    <Button type="submit" variant="contained" size="large" disabled={carregando} sx={{ borderRadius: 2.5, textTransform: "none", fontWeight: 700 }}>
+                      {carregando ? <CircularProgress size={24} color="inherit" /> : "Salvar nova senha"}
+                    </Button>
+                    <Button disabled={carregando} onClick={() => { setEtapa("email"); setCodigo(""); setCodigoDemo(""); setErro(""); }} sx={{ textTransform: "none" }}>Solicitar outro código</Button>
+                  </>
+                )}
+
+                <Button component={RouterLink} to="/login" startIcon={<ArrowBackRoundedIcon />} sx={{ alignSelf: "center", color: "primary.dark", textTransform: "none" }}>Voltar para o login</Button>
+              </Stack>
+            )}
+          </Stack>
+        </Container>
+      </Stack>
+      <FooterLandPage />
+    </Layout>
+  );
 }

@@ -28,6 +28,7 @@ export interface RespostaIA {
   conversa: ConversaIA;
   mensagem_usuario: MensagemIA;
   mensagem_assistente: MensagemIA;
+  fontes_contexto: string[];
 }
 
 export async function buscarModosIA(): Promise<ModoIA[]> {
@@ -58,6 +59,14 @@ export async function enviarMensagemIA(
 
 export async function arquivarConversaIA(id: number): Promise<void> {
   await api.patch(`/ia/conversas/${id}/arquivar`);
+}
+
+export async function renomearConversaIA(id: number, titulo: string): Promise<ConversaIA> {
+  return (await api.patch<ConversaIA>(`/ia/conversas/${id}`, { titulo })).data;
+}
+
+export async function excluirConversaIA(id: number): Promise<void> {
+  await api.delete(`/ia/conversas/${id}`);
 }
 
 export function mensagemErroIA(error: unknown): string {

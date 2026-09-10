@@ -1,6 +1,7 @@
 import EmailIcon from "@mui/icons-material/Email";
 import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import {
   Alert,
   Button,
@@ -101,7 +102,7 @@ export default function Login() {
               sx={{ mb: 2 }}
             >
               <MenuItem value="empreendedor">Empreendedor</MenuItem>
-              <MenuItem value="mentor">Mentor autorizado</MenuItem>
+              <MenuItem value="mentor">Mentor</MenuItem>
             </TextField>
             {papel === "mentor" && (
               <Alert severity="info" sx={{ mb: 2 }}>
@@ -286,7 +287,7 @@ export default function Login() {
               )}
             </Button>
 
-            <Stack sx={{ textAlign: "center" }}>
+            <Stack sx={{ textAlign: "center", gap: 1.5 }}>
               <MuiLink
                 component={RouterLink}
                 to="/cadastro-empreendedor"
@@ -299,6 +300,28 @@ export default function Login() {
               >
                 Não possui conta? Cadastre-se
               </MuiLink>
+              <Button
+                component={RouterLink}
+                to="/cadastro-mentor"
+                variant="outlined"
+                startIcon={<PersonAddAltRoundedIcon />}
+                sx={{
+                  borderColor: "primary.main",
+                  color: "primary.dark",
+                  borderRadius: "10px",
+                  py: 1.1,
+                  fontFamily: fonts.button,
+                  fontWeight: 700,
+                  textTransform: "none",
+                  bgcolor: alpha(theme.palette.primary.main, 0.04),
+                  "&:hover": {
+                    borderColor: "primary.dark",
+                    bgcolor: alpha(theme.palette.primary.main, 0.11),
+                  },
+                }}
+              >
+                Quero me cadastrar como mentor
+              </Button>
             </Stack>
           </Stack>
         </Stack>
