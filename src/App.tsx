@@ -127,6 +127,7 @@ function App() {
       />
       <Route path="/login" element={<Login />} />
       <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+      <Route path="/redefinir-senha" element={<RecuperarSenha />} />
       <Route
         path="/perfil"
         element={

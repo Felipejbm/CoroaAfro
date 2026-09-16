@@ -22,7 +22,7 @@ export function getEmpreendedorLogado(): UsuarioLogado | null {
 }
 
 export function iniciarConexaoInstagram(empreendedorId: number) {
-  const baseUrl = api.defaults.baseURL ?? "http://localhost:8000";
+  const baseUrl = (api.defaults.baseURL ?? "http://localhost:8000").replace(/\/+$/, "");
   window.location.assign(
     `${baseUrl}/auth/meta?empreendedor_id=${encodeURIComponent(empreendedorId)}`,
   );
