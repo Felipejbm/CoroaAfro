@@ -39,10 +39,20 @@ export async function buscarMidiasInstagram(
   empreendedorId: number,
   limit = 25,
 ) {
-  const response = await api.get<InstagramMediaResponse>("/instagram/media", {
-    params: { empreendedor_id: empreendedorId, limit },
-  });
-  return response.data.data;
+  const publications: InstagramMediaResponse["data"] = [];
+  let after: string | undefined;
+
+  // A Meta pagina os resultados. Percorremos as páginas sem expor o token ao navegador.
+  for (let page = 0; page < 20; page += 1) {
+    const response = await api.get<InstagramMediaResponse>("/instagram/media", {
+      params: { empreendedor_id: empreendedorId, limit, ...(after ? { after } : {}) },
+    });
+    publications.push(...response.data.data);
+    const nextAfter = response.data.paging?.cursors?.after;
+    if (!response.data.paging?.next || !nextAfter || nextAfter === after) break;
+    after = nextAfter;
+  }
+  return publications;
 }
 
 export async function buscarAlcanceInstagram(empreendedorId: number) {

@@ -1,4 +1,6 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
@@ -8,7 +10,9 @@ import {
   Box,
   Button,
   CircularProgress,
+  MenuItem,
   Stack,
+  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -25,8 +29,14 @@ export default function DashboardRedes() {
     loading,
     error,
     connected,
+    callbackError,
     loadInstagram,
-    popularPosts,
+    displayedPosts,
+    postCount,
+    showAllPosts,
+    setShowAllPosts,
+    postOrder,
+    setPostOrder,
     handleConnect,
     metricasPerfil,
     metricasInteracoes,
@@ -178,6 +188,7 @@ export default function DashboardRedes() {
         </Stack>
 
         {connected && <Alert severity="success">Instagram conectado com sucesso.</Alert>}
+        {callbackError && <Alert severity="error">{callbackError}</Alert>}
         {error && <Alert severity="warning">{error}</Alert>}
 
         <Stack direction="row" alignItems="center" gap={1}>
@@ -245,10 +256,34 @@ export default function DashboardRedes() {
           ))}
         </Box>
 
-        <Typography sx={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: "1.2rem", color: theme.palette.primary.dark }}>
-          Publicações em destaque
-        </Typography>
-        {popularPosts.length === 0 ? (
+        <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems={{ xs: "stretch", sm: "center" }} gap={1.5}>
+          <Stack>
+            <Typography sx={{ fontFamily: fonts.heading, fontWeight: 700, fontSize: "1.2rem", color: theme.palette.primary.dark }}>
+              {showAllPosts ? "Todas as publicações" : "Publicações em destaque"}
+            </Typography>
+            {postCount > 0 && (
+              <Typography variant="body2" color="text.secondary">
+                {showAllPosts ? `${postCount} publicações carregadas` : "As 3 publicações com mais interações"}
+              </Typography>
+            )}
+          </Stack>
+          {showAllPosts && postCount > 1 && (
+            <TextField
+              select
+              size="small"
+              label="Ordenar por"
+              value={postOrder}
+              onChange={(event) => setPostOrder(event.target.value as typeof postOrder)}
+              sx={{ minWidth: { xs: "100%", sm: 210 }, bgcolor: theme.palette.secondary.light }}
+            >
+              <MenuItem value="recentes">Mais recentes</MenuItem>
+              <MenuItem value="interacoes">Mais interações</MenuItem>
+              <MenuItem value="curtidas">Mais curtidas</MenuItem>
+              <MenuItem value="comentarios">Mais comentários</MenuItem>
+            </TextField>
+          )}
+        </Stack>
+        {displayedPosts.length === 0 ? (
           <Stack sx={{ ...cardSx, alignItems: "center", py: 5 }}>
             <InstagramIcon sx={{ color: theme.palette.primary.main, fontSize: 40, mb: 1 }} />
             <Typography color="text.secondary">
@@ -264,7 +299,7 @@ export default function DashboardRedes() {
               justifyContent: { xs: "stretch", sm: "flex-start" },
             }}
           >
-            {popularPosts.map((post) => (
+            {displayedPosts.map((post) => (
               <Stack
                 key={post.id}
                 component="a"
@@ -310,9 +345,22 @@ export default function DashboardRedes() {
                 >
                   {post.like_count ?? 0} curtidas • {post.comments_count ?? 0} comentários
                 </Typography>
+                <Typography sx={{ color: "text.secondary", fontSize: "0.75rem", mt: 0.4 }}>
+                  {new Intl.DateTimeFormat("pt-BR").format(new Date(post.timestamp))}
+                </Typography>
               </Stack>
             ))}
           </Box>
+        )}
+        {postCount > 3 && (
+          <Button
+            variant={showAllPosts ? "outlined" : "contained"}
+            endIcon={showAllPosts ? <ExpandLessRoundedIcon /> : <ExpandMoreRoundedIcon />}
+            onClick={() => setShowAllPosts(!showAllPosts)}
+            sx={{ alignSelf: "center", borderRadius: 2.5, px: 3, textTransform: "none", fontWeight: 700 }}
+          >
+            {showAllPosts ? "Mostrar apenas destaques" : `Ver todas as publicações (${postCount})`}
+          </Button>
         )}
       </Stack>
     </Stack>

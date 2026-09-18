@@ -15,6 +15,8 @@ import type {
 } from "../../services/Auth/schema/instagramSchema";
 import { metricasInteracoesConfig, metricasPerfilConfig } from "./DashboardRedes.utils";
 
+export type OrdenacaoPublicacoes = "interacoes" | "recentes" | "curtidas" | "comentarios";
+
 export function useDashboardRedes() {
   const navigate = useNavigate();
 
@@ -32,7 +34,24 @@ export function useDashboardRedes() {
 
   const [error, setError] = useState<string | null>(null);
 
-  const connected = searchParams.get("instagram") === "connected";
+  const [showAllPosts, setShowAllPosts] = useState(false);
+
+  const [postOrder, setPostOrder] = useState<OrdenacaoPublicacoes>("interacoes");
+
+  const callbackStatus = searchParams.get("instagram");
+  const connected = callbackStatus === "connected";
+  const callbackErrors: Record<string, string> = {
+    cancelled: "A conexão com o Instagram foi cancelada. Nenhuma alteração foi feita.",
+    invalid_state: "A autorização expirou ou já foi utilizada. Inicie a conexão novamente.",
+    missing_code: "A Meta não concluiu a autorização. Tente conectar novamente.",
+    no_professional_account: "Nenhuma Página autorizada possui um Instagram profissional vinculado. Confirme a Página, a conta Empresa ou Criador e tente novamente.",
+    permissions: "As permissões necessárias não foram concedidas. Reconecte e autorize todos os acessos solicitados.",
+    expired: "A autorização do Instagram expirou ou foi revogada. Conecte novamente.",
+    meta_error: "A Meta não conseguiu concluir a conexão agora. Aguarde um pouco e tente novamente.",
+  };
+  const callbackError = callbackStatus === "error"
+    ? callbackErrors[searchParams.get("reason") ?? ""] ?? "Não foi possível conectar o Instagram. Tente novamente."
+    : null;
 
   const loadInstagram = useCallback(async () => {
     if (!usuario) {
@@ -44,11 +63,15 @@ export function useDashboardRedes() {
     setLoading(true);
     setError(null);
     try {
-      const [profileData, mediaData, insightsData] = await Promise.all([
+      const [profileResult, mediaResult, insightsResult] = await Promise.allSettled([
         buscarPerfilInstagram(usuario.id),
-        buscarMidiasInstagram(usuario.id),
+        buscarMidiasInstagram(usuario.id, 100),
         buscarAlcanceInstagram(usuario.id),
       ]);
+      if (profileResult.status === "rejected") throw profileResult.reason;
+      const profileData = profileResult.value;
+      const mediaData = mediaResult.status === "fulfilled" ? mediaResult.value : [];
+      const insightsData = insightsResult.status === "fulfilled" ? insightsResult.value : { data: [] };
       const reachMetric = insightsData.data.find(
         (item: InstagramInsight) => item.name === "reach",
       );
@@ -57,6 +80,9 @@ export function useDashboardRedes() {
       setProfile(profileData);
       setMedia(mediaData);
       setReach(typeof latestReach === "number" ? latestReach : 0);
+      if (mediaResult.status === "rejected" || insightsResult.status === "rejected") {
+        setError("Instagram conectado, mas algumas métricas estão temporariamente indisponíveis. Use Atualizar dados para tentar novamente.");
+      }
     } catch (requestError) {
       setError(mensagemErroInstagram(requestError));
       setProfile(null);
@@ -72,12 +98,12 @@ export function useDashboardRedes() {
   }, [loadInstagram]);
 
   useEffect(() => {
-    if (!connected) return;
+    if (!callbackStatus) return;
     const timer = window.setTimeout(() => {
       setSearchParams({}, { replace: true });
-    }, 5000);
+    }, 8000);
     return () => window.clearTimeout(timer);
-  }, [connected, setSearchParams]);
+  }, [callbackStatus, setSearchParams]);
 
   const likes = media.reduce((total, item) => total + (item.like_count ?? 0), 0);
 
@@ -86,14 +112,17 @@ export function useDashboardRedes() {
     0,
   );
 
-  const popularPosts = [...media]
-    .sort(
-      (a, b) =>
-        (b.like_count ?? 0) +
-        (b.comments_count ?? 0) -
-        ((a.like_count ?? 0) + (a.comments_count ?? 0)),
-    )
-    .slice(0, 3);
+  const sortedPosts = useMemo(() => [...media].sort((a, b) => {
+    if (postOrder === "recentes") {
+      return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+    }
+    if (postOrder === "curtidas") return (b.like_count ?? 0) - (a.like_count ?? 0);
+    if (postOrder === "comentarios") return (b.comments_count ?? 0) - (a.comments_count ?? 0);
+    return ((b.like_count ?? 0) + (b.comments_count ?? 0))
+      - ((a.like_count ?? 0) + (a.comments_count ?? 0));
+  }), [media, postOrder]);
+
+  const displayedPosts = showAllPosts ? sortedPosts : sortedPosts.slice(0, 3);
 
   const handleConnect = () => {
     if (!usuario) {
@@ -119,10 +148,16 @@ export function useDashboardRedes() {
     loading,
     error,
     connected,
+    callbackError,
     loadInstagram,
     likes,
     comments,
-    popularPosts,
+    displayedPosts,
+    postCount: media.length,
+    showAllPosts,
+    setShowAllPosts,
+    postOrder,
+    setPostOrder,
     handleConnect,
   };
 }

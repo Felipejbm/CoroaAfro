@@ -22,6 +22,12 @@ export interface InstagramMedia {
 
 export interface InstagramMediaResponse {
   data: InstagramMedia[];
+  paging?: {
+    cursors?: {
+      after?: string;
+    };
+    next?: string;
+  };
 }
 
 export interface InstagramInsightValue {
