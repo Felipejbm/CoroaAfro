@@ -112,6 +112,10 @@ export function useDashboardRedes() {
     0,
   );
 
+  const averageInteractions = media.length
+    ? Number(((likes + comments) / media.length).toFixed(1))
+    : 0;
+
   const sortedPosts = useMemo(() => [...media].sort((a, b) => {
     if (postOrder === "recentes") {
       return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
@@ -132,7 +136,7 @@ export function useDashboardRedes() {
     iniciarConexaoInstagram(usuario.id);
   };
 
-  const metricasPerfilValores = [profile?.followers_count ?? "--", profile?.media_count ?? "--", profile ? reach : "--", profile ? likes : "--"];
+  const metricasPerfilValores = [profile?.followers_count ?? "--", profile?.media_count ?? "--", profile ? reach : "--", profile ? averageInteractions : "--"];
   const metricasPerfil = metricasPerfilConfig.map(({ indice, ...card }) => ({ ...card, value: metricasPerfilValores[indice] }));
 
   const metricasInteracoesValores = [likes, comments];
