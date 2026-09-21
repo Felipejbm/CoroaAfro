@@ -29,6 +29,9 @@ export default function CadastroEmpreendedor() {
     loading,
     formData,
     successOpen,
+    socialProvider,
+    socialLoading,
+    social,
   } = useCadastroEmpreendedor();
 
   return (
@@ -62,7 +65,7 @@ export default function CadastroEmpreendedor() {
                 color: theme.palette.text.primary,
               }}
             >
-              Formulário de cadastro
+              {socialProvider ? "Complete seu cadastro" : "Formulário de cadastro"}
             </Typography>
 
             <Typography
@@ -73,7 +76,9 @@ export default function CadastroEmpreendedor() {
                 mb: 4,
               }}
             >
-              Dados do empreendedor
+              {socialProvider
+                ? `Conta confirmada pelo ${socialProvider === "google" ? "Google" : "LinkedIn"}. Agora complete seus dados.`
+                : "Dados do empreendedor"}
             </Typography>
 
             <Stack spacing={3}>
@@ -85,7 +90,7 @@ export default function CadastroEmpreendedor() {
                   direction={{ xs: "column", md: "row" }}
                   spacing={{ xs: 2, md: 4 }}
                 >
-                  {row.map(({ label, field, type }) => (
+                  {row.filter(({ field }) => !socialProvider || field !== "senha").map(({ label, field, type }) => (
                     <Stack key={field} sx={{ flex: 1 }}>
                       <Typography
                         sx={{
@@ -103,6 +108,7 @@ export default function CadastroEmpreendedor() {
                         type={type ?? "text"}
                         select={field === "genero"}
                         value={formData[field] ?? ""}
+                        disabled={socialLoading || (!!socialProvider && (field === "nomeCompleto" || field === "email"))}
                         onChange={handleChange(field)}
                         slotProps={{
                           htmlInput: {
@@ -140,7 +146,7 @@ export default function CadastroEmpreendedor() {
             <Stack direction="row" justifyContent="center" sx={{ mt: 5 }}>
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={loading || socialLoading || (social && !socialProvider)}
                 sx={{
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
                   color: theme.palette.getContrastText(
@@ -159,10 +165,10 @@ export default function CadastroEmpreendedor() {
                   },
                 }}
               >
-                {loading ? (
+                {loading || socialLoading ? (
                   <CircularProgress size={24} color="inherit" />
                 ) : (
-                  "Confirmar"
+                  socialProvider ? "Criar conta e continuar" : "Confirmar"
                 )}
               </Button>
             </Stack>

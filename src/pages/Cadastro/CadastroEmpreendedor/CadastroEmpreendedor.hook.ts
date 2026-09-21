@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatCpf, formatTelefone, initialFormData } from "./CadastroEmpreendedor.utils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type { FormData } from "./CadastroEmpreendedor.types";
-import { criarEmpreendedor, mensagemErroCadastro } from "../../../services/Auth/controllers/empreendedor";
+import { buscarCadastroSocial, concluirCadastroSocial, criarEmpreendedor, mensagemErroCadastro } from "../../../services/Auth/controllers/empreendedor";
 
 
 export function useCadastroEmpreendedor() {
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams();
+    const social = searchParams.get("social") === "google" || searchParams.get("social") === "linkedin";
+    const [socialProvider, setSocialProvider] = useState<"google" | "linkedin" | null>(null);
+    const [socialLoading, setSocialLoading] = useState(social);
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -18,6 +22,22 @@ export function useCadastroEmpreendedor() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [successOpen, setSuccessOpen] = useState(false);
+
+    useEffect(() => {
+        if (!social) return;
+        buscarCadastroSocial()
+            .then((profile) => {
+                setSocialProvider(profile.provider);
+                setFormData((current) => ({
+                    ...current,
+                    nomeCompleto: profile.nome,
+                    email: profile.email,
+                    senha: "",
+                }));
+            })
+            .catch((requestError) => setError(mensagemErroCadastro(requestError)))
+            .finally(() => setSocialLoading(false));
+    }, [social]);
 
     const handleChange =
         (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +54,7 @@ export function useCadastroEmpreendedor() {
         if (
             !formData.nomeCompleto?.trim() ||
             !formData.email?.trim() ||
-            !formData.senha ||
+            (!socialProvider && !formData.senha) ||
             !formData.telefone?.trim()
         ) {
             setError("Preencha nome, e-mail, senha e telefone para continuar.");
@@ -43,12 +63,25 @@ export function useCadastroEmpreendedor() {
 
         setLoading(true);
         try {
+            if (socialProvider) {
+                await concluirCadastroSocial({
+                    telefone: formData.telefone.trim(),
+                    cpf: formData.cpf.trim() || null,
+                    genero: formData.genero || null,
+                    data_nascimento: formData.dataNascimento || null,
+                });
+                navigate("/cadastro-empresa", { replace: true });
+                return;
+            }
             await criarEmpreendedor({
                 nome: formData.nomeCompleto.trim(),
                 email: formData.email.trim(),
                 senha: formData.senha,
                 telefone: formData.telefone.trim(),
                 data_cadastro: new Date().toISOString().slice(0, 10),
+                data_nascimento: formData.dataNascimento || null,
+                cpf: formData.cpf.trim() || null,
+                genero: formData.genero || null,
             });
             setSuccessOpen(true);
         } catch (requestError) {
@@ -84,6 +117,9 @@ export function useCadastroEmpreendedor() {
         handleChange,
         handleSubmit,
         formData,
+        socialProvider,
+        socialLoading,
+        social,
 
     }
 }

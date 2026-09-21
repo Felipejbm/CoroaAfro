@@ -1,4 +1,3 @@
-import EmailIcon from "@mui/icons-material/Email";
 import GoogleIcon from "@mui/icons-material/Google";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
@@ -34,6 +33,7 @@ export default function Login() {
     error,
     setError,
     handleLogin,
+    handleSocialLogin,
   } = useLogin();
 
   return (
@@ -131,6 +131,10 @@ export default function Login() {
               sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 3 }}
             >
               <IconButton
+                aria-label="Entrar com Google"
+                title="Entrar com Google"
+                disabled={loading || papel !== "empreendedor"}
+                onClick={() => handleSocialLogin("google")}
                 sx={{
                   backgroundColor: theme.palette.secondary.main,
                   "&:hover": { backgroundColor: theme.palette.primary.light },
@@ -146,6 +150,10 @@ export default function Login() {
                 />
               </IconButton>
               <IconButton
+                aria-label="Entrar com LinkedIn"
+                title="Entrar com LinkedIn"
+                disabled={loading || papel !== "empreendedor"}
+                onClick={() => handleSocialLogin("linkedin")}
                 sx={{
                   backgroundColor: theme.palette.secondary.main,
                   "&:hover": { backgroundColor: theme.palette.primary.light },
@@ -156,18 +164,13 @@ export default function Login() {
               >
                 <LinkedInIcon sx={{ color: theme.palette.primary.dark }} />
               </IconButton>
-              <IconButton
-                sx={{
-                  backgroundColor: theme.palette.secondary.main,
-                  "&:hover": { backgroundColor: theme.palette.primary.light },
-                  border: "2px solid", 
-                  borderColor: "primary.dark",
-                  padding: "10px",
-                }}
-              >
-                <EmailIcon sx={{ color: theme.palette.primary.dark }} />
-              </IconButton>
             </Stack>
+
+            {papel === "empreendedor" && (
+              <Typography align="center" sx={{ fontSize: "0.8rem", color: "text.secondary", mb: 3, mt: -1 }}>
+                Use o mesmo e-mail já cadastrado no Coroa Afro.
+              </Typography>
+            )}
 
             <Stack
               direction="row"

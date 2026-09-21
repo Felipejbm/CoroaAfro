@@ -33,6 +33,13 @@ export async function login(data: LoginReq) {
     return resp.data
 }
 
+export type ProvedorSocial = "google" | "linkedin";
+
+export function iniciarLoginSocial(provedor: ProvedorSocial) {
+    const baseUrl = (api.defaults.baseURL ?? "http://localhost:8000").replace(/\/+$/, "");
+    window.location.assign(`${baseUrl}/auth/oauth/${provedor}`);
+}
+
 export async function logout() {
     await api.post("/auth/logout");
     atualizarSessao(null);
