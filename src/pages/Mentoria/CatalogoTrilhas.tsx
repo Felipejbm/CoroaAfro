@@ -15,6 +15,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useCatalogoTrilhas } from "./CatalogoTrilhas.hook";
 import type { CatalogoTrilhasProps } from "./CatalogoTrilhas.types";
 
@@ -101,23 +102,41 @@ export default function CatalogoTrilhas({
                   sx={{
                     p: 3,
                     borderRadius: 3,
-                    bgcolor: theme.palette.background.default,
-                    color: theme.palette.common.white,
+                    bgcolor: "#fffdf9",
+                    color: theme.palette.text.primary,
+                    border: "1px solid",
+                    borderColor: alpha(theme.palette.primary.main, 0.16),
+                    boxShadow: `0 8px 24px ${alpha(theme.palette.primary.dark, 0.08)}`,
                     display: "flex",
                     flexDirection: "column",
                     gap: 1.5,
                     overflowWrap: "anywhere",
                   }}
                 >
-                  <Typography sx={{ color: theme.palette.primary.light }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      alignSelf: "flex-start",
+                      px: 1.25,
+                      py: 0.5,
+                      borderRadius: 99,
+                      bgcolor: alpha(theme.palette.primary.main, 0.08),
+                      color: theme.palette.primary.dark,
+                      fontWeight: 700,
+                    }}
+                  >
                     {t.categoria_label}
                   </Typography>
-                  <Typography variant="h5">{t.titulo}</Typography>
-                  <Typography>Mentor: {t.mentor.nome}</Typography>
-                  <Typography variant="body2">
+                  <Typography variant="h5" sx={{ color: theme.palette.primary.dark }}>
+                    {t.titulo}
+                  </Typography>
+                  <Typography>
+                    <strong>Mentor:</strong> {t.mentor.nome}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
                     {t.mentor.especialidade}
                   </Typography>
-                  <Typography sx={{ whiteSpace: "pre-wrap" }}>
+                  <Typography sx={{ whiteSpace: "pre-wrap", lineHeight: 1.7 }}>
                     {t.descricao || "Conheça o conteúdo desta trilha."}
                   </Typography>
                   {t.publico_alvo && (
