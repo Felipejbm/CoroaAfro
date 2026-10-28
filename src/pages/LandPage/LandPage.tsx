@@ -15,7 +15,7 @@ import Layout from "../../components/Layout/Layout";
 import NavBarLandPage from "../../components/NavBarLandPage/NavBarLandPage";
 import Servicos from "../../components/Servicos/Servicos";
 import theme from "../../styles/theme";
-import TestimonialsCarousel from "./Carrosel/Carrosel";
+// import TestimonialsCarousel from "./Carrosel/Carrosel";
 import { styles } from "./LandPage.styles";
 import { items, socialDescriptions } from "./LandPage.utils";
 
@@ -211,7 +211,7 @@ export default function LandPage() {
           }}
         />
 
-        <TestimonialsCarousel></TestimonialsCarousel>
+        {/* <TestimonialsCarousel></TestimonialsCarousel> */}
 
         <Servicos />
 

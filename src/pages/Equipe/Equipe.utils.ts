@@ -50,7 +50,7 @@ export const developers: TeamMember[] = [
         name: "Gabriel",
         role: "Desenvolvedor",
         bio: "",
-        photo: "https://picsum.photos/seed/gabriel/240/280",
+        photo: "/gabriel.jpeg",
     },
     {
         name: "Ízan",
